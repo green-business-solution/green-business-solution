@@ -560,3 +560,30 @@ Because this run is finalized and its S3 hashes are now the review baseline, it 
 The recommended next step is an independent human review of the proposal sample, the full review queue, all license-transition rows, and the unresolved categories.
 If that review approves a production write, create a separate task that consumes only the exact approved artifact hashes, rechecks the authoritative live rows, preserves all protected and substantive values, and applies conditional idempotent updates.
 No production write is authorized by this completion record.
+
+## Subsequent Production Application
+
+On July 25, 2026, the user separately authorized production application of the exact finalized proposal artifact.
+This later authorization did not change the historical automated audit status and does not constitute human verification of the audit sample.
+
+The production writer required the exact run ID, the four approved SHA-256 values, AWS profile `retrofi-prod`, and AWS account `059310317821`.
+It read all 16,029 target rows with strongly consistent reads before applying any update.
+Each update required the contractor row to exist and required `licenseStatus`, `supportedRetrofitIds`, each target field, and `enrichmentEvidence` to remain equal to the pre-write values.
+The writer preserved substantive current values, all CSLB-derived fields, `supportedRetrofitIds`, program memberships, certifications, and existing evidence.
+
+The zero-write rehearsal found all 16,029 contractors, zero conflicts, and all 37,396 approved field values eligible for application.
+The production operation applied 16,029 conditional `UpdateItem` calls with zero conditional conflicts and zero service failures.
+It added 10,191 emails, 9,179 commercial-service values, 10,147 residential-service values, and 7,879 service-area arrays.
+It appended 69,891 exact evidence objects.
+It inserted no contractor rows and replaced no substantive values.
+
+The first read-back verified all 16,029 protected-row hashes and all 37,396 field values.
+It reported one evidence comparison mismatch caused by a lone invalid UTF-16 code unit in an approved supporting snippet being deterministically stored as `?` by DynamoDB string serialization.
+No approved artifact was edited.
+After the verifier accounted for that serialization behavior, a full replay found all 37,396 values and all 69,891 evidence objects already present, with zero conflicts and zero pending operations.
+The exact live contractor count remained 207,903.
+
+An additional write-mode replay read the immutable successful S3 report and made zero DynamoDB writes.
+The successful production report is stored at `s3://gbs-retrofi-contractor-source-data-059310317821-us-east-1/imports/web-enrichment/web-enrichment-statewide-fast-20260724T190000Z/production-write-report.json`.
+Its SHA-256 is `a7c4dbb89a1b4e89d4d315e6816186f824e22b9f5a9a553ef170f5b238ed7fff`.
+No application or infrastructure stack was deployed.

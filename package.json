@@ -96,6 +96,7 @@
     "contractors:resolve:directories": "node --max-old-space-size=4096 scripts/resolve-unmatched-directory-contractors.mjs",
     "contractors:verify:directories": "node --max-old-space-size=4096 scripts/verify-contractor-directory-production-write.mjs",
     "contractors:web-enrich": "node --max-old-space-size=4096 scripts/enrich-contractor-web.mjs",
+    "contractors:web-enrich:apply": "node --max-old-space-size=4096 scripts/apply-contractor-web-enrichment.mjs",
     "form-catalog:export": "node scripts/manage-form-question-catalog.mjs export",
     "form-catalog:publish": "node scripts/manage-form-question-catalog.mjs publish",
     "form-catalog:rollback": "node scripts/manage-form-question-catalog.mjs rollback",
