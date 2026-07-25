@@ -3046,8 +3046,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 2343018,
           "expectedSha256": "3966462686a83437e13fae5b74e6194aae0a95af670e78ff1e763a1c8e6445ca",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:43.076Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -3099,6 +3099,7 @@
         "restoredAt": "2026-07-25T23:26:37.736Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/lmc2015.pdf",
           "scripts/research/operational-savings/.cache/artifacts/doe-lighting-market-characterization-2015.pdf"
         ],
         "materializationGeneration": 1,
@@ -4296,8 +4297,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 1735,
           "expectedSha256": "a14bc71eaed7e051ac47e25c526ce3adf005d65e61088ece43bfda67c8b3595e",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:44.359Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -4349,6 +4350,7 @@
         "restoredAt": "2026-07-25T23:26:44.276Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/evse-ac.html",
           "scripts/research/operational-savings/.cache/artifacts/energy-star-evse-ac-product-2440463.html"
         ],
         "materializationGeneration": 1,
@@ -4475,8 +4477,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 46071,
           "expectedSha256": "0993e2fdf6616abb74defc9cb705c949db11b9769df8c3b167df56a1a486deee",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:44.635Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -4528,6 +4530,7 @@
         "restoredAt": "2026-07-25T23:26:45.014Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/evse-ac.pdf",
           "scripts/research/operational-savings/.cache/artifacts/energy-star-evse-ac-product-2440463.pdf"
         ],
         "materializationGeneration": 1,
@@ -4654,8 +4657,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 44235,
           "expectedSha256": "6b14fa2e7cc33b3571cf0b6cc46f1dcebe1833d33c7ba8c57027183d80a9bc27",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:44.922Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -4707,6 +4710,7 @@
         "restoredAt": "2026-07-25T23:26:45.896Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/evse-dc.pdf",
           "scripts/research/operational-savings/.cache/artifacts/energy-star-evse-dc-product-2665585.pdf"
         ],
         "materializationGeneration": 1,
@@ -4833,8 +4837,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 831466,
           "expectedSha256": "a8e5da603d0f4d99f75dbb56b1ef8a050646982e9c0b850152cdaef7a4c8cf2d",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:45.199Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -4886,6 +4890,7 @@
         "restoredAt": "2026-07-25T23:26:46.996Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/evse-spec.pdf",
           "scripts/research/operational-savings/.cache/artifacts/energy-star-evse-v1.2-specification.pdf"
         ],
         "materializationGeneration": 1,
@@ -5012,8 +5017,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 3770,
           "expectedSha256": "99cd0e3630f7e47612210ec211e517cf50471f6a7f7dbe8a1c169dc4c75cc3ee",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:45.482Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -5065,6 +5070,7 @@
         "restoredAt": "2026-07-25T23:26:47.779Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/es-app.js",
           "scripts/research/operational-savings/.cache/artifacts/energy-star-product-finder-app.js"
         ],
         "materializationGeneration": 1,
@@ -6220,8 +6226,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 21397016,
           "expectedSha256": "9019facf316b54ee72bb58827efc875df4cfbb328fbf2b367615bf2226dd94ca",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:46.966Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -6273,6 +6279,7 @@
         "restoredAt": "2026-07-25T23:26:54.601Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ssc-container-sources.7J3Lku/ortools.tar.gz",
           "scripts/research/operational-savings/.cache/artifacts/or-tools-v9.14.6206-unused-source.tar.gz"
         ],
         "materializationGeneration": 1,
@@ -6566,8 +6573,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 222425044,
           "expectedSha256": "9b0068246fc2ed73c1834302a03f6e8d3ff7003827d9b5032a6a5a5257ceeb70",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:47.926Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -6619,6 +6626,7 @@
         "restoredAt": "2026-07-25T23:27:12.457Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/reopt-f952cab.tar.gz",
           "scripts/research/operational-savings/.cache/artifacts/reopt-f952cab-source.tar.gz"
         ],
         "materializationGeneration": 1,
@@ -6742,8 +6750,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 363816480,
           "expectedSha256": "07abd78a5e1c778fa3fa46e45f2b2aaef3c11089c2b2d99bc5ea0db928457822",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:49.422Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -6795,6 +6803,7 @@
         "restoredAt": "2026-07-25T23:27:31.683Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-72bcf419.tar.gz",
           "scripts/research/operational-savings/.cache/artifacts/scout-72bcf419-source.tar.gz"
         ],
         "materializationGeneration": 1,
@@ -7956,8 +7965,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 278188118,
           "expectedSha256": "00a3001c529c87b97c271bb75dd809c71003045ecadcedeb7b2b4d9cc9479631",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:52.492Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -8009,6 +8018,7 @@
         "restoredAt": "2026-07-25T23:28:01.335Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ssc-container-sources.7J3Lku/ssc.tar.gz",
           "scripts/research/operational-savings/.cache/artifacts/ssc-ba7a7968-source.tar.gz"
         ],
         "materializationGeneration": 1,
@@ -9868,8 +9878,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 980,
           "expectedSha256": "df6d20cd99f0018012fa265e26a75dab40497b14ef24502a4e3a95a9f7706ed9",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:55.105Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -9921,6 +9931,7 @@
         "restoredAt": "2026-07-25T23:28:13.209Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/watersense-toilets.txt",
           "scripts/research/operational-savings/.cache/artifacts/watersense-toilets-landing-fragment.txt"
         ],
         "materializationGeneration": 1,
@@ -10047,8 +10058,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 980,
           "expectedSha256": "00c2549f849d568d64faec569468ebe42d2a1cbbebfa16ec9ac072de61662ddc",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:55.402Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -10100,6 +10111,7 @@
         "restoredAt": "2026-07-25T23:28:13.915Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/watersense-urinals.txt",
           "scripts/research/operational-savings/.cache/artifacts/watersense-urinals-landing-fragment.txt"
         ],
         "materializationGeneration": 1,
@@ -10228,8 +10240,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 9678937,
           "expectedSha256": "56fab916b37196655c9cf293928ca7d2f74a95fb44a47c0fc7bf5c770281201a",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:55.720Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -10282,6 +10294,7 @@
         "restoredAt": "2026-07-25T23:28:15.310Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/watersense_water-budget-tool_v2.0.xlsx",
           "scripts/research/operational-savings/.cache/artifacts/watersense-water-budget-tool-v2.0.xlsx"
         ],
         "materializationGeneration": 1,
@@ -10403,8 +10416,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 67548,
           "expectedSha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:56.049Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -10456,6 +10469,7 @@
         "restoredAt": "2026-07-25T23:28:16.123Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/attrs-26.1.0-py3-none-any.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/attrs-26.1.0-py3-none-any.whl"
         ],
         "materializationGeneration": 1,
@@ -10577,8 +10591,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 15148,
           "expectedSha256": "63579f9a0628e06278f7e47b7d7d5b6ce20dc65c5e96a6f3ca99a6adca0396e8",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:56.350Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -10630,6 +10644,7 @@
         "restoredAt": "2026-07-25T23:28:16.818Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/backoff-2.2.1-py3-none-any.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/backoff-2.2.1-py3-none-any.whl"
         ],
         "materializationGeneration": 1,
@@ -10751,8 +10766,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 136983,
           "expectedSha256": "62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:56.647Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -10804,6 +10819,7 @@
         "restoredAt": "2026-07-25T23:28:17.717Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/certifi-2026.7.22-py3-none-any.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/certifi-2026.7.22-py3-none-any.whl"
         ],
         "materializationGeneration": 1,
@@ -10925,8 +10941,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 215802,
           "expectedSha256": "9b2aff1c7b3884512b9512c3eaadd9bab39fb45042ffaaa1dd08ff2b9f8109d9",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:56.952Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -10978,6 +10994,7 @@
         "restoredAt": "2026-07-25T23:28:18.694Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/charset_normalizer-3.4.9-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/charset_normalizer-3.4.9-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl"
         ],
         "materializationGeneration": 1,
@@ -11099,8 +11116,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 332653,
           "expectedSha256": "92d9abc807cf7d0e047b95ca5d957cf4792fcd04e920ca70d48add15c1a90ea7",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:57.248Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -11152,6 +11169,7 @@
         "restoredAt": "2026-07-25T23:28:19.688Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/contourpy-1.3.3-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/contourpy-1.3.3-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl"
         ],
         "materializationGeneration": 1,
@@ -11273,8 +11291,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 8321,
           "expectedSha256": "85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:57.541Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -11326,6 +11344,7 @@
         "restoredAt": "2026-07-25T23:28:20.370Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/cycler-0.12.1-py3-none-any.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/cycler-0.12.1-py3-none-any.whl"
         ],
         "materializationGeneration": 1,
@@ -11447,8 +11466,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 5044298,
           "expectedSha256": "ef3048ef05dbb552b89817713d9cac912e00d0fde4a3105c00d29e52e10c89af",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:57.841Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -11500,6 +11519,7 @@
         "restoredAt": "2026-07-25T23:28:21.739Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/fonttools-4.63.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/fonttools-4.63.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl"
         ],
         "materializationGeneration": 1,
@@ -11621,8 +11641,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 65455,
           "expectedSha256": "7f952cbe720b688055e3f87de14f5c3e5fdaa8bc3928985c4077ca689de849a2",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:58.141Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -11674,6 +11694,7 @@
         "restoredAt": "2026-07-25T23:28:22.529Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/idna-3.18-py3-none-any.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/idna-3.18-py3-none-any.whl"
         ],
         "materializationGeneration": 1,
@@ -11795,8 +11816,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 7484,
           "expectedSha256": "f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:58.422Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -11848,6 +11869,7 @@
         "restoredAt": "2026-07-25T23:28:23.291Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/iniconfig-2.3.0-py3-none-any.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/iniconfig-2.3.0-py3-none-any.whl"
         ],
         "materializationGeneration": 1,
@@ -11969,8 +11991,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 18437,
           "expectedSha256": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:58.718Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -12022,6 +12044,7 @@
         "restoredAt": "2026-07-25T23:28:24.887Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/jsonschema_specifications-2025.9.1-py3-none-any.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/jsonschema_specifications-2025.9.1-py3-none-any.whl"
         ],
         "materializationGeneration": 1,
@@ -12143,8 +12166,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 90630,
           "expectedSha256": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:59.004Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -12196,6 +12219,7 @@
         "restoredAt": "2026-07-25T23:28:24.243Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/jsonschema-4.26.0-py3-none-any.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/jsonschema-4.26.0-py3-none-any.whl"
         ],
         "materializationGeneration": 1,
@@ -12317,8 +12341,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 1278537,
           "expectedSha256": "b2af221f268f5af85e776a73d62b0845fc8baf8ef0abfae79d29c77d0e776aaf",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:59.295Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -12370,6 +12394,7 @@
         "restoredAt": "2026-07-25T23:28:26.056Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/kiwisolver-1.5.0-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/kiwisolver-1.5.0-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl"
         ],
         "materializationGeneration": 1,
@@ -12491,8 +12516,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 10842559,
           "expectedSha256": "c52f7ad20ef476806ed212380b1d54d20310c8b86bdc2c9a68b51f0024a44472",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:59.607Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -12544,6 +12569,7 @@
         "restoredAt": "2026-07-25T23:28:27.631Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl"
         ],
         "materializationGeneration": 1,
@@ -12665,8 +12691,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 14025,
           "expectedSha256": "bae534b357516f12258862d1f0181d911032d0467f215bfcd1c264b4da579047",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:05:59.927Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -12718,6 +12744,7 @@
         "restoredAt": "2026-07-25T23:28:30.188Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/numpy_financial-1.0.0-py3-none-any.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/numpy_financial-1.0.0-py3-none-any.whl"
         ],
         "materializationGeneration": 1,
@@ -12839,8 +12866,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 13925109,
           "expectedSha256": "9fad7dcb1aac3c7f0584a5a8133e3a43eeb2fe127f47e3632d43d677c66c102b",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:00.249Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -12892,6 +12919,7 @@
         "restoredAt": "2026-07-25T23:28:29.524Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl"
         ],
         "materializationGeneration": 1,
@@ -13013,8 +13041,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 132106,
           "expectedSha256": "26a473dbb4162108b27901492546f83c76fdcea3d0eadff00ae7a07e18dcce09",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:00.595Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -13066,6 +13094,7 @@
         "restoredAt": "2026-07-25T23:28:31.002Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl"
         ],
         "materializationGeneration": 1,
@@ -13187,8 +13216,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 100195,
           "expectedSha256": "5fc45236b9446107ff2415ce77c807cee2862cb6fac22b8a73826d0693b0980e",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:00.883Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -13240,6 +13269,7 @@
         "restoredAt": "2026-07-25T23:28:31.822Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/packaging-26.2-py3-none-any.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/packaging-26.2-py3-none-any.whl"
         ],
         "materializationGeneration": 1,
@@ -13361,8 +13391,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 10485458,
           "expectedSha256": "73fa87b08a7ef706f8aafda39ddaccf2a99047bea62d8c88a0361bcafb2237bc",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:01.201Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -13414,6 +13444,7 @@
         "restoredAt": "2026-07-25T23:28:33.296Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/pandas-3.0.5-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/pandas-3.0.5-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl"
         ],
         "materializationGeneration": 1,
@@ -13535,8 +13566,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 6266838,
           "expectedSha256": "d9c7f76c0673154f044e9d78c8655fb4213f6ca31a836df48b40fe5d187717b9",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:01.527Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -13588,6 +13619,7 @@
         "restoredAt": "2026-07-25T23:28:35.166Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/pillow-12.3.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/pillow-12.3.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl"
         ],
         "materializationGeneration": 1,
@@ -13709,8 +13741,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 20538,
           "expectedSha256": "e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:01.830Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -13762,6 +13794,7 @@
         "restoredAt": "2026-07-25T23:28:35.893Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/pluggy-1.6.0-py3-none-any.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/pluggy-1.6.0-py3-none-any.whl"
         ],
         "materializationGeneration": 1,
@@ -13883,8 +13916,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 1231151,
           "expectedSha256": "81a9e26dd42fd28a23a2d169d86d7ac03b46e2f8b59ed4698fb4785f946d0176",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:02.122Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -13936,6 +13969,7 @@
         "restoredAt": "2026-07-25T23:28:37.025Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/pygments-2.20.0-py3-none-any.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/pygments-2.20.0-py3-none-any.whl"
         ],
         "materializationGeneration": 1,
@@ -14057,8 +14091,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 122781,
           "expectedSha256": "850ba148bd908d7e2411587e247a1e4f0327839c40e2e5e6d05a007ecc69911d",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:02.419Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -14110,6 +14144,7 @@
         "restoredAt": "2026-07-25T23:28:38.203Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/pyparsing-3.3.2-py3-none-any.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/pyparsing-3.3.2-py3-none-any.whl"
         ],
         "materializationGeneration": 1,
@@ -14231,8 +14266,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 386536,
           "expectedSha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:02.710Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -14284,6 +14319,7 @@
         "restoredAt": "2026-07-25T23:28:39.151Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/pytest-9.1.1-py3-none-any.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/pytest-9.1.1-py3-none-any.whl"
         ],
         "materializationGeneration": 1,
@@ -14405,8 +14441,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 229892,
           "expectedSha256": "a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:03.001Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -14458,6 +14494,7 @@
         "restoredAt": "2026-07-25T23:28:40.084Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/python_dateutil-2.9.0.post0-py2.py3-none-any.whl"
         ],
         "materializationGeneration": 1,
@@ -14579,8 +14616,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 22101,
           "expectedSha256": "1d8214789a24de455a8b8bd8ae6fe3c6b69a5e3d64aa8a8e5d68e694bbcb285a",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:03.294Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -14632,6 +14669,7 @@
         "restoredAt": "2026-07-25T23:28:40.736Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/python_dotenv-1.2.2-py3-none-any.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/python_dotenv-1.2.2-py3-none-any.whl"
         ],
         "materializationGeneration": 1,
@@ -14753,8 +14791,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 775116,
           "expectedSha256": "9149cad251584d5fb4981be1ecde53a1ca46c891a79788c0df828d2f166bda28",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:03.595Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -14806,6 +14844,7 @@
         "restoredAt": "2026-07-25T23:28:41.780Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/pyyaml-6.0.3-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/pyyaml-6.0.3-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl"
         ],
         "materializationGeneration": 1,
@@ -14927,8 +14966,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 26766,
           "expectedSha256": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:03.891Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -14980,6 +15019,7 @@
         "restoredAt": "2026-07-25T23:28:42.502Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/referencing-0.37.0-py3-none-any.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/referencing-0.37.0-py3-none-any.whl"
         ],
         "materializationGeneration": 1,
@@ -15101,8 +15141,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 73075,
           "expectedSha256": "2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:04.186Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -15154,6 +15194,7 @@
         "restoredAt": "2026-07-25T23:28:43.259Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/requests-2.34.2-py3-none-any.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/requests-2.34.2-py3-none-any.whl"
         ],
         "materializationGeneration": 1,
@@ -15275,8 +15316,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 368180,
           "expectedSha256": "55927d532399c2c646100ff7feb48eaa940ad70f42cd68e1328f3ded9f81ca24",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:04.517Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -15328,6 +15369,7 @@
         "restoredAt": "2026-07-25T23:28:44.189Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl"
         ],
         "materializationGeneration": 1,
@@ -15449,8 +15491,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 32927842,
           "expectedSha256": "e19ebea31758fac5893a2ac360fedd00116cbb7628e650842a6691ba7ca28a21",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:04.882Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -15502,6 +15544,7 @@
         "restoredAt": "2026-07-25T23:28:46.516Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl"
         ],
         "materializationGeneration": 1,
@@ -15623,8 +15666,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 11050,
           "expectedSha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:05.251Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -15676,6 +15719,7 @@
         "restoredAt": "2026-07-25T23:28:47.180Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/six-1.17.0-py2.py3-none-any.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/six-1.17.0-py2.py3-none-any.whl"
         ],
         "materializationGeneration": 1,
@@ -15797,8 +15841,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 45571,
           "expectedSha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:05.555Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -15850,6 +15894,7 @@
         "restoredAt": "2026-07-25T23:28:47.896Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/typing_extensions-4.16.0-py3-none-any.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/typing_extensions-4.16.0-py3-none-any.whl"
         ],
         "materializationGeneration": 1,
@@ -15971,8 +16016,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 131087,
           "expectedSha256": "9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:05.862Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -16024,6 +16069,7 @@
         "restoredAt": "2026-07-25T23:28:48.716Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/urllib3-2.7.0-py3-none-any.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/urllib3-2.7.0-py3-none-any.whl"
         ],
         "materializationGeneration": 1,
@@ -16145,8 +16191,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 175315,
           "expectedSha256": "9a5db42bc5dff014806c58a20b9eae7322a134abb6fce3c92c181bfb275ec5b3",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:06.166Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -16198,6 +16244,7 @@
         "restoredAt": "2026-07-25T23:28:49.550Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/scout-wheelhouse/xlsxwriter-3.2.9-py3-none-any.whl",
           "scripts/research/operational-savings/.cache/model-dependencies/scout/xlsxwriter-3.2.9-py3-none-any.whl"
         ],
         "materializationGeneration": 1,
@@ -16324,8 +16371,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 265587,
           "expectedSha256": "eb01c3b8fc1dda18056dac7ca3b03f4460ad3241371705ad938f85f715639be4",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:06.496Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -16378,6 +16425,7 @@
         "restoredAt": "2026-07-25T23:28:50.466Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/retrofi-pvwatts-full.json",
           "scripts/research/operational-savings/.cache/model-outputs/reopt/pvwatts-full-output.json"
         ],
         "materializationGeneration": 1,
@@ -16504,8 +16552,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 231568,
           "expectedSha256": "576dee53b11450d02b75afbd3fb8072ebe8e82aefc34c88af5950399991ea573",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:06.972Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -16557,6 +16605,7 @@
         "restoredAt": "2026-07-25T23:28:51.389Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/evse-ac-page.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/energy-star-evse-ac-product-2440463-page.png"
         ],
         "materializationGeneration": 1,
@@ -16683,8 +16732,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 227627,
           "expectedSha256": "611581382375c9a5b3c31bc75f44a28863f02e369da7024f9ec8840d3b46d373",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:07.478Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -16736,6 +16785,7 @@
         "restoredAt": "2026-07-25T23:28:52.281Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/evse-dc-page.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/energy-star-evse-dc-product-2665585-page.png"
         ],
         "materializationGeneration": 1,
@@ -16858,8 +16908,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 554171,
           "expectedSha256": "b824f4e233f82f8e27f9b7d74dc0b3265d4c424152bba280e5c1ad44fb7de65d",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:08.119Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -16911,6 +16961,7 @@
         "restoredAt": "2026-07-25T23:28:53.262Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ws-toilet-pages/p-01.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-01.png"
         ],
         "materializationGeneration": 1,
@@ -17033,8 +17084,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 211364,
           "expectedSha256": "83946323ebf1497cc3993b08e21dd075fa15e31244ff0e8a3aaf508901dbee3c",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:08.501Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -17086,6 +17137,7 @@
         "restoredAt": "2026-07-25T23:28:54.186Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ws-toilet-pages/p-02.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-02.png"
         ],
         "materializationGeneration": 1,
@@ -17208,8 +17260,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 326783,
           "expectedSha256": "5c9078aafd56b6a058a9b1648ba5fa28c8dcd09d11652a0a9f229c27d252829e",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:08.862Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -17261,6 +17313,7 @@
         "restoredAt": "2026-07-25T23:28:55.074Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ws-toilet-pages/p-03.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-03.png"
         ],
         "materializationGeneration": 1,
@@ -17383,8 +17436,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 326539,
           "expectedSha256": "93c1c8ff8ab80194a60eaa7d43274808beb7460e384e67660cb525eb36b9b4d5",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:09.509Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -17436,6 +17489,7 @@
         "restoredAt": "2026-07-25T23:28:55.978Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ws-toilet-pages/p-04.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-04.png"
         ],
         "materializationGeneration": 1,
@@ -17558,8 +17612,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 278324,
           "expectedSha256": "cba3dfb6d04e0fc805508c3cf9b920a892c0169f7c44b863673691e537fed6bc",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:09.848Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -17611,6 +17665,7 @@
         "restoredAt": "2026-07-25T23:28:56.842Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ws-toilet-pages/p-05.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-05.png"
         ],
         "materializationGeneration": 1,
@@ -17733,8 +17788,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 224792,
           "expectedSha256": "5a748125bc2ca6c07a15ffac9f1c182799c07271fbb44756997f8b85669f0362",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:10.194Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -17786,6 +17841,7 @@
         "restoredAt": "2026-07-25T23:28:57.711Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ws-toilet-pages/p-06.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-06.png"
         ],
         "materializationGeneration": 1,
@@ -17908,8 +17964,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 319036,
           "expectedSha256": "570eb95c1c409270f24ff431d23098ff27ed667d03bf1dccfe2f75d0a54db1b3",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:10.510Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -17961,6 +18017,7 @@
         "restoredAt": "2026-07-25T23:28:58.611Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ws-toilet-pages/p-07.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-07.png"
         ],
         "materializationGeneration": 1,
@@ -18083,8 +18140,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 316360,
           "expectedSha256": "207d682141e25e50109c64c521a99242816184b0d6e935a278ad7a833d9b3dcb",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:10.921Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -18136,6 +18193,7 @@
         "restoredAt": "2026-07-25T23:28:59.552Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ws-toilet-pages/p-08.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-08.png"
         ],
         "materializationGeneration": 1,
@@ -18258,8 +18316,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 343021,
           "expectedSha256": "82815955385b1f1adaef58b2a76b5d25798f3f63e89bf4ecdc9935a9844a592d",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:11.279Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -18311,6 +18369,7 @@
         "restoredAt": "2026-07-25T23:29:00.433Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ws-toilet-pages/p-09.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-09.png"
         ],
         "materializationGeneration": 1,
@@ -18433,8 +18492,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 195565,
           "expectedSha256": "102db7144119b8beb495c555663479f7cf4a2c54fa82f5702354a67978167a16",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:11.606Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -18486,6 +18545,7 @@
         "restoredAt": "2026-07-25T23:29:01.348Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ws-toilet-pages/p-10.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-10.png"
         ],
         "materializationGeneration": 1,
@@ -18608,8 +18668,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 185771,
           "expectedSha256": "8e24ac807006d3c9af505ab36cf7666bda252e1222ec39eaa90bf7f70c902339",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:12.102Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -18661,6 +18721,7 @@
         "restoredAt": "2026-07-25T23:29:02.250Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ws-toilet-pages/p-11.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-11.png"
         ],
         "materializationGeneration": 1,
@@ -18783,8 +18844,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 159799,
           "expectedSha256": "45b3f8963c9dc78af749f0ddc23cf8eeb770a149598da977b18a886338407d10",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:12.438Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -18836,6 +18897,7 @@
         "restoredAt": "2026-07-25T23:29:03.093Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ws-toilet-pages/p-12.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-12.png"
         ],
         "materializationGeneration": 1,
@@ -18958,8 +19020,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 9099,
           "expectedSha256": "a096bccf1c9fee4126ca68aa5159fab59c59f2dd6458112128f0c75bc4d79a61",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:12.793Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -19011,6 +19073,7 @@
         "restoredAt": "2026-07-25T23:29:03.749Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ws-toilet-pages/p-13.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-13.png"
         ],
         "materializationGeneration": 1,
@@ -19133,8 +19196,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 116013,
           "expectedSha256": "34c9c02060dfeeb90ca3722abec381637a220a902a82fae29c159d401fb4c616",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:13.125Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -19186,6 +19249,7 @@
         "restoredAt": "2026-07-25T23:29:04.604Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ws-toilet-pages/p-14.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-14.png"
         ],
         "materializationGeneration": 1,
@@ -19308,8 +19372,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 620213,
           "expectedSha256": "b7b56210f197f2b93d9a037dcdf23b1487a8c9d85e1aff81a713de365ad3c1b7",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:13.448Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -19361,6 +19425,7 @@
         "restoredAt": "2026-07-25T23:29:05.573Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ws-urinal-pages/p-01.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-01.png"
         ],
         "materializationGeneration": 1,
@@ -19483,8 +19548,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 214173,
           "expectedSha256": "011dcee7c2a679037651d45060435051be80097d7d6dedf786d9a6617d02e937",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:13.817Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -19536,6 +19601,7 @@
         "restoredAt": "2026-07-25T23:29:06.479Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ws-urinal-pages/p-02.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-02.png"
         ],
         "materializationGeneration": 1,
@@ -19658,8 +19724,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 305801,
           "expectedSha256": "48ba693dec893af78faa69662bcd4b31839f3230228dcd98d58f0c4fb1a403e7",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:14.143Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -19711,6 +19777,7 @@
         "restoredAt": "2026-07-25T23:29:07.380Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ws-urinal-pages/p-03.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-03.png"
         ],
         "materializationGeneration": 1,
@@ -19833,8 +19900,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 310643,
           "expectedSha256": "f76e9fd4ed6336707c85ff9d5427154c4246f908fe5dd6791c29a9ddc469b15b",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:14.486Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -19886,6 +19953,7 @@
         "restoredAt": "2026-07-25T23:29:08.266Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ws-urinal-pages/p-04.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-04.png"
         ],
         "materializationGeneration": 1,
@@ -20008,8 +20076,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 231866,
           "expectedSha256": "2757db9c28d6a2c91a448640485bb07c2737b334566158c85b98c2e1fbfb2e85",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:14.877Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -20061,6 +20129,7 @@
         "restoredAt": "2026-07-25T23:29:09.370Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ws-urinal-pages/p-05.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-05.png"
         ],
         "materializationGeneration": 1,
@@ -20183,8 +20252,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 336594,
           "expectedSha256": "92f5678f0598fb17d3e72d6d07ff973512222eb25164eea5043006fe8e11486d",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:15.190Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -20236,6 +20305,7 @@
         "restoredAt": "2026-07-25T23:29:10.278Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ws-urinal-pages/p-06.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-06.png"
         ],
         "materializationGeneration": 1,
@@ -20358,8 +20428,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 312904,
           "expectedSha256": "8691b3bf6a3ff26cc7582d8ffc2904ac45dbd74826db6ba3f32f051e5e42e3bd",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:15.495Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -20411,6 +20481,7 @@
         "restoredAt": "2026-07-25T23:29:11.177Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ws-urinal-pages/p-07.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-07.png"
         ],
         "materializationGeneration": 1,
@@ -20533,8 +20604,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 194840,
           "expectedSha256": "78a914a9c74fd42a478b45d39d061b5d6fc9c47efb36af57d2a7f8a2c2e5b1ca",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:15.867Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -20586,6 +20657,7 @@
         "restoredAt": "2026-07-25T23:29:12.057Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ws-urinal-pages/p-08.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-08.png"
         ],
         "materializationGeneration": 1,
@@ -20708,8 +20780,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 226530,
           "expectedSha256": "10c70785e2b24ab9d24264eb6a10219373868bb5e9f3564ed923cbf28ea0121a",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:16.188Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -20761,6 +20833,7 @@
         "restoredAt": "2026-07-25T23:29:12.931Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ws-urinal-pages/p-09.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-09.png"
         ],
         "materializationGeneration": 1,
@@ -20883,8 +20956,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 127570,
           "expectedSha256": "2ab9f8ec7557ff3331cf1e3df77e6211cc3f83e281c00bf84b4e665b9e96a8ec",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:16.499Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -20936,6 +21009,7 @@
         "restoredAt": "2026-07-25T23:29:13.772Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/ws-urinal-pages/p-10.png",
           "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-10.png"
         ],
         "materializationGeneration": 1,
@@ -21062,8 +21136,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 10275,
           "expectedSha256": "5030ed8b22f65b388f87edadf4e4f134479b36cb8bf7ab1baa814653fbf20999",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:16.827Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -21115,6 +21189,7 @@
         "restoredAt": "2026-07-25T23:29:14.480Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/sdge-pdfparse.txt",
           "scripts/research/operational-savings/.cache/normalized/interval-tariff/sdge-jrc-pdftotext.txt"
         ],
         "materializationGeneration": 1,
@@ -21241,8 +21316,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 196757,
           "expectedSha256": "c001366e1603bee21fba6982185b50a796716eadfc52ac94b172c7d47784d386",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:17.326Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -21294,6 +21369,7 @@
         "restoredAt": "2026-07-25T23:29:15.375Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/usurdb-inspect.json",
           "scripts/research/operational-savings/.cache/normalized/interval-tariff/usurdb-schema-inspection.json"
         ],
         "materializationGeneration": 1,
@@ -21420,8 +21496,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 89157,
           "expectedSha256": "9072028ee818099ccf46bd60717bbd2cc83a074bfeef19df38e684b8eab570a5",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:17.724Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -21473,6 +21549,7 @@
         "restoredAt": "2026-07-25T23:29:16.208Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/watersense-toilets-full.txt",
           "scripts/research/operational-savings/.cache/normalized/watersense/watersense-toilets-pdftotext.txt"
         ],
         "materializationGeneration": 1,
@@ -21599,8 +21676,8 @@
           "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
           "expectedSizeBytes": 89085,
           "expectedSha256": "57a6a1bcaf96757d75010ff7aa98e4c7c6bcd9b7bcfd2b9d08c231946fd3760e",
-          "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
-          "deletedAt": "2026-07-25T09:06:18.743Z"
+          "cleanupStatus": "LOCAL_RETAINED",
+          "deletedAt": null
         }
       ],
       "remote": {
@@ -21652,6 +21729,7 @@
         "restoredAt": "2026-07-25T23:29:17.030Z",
         "hydrationMode": "EXACT_FILE_HARD_LINK",
         "localPaths": [
+          "/private/tmp/watersense-urinals-full.txt",
           "scripts/research/operational-savings/.cache/normalized/watersense/watersense-urinals-pdftotext.txt"
         ],
         "materializationGeneration": 1,
@@ -42803,858 +42881,858 @@
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 3770,
       "expectedSha256": "99cd0e3630f7e47612210ec211e517cf50471f6a7f7dbe8a1c169dc4c75cc3ee",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:artifacts/energy-star-product-finder-app.js",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/energy-star-product-finder-app.js",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/raw/energy-star/energy-star-product-finder-client-bundle-acquired-2026-07-23/99cd0e3630f7e47612210ec211e517cf50471f6a7f7dbe8a1c169dc4c75cc3ee/energy-star-product-finder-app.js",
-      "deletedAt": "2026-07-25T09:05:45.482Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/evse-ac-page.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 231568,
       "expectedSha256": "576dee53b11450d02b75afbd3fb8072ebe8e82aefc34c88af5950399991ea573",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/energy-star-evse-ac-product-2440463-page.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/energy-star-evse-ac-product-2440463-page.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/energy-star-ac-evse-product-2440463-pdf-inspection-render/pdf-page-render-v1/576dee53b11450d02b75afbd3fb8072ebe8e82aefc34c88af5950399991ea573/energy-star-evse-ac-product-2440463-page.png",
-      "deletedAt": "2026-07-25T09:06:06.972Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/evse-ac.html",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 1735,
       "expectedSha256": "a14bc71eaed7e051ac47e25c526ce3adf005d65e61088ece43bfda67c8b3595e",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:artifacts/energy-star-evse-ac-product-2440463.html",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/energy-star-evse-ac-product-2440463.html",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/raw/energy-star/energy-star-certified-ac-evse-product-2440463-page-acquired-2026-07-23/a14bc71eaed7e051ac47e25c526ce3adf005d65e61088ece43bfda67c8b3595e/energy-star-evse-ac-product-2440463.html",
-      "deletedAt": "2026-07-25T09:05:44.359Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/evse-ac.pdf",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 46071,
       "expectedSha256": "0993e2fdf6616abb74defc9cb705c949db11b9769df8c3b167df56a1a486deee",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:artifacts/energy-star-evse-ac-product-2440463.pdf",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/energy-star-evse-ac-product-2440463.pdf",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/raw/energy-star/energy-star-certified-ac-evse-product-2440463-export-retrieved-2026-07-23/0993e2fdf6616abb74defc9cb705c949db11b9769df8c3b167df56a1a486deee/energy-star-evse-ac-product-2440463.pdf",
-      "deletedAt": "2026-07-25T09:05:44.635Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/evse-dc-page.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 227627,
       "expectedSha256": "611581382375c9a5b3c31bc75f44a28863f02e369da7024f9ec8840d3b46d373",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/energy-star-evse-dc-product-2665585-page.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/energy-star-evse-dc-product-2665585-page.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/energy-star-dc-evse-product-2665585-pdf-inspection-render/pdf-page-render-v1/611581382375c9a5b3c31bc75f44a28863f02e369da7024f9ec8840d3b46d373/energy-star-evse-dc-product-2665585-page.png",
-      "deletedAt": "2026-07-25T09:06:07.478Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/evse-dc.pdf",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 44235,
       "expectedSha256": "6b14fa2e7cc33b3571cf0b6cc46f1dcebe1833d33c7ba8c57027183d80a9bc27",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:artifacts/energy-star-evse-dc-product-2665585.pdf",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/energy-star-evse-dc-product-2665585.pdf",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/raw/energy-star/energy-star-certified-dc-evse-product-2665585-export-retrieved-2026-07-23/6b14fa2e7cc33b3571cf0b6cc46f1dcebe1833d33c7ba8c57027183d80a9bc27/energy-star-evse-dc-product-2665585.pdf",
-      "deletedAt": "2026-07-25T09:05:44.922Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/evse-spec.pdf",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 831466,
       "expectedSha256": "a8e5da603d0f4d99f75dbb56b1ef8a050646982e9c0b850152cdaef7a4c8cf2d",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:artifacts/energy-star-evse-v1.2-specification.pdf",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/energy-star-evse-v1.2-specification.pdf",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/raw/energy-star/energy-star-evse-final-specification-version-1.2/a8e5da603d0f4d99f75dbb56b1ef8a050646982e9c0b850152cdaef7a4c8cf2d/energy-star-evse-v1.2-specification.pdf",
-      "deletedAt": "2026-07-25T09:05:45.199Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/lmc2015.pdf",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 2343018,
       "expectedSha256": "3966462686a83437e13fae5b74e6194aae0a95af670e78ff1e763a1c8e6445ca",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:artifacts/doe-lighting-market-characterization-2015.pdf",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/doe-lighting-market-characterization-2015.pdf",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/raw/doe/2015-u.s.-lighting-market-characterization-published-november-2017/3966462686a83437e13fae5b74e6194aae0a95af670e78ff1e763a1c8e6445ca/doe-lighting-market-characterization-2015.pdf",
-      "deletedAt": "2026-07-25T09:05:43.076Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/reopt-f952cab.tar.gz",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 222425044,
       "expectedSha256": "9b0068246fc2ed73c1834302a03f6e8d3ff7003827d9b5032a6a5a5257ceeb70",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:artifacts/reopt-f952cab-source.tar.gz",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/reopt-f952cab-source.tar.gz",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/raw/natlabrockies-reopt.jl/git-f952cabdf3e60f6e88eef80bb7bc9e7e24bac643/9b0068246fc2ed73c1834302a03f6e8d3ff7003827d9b5032a6a5a5257ceeb70/reopt-f952cab-source.tar.gz",
-      "deletedAt": "2026-07-25T09:05:47.926Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/retrofi-pvwatts-full.json",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 265587,
       "expectedSha256": "eb01c3b8fc1dda18056dac7ca3b03f4460ad3241371705ad938f85f715639be4",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-outputs/reopt/pvwatts-full-output.json",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-outputs/reopt/pvwatts-full-output.json",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-outputs/reopt/ssc-303-reopt-f952cab/model-output-v1/eb01c3b8fc1dda18056dac7ca3b03f4460ad3241371705ad938f85f715639be4/pvwatts-full-output.json",
-      "deletedAt": "2026-07-25T09:06:06.496Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-72bcf419.tar.gz",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 363816480,
       "expectedSha256": "07abd78a5e1c778fa3fa46e45f2b2aaef3c11089c2b2d99bc5ea0db928457822",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:artifacts/scout-72bcf419-source.tar.gz",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/scout-72bcf419-source.tar.gz",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/raw/trynthink-scout/git-72bcf419eb1cb37379f163563344b0ec61507fd3/07abd78a5e1c778fa3fa46e45f2b2aaef3c11089c2b2d99bc5ea0db928457822/scout-72bcf419-source.tar.gz",
-      "deletedAt": "2026-07-25T09:05:49.422Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/attrs-26.1.0-py3-none-any.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 67548,
       "expectedSha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/attrs-26.1.0-py3-none-any.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/attrs-26.1.0-py3-none-any.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309/attrs-26.1.0-py3-none-any.whl",
-      "deletedAt": "2026-07-25T09:05:56.049Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/backoff-2.2.1-py3-none-any.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 15148,
       "expectedSha256": "63579f9a0628e06278f7e47b7d7d5b6ce20dc65c5e96a6f3ca99a6adca0396e8",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/backoff-2.2.1-py3-none-any.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/backoff-2.2.1-py3-none-any.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/63579f9a0628e06278f7e47b7d7d5b6ce20dc65c5e96a6f3ca99a6adca0396e8/backoff-2.2.1-py3-none-any.whl",
-      "deletedAt": "2026-07-25T09:05:56.350Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/certifi-2026.7.22-py3-none-any.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 136983,
       "expectedSha256": "62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/certifi-2026.7.22-py3-none-any.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/certifi-2026.7.22-py3-none-any.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775/certifi-2026.7.22-py3-none-any.whl",
-      "deletedAt": "2026-07-25T09:05:56.647Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/charset_normalizer-3.4.9-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 215802,
       "expectedSha256": "9b2aff1c7b3884512b9512c3eaadd9bab39fb45042ffaaa1dd08ff2b9f8109d9",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/charset_normalizer-3.4.9-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/charset_normalizer-3.4.9-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/9b2aff1c7b3884512b9512c3eaadd9bab39fb45042ffaaa1dd08ff2b9f8109d9/charset_normalizer-3.4.9-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
-      "deletedAt": "2026-07-25T09:05:56.952Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/contourpy-1.3.3-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 332653,
       "expectedSha256": "92d9abc807cf7d0e047b95ca5d957cf4792fcd04e920ca70d48add15c1a90ea7",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/contourpy-1.3.3-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/contourpy-1.3.3-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/92d9abc807cf7d0e047b95ca5d957cf4792fcd04e920ca70d48add15c1a90ea7/contourpy-1.3.3-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
-      "deletedAt": "2026-07-25T09:05:57.248Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/cycler-0.12.1-py3-none-any.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 8321,
       "expectedSha256": "85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/cycler-0.12.1-py3-none-any.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/cycler-0.12.1-py3-none-any.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30/cycler-0.12.1-py3-none-any.whl",
-      "deletedAt": "2026-07-25T09:05:57.541Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/fonttools-4.63.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 5044298,
       "expectedSha256": "ef3048ef05dbb552b89817713d9cac912e00d0fde4a3105c00d29e52e10c89af",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/fonttools-4.63.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/fonttools-4.63.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/ef3048ef05dbb552b89817713d9cac912e00d0fde4a3105c00d29e52e10c89af/fonttools-4.63.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
-      "deletedAt": "2026-07-25T09:05:57.841Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/idna-3.18-py3-none-any.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 65455,
       "expectedSha256": "7f952cbe720b688055e3f87de14f5c3e5fdaa8bc3928985c4077ca689de849a2",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/idna-3.18-py3-none-any.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/idna-3.18-py3-none-any.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/7f952cbe720b688055e3f87de14f5c3e5fdaa8bc3928985c4077ca689de849a2/idna-3.18-py3-none-any.whl",
-      "deletedAt": "2026-07-25T09:05:58.141Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/iniconfig-2.3.0-py3-none-any.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 7484,
       "expectedSha256": "f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/iniconfig-2.3.0-py3-none-any.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/iniconfig-2.3.0-py3-none-any.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12/iniconfig-2.3.0-py3-none-any.whl",
-      "deletedAt": "2026-07-25T09:05:58.422Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/jsonschema_specifications-2025.9.1-py3-none-any.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 18437,
       "expectedSha256": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/jsonschema_specifications-2025.9.1-py3-none-any.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/jsonschema_specifications-2025.9.1-py3-none-any.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe/jsonschema_specifications-2025.9.1-py3-none-any.whl",
-      "deletedAt": "2026-07-25T09:05:58.718Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/jsonschema-4.26.0-py3-none-any.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 90630,
       "expectedSha256": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/jsonschema-4.26.0-py3-none-any.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/jsonschema-4.26.0-py3-none-any.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce/jsonschema-4.26.0-py3-none-any.whl",
-      "deletedAt": "2026-07-25T09:05:59.004Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/kiwisolver-1.5.0-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 1278537,
       "expectedSha256": "b2af221f268f5af85e776a73d62b0845fc8baf8ef0abfae79d29c77d0e776aaf",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/kiwisolver-1.5.0-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/kiwisolver-1.5.0-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/b2af221f268f5af85e776a73d62b0845fc8baf8ef0abfae79d29c77d0e776aaf/kiwisolver-1.5.0-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
-      "deletedAt": "2026-07-25T09:05:59.295Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 10842559,
       "expectedSha256": "c52f7ad20ef476806ed212380b1d54d20310c8b86bdc2c9a68b51f0024a44472",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/c52f7ad20ef476806ed212380b1d54d20310c8b86bdc2c9a68b51f0024a44472/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
-      "deletedAt": "2026-07-25T09:05:59.607Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/numpy_financial-1.0.0-py3-none-any.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 14025,
       "expectedSha256": "bae534b357516f12258862d1f0181d911032d0467f215bfcd1c264b4da579047",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/numpy_financial-1.0.0-py3-none-any.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/numpy_financial-1.0.0-py3-none-any.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/bae534b357516f12258862d1f0181d911032d0467f215bfcd1c264b4da579047/numpy_financial-1.0.0-py3-none-any.whl",
-      "deletedAt": "2026-07-25T09:05:59.927Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 13925109,
       "expectedSha256": "9fad7dcb1aac3c7f0584a5a8133e3a43eeb2fe127f47e3632d43d677c66c102b",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/9fad7dcb1aac3c7f0584a5a8133e3a43eeb2fe127f47e3632d43d677c66c102b/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
-      "deletedAt": "2026-07-25T09:06:00.249Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 132106,
       "expectedSha256": "26a473dbb4162108b27901492546f83c76fdcea3d0eadff00ae7a07e18dcce09",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/26a473dbb4162108b27901492546f83c76fdcea3d0eadff00ae7a07e18dcce09/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
-      "deletedAt": "2026-07-25T09:06:00.595Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/packaging-26.2-py3-none-any.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 100195,
       "expectedSha256": "5fc45236b9446107ff2415ce77c807cee2862cb6fac22b8a73826d0693b0980e",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/packaging-26.2-py3-none-any.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/packaging-26.2-py3-none-any.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/5fc45236b9446107ff2415ce77c807cee2862cb6fac22b8a73826d0693b0980e/packaging-26.2-py3-none-any.whl",
-      "deletedAt": "2026-07-25T09:06:00.883Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/pandas-3.0.5-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 10485458,
       "expectedSha256": "73fa87b08a7ef706f8aafda39ddaccf2a99047bea62d8c88a0361bcafb2237bc",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/pandas-3.0.5-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pandas-3.0.5-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/73fa87b08a7ef706f8aafda39ddaccf2a99047bea62d8c88a0361bcafb2237bc/pandas-3.0.5-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
-      "deletedAt": "2026-07-25T09:06:01.201Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/pillow-12.3.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 6266838,
       "expectedSha256": "d9c7f76c0673154f044e9d78c8655fb4213f6ca31a836df48b40fe5d187717b9",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/pillow-12.3.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pillow-12.3.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/d9c7f76c0673154f044e9d78c8655fb4213f6ca31a836df48b40fe5d187717b9/pillow-12.3.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
-      "deletedAt": "2026-07-25T09:06:01.527Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/pluggy-1.6.0-py3-none-any.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 20538,
       "expectedSha256": "e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/pluggy-1.6.0-py3-none-any.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pluggy-1.6.0-py3-none-any.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746/pluggy-1.6.0-py3-none-any.whl",
-      "deletedAt": "2026-07-25T09:06:01.830Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/pygments-2.20.0-py3-none-any.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 1231151,
       "expectedSha256": "81a9e26dd42fd28a23a2d169d86d7ac03b46e2f8b59ed4698fb4785f946d0176",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/pygments-2.20.0-py3-none-any.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pygments-2.20.0-py3-none-any.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/81a9e26dd42fd28a23a2d169d86d7ac03b46e2f8b59ed4698fb4785f946d0176/pygments-2.20.0-py3-none-any.whl",
-      "deletedAt": "2026-07-25T09:06:02.122Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/pyparsing-3.3.2-py3-none-any.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 122781,
       "expectedSha256": "850ba148bd908d7e2411587e247a1e4f0327839c40e2e5e6d05a007ecc69911d",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/pyparsing-3.3.2-py3-none-any.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pyparsing-3.3.2-py3-none-any.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/850ba148bd908d7e2411587e247a1e4f0327839c40e2e5e6d05a007ecc69911d/pyparsing-3.3.2-py3-none-any.whl",
-      "deletedAt": "2026-07-25T09:06:02.419Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/pytest-9.1.1-py3-none-any.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 386536,
       "expectedSha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/pytest-9.1.1-py3-none-any.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pytest-9.1.1-py3-none-any.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c/pytest-9.1.1-py3-none-any.whl",
-      "deletedAt": "2026-07-25T09:06:02.710Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 229892,
       "expectedSha256": "a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
-      "deletedAt": "2026-07-25T09:06:03.001Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/python_dotenv-1.2.2-py3-none-any.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 22101,
       "expectedSha256": "1d8214789a24de455a8b8bd8ae6fe3c6b69a5e3d64aa8a8e5d68e694bbcb285a",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/python_dotenv-1.2.2-py3-none-any.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/python_dotenv-1.2.2-py3-none-any.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/1d8214789a24de455a8b8bd8ae6fe3c6b69a5e3d64aa8a8e5d68e694bbcb285a/python_dotenv-1.2.2-py3-none-any.whl",
-      "deletedAt": "2026-07-25T09:06:03.294Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/pyyaml-6.0.3-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 775116,
       "expectedSha256": "9149cad251584d5fb4981be1ecde53a1ca46c891a79788c0df828d2f166bda28",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/pyyaml-6.0.3-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pyyaml-6.0.3-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/9149cad251584d5fb4981be1ecde53a1ca46c891a79788c0df828d2f166bda28/pyyaml-6.0.3-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
-      "deletedAt": "2026-07-25T09:06:03.595Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/referencing-0.37.0-py3-none-any.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 26766,
       "expectedSha256": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/referencing-0.37.0-py3-none-any.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/referencing-0.37.0-py3-none-any.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231/referencing-0.37.0-py3-none-any.whl",
-      "deletedAt": "2026-07-25T09:06:03.891Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/requests-2.34.2-py3-none-any.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 73075,
       "expectedSha256": "2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/requests-2.34.2-py3-none-any.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/requests-2.34.2-py3-none-any.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0/requests-2.34.2-py3-none-any.whl",
-      "deletedAt": "2026-07-25T09:06:04.186Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 368180,
       "expectedSha256": "55927d532399c2c646100ff7feb48eaa940ad70f42cd68e1328f3ded9f81ca24",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/55927d532399c2c646100ff7feb48eaa940ad70f42cd68e1328f3ded9f81ca24/rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
-      "deletedAt": "2026-07-25T09:06:04.517Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 32927842,
       "expectedSha256": "e19ebea31758fac5893a2ac360fedd00116cbb7628e650842a6691ba7ca28a21",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/e19ebea31758fac5893a2ac360fedd00116cbb7628e650842a6691ba7ca28a21/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
-      "deletedAt": "2026-07-25T09:06:04.882Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/six-1.17.0-py2.py3-none-any.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 11050,
       "expectedSha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/six-1.17.0-py2.py3-none-any.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/six-1.17.0-py2.py3-none-any.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274/six-1.17.0-py2.py3-none-any.whl",
-      "deletedAt": "2026-07-25T09:06:05.251Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/typing_extensions-4.16.0-py3-none-any.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 45571,
       "expectedSha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/typing_extensions-4.16.0-py3-none-any.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/typing_extensions-4.16.0-py3-none-any.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8/typing_extensions-4.16.0-py3-none-any.whl",
-      "deletedAt": "2026-07-25T09:06:05.555Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/urllib3-2.7.0-py3-none-any.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 131087,
       "expectedSha256": "9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/urllib3-2.7.0-py3-none-any.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/urllib3-2.7.0-py3-none-any.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897/urllib3-2.7.0-py3-none-any.whl",
-      "deletedAt": "2026-07-25T09:06:05.862Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/scout-wheelhouse/xlsxwriter-3.2.9-py3-none-any.whl",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 175315,
       "expectedSha256": "9a5db42bc5dff014806c58a20b9eae7322a134abb6fce3c92c181bfb275ec5b3",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-dependencies/scout/xlsxwriter-3.2.9-py3-none-any.whl",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/xlsxwriter-3.2.9-py3-none-any.whl",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/scout/scout-72bcf419/python-wheel-linux-arm64-v1/9a5db42bc5dff014806c58a20b9eae7322a134abb6fce3c92c181bfb275ec5b3/xlsxwriter-3.2.9-py3-none-any.whl",
-      "deletedAt": "2026-07-25T09:06:06.166Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/sdge-pdfparse.txt",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 10275,
       "expectedSha256": "5030ed8b22f65b388f87edadf4e4f134479b36cb8bf7ab1baa814653fbf20999",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:normalized/interval-tariff/sdge-jrc-pdftotext.txt",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/normalized/interval-tariff/sdge-jrc-pdftotext.txt",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/normalized/operational-savings-research/snapshot-2026-07-24-5030ed8b22f6/source-inspection-v1/sdge-jrc-pdftotext.txt",
-      "deletedAt": "2026-07-25T09:06:16.827Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ssc-container-sources.7J3Lku/ortools.tar.gz",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 21397016,
       "expectedSha256": "9019facf316b54ee72bb58827efc875df4cfbb328fbf2b367615bf2226dd94ca",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:artifacts/or-tools-v9.14.6206-unused-source.tar.gz",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/or-tools-v9.14.6206-unused-source.tar.gz",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/raw/google-or-tools/or-tools-source-tag-v9.14-acquired-for-an-abandoned-ssc-source-build-attempt/9019facf316b54ee72bb58827efc875df4cfbb328fbf2b367615bf2226dd94ca/or-tools-v9.14.6206-unused-source.tar.gz",
-      "deletedAt": "2026-07-25T09:05:46.966Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ssc-container-sources.7J3Lku/ssc.tar.gz",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 278188118,
       "expectedSha256": "00a3001c529c87b97c271bb75dd809c71003045ecadcedeb7b2b4d9cc9479631",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:artifacts/ssc-ba7a7968-source.tar.gz",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/ssc-ba7a7968-source.tar.gz",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/raw/natlabrockies-ssc/git-ba7a7968a115baa0c250597ce2381c7ffb27fbf2/00a3001c529c87b97c271bb75dd809c71003045ecadcedeb7b2b4d9cc9479631/ssc-ba7a7968-source.tar.gz",
-      "deletedAt": "2026-07-25T09:05:52.492Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/usurdb-inspect.json",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 196757,
       "expectedSha256": "c001366e1603bee21fba6982185b50a796716eadfc52ac94b172c7d47784d386",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:normalized/interval-tariff/usurdb-schema-inspection.json",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/normalized/interval-tariff/usurdb-schema-inspection.json",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/normalized/operational-savings-research/snapshot-2026-07-24-c001366e1603/source-inspection-v1/usurdb-schema-inspection.json",
-      "deletedAt": "2026-07-25T09:06:17.326Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/watersense_water-budget-tool_v2.0.xlsx",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 9678937,
       "expectedSha256": "56fab916b37196655c9cf293928ca7d2f74a95fb44a47c0fc7bf5c770281201a",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:artifacts/watersense-water-budget-tool-v2.0.xlsx",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/watersense-water-budget-tool-v2.0.xlsx",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/raw/epa/watersense-water-budget-tool-version-2.0/56fab916b37196655c9cf293928ca7d2f74a95fb44a47c0fc7bf5c770281201a/watersense-water-budget-tool-v2.0.xlsx",
-      "deletedAt": "2026-07-25T09:05:55.720Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/watersense-toilets-full.txt",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 89157,
       "expectedSha256": "9072028ee818099ccf46bd60717bbd2cc83a074bfeef19df38e684b8eab570a5",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:normalized/watersense/watersense-toilets-pdftotext.txt",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/normalized/watersense/watersense-toilets-pdftotext.txt",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/normalized/operational-savings-research/snapshot-2026-07-24-9072028ee818/source-inspection-v1/watersense-toilets-pdftotext.txt",
-      "deletedAt": "2026-07-25T09:06:17.724Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/watersense-toilets.txt",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 980,
       "expectedSha256": "df6d20cd99f0018012fa265e26a75dab40497b14ef24502a4e3a95a9f7706ed9",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:artifacts/watersense-toilets-landing-fragment.txt",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/watersense-toilets-landing-fragment.txt",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/raw/epa/watersense-at-work-2023-section-3.1-landing-response-fragment/df6d20cd99f0018012fa265e26a75dab40497b14ef24502a4e3a95a9f7706ed9/watersense-toilets-landing-fragment.txt",
-      "deletedAt": "2026-07-25T09:05:55.105Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/watersense-urinals-full.txt",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 89085,
       "expectedSha256": "57a6a1bcaf96757d75010ff7aa98e4c7c6bcd9b7bcfd2b9d08c231946fd3760e",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:normalized/watersense/watersense-urinals-pdftotext.txt",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/normalized/watersense/watersense-urinals-pdftotext.txt",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/normalized/operational-savings-research/snapshot-2026-07-24-57a6a1bcaf96/source-inspection-v1/watersense-urinals-pdftotext.txt",
-      "deletedAt": "2026-07-25T09:06:18.743Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/watersense-urinals.txt",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 980,
       "expectedSha256": "00c2549f849d568d64faec569468ebe42d2a1cbbebfa16ec9ac072de61662ddc",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:artifacts/watersense-urinals-landing-fragment.txt",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/watersense-urinals-landing-fragment.txt",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/raw/epa/watersense-at-work-2023-section-3.2-landing-response-fragment/00c2549f849d568d64faec569468ebe42d2a1cbbebfa16ec9ac072de61662ddc/watersense-urinals-landing-fragment.txt",
-      "deletedAt": "2026-07-25T09:05:55.402Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ws-toilet-pages/p-01.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 554171,
       "expectedSha256": "b824f4e233f82f8e27f9b7d74dc0b3265d4c424152bba280e5c1ad44fb7de65d",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-01.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-01.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/watersense-at-work-2023-section-3.1-pdf-inspection-renders-p-01.png/pdf-page-render-v1/b824f4e233f82f8e27f9b7d74dc0b3265d4c424152bba280e5c1ad44fb7de65d/p-01.png",
-      "deletedAt": "2026-07-25T09:06:08.119Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ws-toilet-pages/p-02.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 211364,
       "expectedSha256": "83946323ebf1497cc3993b08e21dd075fa15e31244ff0e8a3aaf508901dbee3c",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-02.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-02.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/watersense-at-work-2023-section-3.1-pdf-inspection-renders-p-02.png/pdf-page-render-v1/83946323ebf1497cc3993b08e21dd075fa15e31244ff0e8a3aaf508901dbee3c/p-02.png",
-      "deletedAt": "2026-07-25T09:06:08.501Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ws-toilet-pages/p-03.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 326783,
       "expectedSha256": "5c9078aafd56b6a058a9b1648ba5fa28c8dcd09d11652a0a9f229c27d252829e",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-03.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-03.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/watersense-at-work-2023-section-3.1-pdf-inspection-renders-p-03.png/pdf-page-render-v1/5c9078aafd56b6a058a9b1648ba5fa28c8dcd09d11652a0a9f229c27d252829e/p-03.png",
-      "deletedAt": "2026-07-25T09:06:08.862Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ws-toilet-pages/p-04.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 326539,
       "expectedSha256": "93c1c8ff8ab80194a60eaa7d43274808beb7460e384e67660cb525eb36b9b4d5",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-04.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-04.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/watersense-at-work-2023-section-3.1-pdf-inspection-renders-p-04.png/pdf-page-render-v1/93c1c8ff8ab80194a60eaa7d43274808beb7460e384e67660cb525eb36b9b4d5/p-04.png",
-      "deletedAt": "2026-07-25T09:06:09.509Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ws-toilet-pages/p-05.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 278324,
       "expectedSha256": "cba3dfb6d04e0fc805508c3cf9b920a892c0169f7c44b863673691e537fed6bc",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-05.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-05.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/watersense-at-work-2023-section-3.1-pdf-inspection-renders-p-05.png/pdf-page-render-v1/cba3dfb6d04e0fc805508c3cf9b920a892c0169f7c44b863673691e537fed6bc/p-05.png",
-      "deletedAt": "2026-07-25T09:06:09.848Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ws-toilet-pages/p-06.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 224792,
       "expectedSha256": "5a748125bc2ca6c07a15ffac9f1c182799c07271fbb44756997f8b85669f0362",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-06.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-06.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/watersense-at-work-2023-section-3.1-pdf-inspection-renders-p-06.png/pdf-page-render-v1/5a748125bc2ca6c07a15ffac9f1c182799c07271fbb44756997f8b85669f0362/p-06.png",
-      "deletedAt": "2026-07-25T09:06:10.194Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ws-toilet-pages/p-07.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 319036,
       "expectedSha256": "570eb95c1c409270f24ff431d23098ff27ed667d03bf1dccfe2f75d0a54db1b3",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-07.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-07.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/watersense-at-work-2023-section-3.1-pdf-inspection-renders-p-07.png/pdf-page-render-v1/570eb95c1c409270f24ff431d23098ff27ed667d03bf1dccfe2f75d0a54db1b3/p-07.png",
-      "deletedAt": "2026-07-25T09:06:10.510Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ws-toilet-pages/p-08.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 316360,
       "expectedSha256": "207d682141e25e50109c64c521a99242816184b0d6e935a278ad7a833d9b3dcb",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-08.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-08.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/watersense-at-work-2023-section-3.1-pdf-inspection-renders-p-08.png/pdf-page-render-v1/207d682141e25e50109c64c521a99242816184b0d6e935a278ad7a833d9b3dcb/p-08.png",
-      "deletedAt": "2026-07-25T09:06:10.921Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ws-toilet-pages/p-09.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 343021,
       "expectedSha256": "82815955385b1f1adaef58b2a76b5d25798f3f63e89bf4ecdc9935a9844a592d",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-09.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-09.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/watersense-at-work-2023-section-3.1-pdf-inspection-renders-p-09.png/pdf-page-render-v1/82815955385b1f1adaef58b2a76b5d25798f3f63e89bf4ecdc9935a9844a592d/p-09.png",
-      "deletedAt": "2026-07-25T09:06:11.279Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ws-toilet-pages/p-10.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 195565,
       "expectedSha256": "102db7144119b8beb495c555663479f7cf4a2c54fa82f5702354a67978167a16",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-10.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-10.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/watersense-at-work-2023-section-3.1-pdf-inspection-renders-p-10.png/pdf-page-render-v1/102db7144119b8beb495c555663479f7cf4a2c54fa82f5702354a67978167a16/p-10.png",
-      "deletedAt": "2026-07-25T09:06:11.606Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ws-toilet-pages/p-11.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 185771,
       "expectedSha256": "8e24ac807006d3c9af505ab36cf7666bda252e1222ec39eaa90bf7f70c902339",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-11.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-11.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/watersense-at-work-2023-section-3.1-pdf-inspection-renders-p-11.png/pdf-page-render-v1/8e24ac807006d3c9af505ab36cf7666bda252e1222ec39eaa90bf7f70c902339/p-11.png",
-      "deletedAt": "2026-07-25T09:06:12.102Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ws-toilet-pages/p-12.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 159799,
       "expectedSha256": "45b3f8963c9dc78af749f0ddc23cf8eeb770a149598da977b18a886338407d10",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-12.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-12.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/watersense-at-work-2023-section-3.1-pdf-inspection-renders-p-12.png/pdf-page-render-v1/45b3f8963c9dc78af749f0ddc23cf8eeb770a149598da977b18a886338407d10/p-12.png",
-      "deletedAt": "2026-07-25T09:06:12.438Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ws-toilet-pages/p-13.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 9099,
       "expectedSha256": "a096bccf1c9fee4126ca68aa5159fab59c59f2dd6458112128f0c75bc4d79a61",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-13.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-13.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/watersense-at-work-2023-section-3.1-pdf-inspection-renders-p-13.png/pdf-page-render-v1/a096bccf1c9fee4126ca68aa5159fab59c59f2dd6458112128f0c75bc4d79a61/p-13.png",
-      "deletedAt": "2026-07-25T09:06:12.793Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ws-toilet-pages/p-14.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 116013,
       "expectedSha256": "34c9c02060dfeeb90ca3722abec381637a220a902a82fae29c159d401fb4c616",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-14.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-14.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/watersense-at-work-2023-section-3.1-pdf-inspection-renders-p-14.png/pdf-page-render-v1/34c9c02060dfeeb90ca3722abec381637a220a902a82fae29c159d401fb4c616/p-14.png",
-      "deletedAt": "2026-07-25T09:06:13.125Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ws-urinal-pages/p-01.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 620213,
       "expectedSha256": "b7b56210f197f2b93d9a037dcdf23b1487a8c9d85e1aff81a713de365ad3c1b7",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-01.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-01.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/watersense-at-work-2023-section-3.2-pdf-inspection-renders-p-01.png/pdf-page-render-v1/b7b56210f197f2b93d9a037dcdf23b1487a8c9d85e1aff81a713de365ad3c1b7/p-01.png",
-      "deletedAt": "2026-07-25T09:06:13.448Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ws-urinal-pages/p-02.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 214173,
       "expectedSha256": "011dcee7c2a679037651d45060435051be80097d7d6dedf786d9a6617d02e937",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-02.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-02.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/watersense-at-work-2023-section-3.2-pdf-inspection-renders-p-02.png/pdf-page-render-v1/011dcee7c2a679037651d45060435051be80097d7d6dedf786d9a6617d02e937/p-02.png",
-      "deletedAt": "2026-07-25T09:06:13.817Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ws-urinal-pages/p-03.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 305801,
       "expectedSha256": "48ba693dec893af78faa69662bcd4b31839f3230228dcd98d58f0c4fb1a403e7",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-03.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-03.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/watersense-at-work-2023-section-3.2-pdf-inspection-renders-p-03.png/pdf-page-render-v1/48ba693dec893af78faa69662bcd4b31839f3230228dcd98d58f0c4fb1a403e7/p-03.png",
-      "deletedAt": "2026-07-25T09:06:14.143Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ws-urinal-pages/p-04.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 310643,
       "expectedSha256": "f76e9fd4ed6336707c85ff9d5427154c4246f908fe5dd6791c29a9ddc469b15b",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-04.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-04.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/watersense-at-work-2023-section-3.2-pdf-inspection-renders-p-04.png/pdf-page-render-v1/f76e9fd4ed6336707c85ff9d5427154c4246f908fe5dd6791c29a9ddc469b15b/p-04.png",
-      "deletedAt": "2026-07-25T09:06:14.486Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ws-urinal-pages/p-05.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 231866,
       "expectedSha256": "2757db9c28d6a2c91a448640485bb07c2737b334566158c85b98c2e1fbfb2e85",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-05.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-05.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/watersense-at-work-2023-section-3.2-pdf-inspection-renders-p-05.png/pdf-page-render-v1/2757db9c28d6a2c91a448640485bb07c2737b334566158c85b98c2e1fbfb2e85/p-05.png",
-      "deletedAt": "2026-07-25T09:06:14.877Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ws-urinal-pages/p-06.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 336594,
       "expectedSha256": "92f5678f0598fb17d3e72d6d07ff973512222eb25164eea5043006fe8e11486d",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-06.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-06.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/watersense-at-work-2023-section-3.2-pdf-inspection-renders-p-06.png/pdf-page-render-v1/92f5678f0598fb17d3e72d6d07ff973512222eb25164eea5043006fe8e11486d/p-06.png",
-      "deletedAt": "2026-07-25T09:06:15.190Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ws-urinal-pages/p-07.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 312904,
       "expectedSha256": "8691b3bf6a3ff26cc7582d8ffc2904ac45dbd74826db6ba3f32f051e5e42e3bd",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-07.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-07.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/watersense-at-work-2023-section-3.2-pdf-inspection-renders-p-07.png/pdf-page-render-v1/8691b3bf6a3ff26cc7582d8ffc2904ac45dbd74826db6ba3f32f051e5e42e3bd/p-07.png",
-      "deletedAt": "2026-07-25T09:06:15.495Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ws-urinal-pages/p-08.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 194840,
       "expectedSha256": "78a914a9c74fd42a478b45d39d061b5d6fc9c47efb36af57d2a7f8a2c2e5b1ca",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-08.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-08.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/watersense-at-work-2023-section-3.2-pdf-inspection-renders-p-08.png/pdf-page-render-v1/78a914a9c74fd42a478b45d39d061b5d6fc9c47efb36af57d2a7f8a2c2e5b1ca/p-08.png",
-      "deletedAt": "2026-07-25T09:06:15.867Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ws-urinal-pages/p-09.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 226530,
       "expectedSha256": "10c70785e2b24ab9d24264eb6a10219373868bb5e9f3564ed923cbf28ea0121a",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-09.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-09.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/watersense-at-work-2023-section-3.2-pdf-inspection-renders-p-09.png/pdf-page-render-v1/10c70785e2b24ab9d24264eb6a10219373868bb5e9f3564ed923cbf28ea0121a/p-09.png",
-      "deletedAt": "2026-07-25T09:06:16.188Z"
+      "deletedAt": null
     },
     {
       "path": "/private/tmp/ws-urinal-pages/p-10.png",
       "relation": "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
       "expectedSizeBytes": 127570,
       "expectedSha256": "2ab9f8ec7557ff3331cf1e3df77e6211cc3f83e281c00bf84b4e665b9e96a8ec",
-      "cleanupStatus": "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      "cleanupStatus": "LOCAL_RETAINED",
       "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-10.png",
       "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-10.png",
       "plannedS3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/model-assets/research-inspection/watersense-at-work-2023-section-3.2-pdf-inspection-renders-p-10.png/pdf-page-render-v1/2ab9f8ec7557ff3331cf1e3df77e6211cc3f83e281c00bf84b4e665b9e96a8ec/p-10.png",
-      "deletedAt": "2026-07-25T09:06:16.499Z"
+      "deletedAt": null
     }
   ],
   "localArtifactAudit": {
@@ -55281,6 +55359,642 @@
         "stdoutSha256": null,
         "stderrSha256": null
       }
+    },
+    "lastOriginalArtifactRestore": {
+      "status": "COMPLETE",
+      "restoredAt": "2026-07-25T23:43:53.249Z",
+      "artifactCount": 78,
+      "createdPathCount": 78,
+      "adoptedPathCount": 0,
+      "permittedTempRoot": "/private/tmp",
+      "overwriteAllowed": false,
+      "source": "EXACT_LOCAL_BYTES_WITH_COMMITTED_S3_RESTORE_RECEIPT",
+      "results": [
+        {
+          "path": "/private/tmp/es-app.js",
+          "canonicalPackageId": "cache-file:artifacts/energy-star-product-finder-app.js",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/energy-star-product-finder-app.js",
+          "sizeBytes": 3770,
+          "sha256": "99cd0e3630f7e47612210ec211e517cf50471f6a7f7dbe8a1c169dc4c75cc3ee",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/evse-ac-page.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/energy-star-evse-ac-product-2440463-page.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/energy-star-evse-ac-product-2440463-page.png",
+          "sizeBytes": 231568,
+          "sha256": "576dee53b11450d02b75afbd3fb8072ebe8e82aefc34c88af5950399991ea573",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/evse-ac.html",
+          "canonicalPackageId": "cache-file:artifacts/energy-star-evse-ac-product-2440463.html",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/energy-star-evse-ac-product-2440463.html",
+          "sizeBytes": 1735,
+          "sha256": "a14bc71eaed7e051ac47e25c526ce3adf005d65e61088ece43bfda67c8b3595e",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/evse-ac.pdf",
+          "canonicalPackageId": "cache-file:artifacts/energy-star-evse-ac-product-2440463.pdf",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/energy-star-evse-ac-product-2440463.pdf",
+          "sizeBytes": 46071,
+          "sha256": "0993e2fdf6616abb74defc9cb705c949db11b9769df8c3b167df56a1a486deee",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/evse-dc-page.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/energy-star-evse-dc-product-2665585-page.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/energy-star-evse-dc-product-2665585-page.png",
+          "sizeBytes": 227627,
+          "sha256": "611581382375c9a5b3c31bc75f44a28863f02e369da7024f9ec8840d3b46d373",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/evse-dc.pdf",
+          "canonicalPackageId": "cache-file:artifacts/energy-star-evse-dc-product-2665585.pdf",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/energy-star-evse-dc-product-2665585.pdf",
+          "sizeBytes": 44235,
+          "sha256": "6b14fa2e7cc33b3571cf0b6cc46f1dcebe1833d33c7ba8c57027183d80a9bc27",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/evse-spec.pdf",
+          "canonicalPackageId": "cache-file:artifacts/energy-star-evse-v1.2-specification.pdf",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/energy-star-evse-v1.2-specification.pdf",
+          "sizeBytes": 831466,
+          "sha256": "a8e5da603d0f4d99f75dbb56b1ef8a050646982e9c0b850152cdaef7a4c8cf2d",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/lmc2015.pdf",
+          "canonicalPackageId": "cache-file:artifacts/doe-lighting-market-characterization-2015.pdf",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/doe-lighting-market-characterization-2015.pdf",
+          "sizeBytes": 2343018,
+          "sha256": "3966462686a83437e13fae5b74e6194aae0a95af670e78ff1e763a1c8e6445ca",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/reopt-f952cab.tar.gz",
+          "canonicalPackageId": "cache-file:artifacts/reopt-f952cab-source.tar.gz",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/reopt-f952cab-source.tar.gz",
+          "sizeBytes": 222425044,
+          "sha256": "9b0068246fc2ed73c1834302a03f6e8d3ff7003827d9b5032a6a5a5257ceeb70",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/retrofi-pvwatts-full.json",
+          "canonicalPackageId": "cache-file:model-outputs/reopt/pvwatts-full-output.json",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-outputs/reopt/pvwatts-full-output.json",
+          "sizeBytes": 265587,
+          "sha256": "eb01c3b8fc1dda18056dac7ca3b03f4460ad3241371705ad938f85f715639be4",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-72bcf419.tar.gz",
+          "canonicalPackageId": "cache-file:artifacts/scout-72bcf419-source.tar.gz",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/scout-72bcf419-source.tar.gz",
+          "sizeBytes": 363816480,
+          "sha256": "07abd78a5e1c778fa3fa46e45f2b2aaef3c11089c2b2d99bc5ea0db928457822",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/attrs-26.1.0-py3-none-any.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/attrs-26.1.0-py3-none-any.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/attrs-26.1.0-py3-none-any.whl",
+          "sizeBytes": 67548,
+          "sha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/backoff-2.2.1-py3-none-any.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/backoff-2.2.1-py3-none-any.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/backoff-2.2.1-py3-none-any.whl",
+          "sizeBytes": 15148,
+          "sha256": "63579f9a0628e06278f7e47b7d7d5b6ce20dc65c5e96a6f3ca99a6adca0396e8",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/certifi-2026.7.22-py3-none-any.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/certifi-2026.7.22-py3-none-any.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/certifi-2026.7.22-py3-none-any.whl",
+          "sizeBytes": 136983,
+          "sha256": "62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/charset_normalizer-3.4.9-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/charset_normalizer-3.4.9-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/charset_normalizer-3.4.9-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+          "sizeBytes": 215802,
+          "sha256": "9b2aff1c7b3884512b9512c3eaadd9bab39fb45042ffaaa1dd08ff2b9f8109d9",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/contourpy-1.3.3-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/contourpy-1.3.3-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/contourpy-1.3.3-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
+          "sizeBytes": 332653,
+          "sha256": "92d9abc807cf7d0e047b95ca5d957cf4792fcd04e920ca70d48add15c1a90ea7",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/cycler-0.12.1-py3-none-any.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/cycler-0.12.1-py3-none-any.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/cycler-0.12.1-py3-none-any.whl",
+          "sizeBytes": 8321,
+          "sha256": "85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/fonttools-4.63.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/fonttools-4.63.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/fonttools-4.63.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+          "sizeBytes": 5044298,
+          "sha256": "ef3048ef05dbb552b89817713d9cac912e00d0fde4a3105c00d29e52e10c89af",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/idna-3.18-py3-none-any.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/idna-3.18-py3-none-any.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/idna-3.18-py3-none-any.whl",
+          "sizeBytes": 65455,
+          "sha256": "7f952cbe720b688055e3f87de14f5c3e5fdaa8bc3928985c4077ca689de849a2",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/iniconfig-2.3.0-py3-none-any.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/iniconfig-2.3.0-py3-none-any.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/iniconfig-2.3.0-py3-none-any.whl",
+          "sizeBytes": 7484,
+          "sha256": "f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/jsonschema_specifications-2025.9.1-py3-none-any.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/jsonschema_specifications-2025.9.1-py3-none-any.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/jsonschema_specifications-2025.9.1-py3-none-any.whl",
+          "sizeBytes": 18437,
+          "sha256": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/jsonschema-4.26.0-py3-none-any.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/jsonschema-4.26.0-py3-none-any.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/jsonschema-4.26.0-py3-none-any.whl",
+          "sizeBytes": 90630,
+          "sha256": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/kiwisolver-1.5.0-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/kiwisolver-1.5.0-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/kiwisolver-1.5.0-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
+          "sizeBytes": 1278537,
+          "sha256": "b2af221f268f5af85e776a73d62b0845fc8baf8ef0abfae79d29c77d0e776aaf",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
+          "sizeBytes": 10842559,
+          "sha256": "c52f7ad20ef476806ed212380b1d54d20310c8b86bdc2c9a68b51f0024a44472",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/numpy_financial-1.0.0-py3-none-any.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/numpy_financial-1.0.0-py3-none-any.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/numpy_financial-1.0.0-py3-none-any.whl",
+          "sizeBytes": 14025,
+          "sha256": "bae534b357516f12258862d1f0181d911032d0467f215bfcd1c264b4da579047",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+          "sizeBytes": 13925109,
+          "sha256": "9fad7dcb1aac3c7f0584a5a8133e3a43eeb2fe127f47e3632d43d677c66c102b",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+          "sizeBytes": 132106,
+          "sha256": "26a473dbb4162108b27901492546f83c76fdcea3d0eadff00ae7a07e18dcce09",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/packaging-26.2-py3-none-any.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/packaging-26.2-py3-none-any.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/packaging-26.2-py3-none-any.whl",
+          "sizeBytes": 100195,
+          "sha256": "5fc45236b9446107ff2415ce77c807cee2862cb6fac22b8a73826d0693b0980e",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/pandas-3.0.5-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/pandas-3.0.5-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pandas-3.0.5-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
+          "sizeBytes": 10485458,
+          "sha256": "73fa87b08a7ef706f8aafda39ddaccf2a99047bea62d8c88a0361bcafb2237bc",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/pillow-12.3.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/pillow-12.3.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pillow-12.3.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
+          "sizeBytes": 6266838,
+          "sha256": "d9c7f76c0673154f044e9d78c8655fb4213f6ca31a836df48b40fe5d187717b9",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/pluggy-1.6.0-py3-none-any.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/pluggy-1.6.0-py3-none-any.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pluggy-1.6.0-py3-none-any.whl",
+          "sizeBytes": 20538,
+          "sha256": "e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/pygments-2.20.0-py3-none-any.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/pygments-2.20.0-py3-none-any.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pygments-2.20.0-py3-none-any.whl",
+          "sizeBytes": 1231151,
+          "sha256": "81a9e26dd42fd28a23a2d169d86d7ac03b46e2f8b59ed4698fb4785f946d0176",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/pyparsing-3.3.2-py3-none-any.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/pyparsing-3.3.2-py3-none-any.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pyparsing-3.3.2-py3-none-any.whl",
+          "sizeBytes": 122781,
+          "sha256": "850ba148bd908d7e2411587e247a1e4f0327839c40e2e5e6d05a007ecc69911d",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/pytest-9.1.1-py3-none-any.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/pytest-9.1.1-py3-none-any.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pytest-9.1.1-py3-none-any.whl",
+          "sizeBytes": 386536,
+          "sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+          "sizeBytes": 229892,
+          "sha256": "a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/python_dotenv-1.2.2-py3-none-any.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/python_dotenv-1.2.2-py3-none-any.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/python_dotenv-1.2.2-py3-none-any.whl",
+          "sizeBytes": 22101,
+          "sha256": "1d8214789a24de455a8b8bd8ae6fe3c6b69a5e3d64aa8a8e5d68e694bbcb285a",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/pyyaml-6.0.3-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/pyyaml-6.0.3-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pyyaml-6.0.3-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+          "sizeBytes": 775116,
+          "sha256": "9149cad251584d5fb4981be1ecde53a1ca46c891a79788c0df828d2f166bda28",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/referencing-0.37.0-py3-none-any.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/referencing-0.37.0-py3-none-any.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/referencing-0.37.0-py3-none-any.whl",
+          "sizeBytes": 26766,
+          "sha256": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/requests-2.34.2-py3-none-any.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/requests-2.34.2-py3-none-any.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/requests-2.34.2-py3-none-any.whl",
+          "sizeBytes": 73075,
+          "sha256": "2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+          "sizeBytes": 368180,
+          "sha256": "55927d532399c2c646100ff7feb48eaa940ad70f42cd68e1328f3ded9f81ca24",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
+          "sizeBytes": 32927842,
+          "sha256": "e19ebea31758fac5893a2ac360fedd00116cbb7628e650842a6691ba7ca28a21",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/six-1.17.0-py2.py3-none-any.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/six-1.17.0-py2.py3-none-any.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/six-1.17.0-py2.py3-none-any.whl",
+          "sizeBytes": 11050,
+          "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/typing_extensions-4.16.0-py3-none-any.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/typing_extensions-4.16.0-py3-none-any.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/typing_extensions-4.16.0-py3-none-any.whl",
+          "sizeBytes": 45571,
+          "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/urllib3-2.7.0-py3-none-any.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/urllib3-2.7.0-py3-none-any.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/urllib3-2.7.0-py3-none-any.whl",
+          "sizeBytes": 131087,
+          "sha256": "9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/scout-wheelhouse/xlsxwriter-3.2.9-py3-none-any.whl",
+          "canonicalPackageId": "cache-file:model-dependencies/scout/xlsxwriter-3.2.9-py3-none-any.whl",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/xlsxwriter-3.2.9-py3-none-any.whl",
+          "sizeBytes": 175315,
+          "sha256": "9a5db42bc5dff014806c58a20b9eae7322a134abb6fce3c92c181bfb275ec5b3",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/sdge-pdfparse.txt",
+          "canonicalPackageId": "cache-file:normalized/interval-tariff/sdge-jrc-pdftotext.txt",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/normalized/interval-tariff/sdge-jrc-pdftotext.txt",
+          "sizeBytes": 10275,
+          "sha256": "5030ed8b22f65b388f87edadf4e4f134479b36cb8bf7ab1baa814653fbf20999",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ssc-container-sources.7J3Lku/ortools.tar.gz",
+          "canonicalPackageId": "cache-file:artifacts/or-tools-v9.14.6206-unused-source.tar.gz",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/or-tools-v9.14.6206-unused-source.tar.gz",
+          "sizeBytes": 21397016,
+          "sha256": "9019facf316b54ee72bb58827efc875df4cfbb328fbf2b367615bf2226dd94ca",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ssc-container-sources.7J3Lku/ssc.tar.gz",
+          "canonicalPackageId": "cache-file:artifacts/ssc-ba7a7968-source.tar.gz",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/ssc-ba7a7968-source.tar.gz",
+          "sizeBytes": 278188118,
+          "sha256": "00a3001c529c87b97c271bb75dd809c71003045ecadcedeb7b2b4d9cc9479631",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/usurdb-inspect.json",
+          "canonicalPackageId": "cache-file:normalized/interval-tariff/usurdb-schema-inspection.json",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/normalized/interval-tariff/usurdb-schema-inspection.json",
+          "sizeBytes": 196757,
+          "sha256": "c001366e1603bee21fba6982185b50a796716eadfc52ac94b172c7d47784d386",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/watersense_water-budget-tool_v2.0.xlsx",
+          "canonicalPackageId": "cache-file:artifacts/watersense-water-budget-tool-v2.0.xlsx",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/watersense-water-budget-tool-v2.0.xlsx",
+          "sizeBytes": 9678937,
+          "sha256": "56fab916b37196655c9cf293928ca7d2f74a95fb44a47c0fc7bf5c770281201a",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/watersense-toilets-full.txt",
+          "canonicalPackageId": "cache-file:normalized/watersense/watersense-toilets-pdftotext.txt",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/normalized/watersense/watersense-toilets-pdftotext.txt",
+          "sizeBytes": 89157,
+          "sha256": "9072028ee818099ccf46bd60717bbd2cc83a074bfeef19df38e684b8eab570a5",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/watersense-toilets.txt",
+          "canonicalPackageId": "cache-file:artifacts/watersense-toilets-landing-fragment.txt",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/watersense-toilets-landing-fragment.txt",
+          "sizeBytes": 980,
+          "sha256": "df6d20cd99f0018012fa265e26a75dab40497b14ef24502a4e3a95a9f7706ed9",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/watersense-urinals-full.txt",
+          "canonicalPackageId": "cache-file:normalized/watersense/watersense-urinals-pdftotext.txt",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/normalized/watersense/watersense-urinals-pdftotext.txt",
+          "sizeBytes": 89085,
+          "sha256": "57a6a1bcaf96757d75010ff7aa98e4c7c6bcd9b7bcfd2b9d08c231946fd3760e",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/watersense-urinals.txt",
+          "canonicalPackageId": "cache-file:artifacts/watersense-urinals-landing-fragment.txt",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/watersense-urinals-landing-fragment.txt",
+          "sizeBytes": 980,
+          "sha256": "00c2549f849d568d64faec569468ebe42d2a1cbbebfa16ec9ac072de61662ddc",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ws-toilet-pages/p-01.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-01.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-01.png",
+          "sizeBytes": 554171,
+          "sha256": "b824f4e233f82f8e27f9b7d74dc0b3265d4c424152bba280e5c1ad44fb7de65d",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ws-toilet-pages/p-02.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-02.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-02.png",
+          "sizeBytes": 211364,
+          "sha256": "83946323ebf1497cc3993b08e21dd075fa15e31244ff0e8a3aaf508901dbee3c",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ws-toilet-pages/p-03.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-03.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-03.png",
+          "sizeBytes": 326783,
+          "sha256": "5c9078aafd56b6a058a9b1648ba5fa28c8dcd09d11652a0a9f229c27d252829e",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ws-toilet-pages/p-04.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-04.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-04.png",
+          "sizeBytes": 326539,
+          "sha256": "93c1c8ff8ab80194a60eaa7d43274808beb7460e384e67660cb525eb36b9b4d5",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ws-toilet-pages/p-05.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-05.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-05.png",
+          "sizeBytes": 278324,
+          "sha256": "cba3dfb6d04e0fc805508c3cf9b920a892c0169f7c44b863673691e537fed6bc",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ws-toilet-pages/p-06.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-06.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-06.png",
+          "sizeBytes": 224792,
+          "sha256": "5a748125bc2ca6c07a15ffac9f1c182799c07271fbb44756997f8b85669f0362",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ws-toilet-pages/p-07.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-07.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-07.png",
+          "sizeBytes": 319036,
+          "sha256": "570eb95c1c409270f24ff431d23098ff27ed667d03bf1dccfe2f75d0a54db1b3",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ws-toilet-pages/p-08.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-08.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-08.png",
+          "sizeBytes": 316360,
+          "sha256": "207d682141e25e50109c64c521a99242816184b0d6e935a278ad7a833d9b3dcb",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ws-toilet-pages/p-09.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-09.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-09.png",
+          "sizeBytes": 343021,
+          "sha256": "82815955385b1f1adaef58b2a76b5d25798f3f63e89bf4ecdc9935a9844a592d",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ws-toilet-pages/p-10.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-10.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-10.png",
+          "sizeBytes": 195565,
+          "sha256": "102db7144119b8beb495c555663479f7cf4a2c54fa82f5702354a67978167a16",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ws-toilet-pages/p-11.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-11.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-11.png",
+          "sizeBytes": 185771,
+          "sha256": "8e24ac807006d3c9af505ab36cf7666bda252e1222ec39eaa90bf7f70c902339",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ws-toilet-pages/p-12.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-12.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-12.png",
+          "sizeBytes": 159799,
+          "sha256": "45b3f8963c9dc78af749f0ddc23cf8eeb770a149598da977b18a886338407d10",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ws-toilet-pages/p-13.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-13.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-13.png",
+          "sizeBytes": 9099,
+          "sha256": "a096bccf1c9fee4126ca68aa5159fab59c59f2dd6458112128f0c75bc4d79a61",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ws-toilet-pages/p-14.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-14.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-14.png",
+          "sizeBytes": 116013,
+          "sha256": "34c9c02060dfeeb90ca3722abec381637a220a902a82fae29c159d401fb4c616",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ws-urinal-pages/p-01.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-01.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-01.png",
+          "sizeBytes": 620213,
+          "sha256": "b7b56210f197f2b93d9a037dcdf23b1487a8c9d85e1aff81a713de365ad3c1b7",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ws-urinal-pages/p-02.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-02.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-02.png",
+          "sizeBytes": 214173,
+          "sha256": "011dcee7c2a679037651d45060435051be80097d7d6dedf786d9a6617d02e937",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ws-urinal-pages/p-03.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-03.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-03.png",
+          "sizeBytes": 305801,
+          "sha256": "48ba693dec893af78faa69662bcd4b31839f3230228dcd98d58f0c4fb1a403e7",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ws-urinal-pages/p-04.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-04.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-04.png",
+          "sizeBytes": 310643,
+          "sha256": "f76e9fd4ed6336707c85ff9d5427154c4246f908fe5dd6791c29a9ddc469b15b",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ws-urinal-pages/p-05.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-05.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-05.png",
+          "sizeBytes": 231866,
+          "sha256": "2757db9c28d6a2c91a448640485bb07c2737b334566158c85b98c2e1fbfb2e85",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ws-urinal-pages/p-06.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-06.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-06.png",
+          "sizeBytes": 336594,
+          "sha256": "92f5678f0598fb17d3e72d6d07ff973512222eb25164eea5043006fe8e11486d",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ws-urinal-pages/p-07.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-07.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-07.png",
+          "sizeBytes": 312904,
+          "sha256": "8691b3bf6a3ff26cc7582d8ffc2904ac45dbd74826db6ba3f32f051e5e42e3bd",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ws-urinal-pages/p-08.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-08.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-08.png",
+          "sizeBytes": 194840,
+          "sha256": "78a914a9c74fd42a478b45d39d061b5d6fc9c47efb36af57d2a7f8a2c2e5b1ca",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ws-urinal-pages/p-09.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-09.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-09.png",
+          "sizeBytes": 226530,
+          "sha256": "10c70785e2b24ab9d24264eb6a10219373868bb5e9f3564ed923cbf28ea0121a",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        },
+        {
+          "path": "/private/tmp/ws-urinal-pages/p-10.png",
+          "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-10.png",
+          "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-10.png",
+          "sizeBytes": 127570,
+          "sha256": "2ab9f8ec7557ff3331cf1e3df77e6211cc3f83e281c00bf84b4e665b9e96a8ec",
+          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+        }
+      ]
     }
   },
   "canonicalInventory": {
@@ -55288,5 +56002,5 @@
     "packageCount": 210,
     "contentSha256": "826c63b309ff326c6dc730be2f6bbfbdd5a0ad07527f9de382f5c70010e31d0a"
   },
-  "manifestContentSha256": "81b7174bb2d6beb162c85f874ad406f721adfad2c072937000551cc75ff116bd"
+  "manifestContentSha256": "89f00f1d15d02d7f10dacdad949a215efc9d126385975f782532af0fabf20e86"
 }
