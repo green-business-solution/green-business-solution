@@ -1,0 +1,123 @@
+{
+  "schemaVersion": "operational-savings/model-container-post-hoc-replay-v1",
+  "status": "PASS_COMMITTED_POST_HOC_REPLAY",
+  "createdAt": "2026-07-25T07:07:33.572Z",
+  "contextGitCommit": "a29226a1bec1a4df28df4c5410bf10e87fab4b6d",
+  "contextGitTree": "d6e71054236eb61fdfe1120cb1e0cb713a2f577b",
+  "semantics": {
+    "replayKind": "POST_HOC_REPLAY",
+    "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT",
+    "producerClaim": "DOES_NOT_ATTEST_HISTORICAL_IMAGE_BUILD_CONTEXT",
+    "authentication": "UNSIGNED_UNAUTHENTICATED",
+    "forgeability": "FORGEABLE_BY_ANY_REPOSITORY_WRITER",
+    "trustModel": "HONEST_LOCAL_OPERATOR_AND_REPOSITORY_INTEGRITY",
+    "hashGuarantee": "DETECTS_STALE_OR_CORRUPT_CONTENT_NOT_MALICIOUS_FORGERY"
+  },
+  "executionEnvironment": {
+    "status": "UNBOUND_HONEST_LOCAL_OPERATOR_EXECUTION_ENVIRONMENT",
+    "nodeExecutableAndRuntime": "NOT_INDEPENDENTLY_ATTESTED",
+    "dockerCliBytesAndVersion": "NOT_INDEPENDENTLY_ATTESTED",
+    "dockerDaemonAndServerIdentity": "NOT_INDEPENDENTLY_ATTESTED",
+    "hostOperatingSystemAndKernel": "NOT_INDEPENDENTLY_ATTESTED",
+    "inheritedEnvironment": "EXCLUDED_BY_FIXED_CHILD_ENVIRONMENT_ALLOWLIST",
+    "childEnvironmentAllowlist": "PATH_LANG_LC_ALL_HOME_DOCKER_CONFIG_DOCKER_HOST_AND_EXACT_MODEL_IMAGE_ID",
+    "provenanceClaim": "CURRENT_POST_HOC_REPLAY_RESULT_ONLY"
+  },
+  "implementationFiles": [
+    {
+      "path": "scripts/research/operational-savings/verify-model-containers.mjs",
+      "sha256": "84a8ed9290ffd5963e7c8db5f1a6fde916e1d03dcdb96df3c0f889768192e6ae"
+    },
+    {
+      "path": "scripts/research/operational-savings/storage/post-hoc-replay.mjs",
+      "sha256": "38f90f26edeee6407f8d35b12671f5eb5be39be4f917ab0a51e1b7511b2f137d"
+    },
+    {
+      "path": "scripts/research/operational-savings/storage/inventory.mjs",
+      "sha256": "65afe8879343cd75248e7d00ff69785a0b6bcbab2acc0c3c3750d93f3f6a7d3f"
+    },
+    {
+      "path": "scripts/research/operational-savings/storage/ecr-evidence.mjs",
+      "sha256": "912b64ad44e26c97c5493a0bf8d5a03291277e4bc5bce9ffc70dae796d47830d"
+    }
+  ],
+  "models": [
+    {
+      "modelId": "reopt",
+      "buildManifestPath": "scripts/research/operational-savings/containers/reopt/build-manifest.json",
+      "buildManifestSha256": "919505d5684c853bf332cf6a73fefce9ddd88d8f518810aed729c565b21b3c8f",
+      "completeInputSetSha256": "b59d19e86680092f507cc51305ceeba797bbb738620877b8c58df95b6fa65ab6",
+      "imageId": "sha256:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717",
+      "imageDigest": "sha256:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717",
+      "sourceCommit": "f952cabdf3e60f6e88eef80bb7bc9e7e24bac643",
+      "verifierPath": "scripts/research/operational-savings/containers/reopt/verify.mjs",
+      "verifierSha256": "1a1c6103f1975c2318c5732639baf5a46cf6c204cbbbb85012c6d5d42aac8142",
+      "exitCode": 0,
+      "stdoutSha256": "d027e0fda1541685b75fe6aa44faa948685dfbe146b1b54b71d773871c7d498b",
+      "stdoutSizeBytes": 25,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSizeBytes": 0,
+      "replayedAt": "2026-07-25T07:07:24.042Z",
+      "replayKind": "POST_HOC_REPLAY",
+      "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT"
+    },
+    {
+      "modelId": "ssc",
+      "buildManifestPath": "scripts/research/operational-savings/containers/ssc/build-manifest.json",
+      "buildManifestSha256": "17d0b52c1010817df7fcfdac43b0cd4d3bd77e83978f7300b6623da3b0450f36",
+      "completeInputSetSha256": "2c55a1ee8746b4ffe6f293ec177107319bb914f232940e11d2ec09bdf741fe51",
+      "imageId": "sha256:70eb1f134a8ca9342988c3593d51ce08b1c6042847b23bfb7e8c4e15a8f435cc",
+      "imageDigest": "sha256:70eb1f134a8ca9342988c3593d51ce08b1c6042847b23bfb7e8c4e15a8f435cc",
+      "sourceCommit": "ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+      "verifierPath": "scripts/research/operational-savings/containers/ssc/verify.mjs",
+      "verifierSha256": "2f67b8ee34421d9aef3c72483532c40a1cd3f238edfc02bbaffe98cb3cb31b69",
+      "exitCode": 0,
+      "stdoutSha256": "58ba437486d3d52d737838373eb9916c8b7acc95feebf047570d4a59b74e2da1",
+      "stdoutSizeBytes": 1737,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSizeBytes": 0,
+      "replayedAt": "2026-07-25T07:07:25.061Z",
+      "replayKind": "POST_HOC_REPLAY",
+      "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT"
+    },
+    {
+      "modelId": "measur",
+      "buildManifestPath": "scripts/research/operational-savings/containers/measur/build-manifest.json",
+      "buildManifestSha256": "530f80f968e126baa00b1e27a1f1a301c02eed885dd9f4ec30f75914799c7d6e",
+      "completeInputSetSha256": "7d7351f1a1b7a29d9849567339cd9ba360410616b60de03bc2feb4475239187a",
+      "imageId": "sha256:0eb47e05f2fefa78ca86958140741181b5d2260b743da1c3b670a4f6c7540393",
+      "imageDigest": "sha256:0eb47e05f2fefa78ca86958140741181b5d2260b743da1c3b670a4f6c7540393",
+      "sourceCommit": "bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "verifierPath": "scripts/research/operational-savings/containers/measur/verify.mjs",
+      "verifierSha256": "df3fb224946a838eb18693e86f02b9293c5994cad187a90b44b67fb947f7369c",
+      "exitCode": 0,
+      "stdoutSha256": "02e88a0c8195a0558b010b4e859f1a16c9e559bbbdc0eb8969c7064d946c80e0",
+      "stdoutSizeBytes": 1297,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSizeBytes": 0,
+      "replayedAt": "2026-07-25T07:07:25.632Z",
+      "replayKind": "POST_HOC_REPLAY",
+      "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT"
+    },
+    {
+      "modelId": "scout",
+      "buildManifestPath": "scripts/research/operational-savings/containers/scout/build-manifest.json",
+      "buildManifestSha256": "ee320e253d9accc86e369e3069f356ff4cd57fee2d3fb14453c8a05fbd85d64f",
+      "completeInputSetSha256": "eadfc40e411bb09bf0a82e9b6d78ecc0fc5f250be826280e645f42cb44aae21a",
+      "imageId": "sha256:f46b0566f31270bc8070192ff587a76eb914801b239f9a21b13a30ddd5c5037e",
+      "imageDigest": "sha256:f46b0566f31270bc8070192ff587a76eb914801b239f9a21b13a30ddd5c5037e",
+      "sourceCommit": "72bcf419eb1cb37379f163563344b0ec61507fd3",
+      "verifierPath": "scripts/research/operational-savings/containers/scout/verify.mjs",
+      "verifierSha256": "33f6af2b32042b04b0ff804cab0335968704ff6bbcd31597e96888410047e878",
+      "exitCode": 0,
+      "stdoutSha256": "8cb828b7a1e09f468a079136111aa574ff994789437a2f102f06130c024dfbe5",
+      "stdoutSizeBytes": 1420,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSizeBytes": 0,
+      "replayedAt": "2026-07-25T07:07:33.332Z",
+      "replayKind": "POST_HOC_REPLAY",
+      "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT"
+    }
+  ],
+  "receiptContentSha256": "a2b186ec5bb44a9151fc9423ee8861a1011a8f876c3a10fb4df16a3f6f126f72"
+}
