@@ -35,6 +35,7 @@ import {
   proveRemoteVersionRestorable,
   recordAllCleanupValidation,
   recoverPendingPackageCleanup,
+  restoreOriginalLocalArtifacts,
   FINAL_CLEANUP_VALIDATION_COMMAND,
   sanitizedAwsEnvironment,
   uploadPackage,
@@ -5225,6 +5226,145 @@ test("outside-cache package cleanup resumes only from its exact nonsymlink quara
           reconciledFromAbsence: false
         })
       ]);
+    }
+  );
+});
+
+test("original artifact restore requires an exact package receipt and never overwrites a recorded path", async () => {
+  await withTemporaryPackage(
+    async ({
+      root,
+      manifest,
+      packageRecord,
+      sha256,
+      sizeBytes,
+      localPath
+    }) => {
+      const canonicalRoot = await realpath(root);
+      markRemoteVerified(packageRecord, sha256, sizeBytes);
+      const originalRoot = join(
+        canonicalRoot,
+        "original-artifacts"
+      );
+      const originalPath = join(
+        originalRoot,
+        "source.json"
+      );
+      await mkdir(originalRoot, { recursive: true });
+      const origin = {
+        path: originalPath,
+        relation:
+          "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
+        expectedSizeBytes: sizeBytes,
+        expectedSha256: sha256,
+        cleanupStatus:
+          "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+        deletedAt: "2026-07-24T00:00:00.000Z"
+      };
+      packageRecord.originalLocalArtifacts = [origin];
+      packageRecord.hydration = {
+        status: "HYDRATED_FROM_VERIFIED_S3_VERSION",
+        restoredVersionId:
+          packageRecord.remote.s3.versionId,
+        restoredSha256: sha256,
+        restoredSizeBytes: sizeBytes,
+        restoredAt: "2026-07-24T01:00:00.000Z",
+        hydrationMode: "EXACT_FILE_HARD_LINK",
+        localPaths: [packageRecord.localPath],
+        materializationGeneration: 1,
+        cleanupActionGenerationByType: {
+          PACKAGE_CANONICAL_FILE: 1
+        },
+        materializedCleanupActionTypes: [
+          "PACKAGE_CANONICAL_FILE"
+        ]
+      };
+      manifest.originalLocalArtifacts = [
+        {
+          ...origin,
+          canonicalPackageId:
+            packageRecord.packageId,
+          canonicalLocalPath:
+            packageRecord.localPath,
+          plannedS3Uri: packageRecord.s3Uri
+        }
+      ];
+      manifest.execution.restoreAllJournal = {
+        status: "COMPLETE",
+        pendingPackageId: null,
+        completedPackages: [
+          {
+            packageId: packageRecord.packageId,
+            restoredVersionId:
+              packageRecord.remote.s3.versionId,
+            restoredSha256: sha256,
+            restoredSizeBytes: sizeBytes,
+            proof: {
+              restoredVersionId:
+                packageRecord.remote.s3.versionId,
+              restoredSha256: sha256,
+              restoredSizeBytes: sizeBytes
+            }
+          }
+        ]
+      };
+      resealManifest(manifest);
+      const manifestPath = await persistManifest(
+        canonicalRoot,
+        manifest,
+        DEFAULT_MANIFEST_RELATIVE_PATH
+      );
+
+      const first = await restoreOriginalLocalArtifacts({
+        repoRoot: canonicalRoot,
+        manifestPath,
+        manifest,
+        gitRunner: cleanValidationGitRunner(),
+        permittedTempRoot: originalRoot,
+        now: () => "2026-07-24T02:00:00.000Z"
+      });
+      expect(first).toMatchObject({
+        status: "COMPLETE",
+        artifactCount: 1,
+        createdPathCount: 1,
+        adoptedPathCount: 0,
+        overwriteAllowed: false
+      });
+      expect(await readFile(originalPath)).toEqual(
+        await readFile(localPath)
+      );
+      expect(origin).toMatchObject({
+        cleanupStatus: "LOCAL_RETAINED",
+        deletedAt: null
+      });
+
+      const second = await restoreOriginalLocalArtifacts({
+        repoRoot: canonicalRoot,
+        manifestPath,
+        manifest,
+        gitRunner: cleanValidationGitRunner(),
+        permittedTempRoot: originalRoot,
+        now: () => "2026-07-24T02:01:00.000Z"
+      });
+      expect(second).toMatchObject({
+        artifactCount: 1,
+        createdPathCount: 0,
+        adoptedPathCount: 1
+      });
+
+      await writeFile(originalPath, "tampered\n");
+      const createCopy = vi.fn();
+      await expect(
+        restoreOriginalLocalArtifacts({
+          repoRoot: canonicalRoot,
+          manifestPath,
+          manifest,
+          gitRunner: cleanValidationGitRunner(),
+          permittedTempRoot: originalRoot,
+          createCopy
+        })
+      ).rejects.toThrow(/LOCAL_SIZE_MISMATCH/);
+      expect(createCopy).not.toHaveBeenCalled();
     }
   );
 });

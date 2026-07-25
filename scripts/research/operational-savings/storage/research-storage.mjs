@@ -23,6 +23,7 @@ import {
   recordAllCleanupValidation,
   recordEcrRestoreReplay,
   recoverPendingPackageCleanup,
+  restoreOriginalLocalArtifacts,
   restoreAndReplayEcrImages,
   uploadPackage,
   uploadAllPackages,
@@ -143,6 +144,10 @@ Hydrate every package in parent-before-child dependency order:
   The command starts only from a clean committed manifest, preflights every exact S3 version, and checkpoints each dependency-ordered package for safe restart.
   Add --run-validation to run the fixed full offline validation sequence after restoration.
   Without --run-validation, the result prints the exact required next command.
+
+Restore every audited original temporary path from its exact hydrated package without overwrite:
+  Use restore-original-artifacts and add --execute.
+  The command requires a complete exact-version restore-all receipt, verifies every canonical package and existing target, and creates only exclusive copies below /private/tmp.
 
 Hydrate and replay every runnable model from its exact verified ECR digest:
   Use restore-ecr-images with the dedicated research destination and add --execute.
@@ -595,6 +600,51 @@ async function recoverPendingCleanupCommand(options) {
   };
 }
 
+async function restoreOriginalArtifactsCommand(options) {
+  const repoRoot = resolve(
+    options["repo-root"] ?? DEFAULT_REPO_ROOT
+  );
+  const manifestPath = absoluteFromRoot(
+    repoRoot,
+    options.manifest,
+    DEFAULT_MANIFEST_RELATIVE_PATH
+  );
+  const { manifest, source } =
+    await readManifest(manifestPath);
+  const artifactCount =
+    manifest.originalLocalArtifacts?.length ?? 0;
+  if (!options.execute) {
+    return {
+      dryRun: true,
+      operation: "restore-original-artifacts",
+      artifactCount,
+      permittedTempRoot: "/private/tmp",
+      wouldCreateExclusiveCopies: true,
+      wouldOverwrite: false,
+      wouldCallAws: false,
+      requiredProof:
+        "COMPLETE_EXACT_VERSION_RESTORE_ALL_RECEIPT"
+    };
+  }
+  const receipt = await restoreOriginalLocalArtifacts({
+    repoRoot,
+    manifestPath,
+    manifest
+  });
+  const writeResult = await writeManifestAtomically({
+    manifestPath,
+    manifest,
+    expectedSourceSha256:
+      manifestSourceSha256(source)
+  });
+  return {
+    dryRun: false,
+    operation: "restore-original-artifacts",
+    receipt,
+    manifest: writeResult
+  };
+}
+
 async function validateCleanupReadinessCommand(options) {
   const repoRoot = resolve(options["repo-root"] ?? DEFAULT_REPO_ROOT);
   const manifestPath = absoluteFromRoot(
@@ -942,6 +992,8 @@ export async function main(argv = process.argv.slice(2)) {
     result = await restoreAllCommand(options);
   } else if (command === "recover-pending-cleanup") {
     result = await recoverPendingCleanupCommand(options);
+  } else if (command === "restore-original-artifacts") {
+    result = await restoreOriginalArtifactsCommand(options);
   } else if (command === "validate-cleanup-readiness") {
     result = await validateCleanupReadinessCommand(options);
   } else if (command === "cleanup-audited-local") {

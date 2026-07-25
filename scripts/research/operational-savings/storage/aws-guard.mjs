@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { execFile, spawn } from "node:child_process";
 import {
+  copyFile,
   lstat,
   link,
   mkdir,
@@ -13,6 +14,7 @@ import {
   rm,
   unlink
 } from "node:fs/promises";
+import { constants as fsConstants } from "node:fs";
 import {
   basename,
   dirname,
@@ -1178,6 +1180,282 @@ async function verifyLocalPackageBytes(
     sizeBytes: details.size,
     sha256: digest
   };
+}
+
+function originalArtifactRestoreRecords(manifest) {
+  const manifestRecords = new Map(
+    (manifest.originalLocalArtifacts ?? []).map(
+      (record) => [record.path, record]
+    )
+  );
+  const records = [];
+  for (const packageRecord of manifest.packages) {
+    for (const origin of
+      packageRecord.originalLocalArtifacts ?? []) {
+      const linked = manifestRecords.get(origin.path);
+      if (
+        origin.relation !==
+          "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY" ||
+        !isAbsolute(origin.path) ||
+        resolve(origin.path) !== origin.path ||
+        origin.expectedSizeBytes !==
+          packageRecord.plannedObject.expectedSizeBytes ||
+        origin.expectedSha256 !==
+          packageRecord.plannedObject.expectedSha256 ||
+        linked?.canonicalPackageId !==
+          packageRecord.packageId ||
+        linked.canonicalLocalPath !==
+          packageRecord.localPath ||
+        linked.expectedSizeBytes !==
+          origin.expectedSizeBytes ||
+        linked.expectedSha256 !== origin.expectedSha256
+      ) {
+        throw new Error(
+          `ORIGINAL_ARTIFACT_RESTORE_LINKAGE_INVALID: ${origin.path}`
+        );
+      }
+      records.push({
+        packageRecord,
+        origin,
+        linked
+      });
+    }
+  }
+  const paths = records.map(
+    ({ origin }) => origin.path
+  );
+  if (
+    new Set(paths).size !== paths.length ||
+    paths.length !== manifestRecords.size
+  ) {
+    throw new Error(
+      "ORIGINAL_ARTIFACT_RESTORE_COVERAGE_INVALID"
+    );
+  }
+  return records.sort((left, right) =>
+    left.origin.path.localeCompare(right.origin.path)
+  );
+}
+
+async function assertOriginalRestoreParentSafe({
+  path,
+  permittedTempRoot
+}) {
+  const root = resolve(permittedTempRoot);
+  const candidate = relative(root, path);
+  if (
+    root === sep ||
+    resolve(path) !== path ||
+    !candidate ||
+    candidate === ".." ||
+    candidate.startsWith(`..${sep}`)
+  ) {
+    throw new Error(
+      `ORIGINAL_ARTIFACT_RESTORE_PATH_UNSAFE: ${path}`
+    );
+  }
+  const rootRealPath = await realpath(root);
+  if (rootRealPath !== root) {
+    throw new Error(
+      `ORIGINAL_ARTIFACT_RESTORE_ROOT_SYMLINK_FORBIDDEN: ${root}`
+    );
+  }
+  const parentPath = dirname(path);
+  await mkdir(parentPath, { recursive: true });
+  const parentRealPath = await realpath(parentPath);
+  const expectedParentRealPath = resolve(
+    rootRealPath,
+    relative(root, parentPath)
+  );
+  if (parentRealPath !== expectedParentRealPath) {
+    throw new Error(
+      `ORIGINAL_ARTIFACT_RESTORE_PARENT_SYMLINK_FORBIDDEN: ${path}`
+    );
+  }
+}
+
+function assertPackageHasExactRestoreReceipt({
+  manifest,
+  packageRecord
+}) {
+  const journal = manifest.execution?.restoreAllJournal;
+  const completion =
+    journal?.completedPackages?.find(
+      (entry) =>
+        entry.packageId === packageRecord.packageId
+    );
+  const hydration = packageRecord.hydration;
+  if (
+    !["IN_PROGRESS", "COMPLETE"].includes(
+      journal?.status
+    ) ||
+    journal.pendingPackageId !== null ||
+    journal.completedPackages.length !==
+      manifest.packages.length ||
+    hydration?.status !==
+      "HYDRATED_FROM_VERIFIED_S3_VERSION" ||
+    hydration.restoredVersionId !==
+      packageRecord.remote.s3.versionId ||
+    hydration.restoredSha256 !==
+      packageRecord.plannedObject.expectedSha256 ||
+    hydration.restoredSizeBytes !==
+      packageRecord.plannedObject.expectedSizeBytes ||
+    completion?.restoredVersionId !==
+      packageRecord.remote.s3.versionId ||
+    completion.restoredSha256 !==
+      packageRecord.plannedObject.expectedSha256 ||
+    completion.restoredSizeBytes !==
+      packageRecord.plannedObject.expectedSizeBytes ||
+    completion.proof?.restoredVersionId !==
+      packageRecord.remote.s3.versionId ||
+    completion.proof.restoredSha256 !==
+      packageRecord.plannedObject.expectedSha256 ||
+    completion.proof.restoredSizeBytes !==
+      packageRecord.plannedObject.expectedSizeBytes
+  ) {
+    throw new Error(
+      `ORIGINAL_ARTIFACT_EXACT_RESTORE_RECEIPT_REQUIRED: ${packageRecord.packageId}`
+    );
+  }
+  return completion;
+}
+
+export async function materializeOriginalLocalArtifacts({
+  repoRoot,
+  manifest,
+  permittedTempRoot = "/private/tmp",
+  createCopy = (sourcePath, targetPath) =>
+    copyFile(
+      sourcePath,
+      targetPath,
+      fsConstants.COPYFILE_EXCL
+    ),
+  now = () => new Date().toISOString()
+}) {
+  validateManifestDigest(manifest);
+  const records = originalArtifactRestoreRecords(manifest);
+  const prepared = [];
+  for (const record of records) {
+    const { packageRecord, origin } = record;
+    assertPackageHasExactRestoreReceipt({
+      manifest,
+      packageRecord
+    });
+    const canonical = await verifyLocalPackage(
+      repoRoot,
+      packageRecord
+    );
+    await assertOriginalRestoreParentSafe({
+      path: origin.path,
+      permittedTempRoot
+    });
+    const exists = await pathExists(origin.path);
+    if (exists) {
+      await verifyLocalPackageBytes(
+        packageRecord,
+        origin.path
+      );
+    }
+    prepared.push({
+      ...record,
+      canonical,
+      existedBeforeRestore: exists
+    });
+  }
+  for (const record of prepared) {
+    if (!record.existedBeforeRestore) {
+      await createCopy(
+        record.canonical.path,
+        record.origin.path
+      );
+    }
+    await verifyLocalPackageBytes(
+      record.packageRecord,
+      record.origin.path
+    );
+  }
+  const restoredAt = now();
+  const results = prepared.map((record) => {
+    for (const target of [
+      record.origin,
+      record.linked
+    ]) {
+      target.cleanupStatus = "LOCAL_RETAINED";
+      target.deletedAt = null;
+    }
+    record.packageRecord.hydration.localPaths = [
+      ...new Set([
+        ...(record.packageRecord.hydration
+          .localPaths ?? []),
+        record.origin.path
+      ])
+    ].sort();
+    return {
+      path: record.origin.path,
+      canonicalPackageId:
+        record.packageRecord.packageId,
+      canonicalLocalPath:
+        record.packageRecord.localPath,
+      sizeBytes: record.origin.expectedSizeBytes,
+      sha256: record.origin.expectedSha256,
+      disposition: record.existedBeforeRestore
+        ? "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
+        : "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+    };
+  });
+  const receipt = {
+    status: "COMPLETE",
+    restoredAt,
+    artifactCount: results.length,
+    createdPathCount: results.filter(
+      (result) =>
+        result.disposition ===
+        "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+    ).length,
+    adoptedPathCount: results.filter(
+      (result) =>
+        result.disposition ===
+        "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
+    ).length,
+    permittedTempRoot: resolve(permittedTempRoot),
+    overwriteAllowed: false,
+    source:
+      "EXACT_LOCAL_BYTES_WITH_COMMITTED_S3_RESTORE_RECEIPT",
+    results
+  };
+  manifest.execution.lastOriginalArtifactRestore =
+    receipt;
+  manifest.manifestContentSha256 =
+    stableManifestDigest(manifest);
+  return receipt;
+}
+
+export async function restoreOriginalLocalArtifacts({
+  repoRoot,
+  manifestPath,
+  manifest,
+  gitRunner = defaultGitRunner,
+  permittedTempRoot = "/private/tmp",
+  createCopy = (sourcePath, targetPath) =>
+    copyFile(
+      sourcePath,
+      targetPath,
+      fsConstants.COPYFILE_EXCL
+    ),
+  now = () => new Date().toISOString()
+}) {
+  await assertManifestCleanCommitted({
+    repoRoot,
+    manifestPath,
+    gitRunner
+  });
+  return materializeOriginalLocalArtifacts({
+    repoRoot,
+    manifest,
+    permittedTempRoot,
+    createCopy,
+    now
+  });
 }
 
 async function verifyEmbeddedLicenseMember({
