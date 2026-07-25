@@ -17,8 +17,8 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 | Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
 | --- | --- | --- | --- | --- |
-| watersense_ci_operations | SOURCE_UNSUPPORTED | scripts/research/operational-savings/adapters/watersense-ci/run.mjs | watersense-ci-cooling-tower-unsupported-proof: PASSED; scripts/research/operational-savings/tests/watersense-ci-real.test.mjs :: retains cooling-tower measurements and the absent numeric equation as blockers<br>watersense-ci-native-unit-failure-proof: PASSED; scripts/research/operational-savings/tests/watersense-ci-real.test.mjs :: fails closed on a mutated native unit contract<br>watersense-ci-offline-proof: PASSED; scripts/research/operational-savings/tests/watersense-ci-real.test.mjs :: requires the offline runtime guard | REMAINING_BLOCKER: The reviewed workbook identifies cooling-tower cycles, meters, controls, and conductivity-based blowdown, but it contains no numeric makeup-water equation or native units for existing cycles, proposed cycles, and annual evaporation. |
-| doe_measur | END_TO_END_REAL | scripts/research/operational-savings/adapters/doe-measur/equipment.mjs | doe-measur-equipment-drift-failure-proof: PASSED; scripts/research/operational-savings/tests/doe-measur-real.test.mjs :: detects MEASUR equipment binding and golden-fixture drift<br>doe-measur-equipment-input-failure-proof: PASSED; scripts/research/operational-savings/tests/doe-measur-real.test.mjs :: rejects incomplete or incompatible MEASUR equipment inputs before native execution<br>doe-measur-equipment-publication-proof: PASSED; scripts/research/operational-savings/tests/doe-measur-real.test.mjs :: publishes all four native MEASUR equipment calculations with provenance<br>doe-measur-real-equipment-native-proof: PASSED; scripts/research/operational-savings/tests/doe-measur-real.test.mjs :: maps native MEASUR equipment outputs to the exact ITC-36, ITC-38, ITC-40, and ITC-41 terms | None |
+| watersense_ci_operations | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/watersense-ci/run.mjs | watersense-ci-cooling-tower-unsupported-proof: NOT_COVERED<br>watersense-ci-native-unit-failure-proof: NOT_COVERED<br>watersense-ci-offline-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| doe_measur | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/doe-measur/equipment.mjs | doe-measur-equipment-drift-failure-proof: NOT_COVERED<br>doe-measur-equipment-input-failure-proof: NOT_COVERED<br>doe-measur-equipment-publication-proof: NOT_COVERED<br>doe-measur-real-equipment-native-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## End-to-end graph
 
@@ -27,7 +27,7 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Feasibility
 
-The category depends on these source-level verdicts: PARTIALLY_FEASIBLE.
+The category depends on these source-level verdicts: NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES.
 The process table reports the final proof level after execution-record verification, not a higher level that a manifest may have declared before the current run.
 An exact path is usable only when every owned input is present and every Standard adapter returns one unambiguous compatible result.
 A benchmark path is usable only where the category has a retained authoritative population and exact selection rule.
@@ -37,5 +37,5 @@ The runtime external-call count remains zero.
 
 | Process key | Current proof level | Next action |
 | --- | --- | --- |
-| watersense_ci_operations | SOURCE_UNSUPPORTED | Revise the source strategy or keep the card path explicitly unsupported before implementation. REMAINING_BLOCKER: The reviewed workbook identifies cooling-tower cycles, meters, controls, and conductivity-based blowdown, but it contains no numeric makeup-water equation or native units for existing cycles, proposed cycles, and annual evaporation. |
-| doe_measur | END_TO_END_REAL | Accept or connect the proved path only within its recorded boundary, and keep the exact execution record current when code, fixtures, artifacts, or canonical bindings change. |
+| watersense_ci_operations | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| doe_measur | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
