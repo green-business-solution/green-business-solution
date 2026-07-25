@@ -10,8 +10,8 @@ The canonical output set contains 1 distinct output description.
 
 | Category and process | Execution-verified proof level | Adapter | Actual adapter test result | Current blocker | Conditional next action |
 | --- | --- | --- | --- | --- | --- |
-| ITC-19/wind_sam | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/wind-sam/run.mjs | wind-sam-publication-failure: NOT_COVERED<br>wind-sam-real-database-publication: NOT_COVERED<br>wind-sam-real-ssc-execution: NOT_COVERED<br>wind-sam-ssc-version-failure: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
-| ITC-26/wind_sam | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/wind-sam/run.mjs | wind-sam-publication-failure: NOT_COVERED<br>wind-sam-real-database-publication: NOT_COVERED<br>wind-sam-real-ssc-execution: NOT_COVERED<br>wind-sam-ssc-version-failure: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| ITC-19/wind_sam | END_TO_END_REAL | scripts/research/operational-savings/adapters/wind-sam/run.mjs | wind-sam-publication-failure: PASSED; scripts/research/operational-savings/tests/ssc-database-publication.test.mjs :: STD-WIND-SAM rejects mixed model identity and offline publication violations<br>wind-sam-real-database-publication: PASSED; scripts/research/operational-savings/tests/ssc-database-publication.test.mjs :: STD-WIND-SAM publishes its pinned model identity, calculation, provenance, and exact formula selection<br>wind-sam-real-ssc-execution: PASSED; scripts/research/operational-savings/tests/ssc-models.test.mjs :: STD-WIND-SAM executes a real pinned local SSC model deterministically<br>wind-sam-ssc-version-failure: PASSED; scripts/research/operational-savings/tests/ssc-models.test.mjs :: STD-WIND-SAM rejects a caller model-version mismatch | None | Accept or connect the proved path only within its recorded boundary, and keep the exact execution record current when code, fixtures, artifacts, or canonical bindings change. |
+| ITC-26/wind_sam | END_TO_END_REAL | scripts/research/operational-savings/adapters/wind-sam/run.mjs | wind-sam-publication-failure: PASSED; scripts/research/operational-savings/tests/ssc-database-publication.test.mjs :: STD-WIND-SAM rejects mixed model identity and offline publication violations<br>wind-sam-real-database-publication: PASSED; scripts/research/operational-savings/tests/ssc-database-publication.test.mjs :: STD-WIND-SAM publishes its pinned model identity, calculation, provenance, and exact formula selection<br>wind-sam-real-ssc-execution: PASSED; scripts/research/operational-savings/tests/ssc-models.test.mjs :: STD-WIND-SAM executes a real pinned local SSC model deterministically<br>wind-sam-ssc-version-failure: PASSED; scripts/research/operational-savings/tests/ssc-models.test.mjs :: STD-WIND-SAM rejects a caller model-version mismatch | None | Accept or connect the proved path only within its recorded boundary, and keep the exact execution record current when code, fixtures, artifacts, or canonical bindings change. |
 
 ## 2. Official source inventory
 
@@ -57,15 +57,15 @@ It reports retained artifact releases, versions, locators, and integrity values 
 
 | Artifact ID | Evidence role | Retained release or version | Exact locator | Integrity | Current proof state | Bound processes |
 | --- | --- | --- | --- | --- | --- | --- |
-| artifact:wind-sam:official-fixture | Proof-manifest artifact | official repository fixture | https://github.com/NatLabRockies/ssc.git | sha256:99d80bffaa75def04d38cca4cb8f5e1e3befd043ce950513fb116d82cb479cf6; commit:ba7a7968a115baa0c250597ce2381c7ffb27fbf2; 5769 bytes | DOCUMENTATION_ONLY | ITC-19/wind_sam, ITC-26/wind_sam |
-| artifact:wind-sam:ssc-303 | Proof-manifest artifact | SSC 303 | https://github.com/NatLabRockies/REopt.jl.git | sha256:db933646389fa94f41af34066d65034681d5836f1bd29644f9b2a934a01b788f; commit:f952cabdf3e60f6e88eef80bb7bc9e7e24bac643; 37852576 bytes | DOCUMENTATION_ONLY | ITC-19/wind_sam, ITC-26/wind_sam |
-| artifact:wind-sam:wind-resource | Proof-manifest artifact | official repository wind resource fixture | https://github.com/NatLabRockies/ssc.git | sha256:94ebc09260d80bcc6796d89407248c39d9599aa9a046d01533fb8083737314b2; commit:ba7a7968a115baa0c250597ce2381c7ffb27fbf2; 122828 bytes | DOCUMENTATION_ONLY | ITC-19/wind_sam, ITC-26/wind_sam |
+| artifact:wind-sam:official-fixture | Proof-manifest artifact | official repository fixture | https://github.com/NatLabRockies/ssc.git | sha256:99d80bffaa75def04d38cca4cb8f5e1e3befd043ce950513fb116d82cb479cf6; commit:ba7a7968a115baa0c250597ce2381c7ffb27fbf2; 5769 bytes | END_TO_END_REAL | ITC-19/wind_sam, ITC-26/wind_sam |
+| artifact:wind-sam:ssc-303 | Proof-manifest artifact | SSC 303 | https://github.com/NatLabRockies/REopt.jl.git | sha256:db933646389fa94f41af34066d65034681d5836f1bd29644f9b2a934a01b788f; commit:f952cabdf3e60f6e88eef80bb7bc9e7e24bac643; 37852576 bytes | END_TO_END_REAL | ITC-19/wind_sam, ITC-26/wind_sam |
+| artifact:wind-sam:wind-resource | Proof-manifest artifact | official repository wind resource fixture | https://github.com/NatLabRockies/ssc.git | sha256:94ebc09260d80bcc6796d89407248c39d9599aa9a046d01533fb8083737314b2; commit:ba7a7968a115baa0c250597ce2381c7ffb27fbf2; 122828 bytes | END_TO_END_REAL | ITC-19/wind_sam, ITC-26/wind_sam |
 
 The current proof manifests record these inspected schemas:
 
 | Schema ID | Artifact ID | Format | Extractor | Required native fields | Current proof state |
 | --- | --- | --- | --- | --- | --- |
-| schema:wind-sam:ssc-303:windpower | artifact:wind-sam:ssc-303 | SSC_C_API_MODULE_METADATA |  | wind_resource_filename; wind_turbine_hub_ht; wind_turbine_powercurve_windspeeds; wind_turbine_powercurve_powerout; gen; annual_energy | DOCUMENTATION_ONLY |
+| schema:wind-sam:ssc-303:windpower | artifact:wind-sam:ssc-303 | SSC_C_API_MODULE_METADATA |  | wind_resource_filename; wind_turbine_hub_ht; wind_turbine_powercurve_windspeeds; wind_turbine_powercurve_powerout; gen; annual_energy | END_TO_END_REAL |
 
 Catalog-native field names that still require proof-backed inspection are:
 
@@ -172,11 +172,11 @@ This synthetic regression does not prove acquisition, source-specific parsing, a
 
 ## 12. Feasibility and supported boundary
 
-**NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES**
+**FEASIBLE_NOW**
 
 This verdict is derived from 2 bound processes.
-No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary.
-The proof ledger records 0 end-to-end real processes, 0 source-verified processes, and 0 processes with genuine manual-export downstream proof.
+Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests.
+The proof ledger records 2 end-to-end real processes, 2 source-verified processes, and 0 processes with genuine manual-export downstream proof.
 The supported boundary is Specified turbine, hub height, losses, and compatible wind resource.
 The unsupported boundary is Turbine selection, hub-height inference, and generic statewide wind production.
 
