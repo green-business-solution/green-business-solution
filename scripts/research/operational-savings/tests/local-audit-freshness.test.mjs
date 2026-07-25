@@ -191,11 +191,22 @@ test("allows read-only inventory from a verified linked Git worktree only", asyn
   const linkedWorktree = await mkdtemp(
     join(tmpdir(), "audit-worktree-linked-")
   );
+  const nestedLinkedWorktree = await mkdtemp(
+    join(tmpdir(), "audit-worktree-nested-linked-")
+  );
   await rm(linkedWorktree, {
     recursive: true,
     force: true
   });
-  temporaryRoots.push(repository, linkedWorktree);
+  await rm(nestedLinkedWorktree, {
+    recursive: true,
+    force: true
+  });
+  temporaryRoots.push(
+    repository,
+    linkedWorktree,
+    nestedLinkedWorktree
+  );
   await execFileAsync("/usr/bin/git", ["init"], {
     cwd: repository
   });
@@ -258,6 +269,25 @@ test("allows read-only inventory from a verified linked Git worktree only", asyn
       repoRoot: join(repository, "unrelated")
     })
   ).toThrow(/AUDIT_WORKTREE_MISMATCH/);
+
+  await execFileAsync(
+    "/usr/bin/git",
+    [
+      "worktree",
+      "add",
+      "--detach",
+      nestedLinkedWorktree,
+      "HEAD"
+    ],
+    { cwd: repository }
+  );
+  audit.scope.worktree = linkedWorktree;
+  expect(
+    assertLocalArtifactAuditInventoryWorktree({
+      audit,
+      repoRoot: nestedLinkedWorktree
+    })
+  ).toBe(linkedWorktree);
 });
 
 test("ignores an unrelated unmonitored temporary file", async () => {

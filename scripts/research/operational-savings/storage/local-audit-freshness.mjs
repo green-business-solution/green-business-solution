@@ -225,86 +225,96 @@ export function assertLocalArtifactAuditWorktree({
   return resolve(repoRoot);
 }
 
+function verifiedGitWorktreeMetadata(worktree) {
+  const root = realpathSync(worktree);
+  const gitPath = join(root, ".git");
+  const gitDetails = lstatSync(gitPath);
+  if (gitDetails.isSymbolicLink()) {
+    throw new Error("symlinked Git metadata");
+  }
+  if (gitDetails.isDirectory()) {
+    return {
+      commonGitDirectory: realpathSync(gitPath),
+      linked: false
+    };
+  }
+  if (!gitDetails.isFile()) {
+    throw new Error("unsupported Git metadata");
+  }
+  const gitdirPrefix = "gitdir:";
+  const linkedDeclaration = readFileSync(
+    gitPath,
+    "utf8"
+  ).trim();
+  if (
+    !linkedDeclaration
+      .toLowerCase()
+      .startsWith(gitdirPrefix)
+  ) {
+    throw new Error("invalid linked-worktree declaration");
+  }
+  const adminDirectory = realpathSync(
+    resolve(
+      root,
+      linkedDeclaration.slice(gitdirPrefix.length).trim()
+    )
+  );
+  const commonDeclaration = readFileSync(
+    join(adminDirectory, "commondir"),
+    "utf8"
+  ).trim();
+  if (!commonDeclaration) {
+    throw new Error("empty common Git directory declaration");
+  }
+  const commonGitDirectory = realpathSync(
+    resolve(adminDirectory, commonDeclaration)
+  );
+  const worktreesDirectory = realpathSync(
+    join(commonGitDirectory, "worktrees")
+  );
+  const adminRelativePath = relative(
+    worktreesDirectory,
+    adminDirectory
+  );
+  if (
+    !adminRelativePath ||
+    adminRelativePath === ".." ||
+    adminRelativePath.startsWith(`..${sep}`) ||
+    adminRelativePath.includes(sep)
+  ) {
+    throw new Error("invalid linked-worktree admin path");
+  }
+  const worktreeGitDeclaration = readFileSync(
+    join(adminDirectory, "gitdir"),
+    "utf8"
+  ).trim();
+  if (
+    !worktreeGitDeclaration ||
+    realpathSync(
+      resolve(adminDirectory, worktreeGitDeclaration)
+    ) !== realpathSync(gitPath)
+  ) {
+    throw new Error("linked-worktree reverse binding mismatch");
+  }
+  return {
+    commonGitDirectory,
+    linked: true
+  };
+}
+
 function isLinkedWorktreeOfAuditRoot({
   auditWorktree,
   repoRoot
 }) {
   try {
-    const root = realpathSync(repoRoot);
-    const auditRoot = realpathSync(auditWorktree);
-    const auditGitDirectory = join(auditRoot, ".git");
-    const auditGitDetails = lstatSync(auditGitDirectory);
-    if (
-      !auditGitDetails.isDirectory() ||
-      auditGitDetails.isSymbolicLink()
-    ) {
-      return false;
-    }
-    const commonGitDirectory = realpathSync(
-      auditGitDirectory
-    );
-    const linkedGitFile = join(root, ".git");
-    const linkedGitDetails = lstatSync(linkedGitFile);
-    if (
-      !linkedGitDetails.isFile() ||
-      linkedGitDetails.isSymbolicLink()
-    ) {
-      return false;
-    }
-    const gitdirPrefix = "gitdir:";
-    const linkedDeclaration = readFileSync(
-      linkedGitFile,
-      "utf8"
-    ).trim();
-    if (
-      !linkedDeclaration
-        .toLowerCase()
-        .startsWith(gitdirPrefix)
-    ) {
-      return false;
-    }
-    const adminDirectory = realpathSync(
-      resolve(
-        root,
-        linkedDeclaration.slice(gitdirPrefix.length).trim()
-      )
-    );
-    const worktreesDirectory = realpathSync(
-      join(commonGitDirectory, "worktrees")
-    );
-    const adminRelativePath = relative(
-      worktreesDirectory,
-      adminDirectory
-    );
-    if (
-      !adminRelativePath ||
-      adminRelativePath === ".." ||
-      adminRelativePath.startsWith(`..${sep}`) ||
-      adminRelativePath.includes(sep)
-    ) {
-      return false;
-    }
-    const commonDeclaration = readFileSync(
-      join(adminDirectory, "commondir"),
-      "utf8"
-    ).trim();
-    if (
-      !commonDeclaration ||
-      realpathSync(
-        resolve(adminDirectory, commonDeclaration)
-      ) !== commonGitDirectory
-    ) {
-      return false;
-    }
-    const worktreeGitDeclaration = readFileSync(
-      join(adminDirectory, "gitdir"),
-      "utf8"
-    ).trim();
+    const auditMetadata =
+      verifiedGitWorktreeMetadata(auditWorktree);
+    const candidateMetadata =
+      verifiedGitWorktreeMetadata(repoRoot);
     return (
-      worktreeGitDeclaration.length > 0 &&
-      realpathSync(
-        resolve(adminDirectory, worktreeGitDeclaration)
-      ) === realpathSync(linkedGitFile)
+      candidateMetadata.linked &&
+      candidateMetadata.commonGitDirectory ===
+        auditMetadata.commonGitDirectory
     );
   } catch {
     return false;
