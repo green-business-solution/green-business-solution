@@ -388,6 +388,24 @@ function isLogicalChild(packageRecord) {
   return packageDependency(packageRecord) !== null;
 }
 
+function mayAdoptVerifiedRetainedPackage(
+  manifest,
+  packageRecord
+) {
+  const cleanupJournal =
+    manifest.execution?.localCleanupJournal;
+  return (
+    manifest.execution?.localFilesDeleted === true &&
+    cleanupJournal?.status === "COMPLETE" &&
+    cleanupJournal.pendingAction === null &&
+    packageRecord.localRetentionPolicy ===
+      "DELETE_AFTER_VERIFIED_MIGRATION" &&
+    !isLogicalChild(packageRecord) &&
+    packageRecord.remote?.s3?.deletionStatus ===
+      "LOCAL_RETAINED"
+  );
+}
+
 function completedPackageMap(journal) {
   return new Map(
     (journal?.completedPackages ?? []).map((entry) => [
@@ -948,6 +966,19 @@ export async function planRestoreAllPackages({
       disposition = isCompleted
         ? "VERIFY_COMPLETED_RESTORED_PACKAGE"
         : "RECOVER_PENDING_RESTORED_PACKAGE";
+    } else if (
+      mayAdoptVerifiedRetainedPackage(
+        manifest,
+        packageRecord
+      )
+    ) {
+      localIdentity = await verifyExistingPackage({
+        repoRoot,
+        manifest,
+        packageRecord
+      });
+      disposition =
+        "VERIFY_RETAINED_PACKAGE_AND_EXACT_S3_VERSION";
     } else {
       disposition = "BLOCKED_EXISTING_TARGET";
       blocker =
@@ -1388,15 +1419,21 @@ export async function restoreAllPackagesCheckpointed({
       runner,
       readRemote
     });
-  const sourceFixtureProofs = new Map();
+  const existingPackageProofs = new Map();
   for (const packageId of start.order) {
     const packageRecord = packageById(
       manifest,
       packageId
     );
+    const step = plan.steps.find(
+      (candidate) =>
+        candidate.packageId === packageId
+    );
     if (
       packageRecord.localRetentionPolicy !==
-      SOURCE_CONTROLLED_RETENTION_POLICY
+        SOURCE_CONTROLLED_RETENTION_POLICY &&
+      step?.disposition !==
+        "VERIFY_RETAINED_PACKAGE_AND_EXACT_S3_VERSION"
     ) {
       continue;
     }
@@ -1417,8 +1454,13 @@ export async function restoreAllPackagesCheckpointed({
       typeof proof.restoredAt !== "string" ||
       !Number.isFinite(Date.parse(proof.restoredAt))
     ) {
+      const errorCode =
+        packageRecord.localRetentionPolicy ===
+        SOURCE_CONTROLLED_RETENTION_POLICY
+          ? "RESTORE_SOURCE_FIXTURE_REMOTE_BYTES_MISMATCH"
+          : "RESTORE_RETAINED_PACKAGE_REMOTE_BYTES_MISMATCH";
       throw new Error(
-        `RESTORE_SOURCE_FIXTURE_REMOTE_BYTES_MISMATCH: ${packageId}`
+        `${errorCode}: ${packageId}`
       );
     }
     const localIdentity =
@@ -1427,11 +1469,16 @@ export async function restoreAllPackagesCheckpointed({
         manifest,
         packageRecord
       });
-    assertSourceFixtureIdentity(
-      packageRecord,
-      localIdentity
-    );
-    sourceFixtureProofs.set(packageId, proof);
+    if (
+      packageRecord.localRetentionPolicy ===
+      SOURCE_CONTROLLED_RETENTION_POLICY
+    ) {
+      assertSourceFixtureIdentity(
+        packageRecord,
+        localIdentity
+      );
+    }
+    existingPackageProofs.set(packageId, proof);
   }
   const checkpointState = {
     sourceSha256:
@@ -1544,7 +1591,7 @@ export async function restoreAllPackagesCheckpointed({
         packageRecord,
         localIdentity
       );
-      proof = sourceFixtureProofs.get(packageId);
+      proof = existingPackageProofs.get(packageId);
       disposition =
         "SOURCE_CONTROLLED_FIXTURE_AND_REMOTE_BYTES_VERIFIED";
       invalidateCleanupAfterHydration({
@@ -1554,6 +1601,29 @@ export async function restoreAllPackagesCheckpointed({
           ...proof,
           hydrationMode:
             "VERIFIED_EXISTING_SOURCE_CONTROLLED_FIXTURE",
+          localPaths: [packageRecord.localPath]
+        }
+      });
+    } else if (
+      step.disposition ===
+      "VERIFY_RETAINED_PACKAGE_AND_EXACT_S3_VERSION"
+    ) {
+      localIdentity =
+        await verifyExistingPackage({
+          repoRoot,
+          manifest,
+          packageRecord
+        });
+      proof = existingPackageProofs.get(packageId);
+      disposition =
+        "RETAINED_PACKAGE_AND_REMOTE_BYTES_VERIFIED";
+      invalidateCleanupAfterHydration({
+        manifest,
+        packageRecord,
+        result: {
+          ...proof,
+          hydrationMode:
+            "VERIFIED_EXISTING_RETAINED_PACKAGE",
           localPaths: [packageRecord.localPath]
         }
       });

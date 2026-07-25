@@ -508,6 +508,90 @@ test("restore-all rejects an uncheckpointed existing cache target without overwr
   });
 });
 
+test("restore-all adopts an exact retained package only after a completed cleanup journal and exact remote proof", async () => {
+  await withTemporaryRoot(async (root) => {
+    const record = packageRecord({
+      packageId: "cache:retained-after-partial-cleanup",
+      localPath:
+        `${CACHE_RELATIVE_PATH}/retained.bin`,
+      content: "retained"
+    });
+    record.remote.s3.deletionStatus =
+      "LOCAL_RETAINED";
+    const manifest = testManifest([record]);
+    manifest.execution.localCleanupJournal = {
+      status: "COMPLETE",
+      pendingAction: null
+    };
+    resealManifest(manifest);
+    const target = join(root, record.localPath);
+    await mkdir(dirname(target), {
+      recursive: true
+    });
+    await writeFile(target, record.testContent, "utf8");
+
+    const plan = await planRestoreAllPackages({
+      repoRoot: root,
+      manifest,
+      destination
+    });
+    expect(plan.blockedCount).toBe(0);
+    expect(plan.steps[0]).toMatchObject({
+      packageId: record.packageId,
+      disposition:
+        "VERIFY_RETAINED_PACKAGE_AND_EXACT_S3_VERSION",
+      blocker: null
+    });
+
+    const { path, source } = await persistManifest(
+      root,
+      manifest
+    );
+    const hydrateOnePackage = vi.fn();
+    const proveRemoteVersion = vi.fn(
+      async ({ packageRecord }) =>
+        fakeProof(packageRecord)
+    );
+    const result =
+      await restoreAllPackagesCheckpointed({
+        repoRoot: root,
+        manifestPath: path,
+        manifest,
+        expectedManifestSourceSha256:
+          manifestSourceSha256(source),
+        destination,
+        assertCleanManifest: vi.fn(),
+        gitRunner: cleanStartGitRunner(),
+        verifyExecutionContext: vi.fn(
+          async () => fakeContext()
+        ),
+        readRemote: fakeReadRemote(manifest),
+        hydrateOnePackage,
+        proveRemoteVersion,
+        now: sequencedNow()
+      });
+    expect(hydrateOnePackage).not.toHaveBeenCalled();
+    expect(proveRemoteVersion).toHaveBeenCalledTimes(1);
+    expect(
+      manifest.execution.restoreAllJournal
+        .completedPackages.find(
+        (entry) =>
+          entry.packageId === record.packageId
+        ).disposition
+    ).toBe(
+      "RETAINED_PACKAGE_AND_REMOTE_BYTES_VERIFIED"
+    );
+    expect(record.hydration).toMatchObject({
+      status: "HYDRATED_FROM_VERIFIED_S3_VERSION",
+      hydrationMode:
+        "VERIFIED_EXISTING_RETAINED_PACKAGE"
+    });
+    expect(await readFile(target, "utf8")).toBe(
+      record.testContent
+    );
+  });
+});
+
 test("restore-all checks a clean committed manifest before any AWS preflight", async () => {
   await withTemporaryRoot(async (root) => {
     const manifest = testManifest([
