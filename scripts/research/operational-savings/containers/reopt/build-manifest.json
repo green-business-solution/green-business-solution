@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 1,
+  "buildContextProvenance": {
+    "status": "UNCOMMITTED_HISTORICAL_BUILD_CONTEXT",
+    "historicalRepositoryCommit": null,
+    "contentIdentityStatus": "POST_HOC_EXACT_FILE_HASHES",
+    "recordedImageBuildContextAttested": false,
+    "note": "These hashes identify the present build and verification files exactly. They do not prove that this uncommitted repository context produced the already-recorded image digest. A future commit will bind this content prospectively."
+  },
+  "image": {
+    "tag": "retrofit-research-reopt:reopt-0.59.2-f952cab-arm64",
+    "repositoryTag": "retrofit-research-reopt:reopt-0.59.2-f952cab-arm64",
+    "digest": "sha256:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717",
+    "localImageId": "sha256:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717",
+    "localRepoDigests": [
+      "retrofit-research-reopt@sha256:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717"
+    ],
+    "os": "linux",
+    "architecture": "arm64",
+    "targetPlatform": "linux/arm64",
+    "sizeBytes": 606087966,
+    "runtimeUser": "65532:65532"
+  },
+  "ecr": {
+    "accountId": "945129430686",
+    "region": "us-east-1",
+    "repositoryName": "retrofi-research-reopt",
+    "repositoryUri": "945129430686.dkr.ecr.us-east-1.amazonaws.com/retrofi-research-reopt",
+    "imageTag": "reopt-0.59.2-f952cab-arm64",
+    "imageDigest": "sha256:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717",
+    "imageUri": "945129430686.dkr.ecr.us-east-1.amazonaws.com/retrofi-research-reopt@sha256:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717",
+    "pushedAt": "2026-07-24T19:31:18.712Z",
+    "imageSizeBytes": 606085102,
+    "imageManifestMediaType": "application/vnd.oci.image.manifest.v1+json",
+    "verificationStatus": "VERIFIED_EXACT_DIGEST",
+    "verifiedAt": "2026-07-24T20:33:19.000Z",
+    "exactDigestPulled": true,
+    "runtimeVerificationStatus": "PASS",
+    "verificationCommand": "REOPT_IMAGE='945129430686.dkr.ecr.us-east-1.amazonaws.com/retrofi-research-reopt@sha256:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717' node scripts/research/operational-savings/containers/reopt/verify.mjs && REOPT_IMAGE='945129430686.dkr.ecr.us-east-1.amazonaws.com/retrofi-research-reopt@sha256:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717' node scripts/research/operational-savings/containers/reopt/verify-solar-storage.mjs",
+    "scan": {
+      "status": "COMPLETE",
+      "completedAt": "2026-07-24T19:31:43.000Z",
+      "critical": 10,
+      "high": 51,
+      "medium": 48,
+      "low": 8,
+      "disposition": "Research-only image. Execute as non-root with Docker networking disabled. Do not deploy for customer calculations."
+    }
+  },
+  "baseImage": {
+    "reference": "julia:1.10.4-bookworm",
+    "indexDigest": "sha256:754e3f19a84522e7b890e173d926048a6d08df59e096628a385a719684e9f52f",
+    "arm64ManifestDigest": "sha256:101e6819484e693032933cefcffe246ee12a5f4a790da69555c821e89f566820"
+  },
+  "build": {
+    "status": "COMPLETED_AND_EXACT_IMAGE_VERIFIED",
+    "builtAt": "2026-07-24T19:18:25.21642468Z",
+    "builtAtEvidence": {
+      "kind": "LOCAL_IMAGE_CONFIG_CREATED",
+      "imageId": "sha256:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717",
+      "inspectionField": ".Created"
+    },
+    "historicalInvocationCaptured": false,
+    "commandSemantics": "This is the exact reproduction command derived from the pinned Dockerfile defaults and recorded image tag. It is not represented as a retained copy of the historical shell invocation.",
+    "reproductionCommand": "docker buildx build --platform linux/arm64 --load --tag retrofit-research-reopt:reopt-0.59.2-f952cab-arm64 --build-arg HIGHS_VERSION=1.12.0 --build-arg JULIA_IMAGE=julia:1.10.4-bookworm@sha256:754e3f19a84522e7b890e173d926048a6d08df59e096628a385a719684e9f52f --build-arg REOPT_ARCHIVE_SHA256=9b0068246fc2ed73c1834302a03f6e8d3ff7003827d9b5032a6a5a5257ceeb70 --build-arg REOPT_COMMIT=f952cabdf3e60f6e88eef80bb7bc9e7e24bac643 scripts/research/operational-savings/containers/reopt",
+    "arguments": {
+      "HIGHS_VERSION": "1.12.0",
+      "JULIA_IMAGE": "julia:1.10.4-bookworm@sha256:754e3f19a84522e7b890e173d926048a6d08df59e096628a385a719684e9f52f",
+      "REOPT_ARCHIVE_SHA256": "9b0068246fc2ed73c1834302a03f6e8d3ff7003827d9b5032a6a5a5257ceeb70",
+      "REOPT_COMMIT": "f952cabdf3e60f6e88eef80bb7bc9e7e24bac643"
+    },
+    "statusEvidence": {
+      "localImageId": "sha256:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717",
+      "ecrImageDigest": "sha256:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717",
+      "runtimeVerificationStatus": "PASS"
+    }
+  },
+  "source": {
+    "repository": "https://github.com/NatLabRockies/REopt.jl",
+    "archiveUrl": "https://github.com/NatLabRockies/REopt.jl/archive/f952cabdf3e60f6e88eef80bb7bc9e7e24bac643.tar.gz",
+    "cachePath": "scripts/research/operational-savings/.cache/artifacts/reopt-f952cab-source.tar.gz",
+    "version": "0.59.2",
+    "commit": "f952cabdf3e60f6e88eef80bb7bc9e7e24bac643",
+    "archiveSha256": "9b0068246fc2ed73c1834302a03f6e8d3ff7003827d9b5032a6a5a5257ceeb70",
+    "archiveSizeBytes": 222425044,
+    "acquisitionMode": "PUBLIC_PINNED_GITHUB_COMMIT_ARCHIVE",
+    "acquisitionTimestamp": "2026-07-24T18:56:41.000Z",
+    "sourceOrganization": "National Laboratory of the Rockies",
+    "role": "EXACT_CONTAINER_SOURCE_ARCHIVE",
+    "official": true,
+    "originalLocalPath": "/private/tmp/reopt-f952cab.tar.gz",
+    "upstreamManifestSha256": "ce4d0f89bfbc6e15ae01ccccac2b02175427dc1b24dc700b645709423548ef1c",
+    "license": {
+      "spdxId": "Apache-2.0",
+      "path": "/opt/reopt/LICENSE",
+      "sha256": "0cec06e0e55fbc3dc5cee4fca9b607f66cb8f4e4dbcf3b3c013594dd156732e9"
+    },
+    "notice": {
+      "path": "/opt/reopt/NOTICE",
+      "sha256": "83913e0475d527c1b77e459759d4356bd935f9783cfe0191b392dedbdbebb3f1"
+    }
+  },
+  "runtime": {
+    "Julia": "1.10.4",
+    "REopt": "0.59.2",
+    "HiGHS": "1.12.0",
+    "HiGHS_jll": "1.8.0+0",
+    "JuMP": "1.23.6",
+    "MathOptInterface": "1.34.0",
+    "juliaPkgOffline": true,
+    "threads": 1,
+    "verificationCommand": "node scripts/research/operational-savings/containers/reopt/verify.mjs"
+  },
+  "buildInputs": [
+    {
+      "path": "Dockerfile",
+      "sha256": "ceec6cad242f2845a8bdbb89c51ff6bcc72661b6d3a1591f043aeddb5d7da3a5"
+    },
+    {
+      "path": "retrofi-storage-spec.json",
+      "sha256": "ee968d5fd50e1c5afbe401aace33b35bf78601cc67313a888b4ec981d88f8fd9"
+    },
+    {
+      "path": "runner.jl",
+      "sha256": "2cc0d5ab263e6621be11c3461c4a62932a806d3c91e9b5fa287a48eed2d0e229"
+    }
+  ],
+  "verificationInputs": [
+    {
+      "path": "../../lib/artifact.mjs",
+      "sha256": "5ad235c2becbe7fa872790a9da0e12eea775ab48fd991842033b279e5e3e76e8"
+    },
+    {
+      "path": "official-proof.json",
+      "sha256": "11fdb7626d56c84a1275e02b77b79a2126be0747e01fedef02a3b722446cbfe4"
+    },
+    {
+      "path": "pvwatts-interval-series.json",
+      "sha256": "d57fd0f03e904bebe7b6056c9e41385fd081eb313b165681c5ca2533bc9c65f0"
+    },
+    {
+      "path": "retrofi-proof.json",
+      "sha256": "28828d9f83e5527292fcb07107c375ec9e5efbb2b0d6112d95a03ec46cc2f99c"
+    },
+    {
+      "path": "retrofi-solar-storage-spec.json",
+      "sha256": "39c97cf3b30265d68ddfc910b51e6e7dadc4b5a86f9e10447ac1d018ff197a2c"
+    },
+    {
+      "path": "solar-storage-proof.json",
+      "sha256": "d47b6ad66e555d0676ebde6e975f08b78c7ab13c123849a3cebaac805f2ae801"
+    },
+    {
+      "path": "solar-storage-runner.jl",
+      "sha256": "c17055e0e1af460be64c0c1c5abac406bb51a11867ea2d31f50e66db9c7f6eef"
+    },
+    {
+      "path": "verify-solar-storage.mjs",
+      "sha256": "97a914e5322ce7c2988ea5c60beaa4f0a804ce2c30ccf487caca4a98b0e9cf11"
+    },
+    {
+      "path": "verify.mjs",
+      "sha256": "1a1c6103f1975c2318c5732639baf5a46cf6c204cbbbb85012c6d5d42aac8142"
+    }
+  ],
+  "proofRuns": [
+    {
+      "mode": "official",
+      "network": "docker-none",
+      "status": "OPTIMAL",
+      "evidencePath": "official-proof.json",
+      "evidenceSha256": "11fdb7626d56c84a1275e02b77b79a2126be0747e01fedef02a3b722446cbfe4",
+      "outputSha256": "456be75c79f0ce06eac509ba11f947ff23d99279c7abd6292d173b527d7666ce"
+    },
+    {
+      "mode": "retrofi",
+      "network": "docker-none",
+      "status": "OPTIMAL",
+      "evidencePath": "retrofi-proof.json",
+      "evidenceSha256": "28828d9f83e5527292fcb07107c375ec9e5efbb2b0d6112d95a03ec46cc2f99c",
+      "outputSha256": "500efe497ec25fba345b271ed67e7c644eb9a21df7bd4ab95fa4b70befc7b68e"
+    },
+    {
+      "mode": "solar-storage",
+      "network": "docker-none",
+      "status": "OPTIMAL",
+      "evidencePath": "solar-storage-proof.json",
+      "evidenceSha256": "d47b6ad66e555d0676ebde6e975f08b78c7ab13c123849a3cebaac805f2ae801",
+      "outputSha256": "2bab0bbd1dde3732cb5914d33ac135c2d87feeac518e0af618bfa90bad748e3b"
+    }
+  ],
+  "verification": {
+    "status": "PASS",
+    "verifiedAt": "2026-07-24T20:33:19.000Z",
+    "architecture": "linux/arm64",
+    "networkMode": "none",
+    "fixtureHashesVerified": true,
+    "licenseHashVerified": true,
+    "officialRegressionStatus": "OPTIMAL",
+    "retrofiBaselineStatus": "OPTIMAL",
+    "retrofiProposedStatus": "OPTIMAL",
+    "solarStorageStatus": "PASS",
+    "solarStorageEvidenceSha256": "d47b6ad66e555d0676ebde6e975f08b78c7ab13c123849a3cebaac805f2ae801",
+    "solarStorageSpecSha256": "39c97cf3b30265d68ddfc910b51e6e7dadc4b5a86f9e10447ac1d018ff197a2c",
+    "pvwattsIntervalSeriesFileSha256": "d57fd0f03e904bebe7b6056c9e41385fd081eb313b165681c5ca2533bc9c65f0",
+    "pvwattsIntervalSeriesValueSha256": "a842a7a51583fca8b7c559a1ed12b16aa9d396ec7c6b92dbfabfc282dbaf0f1c",
+    "solarStorageBaselineStatus": "OPTIMAL",
+    "solarStorageProposedStatus": "OPTIMAL",
+    "solarStorageBaselineAnnualBillUsd": 89827,
+    "solarStorageProposedAnnualBillUsd": 87586.78
+  }
+}

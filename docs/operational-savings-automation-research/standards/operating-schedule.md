@@ -1,73 +1,106 @@
 # STD-OPERATING-SCHEDULE - Recognizable schedule to annual operating hours
 
-## 1. RetroFi role
+## 1. Canonical role and current process proof
 
 This Standard is used by 13 categories and 15 category-local process instances.
 The categories are ITC-02, ITC-09, ITC-12, ITC-20, ITC-30, ITC-37, ITC-38, ITC-40, ITC-41, ITC-42, ITC-43, ITC-47, ITC-51.
 The process keys are daylight-lighting-hours, fixed-lighting-hours, lighting-replacement-calculation, operating_schedule.
 The formula terms supplied are annual_hours, annual_kWh, annual_on_hours, annual_operating_hours, annual_pressurized_hours, avoided_run_hours, hours_period.
-The current claimed output set contains 6 distinct output descriptions.
-The present automation limitation is: A generic building-type schedule presented as actual operation and daylight without coordinates or event definition.
+The canonical output set contains 6 distinct output descriptions.
+
+| Category and process | Execution-verified proof level | Adapter | Actual adapter test result | Current blocker | Conditional next action |
+| --- | --- | --- | --- | --- | --- |
+| ITC-02/fixed-lighting-hours | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/operating-schedule/run.mjs | operating-schedule-itc02-fixed-project-input-proof: NOT_COVERED<br>operating-schedule-project-fixture-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| ITC-02/daylight-lighting-hours | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/operating-schedule/run.mjs | operating-schedule-itc02-daylight-project-input-proof: NOT_COVERED<br>operating-schedule-itc02-daylight-provenance-proof: NOT_COVERED<br>operating-schedule-project-fixture-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| ITC-02/lighting-replacement-calculation | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/femp-lighting/run.mjs | femp-exterior-lighting-resolution-failure-proof: NOT_COVERED<br>itc02-lighting-composition-real-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| ITC-09/operating_schedule | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/operating-schedule/run.mjs | operating-schedule-itc09-project-input-proof: NOT_COVERED<br>operating-schedule-project-fixture-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| ITC-12/operating_schedule | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/operating-schedule/run.mjs | operating-schedule-itc12-project-input-proof: NOT_COVERED<br>operating-schedule-itc12-publication-proof: NOT_COVERED<br>operating-schedule-project-fixture-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| ITC-20/operating_schedule | DOCUMENTATION_ONLY | None implemented | None required or recorded for the current proof state | MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
+| ITC-30/operating_schedule | DOCUMENTATION_ONLY | None implemented | None required or recorded for the current proof state | MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
+| ITC-37/operating_schedule | DOCUMENTATION_ONLY | None implemented | None required or recorded for the current proof state | MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
+| ITC-38/operating_schedule | DOCUMENTATION_ONLY | None implemented | None required or recorded for the current proof state | MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
+| ITC-40/operating_schedule | DOCUMENTATION_ONLY | None implemented | None required or recorded for the current proof state | MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
+| ITC-41/operating_schedule | DOCUMENTATION_ONLY | None implemented | None required or recorded for the current proof state | MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
+| ITC-42/operating_schedule | DOCUMENTATION_ONLY | None implemented | None required or recorded for the current proof state | MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
+| ITC-43/operating_schedule | DOCUMENTATION_ONLY | None implemented | None required or recorded for the current proof state | MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
+| ITC-47/operating_schedule | DOCUMENTATION_ONLY | None implemented | None required or recorded for the current proof state | MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
+| ITC-51/operating_schedule | DOCUMENTATION_ONLY | None implemented | None required or recorded for the current proof state | MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
+
+## 2. Official source inventory
+
+The primary organization is RetroFi project or profile owner, with U.S. Naval Observatory astronomy validation.
+The selected official source is Caller-owned explicit calendar and site inputs; a pinned USNO one-day response validates only the astronomy-model boundary.
+The catalog acquisition target is project-owned operating-schedule input contract v1; USNO API 4.0.1 response acquired 2026-07-24.
+Its release date or release state is Project inputs are versioned per calculation; retained USNO response date 2026-06-21.
+The expected update cadence is Hash every project input per calculation and revalidate astronomy behavior when the local algorithm or USNO API changes.
+The license finding is Project inputs require project-authorized use; USNO astronomical data is U.S. government data.
+The legal-review requirement is Low.
+These catalog values describe the planned source inventory and do not replace proof-manifest artifact identity.
+
+- https://aa.usno.navy.mil/faq/RST_defs
+- https://aa.usno.navy.mil/api/rstt/oneday?date=2026-06-21&coords=37.7749,-122.4194&tz=-8&dst=true
 
 | Evidence ID | Source title | Version | Status | Exact artifact |
 | --- | --- | --- | --- | --- |
 | E-SCHEDULE-EXPLICIT | USNO Rise, Set, and Twilight Definitions | Current | UNVERIFIED | Calendar arithmetic and USNO daylight definitions |
 | E-SCHEDULE-CONTEXT-UNSUPPORTED | DOE Commercial Reference Buildings | Current | UNSUPPORTED | Reference-building schedules |
 
-## 2. Official source inventory
-
-The primary organization is U.S. Naval Observatory and U.S. Department of Energy.
-The selected official source is Explicit calendar schedules, USNO daylight definitions, and approved reference schedules.
-The pinned version is USNO definitions current 2026-07-23.
-The release date or release state is Current definitions.
-The expected update cadence is Definitions are stable; calendars change annually; reference schedules change by model release.
-The license finding is Federal definitions and model assets; retain source-specific metadata.
-The legal-review requirement is Low.
-
-- https://aa.usno.navy.mil/faq/RST_defs
-- https://www.energy.gov/cmei/buildings/commercial-reference-buildings
-
 ## 3. What can actually be acquired
 
-- Explicit profile or project schedule
-- Local calendar arithmetic
-- USNO daylight definition page
-- Approved DOE reference-building schedule files
+- Content-addressed explicit project or profile schedule
+- Local deterministic calendar and solar-event arithmetic
+- Pinned USNO one-day API response for astronomy validation only
 
 | Route | Exact endpoint or source | Authentication, registration, and key | Rate limit and pagination | Observed size, format, compression, and partition | History and URL stability | Automation assessment | Research result |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Explicit profile or project schedule | https://aa.usno.navy.mil/faq/RST_defs | No authentication, registration, or API key observed for this route | Not applicable to a static artifact, repository, local package, or manual export | Not separately sized; Route-specific source structure | USNO definitions current 2026-07-23; Definitions are stable; calendars change annually; reference schedules change by model release; Monitor URL and checksum drift | Public acquisition appears automatable, subject to artifact-specific license review | Not separately probed; retained as a documented alternative |
-| Local calendar arithmetic | https://aa.usno.navy.mil/faq/RST_defs | No authentication, registration, or API key observed for this route | Not applicable to a static artifact, repository, local package, or manual export | Not separately sized; Route-specific source structure | USNO definitions current 2026-07-23; Definitions are stable; calendars change annually; reference schedules change by model release; Monitor URL and checksum drift | Public acquisition appears automatable, subject to artifact-specific license review | Not separately probed; retained as a documented alternative |
-| USNO daylight definition page | https://aa.usno.navy.mil/faq/RST_defs | No authentication, registration, or API key observed for this route | Not applicable to a static artifact, repository, local package, or manual export | 27057 bytes observed; HTML; Route-specific source structure | USNO definitions current 2026-07-23; Definitions are stable; calendars change annually; reference schedules change by model release; Monitor URL and checksum drift | Public acquisition appears automatable, subject to artifact-specific license review | The USNO definition page downloaded and explicit schedule arithmetic was inspected in current category trees |
-| Approved DOE reference-building schedule files | https://aa.usno.navy.mil/faq/RST_defs | No authentication, registration, or API key observed for this route | Not applicable to a static artifact, repository, local package, or manual export | Not separately sized; Route-specific source structure | USNO definitions current 2026-07-23; Definitions are stable; calendars change annually; reference schedules change by model release; Monitor URL and checksum drift | Public acquisition appears automatable, subject to artifact-specific license review | Not separately probed; retained as a documented alternative |
+| Content-addressed explicit project or profile schedule | https://aa.usno.navy.mil/faq/RST_defs | No authentication, registration, or API key observed for this route | Not applicable to a static artifact, repository, local package, or manual export | Not separately sized; Route-specific source structure | project-owned operating-schedule input contract v1; USNO API 4.0.1 response acquired 2026-07-24; Hash every project input per calculation and revalidate astronomy behavior when the local algorithm or USNO API changes; Monitor URL and checksum drift | Public acquisition appears automatable, subject to artifact-specific license review | Not separately probed; retained as a documented alternative |
+| Local deterministic calendar and solar-event arithmetic | https://aa.usno.navy.mil/faq/RST_defs | No authentication, registration, or API key observed for this route | Not applicable to a static artifact, repository, local package, or manual export | Not separately sized; Route-specific source structure | project-owned operating-schedule input contract v1; USNO API 4.0.1 response acquired 2026-07-24; Hash every project input per calculation and revalidate astronomy behavior when the local algorithm or USNO API changes; Monitor URL and checksum drift | Public acquisition appears automatable, subject to artifact-specific license review | Not separately probed; retained as a documented alternative |
+| Pinned USNO one-day API response for astronomy validation only | https://aa.usno.navy.mil/faq/RST_defs | No authentication, registration, or API key observed for this route | No route-specific limit was established; do not use at estimate time | 1271 bytes observed; GeoJSON; Route-specific source structure | project-owned operating-schedule input contract v1; USNO API 4.0.1 response acquired 2026-07-24; Hash every project input per calculation and revalidate astronomy behavior when the local algorithm or USNO API changes; Monitor URL and checksum drift | Permitted only for scheduled ingestion under published terms and limits | A pinned USNO GeoJSON response was acquired and compared with the local solar-event algorithm; separate source-controlled project-input fixtures exercise weekly, difference, and daylight branches |
 
-The tested access result is: The USNO definition page downloaded and explicit schedule arithmetic was inspected in current category trees.
-The retained inspected artifact is USNO rise, set, and twilight definitions HTML, HTML, 27057 bytes, sha256:178f7024fdbce65bf3c3ee80f758ec3429e0115dff4d538cf54c59a978f58281.
+The tested access result is: A pinned USNO GeoJSON response was acquired and compared with the local solar-event algorithm; separate source-controlled project-input fixtures exercise weekly, difference, and daylight branches.
+The planning catalog observation is USNO one-day GeoJSON astronomy-validation response for San Francisco on 2026-06-21, GeoJSON, 1271 bytes, sha256:e096159b03d9fe91f287898142a567809a83d794f6c8aaad6b8809bb2378f812.
 The access-cost classification is completely free.
 
-## 4. Real source structure
+## 4. Proof-backed artifacts, releases, and schemas
 
-The observed source-native fields or model inputs are:
+The following table is generated from current proof contributions that explicitly name this Standard.
+It reports retained artifact releases, versions, locators, and integrity values instead of treating the planning catalog observation as executed proof.
 
-- `weekday intervals`
-- `weekend intervals`
-- `holiday exclusions`
-- `season`
-- `latitude and longitude`
-- `sunrise and sunset definition`
-- `annual hours`
+| Artifact ID | Evidence role | Retained release or version | Exact locator | Integrity | Current proof state | Bound processes |
+| --- | --- | --- | --- | --- | --- | --- |
+| artifact:doe-lmc-2015-tables:2017-11 | PUBLIC_XLSX_DOWNLOAD | 2015 baseline, November 2017 report tables | https://www.energy.gov/sites/default/files/2017/12/f46/LMC%202015%20Tables_0.XLSX | sha256:97c36f8d92a721dc2e3245215987d90c828314fa478050ea24c90c750c6fe5f1; 1112293 bytes | DOCUMENTATION_ONLY | ITC-02/lighting-replacement-calculation |
+| artifact:femp-exterior-lighting:2026-07-23 | PUBLIC_HTML_TABLE | page snapshot acquired 2026-07-23; guidance updated June 2023 | https://www.energy.gov/cmei/femp/purchasing-energy-efficient-exterior-lighting | sha256:cb50171c667e44e0c8fe1681fac57fcfe22d6adffe6ba1229bd9d103b8fc547a; 148626 bytes | DOCUMENTATION_ONLY | ITC-02/lighting-replacement-calculation |
+| artifact:project-operating-schedule-fixtures:v1 | CONTENT_ADDRESSED_PROJECT_INPUT_TEST_FIXTURE | source-controlled test fixture v1 | scripts/research/operational-savings/adapters/operating-schedule/project-schedule-fixtures.v1.json | sha256:6f04cc946059db68af035991cfa40a30652ced58b24ec0800173ee8f1bb268aa; 1733 bytes | DOCUMENTATION_ONLY | ITC-02/daylight-lighting-hours, ITC-02/fixed-lighting-hours, ITC-09/operating_schedule, ITC-12/operating_schedule |
+| artifact:usno-rise-set:sf-2026-06-21 | ASTRONOMY_MODEL_VALIDATION_ONLY | USNO API 4.0.1 response acquired 2026-07-24 | https://aa.usno.navy.mil/api/rstt/oneday?date=2026-06-21&coords=37.7749,-122.4194&tz=-8&dst=true | sha256:e096159b03d9fe91f287898142a567809a83d794f6c8aaad6b8809bb2378f812; 1271 bytes | DOCUMENTATION_ONLY | ITC-02/daylight-lighting-hours |
 
-These names are research requirements from the source inventory, not claims about an observed source schema.
-Exact source types, units, enumerations, nullability, keys, workbook coordinates, or model declarations must come from the source-specific proof manifest under `scripts/research/operational-savings/adapters/operating-schedule/`.
-If no proof manifest records direct inspection evidence, this Standard remains incomplete.
+The current proof manifests record these inspected schemas:
 
-Product and record sources must preserve a natural source identifier plus a release identifier as the composite natural key.
-Model sources must preserve the complete input schema, package version, configuration, warnings, and output schema.
-Dates remain source-native timestamps in raw snapshots and normalize to UTC timestamps or date-only effective intervals in query tables.
-Enumerations remain source-native in raw storage and map through versioned crosswalk rows.
+| Schema ID | Artifact ID | Format | Extractor | Required native fields | Current proof state |
+| --- | --- | --- | --- | --- | --- |
+| schema:doe-lmc-2015:table-4-29 | artifact:doe-lmc-2015-tables:2017-11 | XLSX_TABLE_4_29 | scripts/research/operational-savings/adapters/context-benchmarks/inspect-schema.mjs | Table 4-29!A5:A13 outdoor subsectors; Table 4-29!L5:L13 average wattage per lamp or luminaire | DOCUMENTATION_ONLY |
+| schema:femp-exterior-lighting:2026-07-23 | artifact:femp-exterior-lighting:2026-07-23 | HTML_TABLE | scripts/research/operational-savings/adapters/femp-lighting/inspect-schema.mjs | Category; Luminaire Efficacy Rating (LER) | DOCUMENTATION_ONLY |
+| schema:project-operating-schedule-fixtures:v1 | artifact:project-operating-schedule-fixtures:v1 | JSON | scripts/research/operational-savings/tests/operating-schedule-real.test.mjs | schemaVersion; inputOwnership; cases.*.year; cases.*.timeZone; cases.*.categoryId; cases.*.processKey; cases.*.formulaTerm; cases.*.expectedValue | DOCUMENTATION_ONLY |
+| schema:usno-rise-set:api-v4 | artifact:usno-rise-set:sf-2026-06-21 | GEOJSON | scripts/research/operational-savings/adapters/operating-schedule/run.mjs | apiversion; geometry.coordinates; properties.data.tz; properties.data.isdst; properties.data.sundata[].phen; properties.data.sundata[].time | DOCUMENTATION_ONLY |
+
+Catalog-native field names that still require proof-backed inspection are:
+
+- `projectInput.year`
+- `projectInput.timeZone`
+- `projectInput.weekly`
+- `projectInput.exceptions`
+- `projectInput.holidays`
+- `projectInput.activeWeeks`
+- `projectInput.latitude`
+- `projectInput.longitude`
+- `projectInput.switchOnOffsetMinutes`
+- `projectInput.switchOffOffsetMinutes`
+- `astronomyValidation.properties.data.sundata[].phen`
+- `astronomyValidation.properties.data.sundata[].time`
+- `astronomyValidation.properties.data.tz`
+- `astronomyValidation.properties.data.isdst`
+
 Null means unknown or not reported and must never be converted to zero.
-Withdrawn, expired, superseded, and inactive records remain historically retained but are excluded from current resolution by default.
-Duplicate manufacturer and model strings are normalized for search only, while the original source text remains immutable.
+Inactive, withdrawn, superseded, and historical records remain immutable and are excluded from current resolution unless an explicit historical query selects them.
 
 ## 5. RetroFi field coverage
 
@@ -94,103 +127,69 @@ Duplicate manufacturer and model strings are normalized for search only, while t
 | Existing airflow schedule from a nameplate, measurement, audit, or contractor specification | operating_schedule; ITC-37 | Project Document | Annual Operational Savings > Annual kitchen ventilation fan and makeup-air resource reduction > Documented Existing airflow schedule from Submeter, Controls Trend, Audit, or Contractor Specification | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROJECT_DOCUMENT | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Proposed airflow schedule from a nameplate, measurement, audit, or contractor specification | operating_schedule; ITC-37 | Linked Opportunity | Annual Operational Savings > Annual kitchen ventilation fan and makeup-air resource reduction > Proposed airflow schedule | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_LINKED_OPPORTUNITY | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Site Location for outdoor conditions | operating_schedule; ITC-37 | Profile | Annual Operational Savings > Annual kitchen ventilation fan and makeup-air resource reduction > Site Location for outdoor conditions | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Annual operating hours | fixed-lighting-hours; ITC-02 | USNO rise, set, and twilight definitions HTML | weekday intervals; weekend intervals; holiday exclusions; season; latitude and longitude; sunrise and sunset definition; annual hours | annual_hours = sum_calendar_days max(0, local_end_time - local_start_time) after holiday and seasonal rules; daylight hours use the selected USNO event definition and local coordinates | hours/year | DERIVABLE_FROM_SOURCE | A generic building-type schedule presented as actual operation and daylight without coordinates or event definition |
-| Annual daylight-based operating hours | daylight-lighting-hours; ITC-02 | USNO rise, set, and twilight definitions HTML | weekday intervals; weekend intervals; holiday exclusions; season; latitude and longitude; sunrise and sunset definition; annual hours | annual_hours = sum_calendar_days max(0, local_end_time - local_start_time) after holiday and seasonal rules; daylight hours use the selected USNO event definition and local coordinates | hours/year | DERIVABLE_FROM_SOURCE | A generic building-type schedule presented as actual operation and daylight without coordinates or event definition |
-| Annual electricity reduction | lighting-replacement-calculation; ITC-02 | USNO rise, set, and twilight definitions HTML | weekday intervals; weekend intervals; holiday exclusions; season; latitude and longitude; sunrise and sunset definition; annual hours | annual_hours = sum_calendar_days max(0, local_end_time - local_start_time) after holiday and seasonal rules; daylight hours use the selected USNO event definition and local coordinates | kWh/year | DERIVABLE_FROM_SOURCE | A generic building-type schedule presented as actual operation and daylight without coordinates or event definition |
-| Avoided annual recirculation pump run hours | operating_schedule; ITC-09 | USNO rise, set, and twilight definitions HTML | weekday intervals; weekend intervals; holiday exclusions; season; latitude and longitude; sunrise and sunset definition; annual hours | annual_hours = sum_calendar_days max(0, local_end_time - local_start_time) after holiday and seasonal rules; daylight hours use the selected USNO event definition and local coordinates | hours/year | DERIVABLE_FROM_SOURCE | A generic building-type schedule presented as actual operation and daylight without coordinates or event definition |
-| Annual operating hours | operating_schedule; ITC-12, ITC-30, ITC-38, ITC-40, ITC-41, ITC-42, ITC-51 | USNO rise, set, and twilight definitions HTML | weekday intervals; weekend intervals; holiday exclusions; season; latitude and longitude; sunrise and sunset definition; annual hours | annual_hours = sum_calendar_days max(0, local_end_time - local_start_time) after holiday and seasonal rules; daylight hours use the selected USNO event definition and local coordinates | hours/year | DERIVABLE_FROM_SOURCE | A generic building-type schedule presented as actual operation and daylight without coordinates or event definition |
-| Annual operating hours | operating_schedule; ITC-20 | USNO rise, set, and twilight definitions HTML | weekday intervals; weekend intervals; holiday exclusions; season; latitude and longitude; sunrise and sunset definition; annual hours | annual_hours = sum_calendar_days max(0, local_end_time - local_start_time) after holiday and seasonal rules; daylight hours use the selected USNO event definition and local coordinates | hours/year | DERIVABLE_FROM_SOURCE | A generic building-type schedule presented as actual operation and daylight without coordinates or event definition |
-| Operating hours by modeled period | operating_schedule; ITC-37 | USNO rise, set, and twilight definitions HTML | weekday intervals; weekend intervals; holiday exclusions; season; latitude and longitude; sunrise and sunset definition; annual hours | annual_hours = sum_calendar_days max(0, local_end_time - local_start_time) after holiday and seasonal rules; daylight hours use the selected USNO event definition and local coordinates | hours/period | DERIVABLE_FROM_SOURCE | A generic building-type schedule presented as actual operation and daylight without coordinates or event definition |
-| Annual pressurized hours | operating_schedule; ITC-43, ITC-47 | USNO rise, set, and twilight definitions HTML | weekday intervals; weekend intervals; holiday exclusions; season; latitude and longitude; sunrise and sunset definition; annual hours | annual_hours = sum_calendar_days max(0, local_end_time - local_start_time) after holiday and seasonal rules; daylight hours use the selected USNO event definition and local coordinates | hours/year | DERIVABLE_FROM_SOURCE | A generic building-type schedule presented as actual operation and daylight without coordinates or event definition |
+| Annual operating hours | fixed-lighting-hours; ITC-02 | artifact:project-operating-schedule-fixtures:v1 | projectInput.year; projectInput.timeZone; projectInput.weekly; projectInput.exceptions; projectInput.holidays; projectInput.activeWeeks; projectInput.latitude; projectInput.longitude; projectInput.switchOnOffsetMinutes; projectInput.switchOffOffsetMinutes; astronomyValidation.properties.data.sundata[].phen; astronomyValidation.properties.data.sundata[].time; astronomyValidation.properties.data.tz; astronomyValidation.properties.data.isdst | Weekly annual hours are the sum of actual elapsed durations across enumerated local-date intervals after explicit exceptions, holidays, and active-week rules; schedule savings are existing hours minus proposed hours; daylight hours come from a local solar-event model using project site inputs, while USNO validates the astronomy boundary only | hours/year | DERIVABLE_FROM_SOURCE | A generic building-type schedule presented as actual operation, USNO presented as the source of project annual hours, or polar daylight cases without a supported event model |
+| Annual daylight-based operating hours | daylight-lighting-hours; ITC-02 | artifact:project-operating-schedule-fixtures:v1; artifact:usno-rise-set:sf-2026-06-21 | projectInput.year; projectInput.timeZone; projectInput.weekly; projectInput.exceptions; projectInput.holidays; projectInput.activeWeeks; projectInput.latitude; projectInput.longitude; projectInput.switchOnOffsetMinutes; projectInput.switchOffOffsetMinutes; astronomyValidation.properties.data.sundata[].phen; astronomyValidation.properties.data.sundata[].time; astronomyValidation.properties.data.tz; astronomyValidation.properties.data.isdst | Weekly annual hours are the sum of actual elapsed durations across enumerated local-date intervals after explicit exceptions, holidays, and active-week rules; schedule savings are existing hours minus proposed hours; daylight hours come from a local solar-event model using project site inputs, while USNO validates the astronomy boundary only | hours/year | DERIVABLE_FROM_SOURCE | A generic building-type schedule presented as actual operation, USNO presented as the source of project annual hours, or polar daylight cases without a supported event model |
+| Annual electricity reduction | lighting-replacement-calculation; ITC-02 | artifact:doe-lmc-2015-tables:2017-11; artifact:femp-exterior-lighting:2026-07-23 | projectInput.year; projectInput.timeZone; projectInput.weekly; projectInput.exceptions; projectInput.holidays; projectInput.activeWeeks; projectInput.latitude; projectInput.longitude; projectInput.switchOnOffsetMinutes; projectInput.switchOffOffsetMinutes; astronomyValidation.properties.data.sundata[].phen; astronomyValidation.properties.data.sundata[].time; astronomyValidation.properties.data.tz; astronomyValidation.properties.data.isdst | Weekly annual hours are the sum of actual elapsed durations across enumerated local-date intervals after explicit exceptions, holidays, and active-week rules; schedule savings are existing hours minus proposed hours; daylight hours come from a local solar-event model using project site inputs, while USNO validates the astronomy boundary only | kWh/year | DERIVABLE_FROM_SOURCE | A generic building-type schedule presented as actual operation, USNO presented as the source of project annual hours, or polar daylight cases without a supported event model |
+| Avoided annual recirculation pump run hours | operating_schedule; ITC-09 | artifact:project-operating-schedule-fixtures:v1 | projectInput.year; projectInput.timeZone; projectInput.weekly; projectInput.exceptions; projectInput.holidays; projectInput.activeWeeks; projectInput.latitude; projectInput.longitude; projectInput.switchOnOffsetMinutes; projectInput.switchOffOffsetMinutes; astronomyValidation.properties.data.sundata[].phen; astronomyValidation.properties.data.sundata[].time; astronomyValidation.properties.data.tz; astronomyValidation.properties.data.isdst | Weekly annual hours are the sum of actual elapsed durations across enumerated local-date intervals after explicit exceptions, holidays, and active-week rules; schedule savings are existing hours minus proposed hours; daylight hours come from a local solar-event model using project site inputs, while USNO validates the astronomy boundary only | hours/year | DERIVABLE_FROM_SOURCE | A generic building-type schedule presented as actual operation, USNO presented as the source of project annual hours, or polar daylight cases without a supported event model |
+| Annual operating hours | operating_schedule; ITC-12, ITC-30, ITC-38, ITC-40, ITC-41, ITC-42, ITC-51 | artifact:project-operating-schedule-fixtures:v1 | projectInput.year; projectInput.timeZone; projectInput.weekly; projectInput.exceptions; projectInput.holidays; projectInput.activeWeeks; projectInput.latitude; projectInput.longitude; projectInput.switchOnOffsetMinutes; projectInput.switchOffOffsetMinutes; astronomyValidation.properties.data.sundata[].phen; astronomyValidation.properties.data.sundata[].time; astronomyValidation.properties.data.tz; astronomyValidation.properties.data.isdst | Weekly annual hours are the sum of actual elapsed durations across enumerated local-date intervals after explicit exceptions, holidays, and active-week rules; schedule savings are existing hours minus proposed hours; daylight hours come from a local solar-event model using project site inputs, while USNO validates the astronomy boundary only | hours/year | DERIVABLE_FROM_SOURCE | A generic building-type schedule presented as actual operation, USNO presented as the source of project annual hours, or polar daylight cases without a supported event model |
+| Annual operating hours | operating_schedule; ITC-20 | No retained proof artifact | projectInput.year; projectInput.timeZone; projectInput.weekly; projectInput.exceptions; projectInput.holidays; projectInput.activeWeeks; projectInput.latitude; projectInput.longitude; projectInput.switchOnOffsetMinutes; projectInput.switchOffOffsetMinutes; astronomyValidation.properties.data.sundata[].phen; astronomyValidation.properties.data.sundata[].time; astronomyValidation.properties.data.tz; astronomyValidation.properties.data.isdst | Weekly annual hours are the sum of actual elapsed durations across enumerated local-date intervals after explicit exceptions, holidays, and active-week rules; schedule savings are existing hours minus proposed hours; daylight hours come from a local solar-event model using project site inputs, while USNO validates the astronomy boundary only | hours/year | DERIVABLE_FROM_SOURCE | A generic building-type schedule presented as actual operation, USNO presented as the source of project annual hours, or polar daylight cases without a supported event model |
+| Operating hours by modeled period | operating_schedule; ITC-37 | No retained proof artifact | projectInput.year; projectInput.timeZone; projectInput.weekly; projectInput.exceptions; projectInput.holidays; projectInput.activeWeeks; projectInput.latitude; projectInput.longitude; projectInput.switchOnOffsetMinutes; projectInput.switchOffOffsetMinutes; astronomyValidation.properties.data.sundata[].phen; astronomyValidation.properties.data.sundata[].time; astronomyValidation.properties.data.tz; astronomyValidation.properties.data.isdst | Weekly annual hours are the sum of actual elapsed durations across enumerated local-date intervals after explicit exceptions, holidays, and active-week rules; schedule savings are existing hours minus proposed hours; daylight hours come from a local solar-event model using project site inputs, while USNO validates the astronomy boundary only | hours/period | DERIVABLE_FROM_SOURCE | A generic building-type schedule presented as actual operation, USNO presented as the source of project annual hours, or polar daylight cases without a supported event model |
+| Annual pressurized hours | operating_schedule; ITC-43, ITC-47 | No retained proof artifact | projectInput.year; projectInput.timeZone; projectInput.weekly; projectInput.exceptions; projectInput.holidays; projectInput.activeWeeks; projectInput.latitude; projectInput.longitude; projectInput.switchOnOffsetMinutes; projectInput.switchOffOffsetMinutes; astronomyValidation.properties.data.sundata[].phen; astronomyValidation.properties.data.sundata[].time; astronomyValidation.properties.data.tz; astronomyValidation.properties.data.isdst | Weekly annual hours are the sum of actual elapsed durations across enumerated local-date intervals after explicit exceptions, holidays, and active-week rules; schedule savings are existing hours minus proposed hours; daylight hours come from a local solar-event model using project site inputs, while USNO validates the astronomy boundary only | hours/year | DERIVABLE_FROM_SOURCE | A generic building-type schedule presented as actual operation, USNO presented as the source of project annual hours, or polar daylight cases without a supported event model |
 
-For every `DERIVABLE_FROM_SOURCE` row, the governing derivation is: annual_hours = sum_calendar_days max(0, local_end_time - local_start_time) after holiday and seasonal rules; daylight hours use the selected USNO event definition and local coordinates.
+For every `DERIVABLE_FROM_SOURCE` row, the governing derivation is: Weekly annual hours are the sum of actual elapsed durations across enumerated local-date intervals after explicit exceptions, holidays, and active-week rules; schedule savings are existing hours minus proposed hours; daylight hours come from a local solar-event model using project site inputs, while USNO validates the astronomy boundary only.
 No field owned by Profile, Bill, Linked Opportunity, Project Document, or User is silently replaced with a source default.
 
-## 6. Acquisition workflow
+## 6. Acquisition and internal publication
 
 ```text
-Explicit calendar schedules, USNO daylight definitions, and approved reference schedules
--> Explicit profile or project schedule
--> immutable raw snapshot
--> SHA-256 checksum and media-type validation
--> schema and enumeration validation
--> source-specific normalization and deduplication
--> calculation_assumptions + benchmark_values + model_input_schemas
+Caller-owned explicit calendar and site inputs; a pinned USNO one-day response validates only the astronomy-model boundary
+-> Content-addressed explicit project or profile schedule
+-> immutable checksummed raw artifact
+-> source-specific schema and enumeration validation
+-> typed normalization into operating_schedule_references + calculation_runs + selected_values + selected_value_provenance + calculation_source_dependencies
 -> deterministic operating-schedule adapter
--> typed formula input
--> calculation result with provenance
+-> typed Standard output
+-> category formula mapping
+-> immutable calculation and provenance
 ```
 
-Acquisition runs under a scheduler or operator action and never during a customer estimate.
-A failed checksum, schema drift, or incomplete artifact leaves the prior published release active.
+Acquisition runs under a scheduler or approved operator action and never during a customer estimate.
+A failed checksum, schema validation, normalization, or publication step leaves the prior accepted release and publication receipt active.
+Implementation evidence must come from executed migrations, populated table counts, exact artifact identities, and the committed compact proof publication.
 
-## 7. Internal database schema
+## 7. Resolution rules
 
-The intended normalized targets are calculation_assumptions, benchmark_values, model_input_schemas.
-Implementation evidence must come from executed migrations and populated table counts in the committed compact proof export.
-No generic per-Standard JSON payload table is claimed as an implemented source schema.
-Each source-specific adapter must publish typed columns derived from its inspected native structure or remain incomplete.
-
-## 8. Exact resolution
-
-Identifiers are Unicode-normalized, trimmed, case-folded for search, and compared with punctuation-insensitive aliases only after exact original matching fails.
-Manufacturer aliases and model aliases are versioned rows, never destructive edits.
-Equipment class, capacity, geography, effective date, active status, source version, and test procedure are mandatory filters whenever the source exposes them.
-An exact path must return one compatible active record.
-Zero records returns a typed unavailable result.
+Exact resolution requires one compatible active record after applying every source-supported identity, equipment class, capacity, geography, effective-date, and test-procedure filter.
+Zero compatible records returns a typed unavailable result.
 Multiple compatible records return an ambiguity error unless the source defines a deterministic edition or submodel key.
-The original identifier, matched alias, filters, and rejected candidates remain in provenance.
-
-## 9. Requirements-based resolution
-
-Mandatory filters are the category's explicit equipment class, performance requirement, capacity boundary, geography, date, active status, test-procedure version, and source release.
-The eligible population contains only records satisfying every mandatory filter.
-Inactive, withdrawn, superseded, incompatible-unit, missing-required-field, and cross-test-procedure records are excluded.
-The source release is never mixed with another release inside one population.
-A single eligible record may be selected directly.
-Multiple eligible records use an official recommended value only when the source defines one, then a weighted median only when a defensible source weight exists, then an ordinary median only for a true scalar benchmark population.
+Requirements resolution admits only records satisfying every mandatory project and category constraint from one source release.
+Benchmark resolution requires an authoritative, category-specific, unit-compatible population and a retained numeric selection rule.
+An official recommended value takes precedence, followed by a defensible source-weighted median, then an ordinary median only for an exchangeable scalar population.
 Structured records and model result sets are never median-selected.
+Every selection retains its filters, eligible population, sample size, method, fallback level, uncertainty, and rejected candidates.
 
-## 10. Benchmark resolution
-
-The benchmark population must be authoritative, category-specific, unit-compatible, and filtered to the same context dimensions used by the formula.
-The minimum sample size is five unless an official source explicitly publishes one typical value or a category-specific report approves a different threshold.
-The weighting field must come from the source and is never inferred from record order.
-The weighted median is the first value whose cumulative positive weight reaches at least half of total eligible weight after sorting by value.
-The ordinary median is permitted only when no defensible weight exists and the population is an exchangeable scalar population.
-The selected value retains filters, population size, sample size, method, fallback level, and uncertainty.
-The unsupported boundary is A generic building-type schedule presented as actual operation and daylight without coordinates or event definition.
-
-## 11. Calculation or local-model execution
+## 8. Calculation and runtime execution
 
 The exact output contract contains: Annual operating hours; Annual daylight-based operating hours; Annual electricity reduction; Avoided annual recirculation pump run hours; Operating hours by modeled period; Annual pressurized hours.
-The governing source equation or transformation is annual_hours = sum_calendar_days max(0, local_end_time - local_start_time) after holiday and seasonal rules; daylight hours use the selected USNO event definition and local coordinates.
-The local execution mode is Local deterministic calendar engine with optional approved reference-schedule artifacts.
-Inputs are rejected for missing required fields, incompatible units, ambiguous identifiers, invalid effective dates, out-of-range physical values, or a mismatched model version.
-Outputs retain their native unit and a normalized unit from the repository unit registry.
-Warnings are first-class result fields and cannot be dropped by the category adapter.
-Reproducibility requires the raw-artifact checksum, source release, adapter version, input hash, model or formula version, and output hash.
-
-## 12. Refresh and versioning
-
-Refresh follows Definitions are stable; calendars change annually; reference schedules change by model release.
-Release detection compares official release metadata and artifact checksums.
-A changed checksum under an unchanged source version is quarantined for review.
-Schema drift compares columns, types, required fields, enumeration values, workbook sheets, or model input declarations against the prior accepted fingerprint.
-Raw snapshots, normalized releases, crosswalks, and selection outputs are immutable.
-Publication uses an atomic pointer to the accepted release.
-Rollback changes only that pointer and records an operator reason.
-Deprecated releases remain available for historical calculation replay.
-Stale data is labeled and blocked when an effective-date or certification-status guarantee can no longer be made.
-
-## 13. Runtime design
-
-The selected runtime design is Local deterministic calendar engine with optional approved reference-schedule artifacts.
+The governing source equation or transformation is Weekly annual hours are the sum of actual elapsed durations across enumerated local-date intervals after explicit exceptions, holidays, and active-week rules; schedule savings are existing hours minus proposed hours; daylight hours come from a local solar-event model using project site inputs, while USNO validates the astronomy boundary only.
+The selected runtime design is Run the deterministic calendar or solar model offline, persist a SHA-256 hash of the exact project input on the calculation run, leave primary source artifact and release null for project-owned values, and attach USNO only as an astronomy_model_validation dependency for daylight calculations.
 The required number of external calls during a customer estimate is zero.
-The adapter reads a published internal release or executes a pinned local model only.
-If the source is offline, existing published releases and reproducible historical calculations continue to work.
+Inputs are rejected for missing required fields, incompatible units, ambiguous identifiers, invalid dates, impossible physical values, or a mismatched model version.
+Warnings are first-class result fields and cannot be dropped by the category adapter.
+Reproducibility requires the source-artifact or content-addressed project-input identity, source release when applicable, adapter version, input hash, model or formula version, and output hash.
 
-## 14. Cost
+## 9. Refresh, immutable identity, and publication receipt
+
+Refresh follows Hash every project input per calculation and revalidate astronomy behavior when the local algorithm or USNO API changes.
+Source IDs, release IDs, artifact IDs, project-input hashes, calculation IDs, and model-version IDs are content-bound identities.
+An upsert may confirm an identical record but may not silently rewrite content behind one of those identities.
+A source-backed dependency pins a source artifact and release, while a project-owned dependency may leave those fields null only when its exact input run and input SHA-256 carry the provenance.
+Database publication builds the SQLite database, compact export, and receipt in temporary paths.
+The publisher verifies byte sizes, SHA-256 values, and one generation ID before replacing the database and compact export, then renames the receipt last as the commit marker.
+Consumers verify `docs/operational-savings-automation-research/fixtures/research-database.compact.json` against `docs/operational-savings-automation-research/fixtures/research-database.publication.json`.
+A failed publication preserves the prior committed generation.
+
+## 10. Cost
 
 One-time engineering effort is 60-100 hours.
 Estimated raw storage is 0.2 GB.
@@ -201,7 +200,7 @@ External source cost is $0 per month.
 Estimated internal storage and compute cost is $0.04 at 100 calculations per month, $0.08 at 1,000, and $0.30 at 10,000.
 These figures exclude ordinary shared database and observability overhead and are planning estimates, not vendor quotes.
 
-## 15. Synthetic regression boundary
+## 11. Synthetic regression boundary
 
 The offline command is:
 
@@ -211,25 +210,22 @@ node scripts/research/operational-savings/run-synthetic-prototypes.mjs --json
 
 The retained compact sample is `docs/operational-savings-automation-research/samples/operating-schedule.sample.json`.
 Its local output kind is `model_result_set`, its selection rule is `PINNED_LOCAL_FORMULA:weeklyScheduleHours`, and its output unit is `hours/year`.
-This synthetic regression executes without network access, but it does not prove acquisition, schema inspection, source-specific parsing, a real model run, database publication, or formula-term reachability.
-Only the separate real-proof registry and source-backed tests may satisfy those gates.
+This synthetic regression does not prove acquisition, source-specific parsing, a real model run, database publication, or category formula-term reachability.
 
-## 16. Feasibility verdict
+## 12. Feasibility and supported boundary
 
-**FEASIBLE_AFTER_ADAPTER_WORK**
+**NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES**
 
-The supported boundary is Explicit schedules and a narrow approved context schedule with documented calendar and timezone.
-The unsupported boundary is A generic building-type schedule presented as actual operation and daylight without coordinates or event definition.
+This verdict is derived from 15 bound processes.
+No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary.
+The proof ledger records 0 end-to-end real processes, 0 source-verified processes, and 0 processes with genuine manual-export downstream proof.
+The supported boundary is Explicit project or profile schedules with a calendar year and IANA time zone, plus non-polar daylight controls with explicit site coordinates and offsets.
+The unsupported boundary is A generic building-type schedule presented as actual operation, USNO presented as the source of project annual hours, or polar daylight cases without a supported event model.
 
-## 17. Final recommended strategy
+## 13. Recommended strategy and later card review
 
-Prefer explicit profile or project schedules, calculate annual hours locally with a pinned calendar and timezone library, and use reference schedules only as labeled screening assumptions.
-This is the single recommended production path for this Standard.
-The rejected alternative is: A single fixed 8,760-hour fraction is rejected because holidays, seasons, weekends, and daylight materially change category outputs.
-
-## 18. Potential later Information Card changes
-
+Require explicit project or profile inputs, hash the exact normalized input for each calculation, compute hours locally, and keep external astronomy validation separate from value provenance.
+The rejected alternative is: A single fixed 8,760-hour fraction and USNO-attributed project schedule are rejected because neither represents the caller's actual calendar, exceptions, or controls.
 No Information Card change is made on this research branch.
-Later review may update the visible source version, fallback wording, input ownership, category scope, or status to match the supported boundary documented above.
-Any formula change must be separately researched, reviewed, and approved.
-Any fallback must name its authoritative population and exact numeric selection rule.
+Later review may update visible source versions, fallback wording, ownership, category scope, or status only after the generated proof view supports the change.
+Any formula change requires separate research, review, and approval.

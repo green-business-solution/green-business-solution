@@ -1,0 +1,467 @@
+{
+  "schemaVersion": "operational-savings/real-proof-manifest-v1",
+  "standardId": "STD-REOPT-LOCAL-DISPATCH",
+  "slug": "reopt",
+  "adapterPath": "scripts/research/operational-savings/adapters/reopt/run.mjs",
+  "artifacts": [
+    {
+      "artifactId": "artifact:reopt-jl-project-toml:0.59.2",
+      "sourceUrl": "https://github.com/NatLabRockies/REopt.jl/blob/f952cabdf3e60f6e88eef80bb7bc9e7e24bac643/Project.toml",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/reopt/Project.toml",
+      "release": "0.59.2",
+      "commitSha": "f952cabdf3e60f6e88eef80bb7bc9e7e24bac643",
+      "sha256": "f67d05bba64f2d17f3bdb8944e1b17b3713e1de8b87ba8e52a5c742c3737a0c6",
+      "acquisitionMode": "PUBLIC_GIT_REPOSITORY",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:pvwatts:ssc-303",
+      "sourceUrl": "https://github.com/NatLabRockies/REopt.jl.git",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/reopt/src/sam/libssc.dylib",
+      "version": "SSC 303",
+      "commitSha": "f952cabdf3e60f6e88eef80bb7bc9e7e24bac643",
+      "sha256": "db933646389fa94f41af34066d65034681d5836f1bd29644f9b2a934a01b788f",
+      "sizeBytes": 37852576,
+      "official": true
+    },
+    {
+      "artifactId": "artifact:pvwatts:official-fixture",
+      "sourceUrl": "https://github.com/NatLabRockies/ssc.git",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/ssc/test/input_cases/pvwatts_cases.h",
+      "version": "official repository fixture",
+      "commitSha": "ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+      "sha256": "b806b704a8542aa22ab2ad9c06ece19dcd766eee75777b426039b73f23dfaa61",
+      "sizeBytes": 3419,
+      "official": true
+    },
+    {
+      "artifactId": "artifact:pvwatts:phoenix-tmy2",
+      "sourceUrl": "https://github.com/NatLabRockies/ssc.git",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/ssc/test/input_cases/pvsamv1_data/USA AZ Phoenix (TMY2).csv",
+      "version": "official repository weather fixture",
+      "commitSha": "ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+      "sha256": "311b8871e989b40d0016f7019dcabc06ebf38e16509c51842fce4bf1e6f8c591",
+      "sizeBytes": 501341,
+      "official": true
+    },
+    {
+      "artifactId": "artifact:retrofi:reopt-solar-storage-spec:39c97cf3b30265d68ddfc910b51e6e7dadc4b5a86f9e10447ac1d018ff197a2c",
+      "sourceUrl": "repo://scripts/research/operational-savings/containers/reopt/retrofi-solar-storage-spec.json",
+      "cachePath": "scripts/research/operational-savings/containers/reopt/retrofi-solar-storage-spec.json",
+      "release": "reopt-solar-storage-proof-v1",
+      "sha256": "39c97cf3b30265d68ddfc910b51e6e7dadc4b5a86f9e10447ac1d018ff197a2c",
+      "sizeBytes": 1698,
+      "acquisitionMode": "TRACKED_RETROFI_RESEARCH_FIXTURE",
+      "official": false
+    },
+    {
+      "artifactId": "artifact:retrofi:pvwatts-interval-series:d57fd0f03e904bebe7b6056c9e41385fd081eb313b165681c5ca2533bc9c65f0",
+      "sourceUrl": "repo://scripts/research/operational-savings/containers/reopt/pvwatts-interval-series.json",
+      "cachePath": "scripts/research/operational-savings/containers/reopt/pvwatts-interval-series.json",
+      "release": "reopt-solar-storage-proof-v1",
+      "sha256": "d57fd0f03e904bebe7b6056c9e41385fd081eb313b165681c5ca2533bc9c65f0",
+      "sizeBytes": 96046,
+      "acquisitionMode": "DERIVED_FROM_PINNED_PVWATTS_CALCULATION",
+      "official": false
+    },
+    {
+      "artifactId": "artifact:retrofi:reopt-solar-storage-proof:d47b6ad66e555d0676ebde6e975f08b78c7ab13c123849a3cebaac805f2ae801",
+      "sourceUrl": "repo://scripts/research/operational-savings/containers/reopt/solar-storage-proof.json",
+      "cachePath": "scripts/research/operational-savings/containers/reopt/solar-storage-proof.json",
+      "release": "reopt-solar-storage-proof-v1",
+      "sha256": "d47b6ad66e555d0676ebde6e975f08b78c7ab13c123849a3cebaac805f2ae801",
+      "sizeBytes": 3273,
+      "acquisitionMode": "GENERATED_REOPT_MODEL_EVIDENCE",
+      "official": false
+    },
+    {
+      "artifactId": "artifact:retrofi:reopt-build-manifest:919505d5684c853bf332cf6a73fefce9ddd88d8f518810aed729c565b21b3c8f",
+      "sourceUrl": "repo://scripts/research/operational-savings/containers/reopt/build-manifest.json",
+      "cachePath": "scripts/research/operational-savings/containers/reopt/build-manifest.json",
+      "release": "reopt-solar-storage-proof-v1",
+      "sha256": "919505d5684c853bf332cf6a73fefce9ddd88d8f518810aed729c565b21b3c8f",
+      "sizeBytes": 9921,
+      "acquisitionMode": "GENERATED_CONTAINER_BUILD_EVIDENCE",
+      "official": false
+    },
+    {
+      "artifactId": "artifact:retrofi:reopt-container:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717",
+      "sourceUrl": "945129430686.dkr.ecr.us-east-1.amazonaws.com/retrofi-research-reopt@sha256:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717",
+      "release": "reopt-0.59.2-f952cab-arm64",
+      "sha256": "3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717",
+      "sizeBytes": 606085102,
+      "acquisitionMode": "RESEARCH_ECR_EXACT_DIGEST",
+      "official": false
+    }
+  ],
+  "observedSchemas": [
+    {
+      "schemaId": "schema:reopt-jl:f952cabdf3e60f6e88eef80bb7bc9e7e24bac643",
+      "artifactId": "artifact:reopt-jl-project-toml:0.59.2",
+      "format": "JULIA_SOURCE_AND_JSON_SCENARIO",
+      "extractor": "scripts/research/operational-savings/adapters/reopt/inspect-schema.mjs",
+      "requiredNativeFields": [
+        "ElectricStorageDefaults.min_kw",
+        "ElectricStorageDefaults.max_kw",
+        "ElectricStorageDefaults.min_kwh",
+        "ElectricStorageDefaults.max_kwh",
+        "ElectricStorageDefaults.charge_efficiency",
+        "ElectricStorageDefaults.discharge_efficiency",
+        "ElectricStorageDefaults.soc_init_fraction",
+        "ElectricStorageDefaults.soc_min_fraction",
+        "ElectricStorageDefaults.fixed_soc_series_fraction",
+        "PV.min_kw",
+        "PV.max_kw",
+        "PV.production_factor_series",
+        "PV.can_net_meter",
+        "PV.can_wholesale",
+        "PV.can_export_beyond_nem_limit",
+        "ElectricTariff.year_one_bill_before_tax",
+        "PV.year_one_energy_produced_kwh",
+        "PV.electric_to_load_series_kw",
+        "PV.electric_to_storage_series_kw",
+        "ElectricStorage.soc_series_fraction",
+        "ElectricStorage.storage_to_load_series_kw"
+      ],
+      "fields": [
+        {
+          "name": "ElectricStorageDefaults.min_kw and max_kw",
+          "unit": "kW"
+        },
+        {
+          "name": "ElectricStorageDefaults.min_kwh and max_kwh",
+          "unit": "kWh"
+        },
+        {
+          "name": "ElectricStorageDefaults SOC and efficiency fields",
+          "unit": "fraction",
+          "enumeration": [
+            "0 through 1"
+          ]
+        },
+        {
+          "name": "ElectricTariff.year_one_bill_before_tax",
+          "unit": "USD/year"
+        },
+        {
+          "name": "PV.production_factor_series",
+          "unit": "kW-AC/kW-DC nameplate"
+        },
+        {
+          "name": "PV electric dispatch series",
+          "unit": "kW/time step"
+        },
+        {
+          "name": "ElectricStorage.storage_to_load_series_kw",
+          "unit": "kW/time step"
+        }
+      ]
+    }
+  ],
+  "normalizedTargets": [
+    "source_registry",
+    "source_releases",
+    "source_artifacts",
+    "source_checksums",
+    "model_versions",
+    "model_input_schemas",
+    "calculation_runs",
+    "calculation_source_dependencies",
+    "reopt_scenario_runs",
+    "selected_values",
+    "selected_value_provenance"
+  ],
+  "tests": [
+    {
+      "testId": "reopt-real-source-schema-proof",
+      "path": "scripts/research/operational-savings/tests/reopt-source-real.test.mjs",
+      "name": "publishes exact offline official, baseline, and proposed runs",
+      "kinds": [
+        "END_TO_END_REAL",
+        "LOCAL_MODEL_EXECUTION",
+        "REAL_SCHEMA",
+        "REAL_PARSER",
+        "NORMALIZATION",
+        "DATABASE_PUBLICATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:reopt-jl-project-toml:0.59.2",
+        "artifact:pvwatts:ssc-303",
+        "artifact:pvwatts:official-fixture",
+        "artifact:pvwatts:phoenix-tmy2",
+        "artifact:retrofi:reopt-solar-storage-spec:39c97cf3b30265d68ddfc910b51e6e7dadc4b5a86f9e10447ac1d018ff197a2c",
+        "artifact:retrofi:pvwatts-interval-series:d57fd0f03e904bebe7b6056c9e41385fd081eb313b165681c5ca2533bc9c65f0",
+        "artifact:retrofi:reopt-solar-storage-proof:d47b6ad66e555d0676ebde6e975f08b78c7ab13c123849a3cebaac805f2ae801",
+        "artifact:retrofi:reopt-build-manifest:919505d5684c853bf332cf6a73fefce9ddd88d8f518810aed729c565b21b3c8f",
+        "artifact:retrofi:reopt-container:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717"
+      ],
+      "sourceNativeFields": [
+        "ElectricStorageDefaults",
+        "ElectricTariff result keys",
+        "ElectricStorage result keys",
+        "test/scenarios/no_techs.json",
+        "ElectricLoad.loads_kw",
+        "ElectricTariff.tou_energy_rates_per_kwh",
+        "ElectricTariff.monthly_demand_rates",
+        "PV.production_factor_series",
+        "PV.year_one_energy_produced_kwh",
+        "PV.electric_to_load_series_kw",
+        "PV.electric_to_storage_series_kw"
+      ]
+    },
+    {
+      "testId": "reopt-solar-storage-publication-proof",
+      "path": "scripts/research/operational-savings/tests/reopt-source-real.test.mjs",
+      "name": "publishes the exact solar-plus-storage bill pair and provenance",
+      "kinds": [
+        "END_TO_END_REAL",
+        "LOCAL_MODEL_EXECUTION",
+        "NORMALIZATION",
+        "DATABASE_PUBLICATION",
+        "FORMULA_INPUT_MAPPING"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:reopt-jl-project-toml:0.59.2",
+        "artifact:pvwatts:ssc-303",
+        "artifact:pvwatts:official-fixture",
+        "artifact:pvwatts:phoenix-tmy2",
+        "artifact:retrofi:reopt-solar-storage-spec:39c97cf3b30265d68ddfc910b51e6e7dadc4b5a86f9e10447ac1d018ff197a2c",
+        "artifact:retrofi:pvwatts-interval-series:d57fd0f03e904bebe7b6056c9e41385fd081eb313b165681c5ca2533bc9c65f0",
+        "artifact:retrofi:reopt-solar-storage-proof:d47b6ad66e555d0676ebde6e975f08b78c7ab13c123849a3cebaac805f2ae801",
+        "artifact:retrofi:reopt-build-manifest:919505d5684c853bf332cf6a73fefce9ddd88d8f518810aed729c565b21b3c8f",
+        "artifact:retrofi:reopt-container:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717"
+      ],
+      "sourceNativeFields": [
+        "ElectricLoad.loads_kw",
+        "ElectricTariff.tou_energy_rates_per_kwh",
+        "ElectricTariff.monthly_demand_rates",
+        "PV.production_factor_series",
+        "PV.year_one_energy_produced_kwh",
+        "PV.electric_to_load_series_kw",
+        "PV.electric_to_storage_series_kw"
+      ]
+    },
+    {
+      "testId": "reopt-source-schema-failure-proof",
+      "path": "scripts/research/operational-savings/tests/reopt-source-real.test.mjs",
+      "name": "fails missing structs, missing result keys, and changed package identity",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:reopt-jl-project-toml:0.59.2"
+      ],
+      "mutationCases": [
+        "changed package version",
+        "missing ElectricStorage kwdef struct",
+        "missing required result key",
+        "changed source-file checksum"
+      ]
+    },
+    {
+      "testId": "reopt-solar-input-boundary-failure-proof",
+      "path": "scripts/research/operational-savings/tests/reopt-source-real.test.mjs",
+      "name": "fails closed outside the exact solar-plus-storage input boundaries",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:retrofi:reopt-solar-storage-spec:39c97cf3b30265d68ddfc910b51e6e7dadc4b5a86f9e10447ac1d018ff197a2c",
+        "artifact:retrofi:pvwatts-interval-series:d57fd0f03e904bebe7b6056c9e41385fd081eb313b165681c5ca2533bc9c65f0"
+      ],
+      "mutationCases": [
+        "changed PVWatts interval count",
+        "changed time zone or daylight-saving basis",
+        "changed fixed PV or storage design",
+        "enabled grid charging"
+      ]
+    },
+    {
+      "testId": "reopt-run-evidence-failure-proof",
+      "path": "scripts/research/operational-savings/tests/reopt-source-real.test.mjs",
+      "name": "rejects mutated run evidence before database publication",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:retrofi:reopt-solar-storage-proof:d47b6ad66e555d0676ebde6e975f08b78c7ab13c123849a3cebaac805f2ae801"
+      ],
+      "mutationCases": [
+        "mutated retained run evidence"
+      ]
+    },
+    {
+      "testId": "reopt-immutable-identity-failure-proof",
+      "path": "scripts/research/operational-savings/tests/reopt-source-real.test.mjs",
+      "name": "fails closed instead of rewriting immutable artifact or calculation identities",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:retrofi:reopt-solar-storage-spec:39c97cf3b30265d68ddfc910b51e6e7dadc4b5a86f9e10447ac1d018ff197a2c"
+      ],
+      "mutationCases": [
+        "changed registered source artifact checksum under a stable ID",
+        "changed calculation input checksum under a stable ID"
+      ]
+    },
+    {
+      "testId": "reopt-offline-proof",
+      "path": "scripts/research/operational-savings/tests/reopt-source-real.test.mjs",
+      "name": "requires offline mode and never calls fetch",
+      "kind": "OFFLINE_EXECUTION",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:reopt-jl-project-toml:0.59.2"
+      ]
+    }
+  ],
+  "processClaims": [
+    {
+      "categoryId": "ITC-23",
+      "processKey": "reopt_local_dispatch",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:reopt-jl-project-toml:0.59.2"
+      ],
+      "testIds": [
+        "reopt-real-source-schema-proof",
+        "reopt-source-schema-failure-proof",
+        "reopt-offline-proof"
+      ],
+      "actualOutput": {
+        "baseline_annual_bill": 89827,
+        "proposed_annual_bill": 84032.2
+      },
+      "formulaTerms": [
+        "baseline_annual_bill",
+        "proposed_annual_bill"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-24",
+      "processKey": "reopt_local_dispatch",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:reopt-jl-project-toml:0.59.2",
+        "artifact:pvwatts:ssc-303",
+        "artifact:pvwatts:official-fixture",
+        "artifact:pvwatts:phoenix-tmy2",
+        "artifact:retrofi:reopt-solar-storage-spec:39c97cf3b30265d68ddfc910b51e6e7dadc4b5a86f9e10447ac1d018ff197a2c",
+        "artifact:retrofi:pvwatts-interval-series:d57fd0f03e904bebe7b6056c9e41385fd081eb313b165681c5ca2533bc9c65f0",
+        "artifact:retrofi:reopt-solar-storage-proof:d47b6ad66e555d0676ebde6e975f08b78c7ab13c123849a3cebaac805f2ae801",
+        "artifact:retrofi:reopt-build-manifest:919505d5684c853bf332cf6a73fefce9ddd88d8f518810aed729c565b21b3c8f",
+        "artifact:retrofi:reopt-container:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717"
+      ],
+      "testIds": [
+        "reopt-solar-storage-publication-proof",
+        "reopt-solar-input-boundary-failure-proof",
+        "reopt-run-evidence-failure-proof",
+        "reopt-immutable-identity-failure-proof",
+        "reopt-offline-proof"
+      ],
+      "actualOutput": {
+        "baseline_annual_bill": 89827,
+        "proposed_annual_bill": 87586.78
+      },
+      "formulaTerms": [
+        "baseline_annual_bill",
+        "proposed_annual_bill"
+      ],
+      "provenanceRefs": [
+        "calculation:reopt:solar-storage:baseline:v1",
+        "calculation:reopt:solar-storage:proposed:v1",
+        "pvwatts_v8-fb39ece6873f88e42f9584bc",
+        "artifact:reopt-jl-project-toml:0.59.2",
+        "artifact:retrofi:reopt-solar-storage-spec:39c97cf3b30265d68ddfc910b51e6e7dadc4b5a86f9e10447ac1d018ff197a2c",
+        "artifact:retrofi:pvwatts-interval-series:d57fd0f03e904bebe7b6056c9e41385fd081eb313b165681c5ca2533bc9c65f0",
+        "artifact:retrofi:reopt-solar-storage-proof:d47b6ad66e555d0676ebde6e975f08b78c7ab13c123849a3cebaac805f2ae801",
+        "artifact:retrofi:reopt-build-manifest:919505d5684c853bf332cf6a73fefce9ddd88d8f518810aed729c565b21b3c8f",
+        "artifact:retrofi:reopt-container:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717",
+        "artifact:pvwatts:ssc-303",
+        "artifact:pvwatts:official-fixture",
+        "artifact:pvwatts:phoenix-tmy2"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": null
+    }
+  ],
+  "runtimeProof": {
+    "imageDigest": "sha256:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717",
+    "platform": "linux/arm64",
+    "networkEnforcement": "DOCKER_NONE",
+    "officialEvidence": "scripts/research/operational-savings/containers/reopt/official-proof.json",
+    "retrofiEvidence": "scripts/research/operational-savings/containers/reopt/retrofi-proof.json",
+    "solarStorageEvidence": "scripts/research/operational-savings/containers/reopt/solar-storage-proof.json",
+    "solarStorageReplay": "scripts/research/operational-savings/containers/reopt/verify-solar-storage.mjs",
+    "officialTerminationStatus": "OPTIMAL",
+    "baselineTerminationStatus": "OPTIMAL",
+    "proposedTerminationStatus": "OPTIMAL",
+    "solarStorageBaselineTerminationStatus": "OPTIMAL",
+    "solarStorageProposedTerminationStatus": "OPTIMAL",
+    "solarStorageRuntimeUser": "65532:65532",
+    "solarStorageNetworkEnforcement": "DOCKER_NONE",
+    "solarStorageUpstreamCalculationId": "pvwatts_v8-fb39ece6873f88e42f9584bc",
+    "solarStorageDependencyRoles": [
+      "reopt_source_contract",
+      "solar_storage_input_spec",
+      "pvwatts_interval_series",
+      "pvwatts_model_library",
+      "pvwatts_fixture_definition",
+      "pvwatts_weather_resource",
+      "reopt_container_image",
+      "reopt_build_manifest",
+      "reopt_execution_evidence"
+    ]
+  },
+  "feasibility": "REAL_PROOF_COMPLETE",
+  "remainingBlockers": [
+    "The bounded local proof is not reconciled to a real utility bill and must not be treated as a production estimate.",
+    "The ITC-24 proof follows its canonical initial-state and reserve inputs and ends at reserve; a cyclic annual project estimate would require an explicit terminal-state constraint.",
+    "The other six REopt-bound category processes remain documentation-only."
+  ]
+}

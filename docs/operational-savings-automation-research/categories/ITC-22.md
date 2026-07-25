@@ -6,9 +6,17 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Process coverage
 
-| Process key | Process name | Canonical Standard | Required inputs | Exact outputs | Formula terms | Source feasibility | Runtime external calls | Current blocker |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| epa_chp_performance | Biomass or Biogas Energy System Performance Balance | STD-EPA-CHP-PERFORMANCE | Confirmed annual fuel availability, if known; Fuel unit; Fuel lower heating value, if known from a nameplate, measurement, audit, or contractor specification; Conversion technology; Selected Unit Model, if known; Installed capacity; Coincident onsite electric-load constraint, if known; Coincident useful thermal-load constraint; Existing Boiler Nameplate or Combustion-Test Information, if known | Annual electricity generation; Scheduled annual input fuel; Annual useful recovered heat | generation; scheduled_input_fuel; useful_heat | FEASIBLE_AFTER_ADAPTER_WORK | 0 | The official technology pages, efficiency method, and calculator download were checked. The category adapter and retained source fixture are still absent, and the source does not identify an exact unit or supply site capacity, schedule, or thermal coincidence. |
+### Canonical process contract
+
+| Process key | Process name | Canonical Standard | Required inputs | Exact output and formula term |
+| --- | --- | --- | --- | --- |
+| epa_chp_performance | Biomass or Biogas Energy System Performance Balance | STD-EPA-CHP-PERFORMANCE | Confirmed annual fuel availability, if known [User]; Fuel unit [User]; Fuel lower heating value, if known from a nameplate, measurement, audit, or contractor specification [Project Document]; Conversion technology [Linked Opportunity]; Selected Unit Model, if known [Linked Opportunity]; Installed capacity [Linked Opportunity]; Coincident onsite electric-load constraint, if known [Project Document]; Coincident useful thermal-load constraint [Project Document]; Existing Boiler Nameplate or Combustion-Test Information, if known [Project Document] | Annual electricity generation -> generation (kWh/year; PROJECT_TOTAL); Scheduled annual input fuel -> scheduled_input_fuel (resource-unit/year; PROJECT_TOTAL); Annual useful recovered heat -> useful_heat (energy/year; PROJECT_TOTAL) |
+
+### Current execution evidence
+
+| Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
+| --- | --- | --- | --- | --- |
+| epa_chp_performance | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/epa-chp/run.mjs | epa-biomass-chp-real-proof: NOT_COVERED<br>epa-biomass-native-evidence-failure-proof: NOT_COVERED<br>epa-biomass-publication-proof: NOT_COVERED<br>epa-chp-offline-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## End-to-end graph
 
@@ -16,13 +24,14 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Feasibility
 
-The category depends on these source-level verdicts: FEASIBLE_AFTER_ADAPTER_WORK.
-An exact path is feasible only when every bound Profile, Bill, Linked Opportunity, Project Document, and User input is present and every Standard adapter returns an unambiguous compatible result.
-A benchmark path is feasible only where the category has a retained authoritative population and exact selection rule.
+The category depends on these source-level verdicts: NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES.
+The process table reports the final proof level after execution-record verification, not a higher level that a manifest may have declared before the current run.
+An exact path is usable only when every owned input is present and every Standard adapter returns one unambiguous compatible result.
+A benchmark path is usable only where the category has a retained authoritative population and exact selection rule.
 The runtime external-call count remains zero.
 
-## Recommended next action
+## Conditional next actions
 
-Implement and accept the shared source-family adapters before connecting this category to any calculation runtime.
-Add one category golden fixture for each supported exact or benchmark path.
-Keep unsupported paths explicit rather than filling them with generic defaults.
+| Process key | Current proof level | Next action |
+| --- | --- | --- |
+| epa_chp_performance | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |

@@ -30457,7 +30457,7 @@
         "low": 8,
         "disposition": "Research-only image. Execute as non-root with Docker networking disabled. Do not deploy for customer calculations."
       },
-      "blocker": "Source freeze and the committed post-hoc replay receipt are still pending."
+      "blocker": "Source freeze and the committed post-hoc replay receipt are still pending. A prospective source rebuild is also blocked because the resolved Julia environment and depot archive has no retained checksum or byte size, the pinned base-image OCI evidence is not stored in research AWS, and independent BuildKit daemon-egress denial evidence has not been captured."
     },
     {
       "model": "SSC",
@@ -30492,7 +30492,7 @@
         "low": 0,
         "disposition": "Research-only image. Execute as non-root with Docker networking disabled. Do not deploy for customer calculations."
       },
-      "blocker": "Source freeze and the committed post-hoc replay receipt are still pending."
+      "blocker": "Source freeze and the committed post-hoc replay receipt are still pending. A prospective source rebuild is also blocked because the exact Ubuntu arm64 build and runtime .deb closures have no retained checksums or byte sizes, the pinned base-image OCI evidence is not stored in research AWS, and independent BuildKit daemon-egress denial evidence has not been captured."
     },
     {
       "model": "MEASUR",
@@ -30527,7 +30527,7 @@
         "low": 0,
         "disposition": "Research-only image. Execute as non-root with Docker networking disabled. Do not deploy for customer calculations."
       },
-      "blocker": "Source freeze and the committed post-hoc replay receipt are still pending."
+      "blocker": "Source freeze and the committed post-hoc replay receipt are still pending. The accepted historical ECR image can be restored and replayed, but a separate prospective offline MEASUR rebuild workflow has not been implemented. Exact GCC builder and Ubuntu runtime OCI evidence, a prospective Dockerfile, deterministic AMO Tools and harness inputs, and independent BuildKit daemon-egress denial evidence are still required."
     },
     {
       "model": "SCOUT",
@@ -30568,9 +30568,68 @@
         ],
         "disposition": "Research-only image. No scanner-fixed versions were reported. Execute as non-root with Docker networking disabled and do not deploy for customer calculations."
       },
-      "blocker": "Source freeze and the committed post-hoc replay receipt are still pending."
+      "blocker": "Source freeze and the committed post-hoc replay receipt are still pending. The prospective source rebuild context is ready only when its exact cached inputs validate, the pinned base-image OCI evidence is stored and restore-verified in research AWS, and independent BuildKit daemon-egress denial evidence is captured."
     }
   ],
+  "prospective_model_rebuilds": {
+    "status": "INCOMPLETE",
+    "historical_runtime_scope": "The exact accepted ECR digests have historical runtime verification. This does not prove that a new image can be rebuilt from source without network access.",
+    "historical_build_provenance_status": "INCOMPLETE_UNCOMMITTED_HISTORICAL_BUILD_CONTEXT",
+    "common_blockers": [
+      "The historical build manifests do not capture a committed build-context commit or the complete historical invocation.",
+      "Pinned base-image identities are documented, but their OCI evidence is not yet stored and restore-verified in research AWS.",
+      "Docker build RUN networking is configured as none, but independent BuildKit daemon and registry-resolution egress denial evidence has not been captured."
+    ],
+    "models": [
+      {
+        "model": "REOPT",
+        "status": "BLOCKED_MISSING_EXACT_DEPENDENCY_ARTIFACT",
+        "missing_artifacts": [
+          {
+            "artifact_id": "reopt-resolved-julia-environment",
+            "expected_local_path": "scripts/research/operational-savings/.cache/model-dependencies/reopt/reopt-f952cab-julia-environment-linux-arm64.tar",
+            "sha256": null,
+            "byte_size": null
+          }
+        ]
+      },
+      {
+        "model": "SSC",
+        "status": "BLOCKED_MISSING_EXACT_DEPENDENCY_ARTIFACT",
+        "missing_artifacts": [
+          {
+            "artifact_id": "ssc-ubuntu-build-debs",
+            "expected_context_path": "inputs/ubuntu-build-debs.tar",
+            "sha256": null,
+            "byte_size": null
+          },
+          {
+            "artifact_id": "ssc-ubuntu-runtime-debs",
+            "expected_context_path": "inputs/ubuntu-runtime-debs.tar",
+            "sha256": null,
+            "byte_size": null
+          }
+        ]
+      },
+      {
+        "model": "SCOUT",
+        "status": "READY_WHEN_EXACT_CACHE_INPUTS_VALIDATE",
+        "missing_artifacts": []
+      },
+      {
+        "model": "MEASUR",
+        "status": "BLOCKED_PROSPECTIVE_WORKFLOW_NOT_IMPLEMENTED",
+        "missing_artifacts": [
+          {
+            "artifact_id": "measur-prospective-offline-workflow",
+            "sha256": null,
+            "byte_size": null
+          }
+        ]
+      }
+    ],
+    "authoritative_plan_path": "scripts/research/operational-savings/containers/offline-rebuild-plan.v1.json"
+  },
   "local_only_work": [
     {
       "package_id": "adapter-fixture:operating-schedule:project-schedule-fixtures.v1.json",

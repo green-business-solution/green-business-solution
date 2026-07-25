@@ -1541,6 +1541,16 @@ The JSON file contains exact inputs, supported and unsupported classes, adapter 
 - SSC: 945129430686.dkr.ecr.us-east-1.amazonaws.com/retrofi-research-ssc@sha256:70eb1f134a8ca9342988c3593d51ce08b1c6042847b23bfb7e8c4e15a8f435cc with historical runtime status PASS and current content-bound replay status PENDING.
 - MEASUR: 945129430686.dkr.ecr.us-east-1.amazonaws.com/retrofi-research-measur@sha256:0eb47e05f2fefa78ca86958140741181b5d2260b743da1c3b670a4f6c7540393 with historical runtime status PASS and current content-bound replay status PENDING.
 - SCOUT: 945129430686.dkr.ecr.us-east-1.amazonaws.com/retrofi-research-scout@sha256:f46b0566f31270bc8070192ff587a76eb914801b239f9a21b13a30ddd5c5037e with historical runtime status PASS and current content-bound replay status PENDING.
+- Historical exact-digest runtime verification does not prove that a new model image can be rebuilt from source without network access.
+- The historical build manifests do not capture a committed build-context commit or the complete historical invocation.
+- Pinned base-image identities are documented, but their OCI evidence is not yet stored and restore-verified in research AWS.
+- Docker build RUN networking is configured as none, but independent BuildKit daemon and registry-resolution egress denial evidence has not been captured.
+- REOPT prospective rebuild status is `BLOCKED_MISSING_EXACT_DEPENDENCY_ARTIFACT` because the resolved Julia environment and depot archive has no retained checksum or byte size.
+- SSC prospective rebuild status is `BLOCKED_MISSING_EXACT_DEPENDENCY_ARTIFACT` because the exact Ubuntu arm64 build and runtime `.deb` closures have no retained checksums or byte sizes.
+- SCOUT prospective rebuild status is `READY_WHEN_EXACT_CACHE_INPUTS_VALIDATE`, subject to storing and restore-verifying the pinned base-image OCI evidence and capturing daemon-egress denial evidence.
+- MEASUR prospective rebuild status is `BLOCKED_PROSPECTIVE_WORKFLOW_NOT_IMPLEMENTED`.
+- MEASUR still requires exact GCC builder and Ubuntu runtime OCI evidence, a separate prospective Dockerfile, deterministic AMO Tools and generated harness inputs, and candidate verification.
+- The authoritative prospective rebuild plan is `scripts/research/operational-savings/containers/offline-rebuild-plan.v1.json`.
 - Required artifacts still lacking an exact S3 version: 210.
 - Each remains local because source freeze, committed inventory, exact upload verification, and exact restore verification are not complete.
 

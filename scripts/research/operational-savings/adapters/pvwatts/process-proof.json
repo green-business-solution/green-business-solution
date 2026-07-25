@@ -1,0 +1,296 @@
+{
+  "schemaVersion": "operational-savings/real-proof-manifest-v1",
+  "standardId": "STD-PVWATTS-V8",
+  "slug": "pvwatts",
+  "adapterPath": "scripts/research/operational-savings/adapters/pvwatts/run.mjs",
+  "artifacts": [
+    {
+      "artifactId": "artifact:pvwatts:ssc-303",
+      "sourceUrl": "https://github.com/NatLabRockies/REopt.jl.git",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/reopt/src/sam/libssc.dylib",
+      "version": "SSC 303",
+      "commitSha": "f952cabdf3e60f6e88eef80bb7bc9e7e24bac643",
+      "sha256": "db933646389fa94f41af34066d65034681d5836f1bd29644f9b2a934a01b788f",
+      "sizeBytes": 37852576,
+      "official": true
+    },
+    {
+      "artifactId": "artifact:pvwatts:official-fixture",
+      "sourceUrl": "https://github.com/NatLabRockies/ssc.git",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/ssc/test/input_cases/pvwatts_cases.h",
+      "version": "official repository fixture",
+      "commitSha": "ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+      "sha256": "b806b704a8542aa22ab2ad9c06ece19dcd766eee75777b426039b73f23dfaa61",
+      "sizeBytes": 3419,
+      "official": true
+    },
+    {
+      "artifactId": "artifact:pvwatts:phoenix-tmy2",
+      "sourceUrl": "https://github.com/NatLabRockies/ssc.git",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/ssc/test/input_cases/pvsamv1_data/USA AZ Phoenix (TMY2).csv",
+      "version": "official repository weather fixture",
+      "commitSha": "ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+      "sha256": "311b8871e989b40d0016f7019dcabc06ebf38e16509c51842fce4bf1e6f8c591",
+      "sizeBytes": 501341,
+      "official": true
+    }
+  ],
+  "observedSchemas": [
+    {
+      "schemaId": "schema:pvwatts:ssc-303:pvwattsv8",
+      "artifactId": "artifact:pvwatts:ssc-303",
+      "format": "SSC_C_API_MODULE_METADATA",
+      "fingerprintSha256": "192347a11417cf80d0169a63d0bbd32c19b48d8a8acaa1d731e368577e875fab",
+      "requiredNativeFields": [
+        "system_capacity",
+        "module_type",
+        "array_type",
+        "losses",
+        "tilt",
+        "azimuth",
+        "solar_resource_file",
+        "gen",
+        "annual_energy"
+      ],
+      "fields": [
+        {
+          "name": "gen",
+          "unit": "kW"
+        },
+        {
+          "name": "annual_energy",
+          "unit": "kWh"
+        },
+        {
+          "name": "system_capacity",
+          "unit": "kW"
+        }
+      ]
+    }
+  ],
+  "normalizedTargets": [
+    "source_registry",
+    "source_releases",
+    "source_artifacts",
+    "model_versions",
+    "model_input_schemas",
+    "calculation_runs",
+    "selected_values",
+    "selected_value_provenance",
+    "calculation_warnings"
+  ],
+  "tests": [
+    {
+      "testId": "pvwatts-real-ssc-execution",
+      "path": "scripts/research/operational-savings/tests/ssc-models.test.mjs",
+      "name": "STD-PVWATTS-V8 executes a real pinned local SSC model deterministically",
+      "kind": "LOCAL_MODEL_EXECUTION",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:pvwatts:ssc-303",
+        "artifact:pvwatts:official-fixture",
+        "artifact:pvwatts:phoenix-tmy2"
+      ],
+      "sourceNativeFields": [
+        "system_capacity",
+        "module_type",
+        "array_type",
+        "losses",
+        "tilt",
+        "azimuth",
+        "solar_resource_file",
+        "gen",
+        "annual_energy"
+      ]
+    },
+    {
+      "testId": "pvwatts-ssc-version-failure",
+      "path": "scripts/research/operational-savings/tests/ssc-models.test.mjs",
+      "name": "STD-PVWATTS-V8 rejects a caller model-version mismatch",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:pvwatts:ssc-303"
+      ],
+      "mutationCases": [
+        "model-version mismatch"
+      ]
+    },
+    {
+      "testId": "pvwatts-real-database-publication",
+      "path": "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs",
+      "name": "STD-PVWATTS-V8 publishes its pinned model identity, calculation, provenance, and exact formula selection",
+      "kinds": [
+        "NORMALIZATION",
+        "DATABASE_PUBLICATION",
+        "RESOLVER",
+        "FORMULA_INPUT_MAPPING"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:pvwatts:ssc-303"
+      ],
+      "sourceNativeFields": [
+        "gen",
+        "annual_energy"
+      ]
+    },
+    {
+      "testId": "pvwatts-publication-failure",
+      "path": "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs",
+      "name": "STD-PVWATTS-V8 rejects mixed model identity and offline publication violations",
+      "kinds": [
+        "FAILURE",
+        "MUTATION",
+        "OFFLINE_EXECUTION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:pvwatts:ssc-303"
+      ],
+      "mutationCases": [
+        "mixed model releases",
+        "attempted runtime publication without offline guard"
+      ]
+    }
+  ],
+  "processClaims": [
+    {
+      "categoryId": "ITC-17",
+      "processKey": "pvwatts_v8",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:pvwatts:ssc-303",
+        "artifact:pvwatts:official-fixture",
+        "artifact:pvwatts:phoenix-tmy2"
+      ],
+      "testIds": [
+        "pvwatts-real-ssc-execution",
+        "pvwatts-ssc-version-failure",
+        "pvwatts-real-database-publication",
+        "pvwatts-publication-failure"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "PV_AC_kWh_t": {
+          "count": 8760,
+          "sha256": "a842a7a51583fca8b7c559a1ed12b16aa9d396ec7c6b92dbfabfc282dbaf0f1c"
+        }
+      },
+      "formulaTerms": [
+        "PV_AC_kWh_t"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-24",
+      "processKey": "pvwatts_v8",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:pvwatts:ssc-303",
+        "artifact:pvwatts:official-fixture",
+        "artifact:pvwatts:phoenix-tmy2"
+      ],
+      "testIds": [
+        "pvwatts-real-ssc-execution",
+        "pvwatts-ssc-version-failure",
+        "pvwatts-real-database-publication",
+        "pvwatts-publication-failure"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "PV_AC_kWh_t": {
+          "count": 8760,
+          "sha256": "a842a7a51583fca8b7c559a1ed12b16aa9d396ec7c6b92dbfabfc282dbaf0f1c"
+        }
+      },
+      "formulaTerms": [
+        "PV_AC_kWh_t"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-26",
+      "processKey": "pvwatts_v8",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:pvwatts:ssc-303",
+        "artifact:pvwatts:official-fixture",
+        "artifact:pvwatts:phoenix-tmy2"
+      ],
+      "testIds": [
+        "pvwatts-real-ssc-execution",
+        "pvwatts-ssc-version-failure",
+        "pvwatts-real-database-publication",
+        "pvwatts-publication-failure"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "PV_AC_kWh_t": {
+          "count": 8760,
+          "sha256": "a842a7a51583fca8b7c559a1ed12b16aa9d396ec7c6b92dbfabfc282dbaf0f1c"
+        }
+      },
+      "formulaTerms": [
+        "PV_AC_kWh_t"
+      ],
+      "remainingBlocker": null
+    }
+  ],
+  "feasibility": "FEASIBLE_NOW",
+  "remainingBlockers": [
+    "The retained Phoenix fixture proves the local model path but is not a California or project-specific production estimate.",
+    "Project sizing, array configuration, shading, and permitted local weather must still be supplied or resolved for each customer case."
+  ]
+}

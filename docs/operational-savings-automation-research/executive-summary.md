@@ -1,14 +1,15 @@
 # Executive summary
 
-The zero-runtime-network architecture is feasible for every currently useful path, but no source should be connected directly to a customer estimate.
+The proof ledger currently demonstrates 0 end-to-end real process paths out of 124.
+Every other path remains limited to source-level proof, documentation, a synthetic test, an access block, or an unsupported source boundary.
 The repository contains 19 canonical Standards, 124 category-local process instances, 54 categories, 632 explicit input bindings, 215 explicit output bindings, and 497 formula-term contracts.
 All 19 Standards have a source inventory, compact synthetic sample, cost estimate, and proposed supported boundary.
 Those planning artifacts are not automation proof.
 
-The strongest immediate sources are the ENERGY STAR product datasets, FuelEconomy bulk vehicle data, FEMP lighting tables, and the ENERGY STAR dishwasher calculator.
-DOE CCMS and WaterSense labeled-product data require operator-seeded exports.
-ComStock, Scout, MEASUR, SAM, PVWatts, wind, and REopt are technically localizable but require production adapters and reproducible packaging.
-WaterSense commercial operations and the shared context-benchmark Standard remain intentionally partial because checklists and mixed benchmark sources cannot supply missing project measurements.
+Only Standards whose complete bound process set is end-to-end real receive `FEASIBLE_NOW`.
+Standards with only a proved subset receive `PARTIALLY_FEASIBLE`.
+A Standard receives `FEASIBLE_AFTER_ADAPTER_WORK` only when real source execution exists but none of its bound processes is end-to-end real.
+DOE CCMS and WaterSense labeled-product access probes do not qualify for `FEASIBLE_AFTER_MANUAL_SEED` because no genuine official export reaches the downstream source-to-Standard gates.
 
 The selected runtime architecture is:
 
@@ -27,11 +28,11 @@ Direct selected-source fees are estimated at $0 per month, while the major cost 
 
 | Feasibility verdict | Standards |
 | --- | --- |
-| FEASIBLE_NOW | 4 |
-| FEASIBLE_AFTER_MANUAL_SEED | 2 |
-| FEASIBLE_AFTER_ADAPTER_WORK | 11 |
-| PARTIALLY_FEASIBLE | 2 |
-| NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES | 0 |
+| FEASIBLE_NOW | 0 |
+| FEASIBLE_AFTER_MANUAL_SEED | 0 |
+| FEASIBLE_AFTER_ADAPTER_WORK | 0 |
+| PARTIALLY_FEASIBLE | 0 |
+| NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES | 19 |
 
 The recommended first implementation batch is exact public product and tabular methods, followed immediately by a California tariff publication foundation.
 No deployment, AWS access, infrastructure change, workflow change, production-engine change, or Information Card change is part of this branch.

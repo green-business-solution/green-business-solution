@@ -6,25 +6,36 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Process coverage
 
-| Process key | Process name | Canonical Standard | Required inputs | Exact outputs | Formula terms | Source feasibility | Runtime external calls | Current blocker |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| operating_schedule | Demand-Controlled Kitchen Ventilation Annual Operating Hours | STD-OPERATING-SCHEDULE | Existing airflow schedule from a nameplate, measurement, audit, or contractor specification; Proposed airflow schedule from a nameplate, measurement, audit, or contractor specification; Recognizable Business, Shift, Seasonal, or Usage Pattern; Detailed Operating Days, Shifts, or Active Season, if known; Measured Annual Operating Hours, if known; Site Location for outdoor conditions; Site Location and Business Activity | Operating hours by modeled period | hours_period | FEASIBLE_AFTER_ADAPTER_WORK | 0 | The DOE commercial reference-building schedule context was checked. Calendar arithmetic is deterministic when the operating pattern is complete, but a business label alone is not a validated annual-hours value and no category golden fixture exists. |
-| doe_measur | Demand-Controlled Kitchen Ventilation Engineering Calculation | STD-DOE-MEASUR | In-Scope Equipment Count; Existing Fan Nameplate or Measured Input; Existing Design Airflow from a nameplate, measurement, audit, or contractor specification; Makeup-air heating system; Makeup-air cooling system; Annual operating hours from the connected schedule process | Existing fan input power by modeled period; Proposed fan input power by modeled period | existing_fan_kW_period; proposed_fan_kW_period | FEASIBLE_AFTER_ADAPTER_WORK | 0 | The official MEASUR tool page, calculator descriptions, and open-source implementation were checked, so local automation is feasible. The exact category module, input and output mapping, and golden example have not yet been pinned, so this process must not imply executable validation. |
+### Canonical process contract
+
+| Process key | Process name | Canonical Standard | Required inputs | Exact output and formula term |
+| --- | --- | --- | --- | --- |
+| operating_schedule | Demand-Controlled Kitchen Ventilation Annual Operating Hours | STD-OPERATING-SCHEDULE | Existing airflow schedule from a nameplate, measurement, audit, or contractor specification [Project Document]; Proposed airflow schedule from a nameplate, measurement, audit, or contractor specification [Linked Opportunity]; Recognizable Business, Shift, Seasonal, or Usage Pattern [User]; Detailed Operating Days, Shifts, or Active Season, if known [User]; Measured Annual Operating Hours, if known [Project Document]; Site Location for outdoor conditions [Profile]; Site Location and Business Activity [Profile] | Operating hours by modeled period -> hours_period (hours/period; PROFILE) |
+| doe_measur | Demand-Controlled Kitchen Ventilation Engineering Calculation | STD-DOE-MEASUR | In-Scope Equipment Count [User]; Existing Fan Nameplate or Measured Input [Project Document]; Existing Design Airflow from a nameplate, measurement, audit, or contractor specification [Project Document]; Makeup-air heating system [User]; Makeup-air cooling system [User]; Annual operating hours from the connected schedule process [Standard Output] | Existing fan input power by modeled period -> existing_fan_kW_period (kW; PROFILE); Proposed fan input power by modeled period -> proposed_fan_kW_period (kW; PROFILE) |
+
+### Current execution evidence
+
+| Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
+| --- | --- | --- | --- | --- |
+| operating_schedule | DOCUMENTATION_ONLY | None implemented | None required or recorded for the current proof state | MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
+| doe_measur | DOCUMENTATION_ONLY | None implemented | None required or recorded for the current proof state | MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
 
 ## End-to-end graph
 
-- `operating_schedule`: Existing airflow schedule from a nameplate, measurement, audit, or contractor specification [Project Document] + Proposed airflow schedule from a nameplate, measurement, audit, or contractor specification [Linked Opportunity] + Recognizable Business, Shift, Seasonal, or Usage Pattern [User] + Detailed Operating Days, Shifts, or Active Season, if known [User] + Measured Annual Operating Hours, if known [Project Document] + Site Location for outdoor conditions [Profile] + Site Location and Business Activity [Profile] -> STD-OPERATING-SCHEDULE -> calculation_assumptions + benchmark_values + model_input_schemas -> Operating hours by modeled period -> hours_period (hours/period)
+- `operating_schedule`: Existing airflow schedule from a nameplate, measurement, audit, or contractor specification [Project Document] + Proposed airflow schedule from a nameplate, measurement, audit, or contractor specification [Linked Opportunity] + Recognizable Business, Shift, Seasonal, or Usage Pattern [User] + Detailed Operating Days, Shifts, or Active Season, if known [User] + Measured Annual Operating Hours, if known [Project Document] + Site Location for outdoor conditions [Profile] + Site Location and Business Activity [Profile] -> STD-OPERATING-SCHEDULE -> operating_schedule_references + calculation_runs + selected_values + selected_value_provenance + calculation_source_dependencies -> Operating hours by modeled period -> hours_period (hours/period)
 - `doe_measur`: In-Scope Equipment Count [User] + Existing Fan Nameplate or Measured Input [Project Document] + Existing Design Airflow from a nameplate, measurement, audit, or contractor specification [Project Document] + Makeup-air heating system [User] + Makeup-air cooling system [User] + Annual operating hours from the connected schedule process [Standard Output] -> STD-DOE-MEASUR -> model_versions + model_input_schemas + calculation_assumptions + calculation_runs + calculation_warnings -> Existing fan input power by modeled period -> existing_fan_kW_period (kW) + Proposed fan input power by modeled period -> proposed_fan_kW_period (kW)
 
 ## Feasibility
 
-The category depends on these source-level verdicts: FEASIBLE_AFTER_ADAPTER_WORK.
-An exact path is feasible only when every bound Profile, Bill, Linked Opportunity, Project Document, and User input is present and every Standard adapter returns an unambiguous compatible result.
-A benchmark path is feasible only where the category has a retained authoritative population and exact selection rule.
+The category depends on these source-level verdicts: NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES.
+The process table reports the final proof level after execution-record verification, not a higher level that a manifest may have declared before the current run.
+An exact path is usable only when every owned input is present and every Standard adapter returns one unambiguous compatible result.
+A benchmark path is usable only where the category has a retained authoritative population and exact selection rule.
 The runtime external-call count remains zero.
 
-## Recommended next action
+## Conditional next actions
 
-Implement and accept the shared source-family adapters before connecting this category to any calculation runtime.
-Add one category golden fixture for each supported exact or benchmark path.
-Keep unsupported paths explicit rather than filling them with generic defaults.
+| Process key | Current proof level | Next action |
+| --- | --- | --- |
+| operating_schedule | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
+| doe_measur | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |

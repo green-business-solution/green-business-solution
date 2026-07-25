@@ -7,6 +7,10 @@ import {
   buildOperationalSavingsReview,
   loadOperationalSavingsSources
 } from "../../generate-operational-savings-review-pages.mjs";
+import {
+  PROOF_LEVELS,
+  buildProofLedger
+} from "./proof-ledger.mjs";
 import { runSyntheticPrototype } from "./synthetic-prototype.mjs";
 
 const REPO_ROOT = fileURLToPath(new URL("../../..", import.meta.url));
@@ -15,6 +19,8 @@ const STANDARDS_ROOT = join(OUTPUT_ROOT, "standards");
 const CATEGORIES_ROOT = join(OUTPUT_ROOT, "categories");
 const SAMPLES_ROOT = join(OUTPUT_ROOT, "samples");
 const CATALOG_PATH = fileURLToPath(new URL("./research-catalog.json", import.meta.url));
+export const FEASIBILITY_SOURCE =
+  "Derived from buildProofLedger process evidence during generation";
 
 function escapeCell(value) {
   return String(value ?? "")
@@ -34,6 +40,16 @@ function unique(values) {
   return [...new Set(values.filter((value) => value !== null && value !== undefined && value !== ""))];
 }
 
+function duplicateValues(values) {
+  const seen = new Set();
+  const duplicates = new Set();
+  for (const value of values) {
+    if (seen.has(value)) duplicates.add(value);
+    seen.add(value);
+  }
+  return [...duplicates];
+}
+
 function sha256(content) {
   return createHash("sha256").update(content).digest("hex");
 }
@@ -51,17 +67,310 @@ function countLabel(count, singular, plural = `${singular}s`) {
   return `${count} ${count === 1 ? singular : plural}`;
 }
 
-function aggregateFeasibility(standards) {
-  const precedence = [
-    "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES",
-    "PARTIALLY_FEASIBLE",
-    "FEASIBLE_AFTER_MANUAL_SEED",
-    "FEASIBLE_AFTER_ADAPTER_WORK",
-    "FEASIBLE_NOW"
-  ];
-  return precedence.find((verdict) =>
-    standards.some((standard) => standard.feasibility === verdict)
-  ) || "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES";
+const PROOF_LEVEL_RANK = Object.freeze({
+  END_TO_END_REAL: 7,
+  SOURCE_TO_STANDARD_REAL: 6,
+  REAL_SOURCE_PARTIAL: 5,
+  SYNTHETIC_ONLY: 4,
+  DOCUMENTATION_ONLY: 3,
+  ACCESS_BLOCKED: 2,
+  SOURCE_UNSUPPORTED: 1
+});
+
+const SOURCE_VERIFIED_LEVELS = new Set([
+  "END_TO_END_REAL",
+  "SOURCE_TO_STANDARD_REAL",
+  "REAL_SOURCE_PARTIAL"
+]);
+
+const MANUAL_EXPORT_DOWNSTREAM_GATES = Object.freeze([
+  "sourceIdentityPinned",
+  "artifactAcquired",
+  "checksumOrCommitRetained",
+  "schemaExtracted",
+  "requiredFieldsLocated",
+  "unitsEnumerationsPinned",
+  "parserOrModelExecuted",
+  "normalizedPublished",
+  "resolutionExecuted",
+  "standardOutputProduced",
+  "unitScopeMatches",
+  "offlineRerunPassed",
+  "provenanceComplete",
+  "mutationFailureTestsPassed"
+]);
+
+function isManualSeedStandard(standard) {
+  return /\bmanual\b/i.test(standard.accessClass || "");
+}
+
+function hasGenuineExportArtifact(contribution) {
+  return (contribution.realArtifacts || []).some((artifact) => {
+    const mode = String(artifact.acquisitionMode || "").toUpperCase();
+    return (
+      artifact.official !== false &&
+      mode.includes("EXPORT") &&
+      !mode.includes("PROBE")
+    );
+  });
+}
+
+function hasManualExportDownstreamProof(contribution) {
+  return (
+    hasGenuineExportArtifact(contribution) &&
+    MANUAL_EXPORT_DOWNSTREAM_GATES.every(
+      (gate) => contribution.gates?.[gate] === true
+    )
+  );
+}
+
+function contributionsForStandard(process, standardId) {
+  const contributions = (process.contributions || []).filter((contribution) =>
+    contribution.coveredStandardIds?.includes(standardId)
+  );
+  if (contributions.length) return contributions;
+  if (
+    process.standardIds?.length === 1 &&
+    process.standardIds[0] === standardId
+  ) {
+    return [process];
+  }
+  return [];
+}
+
+function bestProofForStandardProcess(process, standardId) {
+  const contributions = contributionsForStandard(process, standardId);
+  if (!contributions.length) {
+    return {
+      proofLevel: "DOCUMENTATION_ONLY",
+      manualExportDownstream: false
+    };
+  }
+  const selected = [...contributions].sort(
+    (left, right) =>
+      PROOF_LEVEL_RANK[right.proofLevel] -
+        PROOF_LEVEL_RANK[left.proofLevel] ||
+      String(left.contributionId || "").localeCompare(
+        String(right.contributionId || "")
+      )
+  )[0];
+  return {
+    proofLevel: selected.proofLevel,
+    manualExportDownstream: contributions.some(
+      hasManualExportDownstreamProof
+    )
+  };
+}
+
+export function deriveStandardFeasibility(standard, processes) {
+  const boundProcesses = processes.filter((process) =>
+    process.standardIds.includes(standard.id)
+  );
+  const proofLevelCounts = Object.fromEntries(
+    PROOF_LEVELS.map((level) => [level, 0])
+  );
+  const assessments = boundProcesses.map((process) => {
+    const proof = bestProofForStandardProcess(process, standard.id);
+    proofLevelCounts[proof.proofLevel] += 1;
+    return {
+      categoryId: process.categoryId,
+      processKey: process.processKey,
+      ...proof
+    };
+  });
+  const processCount = assessments.length;
+  const endToEndProcessCount = assessments.filter(
+    (assessment) => assessment.proofLevel === "END_TO_END_REAL"
+  ).length;
+  const sourceVerifiedProcessCount = assessments.filter((assessment) =>
+    SOURCE_VERIFIED_LEVELS.has(assessment.proofLevel)
+  ).length;
+  const manualExportReadyProcessCount = assessments.filter(
+    (assessment) => assessment.manualExportDownstream
+  ).length;
+
+  let feasibility;
+  let basis;
+  if (isManualSeedStandard(standard)) {
+    if (
+      processCount > 0 &&
+      manualExportReadyProcessCount === processCount
+    ) {
+      feasibility = "FEASIBLE_AFTER_MANUAL_SEED";
+      basis =
+        "Every bound process has a genuine official export that reaches the complete source-to-Standard gate set offline.";
+    } else if (manualExportReadyProcessCount > 0) {
+      feasibility = "PARTIALLY_FEASIBLE";
+      basis =
+        "A genuine official export reaches downstream proof for only a subset of the bound processes.";
+    } else {
+      feasibility = "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES";
+      basis =
+        "No genuine official export reaches the complete source-to-Standard gate set, so an access probe or planned operator workflow is not counted as a manual seed.";
+    }
+  } else if (
+    processCount > 0 &&
+    endToEndProcessCount === processCount
+  ) {
+    feasibility = "FEASIBLE_NOW";
+    basis =
+      "Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests.";
+  } else if (endToEndProcessCount > 0) {
+    feasibility = "PARTIALLY_FEASIBLE";
+    basis =
+      "At least one bound process is proved end to end, but the complete Standard process set is not.";
+  } else if (sourceVerifiedProcessCount > 0) {
+    feasibility = "FEASIBLE_AFTER_ADAPTER_WORK";
+    basis =
+      "Real source evidence reaches a source-specific parser or Standard output, but no bound process is proved end to end.";
+  } else {
+    feasibility = "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES";
+    basis =
+      "No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary.";
+  }
+
+  return {
+    standardId: standard.id,
+    feasibility,
+    processCount,
+    endToEndProcessCount,
+    sourceVerifiedProcessCount,
+    manualExportReadyProcessCount,
+    proofLevelCounts,
+    basis,
+    processes: assessments
+  };
+}
+
+export function deriveStandardFeasibilities(standards, proofLedger) {
+  const processes = proofLedger.processes.map((entry) => entry.proof || entry);
+  return standards.map((standard) =>
+    deriveStandardFeasibility(standard, processes)
+  );
+}
+
+function processIdentity(categoryId, processKey) {
+  return `${categoryId}\u0000${processKey}`;
+}
+
+function canonicalRequiredInputs(process) {
+  return process.inputBindings.map((binding) => ({
+    inputName: binding.lookupInput,
+    sourceOwner: binding.sourceLabel,
+    treePath: binding.treePath
+  }));
+}
+
+function canonicalOutputBindings(process) {
+  return process.outputBindings.map((binding) => ({
+    outputName: binding.outputName,
+    formulaTerm: binding.formulaTerm,
+    unit: binding.outputUnit,
+    scope: binding.outputScope,
+    treePath: binding.treePath
+  }));
+}
+
+function assertSameProcessField(identity, field, canonicalValue, proofValue) {
+  if (JSON.stringify(canonicalValue) !== JSON.stringify(proofValue)) {
+    throw new Error(
+      `Canonical and proof process views disagree for ${identity} field ${field}`
+    );
+  }
+}
+
+export function buildMergedResearchView(review, proofLedger) {
+  const canonicalEntries = review.categoryReviews.flatMap((category) =>
+    category.informationCard.processes.map((process) => ({
+      category,
+      process,
+      identity: processIdentity(category.id, process.key)
+    }))
+  );
+  const canonicalIdentities = canonicalEntries.map(({ identity }) => identity);
+  const proofIdentities = proofLedger.processes.map((process) =>
+    processIdentity(process.categoryId, process.processKey)
+  );
+  const duplicateCanonical = duplicateValues(canonicalIdentities);
+  const duplicateProof = duplicateValues(proofIdentities);
+  if (duplicateCanonical.length) {
+    throw new Error(
+      `Canonical process identities are duplicated: ${duplicateCanonical.join(", ")}`
+    );
+  }
+  if (duplicateProof.length) {
+    throw new Error(
+      `Proof process identities are duplicated: ${duplicateProof.join(", ")}`
+    );
+  }
+
+  const proofByIdentity = new Map(
+    proofLedger.processes.map((process) => [
+      processIdentity(process.categoryId, process.processKey),
+      process
+    ])
+  );
+  const canonicalIdentitySet = new Set(canonicalIdentities);
+  const extraProof = proofIdentities.filter(
+    (identity) => !canonicalIdentitySet.has(identity)
+  );
+  if (extraProof.length) {
+    throw new Error(
+      `Proof ledger contains noncanonical process identities: ${extraProof.join(", ")}`
+    );
+  }
+
+  const processes = canonicalEntries.map(({ category, process, identity }) => {
+    const proof = proofByIdentity.get(identity);
+    if (!proof) {
+      throw new Error(`Proof ledger omits canonical process ${identity}`);
+    }
+    assertSameProcessField(identity, "categoryTitle", category.title, proof.categoryTitle);
+    assertSameProcessField(identity, "processName", process.name, proof.processName);
+    assertSameProcessField(
+      identity,
+      "standardIds",
+      process.canonicalStandardIds,
+      proof.standardIds
+    );
+    assertSameProcessField(
+      identity,
+      "requiredInputs",
+      canonicalRequiredInputs(process),
+      proof.requiredInputs
+    );
+    assertSameProcessField(
+      identity,
+      "outputBindings",
+      canonicalOutputBindings(process),
+      proof.outputBindings
+    );
+    return {
+      ...structuredClone(process),
+      categoryId: category.id,
+      categoryTitle: category.title,
+      proof: structuredClone(proof)
+    };
+  });
+  const processesByCategory = new Map(
+    review.categoryReviews.map((category) => [
+      category.id,
+      processes.filter((process) => process.categoryId === category.id)
+    ])
+  );
+  const processesByStandard = new Map(
+    review.standards.map((standard) => [
+      standard.id,
+      processes.filter((process) =>
+        process.canonicalStandardIds.includes(standard.id)
+      )
+    ])
+  );
+  return {
+    processes,
+    processesByCategory,
+    processesByStandard
+  };
 }
 
 const TESTED_ACCESS_ROUTES = new Map([
@@ -284,16 +593,112 @@ function outputClassification(standardId, process, output) {
   return "DERIVABLE_FROM_SOURCE";
 }
 
-function buildStandardInstances(review) {
+function buildStandardInstances(review, mergedView) {
   const instances = new Map(review.standards.map((standard) => [standard.id, []]));
+  const mergedByIdentity = new Map(
+    mergedView.processes.map((process) => [
+      processIdentity(process.categoryId, process.key),
+      process
+    ])
+  );
   for (const category of review.categoryReviews) {
     for (const process of category.informationCard.processes) {
+      const mergedProcess = mergedByIdentity.get(
+        processIdentity(category.id, process.key)
+      );
+      if (!mergedProcess) {
+        throw new Error(
+          `Merged research view omits ${category.id}/${process.key}`
+        );
+      }
       for (const standardId of process.canonicalStandardIds) {
-        instances.get(standardId)?.push({ category, process });
+        instances.get(standardId)?.push({
+          category,
+          process: mergedProcess
+        });
       }
     }
   }
   return instances;
+}
+
+function proofContributionsForStandard(process, standardId) {
+  return (process.proof.contributions || []).filter((contribution) =>
+    contribution.coveredStandardIds?.includes(standardId)
+  );
+}
+
+function proofArtifactIdentity(artifact) {
+  return [
+    artifact.artifactId,
+    artifact.release || artifact.version || "",
+    artifact.sha256 || artifact.commitSha || ""
+  ].join("\u0000");
+}
+
+function collectStandardProofEvidence(standardId, instances) {
+  const artifacts = new Map();
+  const schemas = new Map();
+  for (const { category, process } of instances) {
+    for (const contribution of proofContributionsForStandard(
+      process,
+      standardId
+    )) {
+      const processLabel = `${category.id}/${process.key}`;
+      for (const artifact of contribution.realArtifacts || []) {
+        const identity = proofArtifactIdentity(artifact);
+        const current = artifacts.get(identity) || {
+          artifact: structuredClone(artifact),
+          proofLevels: new Set(),
+          processes: new Set(),
+          contributions: new Set()
+        };
+        current.proofLevels.add(contribution.proofLevel);
+        current.processes.add(processLabel);
+        current.contributions.add(contribution.contributionId);
+        artifacts.set(identity, current);
+      }
+      for (const schema of contribution.observedSchemas || []) {
+        const identity = [
+          schema.schemaId,
+          schema.artifactId,
+          schema.format,
+          schema.extractor
+        ].join("\u0000");
+        const current = schemas.get(identity) || {
+          schema: structuredClone(schema),
+          proofLevels: new Set(),
+          processes: new Set(),
+          contributions: new Set()
+        };
+        current.proofLevels.add(contribution.proofLevel);
+        current.processes.add(processLabel);
+        current.contributions.add(contribution.contributionId);
+        schemas.set(identity, current);
+      }
+    }
+  }
+  const sortEvidence = (left, right) =>
+    String(
+      left.artifact?.artifactId || left.schema?.schemaId || ""
+    ).localeCompare(
+      String(right.artifact?.artifactId || right.schema?.schemaId || "")
+    );
+  return {
+    artifacts: [...artifacts.values()].sort(sortEvidence),
+    schemas: [...schemas.values()].sort(sortEvidence)
+  };
+}
+
+function artifactIdsForProcessStandard(process, standardId) {
+  return unique(
+    proofContributionsForStandard(process, standardId).flatMap(
+      (contribution) =>
+        (contribution.realArtifacts || []).map(
+          (artifact) => artifact.artifactId
+        )
+    )
+  ).sort();
 }
 
 function buildFieldRows(standard, instances) {
@@ -319,11 +724,15 @@ function buildFieldRows(standard, instances) {
     }
     for (const output of process.outputBindings) {
       const key = `${output.outputName}\u0000${output.formulaTerm}`;
+      const proofArtifactIds = artifactIdsForProcessStandard(
+        process,
+        standard.id
+      );
       const current = outputRows.get(key) || {
         field: output.outputName,
         categories: new Set(),
         processes: new Set(),
-        sourceArtifact: standard.observedArtifact,
+        sourceArtifacts: new Set(),
         sourceNative: standard.nativeFields.join("; "),
         transformation: standard.derivation,
         target: output.outputUnit,
@@ -332,17 +741,139 @@ function buildFieldRows(standard, instances) {
       };
       current.categories.add(category.id);
       current.processes.add(process.key);
+      for (const artifactId of proofArtifactIds) {
+        current.sourceArtifacts.add(artifactId);
+      }
       outputRows.set(key, current);
     }
   }
   return [...inputRows.values(), ...outputRows.values()].map((row) => ({
     ...row,
     categories: [...row.categories].sort(),
-    processes: [...row.processes].sort()
+    processes: [...row.processes].sort(),
+    sourceArtifact: row.sourceArtifacts
+      ? [...row.sourceArtifacts].sort().join("; ") ||
+        "No retained proof artifact"
+      : row.sourceArtifact
   }));
 }
 
-function renderStandardReport(standard, canonical, instances, evidenceRecords, prototypeResult) {
+function formatExecutionTests(proof) {
+  const results = proof.executionTestResults || [];
+  if (results.length) {
+    return results
+      .map((result) => {
+        const location = result.path
+          ? `; ${result.path}${result.name ? ` :: ${result.name}` : ""}`
+          : "";
+        return `${result.testId}: ${result.status}${location}`;
+      })
+      .join("<br>");
+  }
+  const declaredTests = [
+    ...(proof.realTests || []),
+    ...(proof.syntheticTests || [])
+  ];
+  if (declaredTests.length) {
+    return declaredTests
+      .map(
+        (test) =>
+          `${test.testId || "unnamed test"}: DECLARED_ONLY${test.path ? `; ${test.path}` : ""}`
+      )
+      .join("<br>");
+  }
+  return "None required or recorded for the current proof state";
+}
+
+function selectedContributionForStandard(process, standardId) {
+  const contributions = proofContributionsForStandard(process, standardId);
+  if (!contributions.length) {
+    return process.proof.standardIds.length === 1
+      ? process.proof
+      : {
+          proofLevel: "DOCUMENTATION_ONLY",
+          adapterPath: null,
+          executionTestResults: [],
+          blocker: {
+            code: "STANDARD_PROOF_MISSING",
+            detail:
+              "No proof contribution names this Standard for the shared process."
+          }
+        };
+  }
+  return [...contributions].sort(
+    (left, right) =>
+      PROOF_LEVEL_RANK[right.proofLevel] -
+        PROOF_LEVEL_RANK[left.proofLevel] ||
+      String(left.contributionId || "").localeCompare(
+        String(right.contributionId || "")
+      )
+  )[0];
+}
+
+export function nextActionForProcess(process) {
+  const proof = process.proof || process;
+  const blocker = formatBlocker(proof.blocker);
+  switch (proof.proofLevel) {
+    case "END_TO_END_REAL":
+      return "Accept or connect the proved path only within its recorded boundary, and keep the exact execution record current when code, fixtures, artifacts, or canonical bindings change.";
+    case "SOURCE_TO_STANDARD_REAL":
+      return "Implement and execution-verify the category formula mapping from the proved Standard output, including unit, scope, provenance, and failure behavior.";
+    case "REAL_SOURCE_PARTIAL":
+      return `Complete the missing downstream proof gates recorded by the blocker, then rerun the exact adapter tests. ${blocker}`;
+    case "SYNTHETIC_ONLY":
+      return "Replace the synthetic fixture with a retained real source artifact or a content-addressed project, profile, bill, or document input as ownership permits, then record the exact offline execution.";
+    case "ACCESS_BLOCKED":
+      return `Perform the exact approved operator or access action recorded by the blocker, retain the resulting artifact, and resume at checksum and schema validation. ${blocker}`;
+    case "SOURCE_UNSUPPORTED":
+      return `Revise the source strategy or keep the card path explicitly unsupported before implementation. ${blocker}`;
+    case "DOCUMENTATION_ONLY":
+      return `Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. ${blocker}`;
+    default:
+      throw new Error(`Unknown proof level ${proof.proofLevel}`);
+  }
+}
+
+function formatArtifactRelease(evidence) {
+  const artifact = evidence.artifact;
+  return artifact.release || artifact.version || "No release or version recorded";
+}
+
+function formatArtifactLocator(artifact) {
+  return (
+    artifact.sourceUrl ||
+    artifact.cachePath ||
+    artifact.sourceId ||
+    "No locator recorded"
+  );
+}
+
+function formatArtifactIntegrity(artifact) {
+  const fields = [];
+  if (artifact.sha256) fields.push(`sha256:${artifact.sha256}`);
+  if (artifact.commitSha) fields.push(`commit:${artifact.commitSha}`);
+  if (artifact.sizeBytes !== undefined) {
+    fields.push(`${artifact.sizeBytes} bytes`);
+  }
+  return fields.join("; ") || "No checksum, commit, or byte size recorded";
+}
+
+function formatArtifactRole(artifact) {
+  return (
+    artifact.evidenceRole ||
+    artifact.artifactRole ||
+    artifact.acquisitionMode ||
+    "Proof-manifest artifact"
+  );
+}
+
+export function renderStandardReport(
+  standard,
+  canonical,
+  instances,
+  evidenceRecords,
+  prototypeResult
+) {
   const categories = unique(instances.map(({ category }) => category.id)).sort();
   const processes = unique(instances.map(({ process }) => process.key)).sort();
   const formulaTerms = unique(
@@ -353,9 +884,10 @@ function renderStandardReport(standard, canonical, instances, evidenceRecords, p
   );
   const fieldRows = buildFieldRows(standard, instances);
   const cost = standard.cost;
-  const artifactDetails = standard.observedSha256
+  const proofEvidence = collectStandardProofEvidence(standard.id, instances);
+  const catalogObservation = standard.observedSha256
     ? `${standard.observedArtifact}, ${standard.observedFormat}, ${standard.observedSizeBytes} bytes, sha256:${standard.observedSha256}`
-    : `${standard.observedArtifact}, ${standard.observedFormat}; source repository content is pinned by commit where applicable`;
+    : `${standard.observedArtifact}, ${standard.observedFormat}; no artifact checksum is recorded in the planning catalog`;
   const sourceEvidenceTable = table(
     ["Evidence ID", "Source title", "Version", "Status", "Exact artifact"],
     evidenceRecords.map((record) => [
@@ -388,30 +920,110 @@ function renderStandardReport(standard, canonical, instances, evidenceRecords, p
       row.limitation
     ])
   );
+  const processProofTable = table(
+    [
+      "Category and process",
+      "Execution-verified proof level",
+      "Adapter",
+      "Actual adapter test result",
+      "Current blocker",
+      "Conditional next action"
+    ],
+    instances.map(({ category, process }) => {
+      const proof = selectedContributionForStandard(process, standard.id);
+      return [
+        `${category.id}/${process.key}`,
+        proof.proofLevel,
+        proof.adapterPath || "None implemented",
+        formatExecutionTests(proof),
+        formatBlocker(proof.blocker),
+        nextActionForProcess(proof)
+      ];
+    })
+  );
+  const artifactTable = table(
+    [
+      "Artifact ID",
+      "Evidence role",
+      "Retained release or version",
+      "Exact locator",
+      "Integrity",
+      "Current proof state",
+      "Bound processes"
+    ],
+    proofEvidence.artifacts.length
+      ? proofEvidence.artifacts.map((evidence) => [
+          evidence.artifact.artifactId,
+          formatArtifactRole(evidence.artifact),
+          formatArtifactRelease(evidence),
+          formatArtifactLocator(evidence.artifact),
+          formatArtifactIntegrity(evidence.artifact),
+          [...evidence.proofLevels].sort().join(", "),
+          [...evidence.processes].sort().join(", ")
+        ])
+      : [[
+          "None retained",
+          "None",
+          "None",
+          "None",
+          "None",
+          "DOCUMENTATION_ONLY",
+          processes.join(", ")
+        ]]
+  );
+  const schemaTable = table(
+    [
+      "Schema ID",
+      "Artifact ID",
+      "Format",
+      "Extractor",
+      "Required native fields",
+      "Current proof state"
+    ],
+    proofEvidence.schemas.length
+      ? proofEvidence.schemas.map((evidence) => [
+          evidence.schema.schemaId,
+          evidence.schema.artifactId,
+          evidence.schema.format,
+          evidence.schema.extractor,
+          (evidence.schema.requiredNativeFields || []).join("; "),
+          [...evidence.proofLevels].sort().join(", ")
+        ])
+      : [[
+          "None inspected",
+          "None",
+          "None",
+          "None",
+          "None",
+          "DOCUMENTATION_ONLY"
+        ]]
+  );
   return `# ${standard.id} - ${canonical.title}
 
-## 1. RetroFi role
+## 1. Canonical role and current process proof
 
 This Standard is used by ${countLabel(categories.length, "category", "categories")} and ${countLabel(instances.length, "category-local process instance")}.
 The categories are ${categories.join(", ")}.
 The process keys are ${processes.join(", ")}.
 The formula terms supplied are ${formulaTerms.join(", ") || "none"}.
-The current claimed output set contains ${countLabel(outputs.length, "distinct output description")}.
-The present automation limitation is: ${standard.unsupportedBoundary}.
+The canonical output set contains ${countLabel(outputs.length, "distinct output description")}.
 
-${sourceEvidenceTable}
+${processProofTable}
 
 ## 2. Official source inventory
 
 The primary organization is ${standard.organization}.
 The selected official source is ${standard.officialSource}.
-The pinned version is ${standard.version}.
-The release date or release state is ${standard.releaseDate}.
+The catalog acquisition target is ${standard.version}.
+Its release date or release state is ${standard.releaseDate}.
 The expected update cadence is ${standard.updateCadence}.
 The license finding is ${standard.license}.
 The legal-review requirement is ${standard.legalReview}.
+These catalog values describe the planned source inventory and do not replace proof-manifest artifact identity.
 
 ${standard.officialUrls.map((url) => `- ${url}`).join("\n")}
+
+${sourceEvidenceTable}
 
 ## 3. What can actually be acquired
 
@@ -432,26 +1044,26 @@ ${table(
 )}
 
 The tested access result is: ${standard.testedAccess}.
-The retained inspected artifact is ${artifactDetails}.
+The planning catalog observation is ${catalogObservation}.
 The access-cost classification is ${standard.accessClass}.
 
-## 4. Real source structure
+## 4. Proof-backed artifacts, releases, and schemas
 
-The observed source-native fields or model inputs are:
+The following table is generated from current proof contributions that explicitly name this Standard.
+It reports retained artifact releases, versions, locators, and integrity values instead of treating the planning catalog observation as executed proof.
+
+${artifactTable}
+
+The current proof manifests record these inspected schemas:
+
+${schemaTable}
+
+Catalog-native field names that still require proof-backed inspection are:
 
 ${standard.nativeFields.map((field) => `- \`${field}\``).join("\n")}
 
-These names are research requirements from the source inventory, not claims about an observed source schema.
-Exact source types, units, enumerations, nullability, keys, workbook coordinates, or model declarations must come from the source-specific proof manifest under \`scripts/research/operational-savings/adapters/${standard.slug}/\`.
-If no proof manifest records direct inspection evidence, this Standard remains incomplete.
-
-Product and record sources must preserve a natural source identifier plus a release identifier as the composite natural key.
-Model sources must preserve the complete input schema, package version, configuration, warnings, and output schema.
-Dates remain source-native timestamps in raw snapshots and normalize to UTC timestamps or date-only effective intervals in query tables.
-Enumerations remain source-native in raw storage and map through versioned crosswalk rows.
 Null means unknown or not reported and must never be converted to zero.
-Withdrawn, expired, superseded, and inactive records remain historically retained but are excluded from current resolution by default.
-Duplicate manufacturer and model strings are normalized for search only, while the original source text remains immutable.
+Inactive, withdrawn, superseded, and historical records remain immutable and are excluded from current resolution unless an explicit historical query selects them.
 
 ## 5. RetroFi field coverage
 
@@ -460,91 +1072,57 @@ ${fieldTable}
 For every \`DERIVABLE_FROM_SOURCE\` row, the governing derivation is: ${standard.derivation}.
 No field owned by Profile, Bill, Linked Opportunity, Project Document, or User is silently replaced with a source default.
 
-## 6. Acquisition workflow
+## 6. Acquisition and internal publication
 
 \`\`\`text
 ${standard.officialSource}
 -> ${standard.accessRoutes[0]}
--> immutable raw snapshot
--> SHA-256 checksum and media-type validation
--> schema and enumeration validation
--> source-specific normalization and deduplication
--> ${standard.internalTargets.join(" + ")}
+-> immutable checksummed raw artifact
+-> source-specific schema and enumeration validation
+-> typed normalization into ${standard.internalTargets.join(" + ")}
 -> deterministic ${standard.slug} adapter
--> typed formula input
--> calculation result with provenance
+-> typed Standard output
+-> category formula mapping
+-> immutable calculation and provenance
 \`\`\`
 
-Acquisition runs under a scheduler or operator action and never during a customer estimate.
-A failed checksum, schema drift, or incomplete artifact leaves the prior published release active.
+Acquisition runs under a scheduler or approved operator action and never during a customer estimate.
+A failed checksum, schema validation, normalization, or publication step leaves the prior accepted release and publication receipt active.
+Implementation evidence must come from executed migrations, populated table counts, exact artifact identities, and the committed compact proof publication.
 
-## 7. Internal database schema
+## 7. Resolution rules
 
-The intended normalized targets are ${standard.internalTargets.join(", ")}.
-Implementation evidence must come from executed migrations and populated table counts in the committed compact proof export.
-No generic per-Standard JSON payload table is claimed as an implemented source schema.
-Each source-specific adapter must publish typed columns derived from its inspected native structure or remain incomplete.
-
-## 8. Exact resolution
-
-Identifiers are Unicode-normalized, trimmed, case-folded for search, and compared with punctuation-insensitive aliases only after exact original matching fails.
-Manufacturer aliases and model aliases are versioned rows, never destructive edits.
-Equipment class, capacity, geography, effective date, active status, source version, and test procedure are mandatory filters whenever the source exposes them.
-An exact path must return one compatible active record.
-Zero records returns a typed unavailable result.
+Exact resolution requires one compatible active record after applying every source-supported identity, equipment class, capacity, geography, effective-date, and test-procedure filter.
+Zero compatible records returns a typed unavailable result.
 Multiple compatible records return an ambiguity error unless the source defines a deterministic edition or submodel key.
-The original identifier, matched alias, filters, and rejected candidates remain in provenance.
-
-## 9. Requirements-based resolution
-
-Mandatory filters are the category's explicit equipment class, performance requirement, capacity boundary, geography, date, active status, test-procedure version, and source release.
-The eligible population contains only records satisfying every mandatory filter.
-Inactive, withdrawn, superseded, incompatible-unit, missing-required-field, and cross-test-procedure records are excluded.
-The source release is never mixed with another release inside one population.
-A single eligible record may be selected directly.
-Multiple eligible records use an official recommended value only when the source defines one, then a weighted median only when a defensible source weight exists, then an ordinary median only for a true scalar benchmark population.
+Requirements resolution admits only records satisfying every mandatory project and category constraint from one source release.
+Benchmark resolution requires an authoritative, category-specific, unit-compatible population and a retained numeric selection rule.
+An official recommended value takes precedence, followed by a defensible source-weighted median, then an ordinary median only for an exchangeable scalar population.
 Structured records and model result sets are never median-selected.
+Every selection retains its filters, eligible population, sample size, method, fallback level, uncertainty, and rejected candidates.
 
-## 10. Benchmark resolution
-
-The benchmark population must be authoritative, category-specific, unit-compatible, and filtered to the same context dimensions used by the formula.
-The minimum sample size is five unless an official source explicitly publishes one typical value or a category-specific report approves a different threshold.
-The weighting field must come from the source and is never inferred from record order.
-The weighted median is the first value whose cumulative positive weight reaches at least half of total eligible weight after sorting by value.
-The ordinary median is permitted only when no defensible weight exists and the population is an exchangeable scalar population.
-The selected value retains filters, population size, sample size, method, fallback level, and uncertainty.
-The unsupported boundary is ${standard.unsupportedBoundary}.
-
-## 11. Calculation or local-model execution
+## 8. Calculation and runtime execution
 
 The exact output contract contains: ${outputs.join("; ")}.
 The governing source equation or transformation is ${standard.derivation}.
-The local execution mode is ${standard.runtimeDesign}.
-Inputs are rejected for missing required fields, incompatible units, ambiguous identifiers, invalid effective dates, out-of-range physical values, or a mismatched model version.
-Outputs retain their native unit and a normalized unit from the repository unit registry.
-Warnings are first-class result fields and cannot be dropped by the category adapter.
-Reproducibility requires the raw-artifact checksum, source release, adapter version, input hash, model or formula version, and output hash.
-
-## 12. Refresh and versioning
-
-Refresh follows ${standard.updateCadence}.
-Release detection compares official release metadata and artifact checksums.
-A changed checksum under an unchanged source version is quarantined for review.
-Schema drift compares columns, types, required fields, enumeration values, workbook sheets, or model input declarations against the prior accepted fingerprint.
-Raw snapshots, normalized releases, crosswalks, and selection outputs are immutable.
-Publication uses an atomic pointer to the accepted release.
-Rollback changes only that pointer and records an operator reason.
-Deprecated releases remain available for historical calculation replay.
-Stale data is labeled and blocked when an effective-date or certification-status guarantee can no longer be made.
-
-## 13. Runtime design
-
 The selected runtime design is ${standard.runtimeDesign}.
 The required number of external calls during a customer estimate is zero.
-The adapter reads a published internal release or executes a pinned local model only.
-If the source is offline, existing published releases and reproducible historical calculations continue to work.
+Inputs are rejected for missing required fields, incompatible units, ambiguous identifiers, invalid dates, impossible physical values, or a mismatched model version.
+Warnings are first-class result fields and cannot be dropped by the category adapter.
+Reproducibility requires the source-artifact or content-addressed project-input identity, source release when applicable, adapter version, input hash, model or formula version, and output hash.
 
-## 14. Cost
+## 9. Refresh, immutable identity, and publication receipt
+
+Refresh follows ${standard.updateCadence}.
+Source IDs, release IDs, artifact IDs, project-input hashes, calculation IDs, and model-version IDs are content-bound identities.
+An upsert may confirm an identical record but may not silently rewrite content behind one of those identities.
+A source-backed dependency pins a source artifact and release, while a project-owned dependency may leave those fields null only when its exact input run and input SHA-256 carry the provenance.
+Database publication builds the SQLite database, compact export, and receipt in temporary paths.
+The publisher verifies byte sizes, SHA-256 values, and one generation ID before replacing the database and compact export, then renames the receipt last as the commit marker.
+Consumers verify \`docs/operational-savings-automation-research/fixtures/research-database.compact.json\` against \`docs/operational-savings-automation-research/fixtures/research-database.publication.json\`.
+A failed publication preserves the prior committed generation.
+
+## 10. Cost
 
 One-time engineering effort is ${cost.engineeringHours} hours.
 Estimated raw storage is ${cost.rawStorageGb} GB.
@@ -555,7 +1133,7 @@ External source cost is ${formatMoney(cost.externalMonthlyUsd)} per month.
 Estimated internal storage and compute cost is ${formatMoney(cost.monthly100Usd)} at 100 calculations per month, ${formatMoney(cost.monthly1000Usd)} at 1,000, and ${formatMoney(cost.monthly10000Usd)} at 10,000.
 These figures exclude ordinary shared database and observability overhead and are planning estimates, not vendor quotes.
 
-## 15. Synthetic regression boundary
+## 11. Synthetic regression boundary
 
 The offline command is:
 
@@ -565,47 +1143,63 @@ node scripts/research/operational-savings/run-synthetic-prototypes.mjs --json
 
 The retained compact sample is \`docs/operational-savings-automation-research/samples/${standard.slug}.sample.json\`.
 Its local output kind is \`${prototypeResult.kind}\`, its selection rule is \`${prototypeResult.selectionRule}\`, and its output unit is \`${prototypeResult.unit}\`.
-This synthetic regression executes without network access, but it does not prove acquisition, schema inspection, source-specific parsing, a real model run, database publication, or formula-term reachability.
-Only the separate real-proof registry and source-backed tests may satisfy those gates.
+This synthetic regression does not prove acquisition, source-specific parsing, a real model run, database publication, or category formula-term reachability.
 
-## 16. Feasibility verdict
+## 12. Feasibility and supported boundary
 
 **${standard.feasibility}**
 
+This verdict is derived from ${countLabel(standard.feasibilityEvidence.processCount, "bound process", "bound processes")}.
+${standard.feasibilityEvidence.basis}
+The proof ledger records ${countLabel(standard.feasibilityEvidence.endToEndProcessCount, "end-to-end real process", "end-to-end real processes")}, ${countLabel(standard.feasibilityEvidence.sourceVerifiedProcessCount, "source-verified process", "source-verified processes")}, and ${countLabel(standard.feasibilityEvidence.manualExportReadyProcessCount, "process", "processes")} with genuine manual-export downstream proof.
 The supported boundary is ${standard.supportedBoundary}.
 The unsupported boundary is ${standard.unsupportedBoundary}.
 
-## 17. Final recommended strategy
+## 13. Recommended strategy and later card review
 
 ${standard.recommendedStrategy}
-This is the single recommended production path for this Standard.
 The rejected alternative is: ${standard.rejectedAlternative}
-
-## 18. Potential later Information Card changes
-
 No Information Card change is made on this research branch.
-Later review may update the visible source version, fallback wording, input ownership, category scope, or status to match the supported boundary documented above.
-Any formula change must be separately researched, reviewed, and approved.
-Any fallback must name its authoritative population and exact numeric selection rule.
+Later review may update visible source versions, fallback wording, ownership, category scope, or status only after the generated proof view supports the change.
+Any formula change requires separate research, review, and approval.
 `;
 }
 
-function renderCategoryReport(category, standardCatalog) {
-  const processes = category.informationCard.processes;
-  const rows = processes.map((process) => {
-    const standards = process.canonicalStandardIds.map((id) => standardCatalog.get(id));
-    return [
+export function renderCategoryReport(
+  category,
+  standardCatalog,
+  mergedProcesses
+) {
+  const processes = mergedProcesses;
+  if (processes.length !== category.informationCard.processes.length) {
+    throw new Error(
+      `${category.id} merged process count differs from its canonical process count`
+    );
+  }
+  const contractRows = processes.map((process) => [
+    process.key,
+    process.name,
+    process.canonicalStandardIds.join(", "),
+    process.inputBindings
+      .map(
+        (binding) =>
+          `${binding.lookupInput} [${binding.sourceLabel}]`
+      )
+      .join("; "),
+    process.outputBindings
+      .map(
+        (binding) =>
+          `${binding.outputName} -> ${binding.formulaTerm} (${binding.outputUnit}; ${binding.outputScope})`
+      )
+      .join("; ")
+  ]);
+  const proofRows = processes.map((process) => [
       process.key,
-      process.name,
-      process.canonicalStandardIds.join(", "),
-      process.lookupInputs.join("; "),
-      process.valueNeeded.join("; "),
-      process.outputBindings.map((binding) => binding.formulaTerm).join("; "),
-      standards.map((standard) => standard?.feasibility || "MISSING").join(", "),
-      "0",
-      process.validation
-    ];
-  });
+      process.proof.proofLevel,
+      process.proof.adapterPath || "None implemented",
+      formatExecutionTests(process.proof),
+      formatBlocker(process.proof.blocker)
+  ]);
   const feasibility = unique(
     processes.flatMap((process) =>
       process.canonicalStandardIds.map((id) => standardCatalog.get(id)?.feasibility)
@@ -619,19 +1213,30 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Process coverage
 
+### Canonical process contract
+
 ${table(
   [
     "Process key",
     "Process name",
     "Canonical Standard",
     "Required inputs",
-    "Exact outputs",
-    "Formula terms",
-    "Source feasibility",
-    "Runtime external calls",
+    "Exact output and formula term"
+  ],
+  contractRows
+)}
+
+### Current execution evidence
+
+${table(
+  [
+    "Process key",
+    "Execution-verified proof level",
+    "Adapter path",
+    "Actual adapter test result",
     "Current blocker"
   ],
-  rows
+  proofRows
 )}
 
 ## End-to-end graph
@@ -654,68 +1259,155 @@ ${processes
 ## Feasibility
 
 The category depends on these source-level verdicts: ${feasibility.join(", ") || "no external Standard"}.
-An exact path is feasible only when every bound Profile, Bill, Linked Opportunity, Project Document, and User input is present and every Standard adapter returns an unambiguous compatible result.
-A benchmark path is feasible only where the category has a retained authoritative population and exact selection rule.
+The process table reports the final proof level after execution-record verification, not a higher level that a manifest may have declared before the current run.
+An exact path is usable only when every owned input is present and every Standard adapter returns one unambiguous compatible result.
+A benchmark path is usable only where the category has a retained authoritative population and exact selection rule.
 The runtime external-call count remains zero.
 
-## Recommended next action
+## Conditional next actions
 
-Implement and accept the shared source-family adapters before connecting this category to any calculation runtime.
-Add one category golden fixture for each supported exact or benchmark path.
-Keep unsupported paths explicit rather than filling them with generic defaults.
+${table(
+  ["Process key", "Current proof level", "Next action"],
+  processes.map((process) => [
+    process.key,
+    process.proof.proofLevel,
+    nextActionForProcess(process)
+  ])
+)}
 `;
 }
 
-function processCoverageRows(review, catalogById) {
-  return review.categoryReviews.flatMap((category) =>
-    category.informationCard.processes.map((process) => {
-      const standards = process.canonicalStandardIds.map((id) => catalogById.get(id)).filter(Boolean);
-      const exactFeasible = standards.every((standard) =>
-        [
-          "FEASIBLE_NOW",
-          "FEASIBLE_AFTER_MANUAL_SEED",
-          "FEASIBLE_AFTER_ADAPTER_WORK"
-        ].includes(standard.feasibility)
-      );
-      const exactFeasibility = exactFeasible
-        ? "FEASIBLE_AFTER_SOURCE_PREREQUISITES"
-        : standards.some((standard) => standard.feasibility === "PARTIALLY_FEASIBLE")
-          ? "CONDITIONAL_WITHIN_SUPPORTED_BOUNDARY"
-          : "NOT_FEASIBLE";
-      const benchmarkFeasible =
-        process.selectionPolicy.outputCardinality === "ONE_SELECTED_SCALAR" &&
-        !standards.some((standard) => standard.feasibility === "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES");
-      return {
-        categoryId: category.id,
-        processKey: process.key,
-        processName: process.name,
-        standardIds: process.canonicalStandardIds,
-        requiredInputs: process.lookupInputs,
-        acquisitionSources: standards.map((standard) => standard.officialSource),
-        sourceNativeFields: unique(standards.flatMap((standard) => standard.nativeFields)),
-        internalTargets: unique(standards.flatMap((standard) => standard.internalTargets)),
-        outputFields: process.valueNeeded,
-        formulaTerms: process.outputBindings.map((binding) => binding.formulaTerm),
-        exactFeasibility,
-        benchmarkFeasibility: benchmarkFeasible ? "SOURCE_SPECIFIC_REVIEW_REQUIRED" : "NOT_APPLICABLE_OR_UNSUPPORTED",
-        runtimeNetworkDependency: 0,
-        externalCost: standards.every((standard) => standard.cost.externalMonthlyUsd === 0)
-          ? "$0"
-          : "See Standard reports",
-        engineeringEffort: standards.map((standard) => standard.cost.engineeringHours).join(" + "),
-        blocker: process.validation,
-        verdict: aggregateFeasibility(standards),
-        nextAction: standards.map((standard) => standard.recommendedStrategy).join(" ")
-      };
-    })
-  );
+export function processCoverageRows(proofSource) {
+  return proofSource.processes.map((entry) => {
+    const process = entry.proof || entry;
+    return {
+      categoryId: process.categoryId,
+      processKey: process.processKey,
+      processName: process.processName,
+      standardIds: [...process.standardIds],
+      proofLevel: process.proofLevel,
+      realArtifacts: structuredClone(process.realArtifacts),
+      adapterPath: process.adapterPath,
+      normalizedTargets: structuredClone(process.normalizedTargets),
+      actualOutputs: structuredClone(process.actualOutputs),
+      formulaMappings: structuredClone(process.formulaMappings),
+      realTests: structuredClone(process.realTests),
+      syntheticTests: structuredClone(process.syntheticTests),
+      executionTestResults: structuredClone(
+        process.executionTestResults
+      ),
+      offlineStatus: structuredClone(process.offlineStatus),
+      blocker: structuredClone(process.blocker),
+      nextAction: nextActionForProcess(process)
+    };
+  });
 }
 
-function renderCoverage(rows) {
+function compactJson(value) {
+  return JSON.stringify(value);
+}
+
+function formatRealArtifacts(artifacts) {
+  if (!artifacts.length) return "None retained";
+  return artifacts
+    .map((artifact) => {
+      const locator =
+        artifact.cachePath ||
+        artifact.sourceUrl ||
+        artifact.sourceId ||
+        "no retained locator";
+      const integrity = artifact.sha256
+        ? `sha256:${artifact.sha256}`
+        : artifact.commitSha
+          ? `commit:${artifact.commitSha}`
+          : "no retained checksum or commit";
+      return `${artifact.artifactId || "unnamed artifact"} (${locator}; ${integrity})`;
+    })
+    .join("<br>");
+}
+
+function formatActualOutputs(outputs) {
+  if (!outputs.length) return "None produced";
+  return outputs
+    .map(
+      (output) =>
+        `${output.formulaTerm}: ${compactJson(output.value)} (${output.unit}; ${output.scope})`
+    )
+    .join("<br>");
+}
+
+function formatNormalizedTargets(targets) {
+  if (!targets.length) return "None published";
+  return targets
+    .map((target) =>
+      typeof target === "string" ? target : compactJson(target)
+    )
+    .join("<br>");
+}
+
+function formatFormulaMappings(mappings) {
+  if (!mappings.length) return "None mapped";
+  return mappings
+    .map(
+      (mapping) =>
+        `${mapping.formulaTerm} [${mapping.status}]${mapping.testId ? ` via ${mapping.testId}` : ""}`
+    )
+    .join("<br>");
+}
+
+function formatOfflineStatus(status) {
+  const fields = [status.status || "NOT_RUN"];
+  if (status.testId) fields.push(`test:${status.testId}`);
+  if (status.networkMode) fields.push(`network:${status.networkMode}`);
+  return fields.join("; ");
+}
+
+function formatBlocker(blocker) {
+  if (!blocker) return "None";
+  const missingGates = blocker.missingGates?.length
+    ? ` Missing gates: ${blocker.missingGates.join(", ")}.`
+    : "";
+  return `${blocker.code}: ${blocker.detail || "No detail supplied."}${missingGates}`;
+}
+
+function formatProofLevelMix(counts) {
+  return PROOF_LEVELS.filter((level) => counts[level] > 0)
+    .map((level) => `${level}: ${counts[level]}`)
+    .join("; ");
+}
+
+export function renderCoverage(rows, standardFeasibilities) {
   return `# Category-process automation coverage
 
-This inventory is generated from the current Information Card projections and contains exactly one row for every category-local process.
-It does not alter the cards or their process bindings.
+This inventory is generated from the contradiction-checked merge of canonical Information Card bindings and \`proof-ledger.v2.json\` evidence.
+It contains exactly one row for every category-local process.
+It does not infer readiness from planning labels in the research catalog.
+An empty evidence field is reported explicitly and does not count as proof.
+
+${table(
+  [
+    "Standard",
+    "Derived feasibility",
+    "Bound processes",
+    "End-to-end real",
+    "Source verified",
+    "Manual export downstream",
+    "Proof-level mix",
+    "Evidence basis"
+  ],
+  standardFeasibilities.map((summary) => [
+    summary.standardId,
+    summary.feasibility,
+    summary.processCount,
+    summary.endToEndProcessCount,
+    summary.sourceVerifiedProcessCount,
+    summary.manualExportReadyProcessCount,
+    formatProofLevelMix(summary.proofLevelCounts),
+    summary.basis
+  ])
+)}
+
+## Process evidence
 
 ${table(
   [
@@ -723,39 +1415,31 @@ ${table(
     "Process key",
     "Process name",
     "Canonical Standard",
-    "Required inputs",
-    "Acquisition source",
-    "Source-native fields",
-    "Internal table or local model",
-    "Exact output fields",
-    "Formula terms",
-    "Exact path",
-    "Benchmark path",
-    "Runtime network",
-    "External cost",
-    "Engineering effort",
+    "Proof level",
+    "Real artifact",
+    "Adapter path",
+    "Normalized target",
+    "Actual output",
+    "Formula term",
+    "Actual adapter test",
+    "Offline status",
     "Blocker",
-    "Verdict",
-    "Recommended next action"
+    "Conditional next action"
   ],
   rows.map((row) => [
     row.categoryId,
     row.processKey,
     row.processName,
     row.standardIds.join(", "),
-    row.requiredInputs.join("; "),
-    row.acquisitionSources.join("; "),
-    row.sourceNativeFields.join("; "),
-    row.internalTargets.join("; "),
-    row.outputFields.join("; "),
-    row.formulaTerms.join("; "),
-    row.exactFeasibility,
-    row.benchmarkFeasibility,
-    row.runtimeNetworkDependency,
-    row.externalCost,
-    row.engineeringEffort,
-    row.blocker,
-    row.verdict,
+    row.proofLevel,
+    formatRealArtifacts(row.realArtifacts),
+    row.adapterPath || "None retained",
+    formatNormalizedTargets(row.normalizedTargets),
+    formatActualOutputs(row.actualOutputs),
+    formatFormulaMappings(row.formulaMappings),
+    formatExecutionTests(row),
+    formatOfflineStatus(row.offlineStatus),
+    formatBlocker(row.blocker),
     row.nextAction
   ])
 )}
@@ -822,6 +1506,8 @@ function renderInternalDatabaseDesign() {
     ["equipment_products", "Normalized product identity", "id", "source_release_id, native_id, manufacturer, brand, model, normalized_model"],
     ["equipment_certifications", "Certification and status history", "id", "product_id, specification, test_procedure, effective_from, effective_to, active"],
     ["equipment_performance_fields", "Typed source-native product metrics", "id", "certification_id, field_key, numeric_value, text_value, unit_id"],
+    ["energy_star_commercial_dishwashers", "ENERGY STAR commercial-dishwasher summary fields", "product_id", "machine_type, sanitation_method, water_gallons_per_rack, washing_kwh_per_rack, idle_energy_rate_kw, date_qualified"],
+    ["energy_star_dishwasher_operating_modes", "Mode-specific ENERGY STAR commercial-dishwasher metrics", "id", "product_id, operating_mode, water_gallons_per_rack, washing_kwh_per_rack, idle_energy_rate_kw, booster_idle_energy_rate_kw, racks_per_hour"],
     ["installed_baseline_benchmarks", "Approved installed-equipment populations", "id", "population_id, equipment_class, context_json"],
     ["building_upgrade_measures", "ComStock and Scout measure definitions", "id", "release_id, native_measure_id, name, method"],
     ["building_archetype_benchmarks", "Precomputed building resource deltas", "id", "measure_id, geography_id, archetype, resource, value, unit_id"],
@@ -837,12 +1523,14 @@ function renderInternalDatabaseDesign() {
     ["retrofit_measure_crosswalks", "RetroFi to building measure IDs", "id", "source_release_id, retrofit_id, measure_id, approval_status"],
     ["benchmark_populations", "Immutable eligible population definitions", "id", "source_release_id, population_key, filters_json, minimum_sample_size"],
     ["benchmark_values", "Selected official, weighted-median, or median values", "id", "population_id, field_key, value, unit_id, sample_size, selection_rule"],
+    ["operating_schedule_references", "Pinned source-backed astronomy or schedule validation observations", "id", "source_release_id, reference_kind, location, local_date, event_name, local_time, native_text"],
     ["model_versions", "Pinned executable models", "id", "name, version, commit_sha, package_sha256, license"],
     ["model_input_schemas", "Model input contracts", "id", "model_version_id, schema_json, fingerprint"],
     ["calculation_assumptions", "Versioned RetroFi-owned assumptions", "id", "assumption_key, value_json, unit_id, effective_from, approved_by"],
     ["selected_values", "One selected value or structure per resolver", "id", "calculation_run_id, process_key, result_kind, value_json, unit_id"],
     ["selected_value_provenance", "Complete selected-value trace", "id", "selected_value_id, release_id, artifact_id, filters_json, population_id, fallback_level"],
     ["calculation_runs", "Reproducible local executions", "id", "adapter_version, input_hash, model_version_id, started_at, result_hash, status"],
+    ["calculation_source_dependencies", "Typed lineage from a calculation to upstream runs or retained source artifacts", "calculation_run_id + dependency_role", "input_calculation_run_id, source_artifact_id, source_fields_json, transformation"],
     ["calculation_warnings", "Typed warnings and review gates", "id", "calculation_run_id, code, severity, message"]
   ];
   return `# Internal operational-savings database design
@@ -922,16 +1610,40 @@ CREATE TABLE selected_value_provenance (
   fallback_level text NOT NULL,
   warnings jsonb NOT NULL
 );
+
+CREATE TABLE calculation_source_dependencies (
+  calculation_run_id uuid NOT NULL REFERENCES calculation_runs(id),
+  dependency_role text NOT NULL,
+  input_calculation_run_id uuid REFERENCES calculation_runs(id),
+  source_artifact_id uuid REFERENCES source_artifacts(id),
+  source_fields_json jsonb NOT NULL,
+  transformation text NOT NULL,
+  PRIMARY KEY (calculation_run_id, dependency_role),
+  CHECK (
+    input_calculation_run_id IS NOT NULL
+    OR source_artifact_id IS NOT NULL
+  )
+);
 \`\`\`
 
 ## Versioning and publication
 
 Every raw artifact and normalized release is immutable.
+Source, release, artifact, model-version, assumption, calculation-run, selected-value, and dependency identities are content-bound.
+An idempotent insert may confirm identical content, but no upsert may replace different content behind an existing identity.
 A source release moves through discovered, acquired, validated, normalized, reviewed, published, deprecated, and rejected states.
 Only a published release may be selected by an estimate.
 Publication is an atomic source-specific pointer and rollback changes that pointer without deleting data.
 Effective dates are separate from ingestion and publication dates.
 Historical calculations pin their source-release IDs and remain reproducible after a newer release is published.
+A source-backed calculation dependency pins its source artifact.
+A project, profile, bill, linked-opportunity, or document dependency may omit the source artifact only when it pins an immutable upstream calculation run whose input hash records the exact owned input.
+\`calculation_source_dependencies\` enforces that every dependency has an upstream calculation run, a source artifact, or both.
+
+The research database publisher builds the SQLite database, compact JSON export, and publication receipt in temporary paths.
+It hashes the database and compact export, records their byte sizes under one generation ID, renames the data files, and renames the receipt last as the commit marker.
+Consumers must verify \`docs/operational-savings-automation-research/fixtures/research-database.compact.json\` against \`docs/operational-savings-automation-research/fixtures/research-database.publication.json\` before use.
+If any build, rename, or verification step fails, the prior committed generation remains authoritative.
 
 ## Deduplication and matching
 
@@ -1000,9 +1712,11 @@ interface ResultEnvelope<T> {
   value: T | null;
   unit: string | null;
   scope: string;
-  source: string;
-  sourceVersion: string;
-  sourceArtifact: string;
+  inputOwnership: "SOURCE" | "PROJECT_OR_PROFILE";
+  source: string | null;
+  sourceVersion: string | null;
+  sourceArtifact: string | null;
+  inputSha256: string;
   filters: Record<string, unknown>;
   eligiblePopulation: unknown[];
   sampleSize: number;
@@ -1014,7 +1728,9 @@ interface ResultEnvelope<T> {
 }
 \`\`\`
 
-Every result contains the selected value or structure, unit, scope, source, source version, source artifact, filters, eligible population, sample size, selection rule, fallback level, uncertainty, warnings, and provenance.
+Every result contains the selected value or structure, unit, scope, ownership, exact input hash, filters, eligible population, sample size, selection rule, fallback level, uncertainty, warnings, and provenance.
+A source-backed result also contains its source, release, and artifact identities.
+A project-owned result leaves those source fields null and proves the exact input through its content hash and immutable input calculation run.
 Unavailable is a successful typed result when the source cannot lawfully or technically supply a required value.
 
 ## Estimate-time flow
@@ -1038,6 +1754,18 @@ Normalized Profile
 Later exact inputs supersede benchmark selections by creating a new calculation run.
 Historical runs remain immutable.
 Category-overlap guards compare retrofit identity, physical resource boundary, time interval, and upstream savings component before summing results.
+
+## Identity and publication contract
+
+Source IDs, release IDs, artifact IDs, model-version IDs, input hashes, and calculation IDs identify immutable content.
+Adapters may reuse an existing row only after every identity-bearing field matches.
+They fail closed on conflicting content instead of rewriting a retained release, artifact, assumption, calculation, selected value, or dependency.
+\`calculation_source_dependencies\` requires an upstream calculation run or a source artifact for every dependency.
+This permits content-addressed project inputs without falsely attributing them to an external source.
+
+The offline proof publisher creates the database, compact export, and receipt as one generation.
+It verifies byte sizes and SHA-256 values before publishing, then installs the receipt last.
+The prior generation remains usable if publication fails before that final commit marker.
 
 ## Error policy
 
@@ -1088,6 +1816,10 @@ ${table(
   [
     "Standard",
     "Verdict",
+    "Bound processes",
+    "End-to-end real",
+    "Source verified",
+    "Evidence basis",
     "Engineering hours",
     "Raw GB",
     "Published GB",
@@ -1101,6 +1833,10 @@ ${table(
   catalog.standards.map((standard) => [
     standard.id,
     standard.feasibility,
+    standard.feasibilityEvidence.processCount,
+    standard.feasibilityEvidence.endToEndProcessCount,
+    standard.feasibilityEvidence.sourceVerifiedProcessCount,
+    standard.feasibilityEvidence.basis,
     standard.cost.engineeringHours,
     standard.cost.rawStorageGb,
     standard.cost.publishedStorageGb,
@@ -1271,7 +2007,7 @@ ${table(
   catalog.standards.map((standard) => [
     standard.id,
     standard.feasibility,
-    standard.unsupportedBoundary
+    standard.feasibilityEvidence.basis
   ])
 )}
 
@@ -1327,17 +2063,24 @@ function renderExecutiveSummary(catalog, review, rows) {
     },
     { minimum: 0, maximum: 0 }
   );
+  const proofCounts = Object.fromEntries(
+    PROOF_LEVELS.map((level) => [
+      level,
+      rows.filter((row) => row.proofLevel === level).length
+    ])
+  );
   return `# Executive summary
 
-The zero-runtime-network architecture is feasible for every currently useful path, but no source should be connected directly to a customer estimate.
+The proof ledger currently demonstrates ${proofCounts.END_TO_END_REAL} end-to-end real process paths out of ${rows.length}.
+Every other path remains limited to source-level proof, documentation, a synthetic test, an access block, or an unsupported source boundary.
 The repository contains 19 canonical Standards, ${rows.length} category-local process instances, ${review.categoryReviews.length} categories, 632 explicit input bindings, 215 explicit output bindings, and 497 formula-term contracts.
 All 19 Standards have a source inventory, compact synthetic sample, cost estimate, and proposed supported boundary.
 Those planning artifacts are not automation proof.
 
-The strongest immediate sources are the ENERGY STAR product datasets, FuelEconomy bulk vehicle data, FEMP lighting tables, and the ENERGY STAR dishwasher calculator.
-DOE CCMS and WaterSense labeled-product data require operator-seeded exports.
-ComStock, Scout, MEASUR, SAM, PVWatts, wind, and REopt are technically localizable but require production adapters and reproducible packaging.
-WaterSense commercial operations and the shared context-benchmark Standard remain intentionally partial because checklists and mixed benchmark sources cannot supply missing project measurements.
+Only Standards whose complete bound process set is end-to-end real receive \`FEASIBLE_NOW\`.
+Standards with only a proved subset receive \`PARTIALLY_FEASIBLE\`.
+A Standard receives \`FEASIBLE_AFTER_ADAPTER_WORK\` only when real source execution exists but none of its bound processes is end-to-end real.
+DOE CCMS and WaterSense labeled-product access probes do not qualify for \`FEASIBLE_AFTER_MANUAL_SEED\` because no genuine official export reaches the downstream source-to-Standard gates.
 
 The selected runtime architecture is:
 
@@ -1383,6 +2126,9 @@ It covers ${catalog.standards.length} canonical Standards, ${rows.length} catego
 - [Deployment readiness](deployment-readiness.md)
 - [Unresolved product decisions](unresolved-product-decisions.md)
 - [Source download manifest](source-download-manifest.json)
+- [Real-proof ledger](proof-ledger.v2.json)
+- [Compact research database](fixtures/research-database.compact.json)
+- [Database publication receipt](fixtures/research-database.publication.json)
 - [Standard reports](standards/)
 - [Category reports](categories/)
 - [Retained compact samples](samples/)
@@ -1396,7 +2142,8 @@ npx vitest run scripts/research/operational-savings/tests
 \`\`\`
 
 The synthetic prototype runner performs no network access and cannot satisfy a real-proof gate.
-Large downloaded artifacts and cloned repositories remain under the ignored \`scripts/research/operational-savings/.cache/\` directory.
+Research S3 is the durable source of truth for acquired and normalized artifacts, while research ECR is the durable source of truth for runnable model images.
+The ignored \`scripts/research/operational-savings/.cache/\` directory is temporary working space and is not treated as durable evidence.
 The generated reports do not change the approved formulas, trees, bindings, ownership decisions, statuses, or Information Cards.
 `;
 }
@@ -1411,7 +2158,10 @@ function buildManifest(catalog, sampleMetadata) {
       rawArtifactsCommitted: false,
       rawCachePath: "scripts/research/operational-savings/.cache/artifacts",
       repositoryCachePath: "scripts/research/operational-savings/.cache/repos",
-      compactSamplesCommitted: true
+      compactSamplesCommitted: true,
+      durableRawAndNormalizedStore: "research S3",
+      durableRunnableModelStore: "research ECR",
+      localCacheRole: "temporary working space only"
     },
     standards: catalog.standards.map((standard) => ({
       standardId: standard.id,
@@ -1435,18 +2185,69 @@ function buildManifest(catalog, sampleMetadata) {
       },
       retainedSample: sampleMetadata.get(standard.id),
       runtimeDesign: standard.runtimeDesign,
-      feasibility: standard.feasibility
+      feasibility: standard.feasibility,
+      feasibilityEvidence: {
+        processCount: standard.feasibilityEvidence.processCount,
+        endToEndProcessCount:
+          standard.feasibilityEvidence.endToEndProcessCount,
+        sourceVerifiedProcessCount:
+          standard.feasibilityEvidence.sourceVerifiedProcessCount,
+        manualExportReadyProcessCount:
+          standard.feasibilityEvidence.manualExportReadyProcessCount,
+        proofLevelCounts: standard.feasibilityEvidence.proofLevelCounts,
+        basis: standard.feasibilityEvidence.basis
+      }
     }))
   };
 }
 
 async function main() {
-  const catalog = JSON.parse(await readFile(CATALOG_PATH, "utf8"));
+  const sourceCatalog = JSON.parse(await readFile(CATALOG_PATH, "utf8"));
+  if (sourceCatalog.feasibilitySource !== FEASIBILITY_SOURCE) {
+    throw new Error(
+      "Research catalog does not declare proof-ledger feasibility derivation"
+    );
+  }
+  const staticFeasibility = sourceCatalog.standards.filter((standard) =>
+    Object.prototype.hasOwnProperty.call(standard, "feasibility")
+  );
+  if (staticFeasibility.length) {
+    throw new Error(
+      `Research catalog must not declare static Standard feasibility: ${staticFeasibility.map((standard) => standard.id).join(", ")}`
+    );
+  }
+  const proofLedger = await buildProofLedger({ repoRoot: REPO_ROOT });
   const sources = await loadOperationalSavingsSources(REPO_ROOT);
   const review = buildOperationalSavingsReview(sources);
   if (review.errors.length) {
-    throw new Error(`Canonical operational-savings inventory is invalid:\n${review.errors.join("\n")}`);
+    throw new Error(
+      `Canonical operational-savings inventory is invalid:\n${review.errors.join("\n")}`
+    );
   }
+  const mergedView = buildMergedResearchView(review, proofLedger);
+  const standardFeasibilities = deriveStandardFeasibilities(
+    sourceCatalog.standards,
+    mergedView
+  );
+  const feasibilityByStandard = new Map(
+    standardFeasibilities.map((summary) => [summary.standardId, summary])
+  );
+  const catalog = {
+    ...sourceCatalog,
+    standards: sourceCatalog.standards.map((standard) => {
+      const feasibilityEvidence = feasibilityByStandard.get(standard.id);
+      if (!feasibilityEvidence) {
+        throw new Error(
+          `Proof ledger does not produce feasibility evidence for ${standard.id}`
+        );
+      }
+      return {
+        ...standard,
+        feasibility: feasibilityEvidence.feasibility,
+        feasibilityEvidence
+      };
+    })
+  };
   const catalogById = new Map(catalog.standards.map((standard) => [standard.id, standard]));
   const canonicalIds = review.standards.map((standard) => standard.id).sort();
   const catalogIds = catalog.standards.map((standard) => standard.id).sort();
@@ -1454,14 +2255,14 @@ async function main() {
     throw new Error("Research catalog Standard IDs do not match the canonical registry");
   }
   const canonicalById = new Map(review.standards.map((standard) => [standard.id, standard]));
-  const instancesByStandard = buildStandardInstances(review);
+  const instancesByStandard = buildStandardInstances(review, mergedView);
   const evidenceByStandard = new Map(
     canonicalIds.map((id) => [
       id,
       sources.evidenceManifest.evidence_records.filter((record) => record.standard_id === id)
     ])
   );
-  const processRows = processCoverageRows(review, catalogById);
+  const processRows = processCoverageRows(mergedView);
   if (processRows.length !== 124) {
     throw new Error(`Expected 124 process rows, found ${processRows.length}`);
   }
@@ -1513,7 +2314,11 @@ async function main() {
   for (const category of review.categoryReviews) {
     await writeFile(
       join(CATEGORIES_ROOT, `${category.id}.md`),
-      renderCategoryReport(category, catalogById),
+      renderCategoryReport(
+        category,
+        catalogById,
+        mergedView.processesByCategory.get(category.id) || []
+      ),
       "utf8"
     );
   }
@@ -1524,7 +2329,10 @@ async function main() {
     ["source-access-matrix.md", renderSourceAccessMatrix(catalog)],
     ["internal-database-design.md", renderInternalDatabaseDesign()],
     ["shared-adapter-architecture.md", renderAdapterArchitecture()],
-    ["category-process-coverage.md", renderCoverage(processRows)],
+    [
+      "category-process-coverage.md",
+      renderCoverage(processRows, standardFeasibilities)
+    ],
     ["cost-and-feasibility.md", renderCostAndFeasibility(catalog)],
     ["implementation-roadmap.md", renderRoadmap(catalog, instancesByStandard)],
     ["deployment-readiness.md", renderDeploymentReadiness(catalog)],
@@ -1532,6 +2340,10 @@ async function main() {
     [
       "source-download-manifest.json",
       `${JSON.stringify(buildManifest(catalog, sampleMetadata), null, 2)}\n`
+    ],
+    [
+      "proof-ledger.v2.json",
+      `${JSON.stringify(proofLedger, null, 2)}\n`
     ]
   ]);
   for (const [filename, content] of outputs) {
@@ -1543,4 +2355,6 @@ async function main() {
   );
 }
 
-await main();
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  await main();
+}

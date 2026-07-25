@@ -1,0 +1,24 @@
+{
+  "metrics": {
+    "annualLoadKwh": 10000.0,
+    "yearOneBillBeforeTaxUsd": 1136.99,
+    "yearOneDemandCostBeforeTaxUsd": 136.99,
+    "yearOneEnergyCostBeforeTaxUsd": 1000.0
+  },
+  "schemaVersion": "retrofi/reopt-official-proof-v1",
+  "status": "optimal",
+  "sourceCommit": "f952cabdf3e60f6e88eef80bb7bc9e7e24bac643",
+  "terminationStatus": "OPTIMAL",
+  "solverSeconds": 0.356,
+  "packageVersions": {
+    "HiGHS_jll": "1.8.0+0",
+    "HiGHS": "1.12.0",
+    "Julia": "1.10.4",
+    "MathOptInterface": "1.34.0",
+    "JuMP": "1.23.6"
+  },
+  "scenarioKind": "official_shipped",
+  "inputSha256": "35403d8d36594530aeb7f43619083d3a5304816ffbbc5f2b7e1de13887d9591d",
+  "outputSha256": "456be75c79f0ce06eac509ba11f947ff23d99279c7abd6292d173b527d7666ce",
+  "sourcePath": "test/scenarios/no_techs.json"
+}

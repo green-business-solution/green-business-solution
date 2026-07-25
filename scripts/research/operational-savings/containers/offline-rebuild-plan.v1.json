@@ -1,0 +1,333 @@
+{
+  "schemaVersion": "operational-savings/offline-container-rebuild-plan-v1",
+  "scope": "Prospective rebuild inputs only. This plan is not evidence about how any image digest recorded in an existing build-manifest.json was built.",
+  "targetPlatform": "linux/arm64",
+  "daemonEgressControl": {
+    "status": "NOT_VERIFIED",
+    "evidencePath": null,
+    "evidenceSha256": null,
+    "verifiedAt": null,
+    "scope": "Docker build RUN networking is set to none. BuildKit daemon and registry-resolution egress must be independently denied and evidenced before an executable build can be classified as offline."
+  },
+  "durableImageDependencies": [
+    {
+      "dependencyId": "julia-1.10.4-bookworm-linux-arm64",
+      "roles": [
+        "reopt-build-base",
+        "reopt-runtime-base"
+      ],
+      "reference": "julia:1.10.4-bookworm@sha256:754e3f19a84522e7b890e173d926048a6d08df59e096628a385a719684e9f52f",
+      "indexDigest": "sha256:754e3f19a84522e7b890e173d926048a6d08df59e096628a385a719684e9f52f",
+      "arm64ManifestDigest": "sha256:101e6819484e693032933cefcffe246ee12a5f4a790da69555c821e89f566820",
+      "durableEvidence": {
+        "status": "NOT_RECORDED",
+        "storageKind": null,
+        "uri": null,
+        "immutableIdentity": null,
+        "verifiedAt": null,
+        "restoreVerifiedAt": null
+      }
+    },
+    {
+      "dependencyId": "ubuntu-24.04-linux-arm64",
+      "roles": [
+        "ssc-build-base",
+        "ssc-runtime-base",
+        "measur-runtime-base"
+      ],
+      "reference": "ubuntu:24.04@sha256:4fbb8e6a8395de5a7550b33509421a2bafbc0aab6c06ba2cef9ebffbc7092d90",
+      "indexDigest": "sha256:4fbb8e6a8395de5a7550b33509421a2bafbc0aab6c06ba2cef9ebffbc7092d90",
+      "arm64ManifestDigest": "sha256:7f622ca8766bccb22f04242ecb6f19f770b2f08827dc4b8c707de5e78a6da7ab",
+      "durableEvidence": {
+        "status": "NOT_RECORDED",
+        "storageKind": null,
+        "uri": null,
+        "immutableIdentity": null,
+        "verifiedAt": null,
+        "restoreVerifiedAt": null
+      }
+    },
+    {
+      "dependencyId": "python-3.12.13-slim-bookworm-linux-arm64",
+      "roles": [
+        "scout-build-base",
+        "scout-runtime-base"
+      ],
+      "reference": "python:3.12.13-slim-bookworm@sha256:d50fb7611f86d04a3b0471b46d7557818d88983fc3136726336b2a4c657aa30b",
+      "indexDigest": "sha256:d50fb7611f86d04a3b0471b46d7557818d88983fc3136726336b2a4c657aa30b",
+      "arm64ManifestDigest": "sha256:c18c7a910432dde3311fc54d02e5d5220f3ebe26fec43ff15745982863dd7b3b",
+      "durableEvidence": {
+        "status": "NOT_RECORDED",
+        "storageKind": null,
+        "uri": null,
+        "immutableIdentity": null,
+        "verifiedAt": null,
+        "restoreVerifiedAt": null
+      }
+    },
+    {
+      "dependencyId": "gcc-13.3.0-bookworm-linux-arm64",
+      "roles": [
+        "measur-build-base"
+      ],
+      "reference": "gcc:13.3.0-bookworm@sha256:1d71f0f3450214bef38fe09e6f610fb6cca90cf97b43f4ce845bfc32a4168818",
+      "indexDigest": "sha256:1d71f0f3450214bef38fe09e6f610fb6cca90cf97b43f4ce845bfc32a4168818",
+      "arm64ManifestDigest": "sha256:9b78318009f4b2c8ea27aaea79d710bccb28ae362c467f3a54d1c63d4a4f7a72",
+      "durableEvidence": {
+        "status": "NOT_RECORDED",
+        "storageKind": null,
+        "uri": null,
+        "immutableIdentity": null,
+        "verifiedAt": null,
+        "restoreVerifiedAt": null
+      }
+    }
+  ],
+  "models": [
+    {
+      "modelId": "reopt",
+      "historicalBuildManifestPath": "scripts/research/operational-savings/containers/reopt/build-manifest.json",
+      "offlineDockerfilePath": "scripts/research/operational-savings/containers/reopt/Dockerfile.offline",
+      "candidateTag": "retrofit-research-reopt:reopt-0.59.2-f952cab-offline-candidate-arm64",
+      "workflowStatus": "IMPLEMENTED",
+      "imageDependencyIds": [
+        "julia-1.10.4-bookworm-linux-arm64"
+      ],
+      "baseImageArgument": "JULIA_IMAGE",
+      "baseImage": {
+        "reference": "julia:1.10.4-bookworm@sha256:754e3f19a84522e7b890e173d926048a6d08df59e096628a385a719684e9f52f",
+        "indexDigest": "sha256:754e3f19a84522e7b890e173d926048a6d08df59e096628a385a719684e9f52f",
+        "arm64ManifestDigest": "sha256:101e6819484e693032933cefcffe246ee12a5f4a790da69555c821e89f566820",
+        "localPresenceRequired": true
+      },
+      "exactArtifacts": [
+        {
+          "artifactId": "reopt-source",
+          "cachePath": "scripts/research/operational-savings/.cache/artifacts/reopt-f952cab-source.tar.gz",
+          "contextPath": "inputs/reopt-source.tar.gz",
+          "sha256": "9b0068246fc2ed73c1834302a03f6e8d3ff7003827d9b5032a6a5a5257ceeb70",
+          "sizeBytes": 222425044,
+          "required": true,
+          "archivePolicy": {
+            "format": "tar",
+            "compression": "gzip",
+            "requiredMembers": []
+          }
+        },
+        {
+          "artifactId": "reopt-resolved-julia-environment",
+          "plannedCachePath": "scripts/research/operational-savings/.cache/model-dependencies/reopt/reopt-f952cab-julia-environment-linux-arm64.tar",
+          "contextPath": "inputs/reopt-julia-environment.tar",
+          "buildArgument": "REOPT_ENVIRONMENT_SHA256",
+          "sha256": null,
+          "sizeBytes": null,
+          "required": true,
+          "missingReason": "The exact post-Pkg.add Project.toml, Manifest.toml, and Julia depot used by the accepted image have not been retained as one checksum-pinned artifact.",
+          "archivePolicy": {
+            "format": "tar",
+            "compression": "none",
+            "requiredMembers": [
+              "reopt-environment/Project.toml",
+              "reopt-environment/Manifest.toml",
+              "julia-depot/"
+            ]
+          }
+        }
+      ],
+      "trackedContextFiles": [
+        {
+          "sourcePath": "scripts/research/operational-savings/containers/reopt/Dockerfile.offline",
+          "contextPath": "Dockerfile"
+        },
+        {
+          "sourcePath": "scripts/research/operational-savings/containers/reopt/runner.jl",
+          "contextPath": "runner.jl"
+        },
+        {
+          "sourcePath": "scripts/research/operational-savings/containers/reopt/retrofi-storage-spec.json",
+          "contextPath": "retrofi-storage-spec.json"
+        }
+      ],
+      "buildArguments": {
+        "JULIA_IMAGE": "julia:1.10.4-bookworm@sha256:754e3f19a84522e7b890e173d926048a6d08df59e096628a385a719684e9f52f",
+        "REOPT_ARCHIVE_SHA256": "9b0068246fc2ed73c1834302a03f6e8d3ff7003827d9b5032a6a5a5257ceeb70",
+        "REOPT_COMMIT": "f952cabdf3e60f6e88eef80bb7bc9e7e24bac643"
+      },
+      "plannedContextStatus": "BLOCKED_MISSING_EXACT_DEPENDENCY_ARTIFACT",
+      "blockedAction": "Extract the resolved Julia environment from the exact accepted image, create a deterministic archive with the required members, checksum it, add its exact cache identity to this plan and the research storage inventory, upload and restore-verify it in research S3, then build a new candidate image."
+    },
+    {
+      "modelId": "ssc",
+      "historicalBuildManifestPath": "scripts/research/operational-savings/containers/ssc/build-manifest.json",
+      "offlineDockerfilePath": "scripts/research/operational-savings/containers/ssc/Dockerfile.offline",
+      "candidateTag": "retrofit-research-ssc:ssc-308-ba7a7968-offline-candidate-arm64",
+      "workflowStatus": "IMPLEMENTED",
+      "imageDependencyIds": [
+        "ubuntu-24.04-linux-arm64"
+      ],
+      "baseImageArgument": "UBUNTU_IMAGE",
+      "baseImage": {
+        "reference": "ubuntu:24.04@sha256:4fbb8e6a8395de5a7550b33509421a2bafbc0aab6c06ba2cef9ebffbc7092d90",
+        "indexDigest": "sha256:4fbb8e6a8395de5a7550b33509421a2bafbc0aab6c06ba2cef9ebffbc7092d90",
+        "arm64ManifestDigest": "sha256:7f622ca8766bccb22f04242ecb6f19f770b2f08827dc4b8c707de5e78a6da7ab",
+        "localPresenceRequired": true
+      },
+      "exactArtifacts": [
+        {
+          "artifactId": "ssc-source",
+          "cachePath": "scripts/research/operational-savings/.cache/artifacts/ssc-ba7a7968-source.tar.gz",
+          "contextPath": "inputs/ssc-source.tar.gz",
+          "sha256": "00a3001c529c87b97c271bb75dd809c71003045ecadcedeb7b2b4d9cc9479631",
+          "sizeBytes": 278188118,
+          "required": true,
+          "archivePolicy": {
+            "format": "tar",
+            "compression": "gzip",
+            "requiredMembers": []
+          }
+        },
+        {
+          "artifactId": "or-tools-linux-arm64-release",
+          "cachePath": "scripts/research/operational-savings/.cache/artifacts/or-tools_aarch64_AlmaLinux-8.10_cpp_v9.14.6206.tar.gz",
+          "contextPath": "inputs/or-tools.tar.gz",
+          "sha256": "2f731a156cd9e4123d1433dec51a22ba74702d349457fe76c65bba0f1f7958e0",
+          "sizeBytes": 53631276,
+          "required": true,
+          "archivePolicy": {
+            "format": "tar",
+            "compression": "gzip",
+            "requiredMembers": [
+              "or-tools_aarch64_AlmaLinux-8.10_cpp_v9.14.6206/share/doc/ortools/LICENSE"
+            ]
+          }
+        },
+        {
+          "artifactId": "ssc-ubuntu-build-debs",
+          "plannedCachePath": "scripts/research/operational-savings/.cache/model-dependencies/ssc/ubuntu-24.04-arm64-build-debs.tar",
+          "contextPath": "inputs/ubuntu-build-debs.tar",
+          "buildArgument": "SSC_BUILD_DEBS_SHA256",
+          "sha256": null,
+          "sizeBytes": null,
+          "required": true,
+          "missingReason": "The exact Ubuntu 24.04 arm64 build-essential, CMake, Ninja, and transitive .deb inputs have not been retained.",
+          "archivePolicy": {
+            "format": "tar",
+            "compression": "none",
+            "requiredMembers": []
+          }
+        },
+        {
+          "artifactId": "ssc-ubuntu-runtime-debs",
+          "plannedCachePath": "scripts/research/operational-savings/.cache/model-dependencies/ssc/ubuntu-24.04-arm64-runtime-debs.tar",
+          "contextPath": "inputs/ubuntu-runtime-debs.tar",
+          "buildArgument": "SSC_RUNTIME_DEBS_SHA256",
+          "sha256": null,
+          "sizeBytes": null,
+          "required": true,
+          "missingReason": "The exact Ubuntu 24.04 arm64 libgomp1, libstdc++6, and transitive runtime .deb inputs have not been retained.",
+          "archivePolicy": {
+            "format": "tar",
+            "compression": "none",
+            "requiredMembers": []
+          }
+        }
+      ],
+      "trackedContextFiles": [
+        {
+          "sourcePath": "scripts/research/operational-savings/containers/ssc/Dockerfile.offline",
+          "contextPath": "Dockerfile"
+        },
+        {
+          "sourcePath": "scripts/research/operational-savings/containers/ssc/runner.cpp",
+          "contextPath": "runner.cpp"
+        }
+      ],
+      "buildArguments": {
+        "BUILD_JOBS": "4",
+        "ORTOOLS_ARCHIVE_SHA256": "2f731a156cd9e4123d1433dec51a22ba74702d349457fe76c65bba0f1f7958e0",
+        "SSC_ARCHIVE_SHA256": "00a3001c529c87b97c271bb75dd809c71003045ecadcedeb7b2b4d9cc9479631",
+        "SSC_COMMIT": "ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+        "UBUNTU_IMAGE": "ubuntu:24.04@sha256:4fbb8e6a8395de5a7550b33509421a2bafbc0aab6c06ba2cef9ebffbc7092d90"
+      },
+      "plannedContextStatus": "BLOCKED_MISSING_EXACT_DEPENDENCY_ARTIFACT",
+      "blockedAction": "Acquire the exact Ubuntu arm64 .deb closure from a pinned snapshot, retain deterministic build and runtime archives with checksums and license metadata, add them to this plan and the research storage inventory, upload and restore-verify them in research S3, then build a new candidate image."
+    },
+    {
+      "modelId": "scout",
+      "historicalBuildManifestPath": "scripts/research/operational-savings/containers/scout/build-manifest.json",
+      "offlineDockerfilePath": "scripts/research/operational-savings/containers/scout/Dockerfile.offline",
+      "candidateTag": "retrofit-research-scout:scout-72bcf419-offline-candidate-arm64",
+      "workflowStatus": "IMPLEMENTED",
+      "imageDependencyIds": [
+        "python-3.12.13-slim-bookworm-linux-arm64"
+      ],
+      "baseImageArgument": "PYTHON_IMAGE",
+      "baseImage": {
+        "reference": "python:3.12.13-slim-bookworm@sha256:d50fb7611f86d04a3b0471b46d7557818d88983fc3136726336b2a4c657aa30b",
+        "indexDigest": "sha256:d50fb7611f86d04a3b0471b46d7557818d88983fc3136726336b2a4c657aa30b",
+        "arm64ManifestDigest": "sha256:c18c7a910432dde3311fc54d02e5d5220f3ebe26fec43ff15745982863dd7b3b",
+        "localPresenceRequired": true
+      },
+      "exactArtifacts": [
+        {
+          "artifactId": "scout-source",
+          "cachePath": "scripts/research/operational-savings/.cache/artifacts/scout-72bcf419-source.tar.gz",
+          "contextPath": "inputs/scout-source.tar.gz",
+          "sha256": "07abd78a5e1c778fa3fa46e45f2b2aaef3c11089c2b2d99bc5ea0db928457822",
+          "sizeBytes": 363816480,
+          "required": true,
+          "archivePolicy": {
+            "format": "tar",
+            "compression": "gzip",
+            "requiredMembers": []
+          }
+        }
+      ],
+      "wheelhouse": {
+        "cacheDirectory": "scripts/research/operational-savings/.cache/model-dependencies/scout",
+        "contextDirectory": "inputs/wheels",
+        "requirementsPath": "scripts/research/operational-savings/containers/scout/requirements.lock",
+        "expectedPackageCount": 34
+      },
+      "trackedContextFiles": [
+        {
+          "sourcePath": "scripts/research/operational-savings/containers/scout/Dockerfile.offline",
+          "contextPath": "Dockerfile"
+        },
+        {
+          "sourcePath": "scripts/research/operational-savings/containers/scout/runner.py",
+          "contextPath": "runner.py"
+        },
+        {
+          "sourcePath": "scripts/research/operational-savings/containers/scout/requirements.lock",
+          "contextPath": "requirements.lock"
+        }
+      ],
+      "buildArguments": {
+        "PYTHON_IMAGE": "python:3.12.13-slim-bookworm@sha256:d50fb7611f86d04a3b0471b46d7557818d88983fc3136726336b2a4c657aa30b",
+        "SCOUT_ARCHIVE_SHA256": "07abd78a5e1c778fa3fa46e45f2b2aaef3c11089c2b2d99bc5ea0db928457822",
+        "SCOUT_COMMIT": "72bcf419eb1cb37379f163563344b0ec61507fd3",
+        "SCOUT_OUTPUT_SHA256": "f7b428a2e66d90b4bfc4cf6272d85f52b1aea88229ff3c3fb53e33f536eccf50"
+      },
+      "plannedContextStatus": "READY_WHEN_EXACT_CACHE_INPUTS_VALIDATE",
+      "blockedAction": "Restore-verify the source archive and every wheel from research S3, preload the exact pinned base image without changing its identity, prepare the locked context, and build a new candidate image with networking disabled."
+    },
+    {
+      "modelId": "measur",
+      "historicalBuildManifestPath": "scripts/research/operational-savings/containers/measur/build-manifest.json",
+      "offlineDockerfilePath": null,
+      "candidateTag": "retrofit-research-measur:amo-tools-bdc33b8-offline-candidate-arm64",
+      "workflowStatus": "BLOCKED_PROSPECTIVE_WORKFLOW_NOT_IMPLEMENTED",
+      "imageDependencyIds": [
+        "gcc-13.3.0-bookworm-linux-arm64",
+        "ubuntu-24.04-linux-arm64"
+      ],
+      "baseImageArgument": null,
+      "exactArtifacts": [],
+      "trackedContextFiles": [],
+      "buildArguments": {},
+      "plannedContextStatus": "BLOCKED_PROSPECTIVE_WORKFLOW_NOT_IMPLEMENTED",
+      "blockedAction": "Retain and restore-verify exact OCI evidence for both the GCC builder and Ubuntu runtime images, define a separate prospective Dockerfile without altering the accepted Dockerfile, bind the deterministic AMO Tools archive and generated harness inputs, and add candidate verification before enabling a MEASUR rebuild."
+    }
+  ]
+}

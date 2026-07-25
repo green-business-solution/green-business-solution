@@ -1,0 +1,270 @@
+{
+  "schemaVersion": 1,
+  "buildContextProvenance": {
+    "status": "UNCOMMITTED_HISTORICAL_BUILD_CONTEXT",
+    "historicalRepositoryCommit": null,
+    "contentIdentityStatus": "POST_HOC_EXACT_FILE_HASHES",
+    "recordedImageBuildContextAttested": false,
+    "note": "These hashes identify the present build and verification files exactly. They do not prove that this uncommitted repository context produced the already-recorded image digest. A future commit will bind this content prospectively."
+  },
+  "image": {
+    "repositoryTag": "retrofit-research-scout:scout-72bcf419-arm64",
+    "targetPlatform": "linux/arm64",
+    "baseImage": "python:3.12.13-slim-bookworm@sha256:d50fb7611f86d04a3b0471b46d7557818d88983fc3136726336b2a4c657aa30b",
+    "baseImageArm64ManifestDigest": "sha256:c18c7a910432dde3311fc54d02e5d5220f3ebe26fec43ff15745982863dd7b3b",
+    "localImageId": "sha256:f46b0566f31270bc8070192ff587a76eb914801b239f9a21b13a30ddd5c5037e",
+    "localRepoDigests": [
+      "retrofit-research-scout@sha256:f46b0566f31270bc8070192ff587a76eb914801b239f9a21b13a30ddd5c5037e"
+    ],
+    "localImageSizeBytes": 526217636,
+    "runtimeUser": "65532:65532"
+  },
+  "baseImage": {
+    "reference": "python:3.12.13-slim-bookworm",
+    "indexDigest": "sha256:d50fb7611f86d04a3b0471b46d7557818d88983fc3136726336b2a4c657aa30b",
+    "arm64ManifestDigest": "sha256:c18c7a910432dde3311fc54d02e5d5220f3ebe26fec43ff15745982863dd7b3b"
+  },
+  "source": {
+    "repository": "https://github.com/trynthink/scout",
+    "commit": "72bcf419eb1cb37379f163563344b0ec61507fd3",
+    "archiveUrl": "https://github.com/trynthink/scout/archive/72bcf419eb1cb37379f163563344b0ec61507fd3.tar.gz",
+    "cachePath": "scripts/research/operational-savings/.cache/artifacts/scout-72bcf419-source.tar.gz",
+    "archiveSha256": "07abd78a5e1c778fa3fa46e45f2b2aaef3c11089c2b2d99bc5ea0db928457822",
+    "archiveSizeBytes": 363816480,
+    "acquisitionMode": "PUBLIC_PINNED_GITHUB_COMMIT_ARCHIVE",
+    "acquisitionTimestamp": "2026-07-24T19:49:31.000Z",
+    "sourceOrganization": "National Laboratory of the Rockies",
+    "role": "EXACT_CONTAINER_SOURCE_ARCHIVE",
+    "official": true,
+    "originalLocalPath": "/private/tmp/scout-72bcf419.tar.gz",
+    "license": {
+      "spdxExpression": "Apache-2.0 OR BSD-3-Clause",
+      "path": "/opt/scout/LICENSE.md",
+      "sha256": "8ab3f859bd20bbd4ba4e74902ce7d9af94fb866facf856da4b32ed1a380cd2ef"
+    }
+  },
+  "runtime": {
+    "python": "3.12.13",
+    "platform": "Linux aarch64 with glibc 2.36",
+    "openBlasThreads": 1,
+    "pythonHashSeed": 0,
+    "entryPoint": [
+      "python",
+      "/opt/scout-proof/runner.py"
+    ],
+    "commonDockerArguments": [
+      "--rm",
+      "--platform",
+      "linux/arm64",
+      "--network",
+      "none",
+      "--read-only",
+      "--cap-drop",
+      "ALL",
+      "--security-opt",
+      "no-new-privileges",
+      "--pull",
+      "never"
+    ],
+    "verificationCommand": "node scripts/research/operational-savings/containers/scout/verify.mjs"
+  },
+  "dependencies": {
+    "lockFormat": "pip-require-hashes-linux-arm64-wheels",
+    "lockPath": "requirements.lock",
+    "lockSha256": "ac4072b2b2e2069a7dbed51a7f1127a11e762165ca4f6890a2b461a19544ef83",
+    "installedFreezePath": "/opt/scout-proof/dependencies.freeze",
+    "installedFreezeSha256": "0dcc94d6cf4f2e6452541e4036914ab65ddf9679ee9b9d6847fdaec8d2908084",
+    "packageCount": 34,
+    "packages": [
+      "PyYAML==6.0.3",
+      "Pygments==2.20.0",
+      "attrs==26.1.0",
+      "backoff==2.2.1",
+      "certifi==2026.7.22",
+      "charset-normalizer==3.4.9",
+      "contourpy==1.3.3",
+      "cycler==0.12.1",
+      "fonttools==4.63.0",
+      "idna==3.18",
+      "iniconfig==2.3.0",
+      "jsonschema-specifications==2025.9.1",
+      "jsonschema==4.26.0",
+      "kiwisolver==1.5.0",
+      "matplotlib==3.11.1",
+      "numpy-financial==1.0.0",
+      "numpy==1.26.4",
+      "orjson==3.11.9",
+      "packaging==26.2",
+      "pandas==3.0.5",
+      "pillow==12.3.0",
+      "pluggy==1.6.0",
+      "pyparsing==3.3.2",
+      "pytest==9.1.1",
+      "python-dateutil==2.9.0.post0",
+      "python-dotenv==1.2.2",
+      "referencing==0.37.0",
+      "requests==2.34.2",
+      "rpds-py==2026.6.3",
+      "scipy==1.17.1",
+      "six==1.17.0",
+      "typing_extensions==4.16.0",
+      "urllib3==2.7.0",
+      "xlsxwriter==3.2.9"
+    ]
+  },
+  "fixtures": [
+    {
+      "path": "ecm_definitions/(C) 90.1 Lighting.json",
+      "sha256": "f58f1dec2e3b4693339eae59a73cf018b637a5c34400ff6c62dae189cfe18baa"
+    },
+    {
+      "path": "ecm_definitions/ecm_schema.json",
+      "sha256": "d28cdc4fd33c65a03a05c0c08e5e222b1eaf26bb081670c5e081e78f7d1b07ed"
+    },
+    {
+      "path": "scout/ecm_prep.py",
+      "sha256": "639134208b7368e7a9cafe9975b8205ed8fe4b864cce10368167557cd5831848"
+    },
+    {
+      "path": "scout/supporting_data/config_schema.yml",
+      "sha256": "1e6eff0552e7f88ed276950eb77551089c283734bb45caf00174c8be1e9405c8"
+    },
+    {
+      "path": "inputs/microsegments.json",
+      "sha256": "4765aa366a61704ad60de1e9a8a094e5872c6e64e118eb8d2e5f3fe44024ff1c"
+    },
+    {
+      "path": "inputs/panel_shares.csv",
+      "sha256": "cea26fef22a8d7a7e144ab5d7d2beb2e702723b3e8de827230b56cc69cb2ff33"
+    },
+    {
+      "path": "inputs/metadata.json",
+      "sha256": "00d7ce7728310c909cc78ba48c608d142e9d8537141064814eb149537efb54a8"
+    }
+  ],
+  "buildInputs": [
+    {
+      "path": "Dockerfile",
+      "sha256": "c787457968a00993e8589a00500e5f8b5c6159e4d5bcf62170f7a489698667da"
+    },
+    {
+      "path": "runner.py",
+      "sha256": "d62f7cd2d4e55c4e4ae51fc0f7765cc38f1c77cf6f7335db93ea33eddd099a48"
+    },
+    {
+      "path": "requirements.lock",
+      "sha256": "ac4072b2b2e2069a7dbed51a7f1127a11e762165ca4f6890a2b461a19544ef83"
+    }
+  ],
+  "verificationInputs": [
+    {
+      "path": "verify.mjs",
+      "sha256": "33f6af2b32042b04b0ff804cab0335968704ff6bbcd31597e96888410047e878"
+    }
+  ],
+  "build": {
+    "status": "COMPLETED_AND_EXACT_IMAGE_VERIFIED",
+    "builtAt": "2026-07-24T20:01:16.562757505Z",
+    "builtAtEvidence": {
+      "kind": "LOCAL_IMAGE_CONFIG_CREATED",
+      "imageId": "sha256:f46b0566f31270bc8070192ff587a76eb914801b239f9a21b13a30ddd5c5037e",
+      "inspectionField": ".Created"
+    },
+    "historicalInvocationCaptured": false,
+    "commandSemantics": "This is the exact reproduction command derived from the pinned Dockerfile defaults and recorded image tag. It is not represented as a retained copy of the historical shell invocation.",
+    "environment": {
+      "dockerClientVersion": "29.6.1",
+      "dockerServerVersion": "29.6.1",
+      "dockerBuildxVersion": "v0.35.0-desktop.2",
+      "dockerServerPlatform": "linux/arm64",
+      "dockerServerKernel": "6.12.76-linuxkit"
+    },
+    "arguments": {
+      "PYTHON_IMAGE": "python:3.12.13-slim-bookworm@sha256:d50fb7611f86d04a3b0471b46d7557818d88983fc3136726336b2a4c657aa30b",
+      "SCOUT_ARCHIVE_SHA256": "07abd78a5e1c778fa3fa46e45f2b2aaef3c11089c2b2d99bc5ea0db928457822",
+      "SCOUT_COMMIT": "72bcf419eb1cb37379f163563344b0ec61507fd3",
+      "SCOUT_OUTPUT_SHA256": "f7b428a2e66d90b4bfc4cf6272d85f52b1aea88229ff3c3fb53e33f536eccf50"
+    },
+    "command": "docker buildx build --platform linux/arm64 --provenance=false --load --tag retrofit-research-scout:scout-72bcf419-arm64 scripts/research/operational-savings/containers/scout",
+    "reproductionCommand": "docker buildx build --platform linux/arm64 --provenance=false --load --tag retrofit-research-scout:scout-72bcf419-arm64 scripts/research/operational-savings/containers/scout",
+    "statusEvidence": {
+      "localImageId": "sha256:f46b0566f31270bc8070192ff587a76eb914801b239f9a21b13a30ddd5c5037e",
+      "ecrImageDigest": "sha256:f46b0566f31270bc8070192ff587a76eb914801b239f9a21b13a30ddd5c5037e",
+      "runtimeVerificationStatus": "PASS"
+    }
+  },
+  "proofRuns": [
+    {
+      "mode": "retained-output",
+      "network": "docker-none",
+      "status": "PASS",
+      "outputPath": "/opt/scout/generated/ecm_prep.json",
+      "outputSha256": "f7b428a2e66d90b4bfc4cf6272d85f52b1aea88229ff3c3fb53e33f536eccf50",
+      "outputSizeBytes": 599004,
+      "smallOfficeReductionFraction": 0.2
+    },
+    {
+      "mode": "full-rerun",
+      "network": "docker-none",
+      "status": "PASS",
+      "command": [
+        "scout/ecm_prep.py",
+        "--ecm_files",
+        "(C) 90.1 Lighting",
+        "--alt_regions",
+        "AIA",
+        "--no_scnd_lgt"
+      ],
+      "outputSha256": "f7b428a2e66d90b4bfc4cf6272d85f52b1aea88229ff3c3fb53e33f536eccf50",
+      "outputSizeBytes": 599004,
+      "smallOfficeReductionFraction": 0.2,
+      "technicalPotential2026": {
+        "baselineEnergyMmbtu": 1186769465.363136,
+        "efficientEnergyMmbtu": 934880631.317625
+      }
+    }
+  ],
+  "verification": {
+    "status": "PASS",
+    "verifiedAt": "2026-07-24T20:06:19Z",
+    "architecture": "linux/arm64",
+    "networkMode": "none",
+    "fixtureHashesVerified": true,
+    "licenseHashVerified": true,
+    "retainedOutputVerified": true,
+    "fullRerunVerified": true,
+    "fullRerunMatchesRetainedOutput": true
+  },
+  "ecr": {
+    "accountId": "945129430686",
+    "region": "us-east-1",
+    "repositoryName": "retrofi-research-scout",
+    "repositoryUri": "945129430686.dkr.ecr.us-east-1.amazonaws.com/retrofi-research-scout",
+    "imageTag": "scout-72bcf419-arm64",
+    "imageDigest": "sha256:f46b0566f31270bc8070192ff587a76eb914801b239f9a21b13a30ddd5c5037e",
+    "imageUri": "945129430686.dkr.ecr.us-east-1.amazonaws.com/retrofi-research-scout@sha256:f46b0566f31270bc8070192ff587a76eb914801b239f9a21b13a30ddd5c5037e",
+    "pushedAt": "2026-07-24T20:14:11.650Z",
+    "imageSizeBytes": 526215817,
+    "imageManifestMediaType": "application/vnd.oci.image.manifest.v1+json",
+    "verificationStatus": "VERIFIED_EXACT_DIGEST",
+    "verifiedAt": "2026-07-24T20:17:39Z",
+    "exactDigestPulled": true,
+    "runtimeVerificationStatus": "PASS",
+    "verificationCommand": "SCOUT_IMAGE='945129430686.dkr.ecr.us-east-1.amazonaws.com/retrofi-research-scout@sha256:f46b0566f31270bc8070192ff587a76eb914801b239f9a21b13a30ddd5c5037e' node scripts/research/operational-savings/containers/scout/verify.mjs",
+    "scan": {
+      "status": "COMPLETE",
+      "completedAt": "2026-07-24T20:14:29.000Z",
+      "critical": 3,
+      "high": 5,
+      "medium": 3,
+      "low": 1,
+      "fixedVersionsReported": false,
+      "affectedPackages": [
+        "perl 5.36.0-7+deb12u3",
+        "diffutils 3.8-4",
+        "util-linux 2.38.1-5+deb12u3"
+      ],
+      "disposition": "Research-only image. No scanner-fixed versions were reported. Execute as non-root with Docker networking disabled and do not deploy for customer calculations."
+    }
+  }
+}

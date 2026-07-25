@@ -6,9 +6,17 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Process coverage
 
-| Process key | Process name | Canonical Standard | Required inputs | Exact outputs | Formula terms | Source feasibility | Runtime external calls | Current blocker |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| comstock_annual_delta | Commercial Building Upgrade Resource Model | STD-COMSTOCK-ANNUAL-DELTA | Existing Building Condition; Proposed Upgrade Option; Building Type; Site State or County; Building Area, approximate unless subsequently verified | Annual electricity and fuel-use change per square foot for the approved measure and building segment, with source version and units | median_ComStock_delta_r_per_ft² | FEASIBLE_AFTER_ADAPTER_WORK | 0 | The official release pages, upgrade documentation, and reference method were checked. A retained aggregate fixture and reviewed category crosswalk do not yet exist, so this process cannot currently return a project estimate or claim project-specific equipment performance. |
+### Canonical process contract
+
+| Process key | Process name | Canonical Standard | Required inputs | Exact output and formula term |
+| --- | --- | --- | --- | --- |
+| comstock_annual_delta | Commercial Building Upgrade Resource Model | STD-COMSTOCK-ANNUAL-DELTA | Existing Building Condition [User]; Proposed Upgrade Option [Linked Opportunity]; Building Type [Profile]; Site State or County [Profile]; Building Area, approximate unless subsequently verified [Profile] | Annual electricity and fuel-use change per square foot for the approved measure and building segment, with source version and units -> median_ComStock_delta_r_per_ft² (resource-unit/ft2-year; PER_YEAR) |
+
+### Current execution evidence
+
+| Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
+| --- | --- | --- | --- | --- |
+| comstock_annual_delta | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/comstock/run.mjs | comstock-artifact-network-failure-proof: NOT_COVERED<br>comstock-real-release-3-annual-delta-proof: NOT_COVERED<br>comstock-resolution-failure-proof: NOT_COVERED<br>comstock-schema-failure-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## End-to-end graph
 
@@ -16,13 +24,14 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Feasibility
 
-The category depends on these source-level verdicts: FEASIBLE_AFTER_ADAPTER_WORK.
-An exact path is feasible only when every bound Profile, Bill, Linked Opportunity, Project Document, and User input is present and every Standard adapter returns an unambiguous compatible result.
-A benchmark path is feasible only where the category has a retained authoritative population and exact selection rule.
+The category depends on these source-level verdicts: NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES.
+The process table reports the final proof level after execution-record verification, not a higher level that a manifest may have declared before the current run.
+An exact path is usable only when every owned input is present and every Standard adapter returns one unambiguous compatible result.
+A benchmark path is usable only where the category has a retained authoritative population and exact selection rule.
 The runtime external-call count remains zero.
 
-## Recommended next action
+## Conditional next actions
 
-Implement and accept the shared source-family adapters before connecting this category to any calculation runtime.
-Add one category golden fixture for each supported exact or benchmark path.
-Keep unsupported paths explicit rather than filling them with generic defaults.
+| Process key | Current proof level | Next action |
+| --- | --- | --- |
+| comstock_annual_delta | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |

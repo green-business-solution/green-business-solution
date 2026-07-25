@@ -1398,7 +1398,7 @@ describe("validate-operational-savings-information-trees", () => {
 });
 
 async function createFixture() {
-  const fixtureRoot = await mkdtemp(join(tmpdir(), "gbs-operational-savings-validator-"));
+  const fixtureRoot = await mkdtemp(join(tmpdir(), "vitest-information-tree-validator-"));
   fixtureRoots.push(fixtureRoot);
   for (const directory of ["docs", "scripts", "data", "apps/api/server/matching"]) {
     await mkdir(join(fixtureRoot, directory), { recursive: true });

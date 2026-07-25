@@ -7,12 +7,35 @@ import {
   buildOperationalSavingsReview,
   loadOperationalSavingsSources
 } from "../../generate-operational-savings-review-pages.mjs";
+import {
+  FEASIBILITY_SOURCE,
+  buildMergedResearchView,
+  deriveStandardFeasibilities,
+  processCoverageRows,
+  renderCategoryReport,
+  renderCoverage,
+  renderStandardReport
+} from "./generate-research.mjs";
+import {
+  PROOF_LEVELS,
+  buildProofLedger,
+  validateProofLedger
+} from "./proof-ledger.mjs";
 import { runSyntheticPrototype, validateResult } from "./synthetic-prototype.mjs";
 
 const REPO_ROOT = fileURLToPath(new URL("../../..", import.meta.url));
 const OUTPUT_ROOT = join(REPO_ROOT, "docs/operational-savings-automation-research");
 const CATALOG_PATH = fileURLToPath(new URL("./research-catalog.json", import.meta.url));
 const MANIFEST_PATH = join(OUTPUT_ROOT, "source-download-manifest.json");
+const PROOF_LEDGER_PATH = join(OUTPUT_ROOT, "proof-ledger.v2.json");
+const DATABASE_FIXTURE_PATH = join(
+  OUTPUT_ROOT,
+  "fixtures/research-database.compact.json"
+);
+const DATABASE_RECEIPT_PATH = join(
+  OUTPUT_ROOT,
+  "fixtures/research-database.publication.json"
+);
 const ALLOWED_INPUT_SOURCES = new Set([
   "Bill",
   "Linked Opportunity",
@@ -31,6 +54,8 @@ const REQUIRED_INTERNAL_TABLES = new Set([
   "equipment_products",
   "equipment_certifications",
   "equipment_performance_fields",
+  "energy_star_commercial_dishwashers",
+  "energy_star_dishwasher_operating_modes",
   "installed_baseline_benchmarks",
   "building_upgrade_measures",
   "building_archetype_benchmarks",
@@ -46,12 +71,14 @@ const REQUIRED_INTERNAL_TABLES = new Set([
   "retrofit_measure_crosswalks",
   "benchmark_populations",
   "benchmark_values",
+  "operating_schedule_references",
   "model_versions",
   "model_input_schemas",
   "calculation_assumptions",
   "selected_values",
   "selected_value_provenance",
   "calculation_runs",
+  "calculation_source_dependencies",
   "calculation_warnings"
 ]);
 const REQUIRED_ROOT_FILES = [
@@ -65,7 +92,8 @@ const REQUIRED_ROOT_FILES = [
   "implementation-roadmap.md",
   "deployment-readiness.md",
   "unresolved-product-decisions.md",
-  "source-download-manifest.json"
+  "source-download-manifest.json",
+  "proof-ledger.v2.json"
 ];
 const EXPECTED_CLASSIFICATIONS = new Set([
   "DIRECTLY_AVAILABLE",
@@ -86,6 +114,37 @@ const EXPECTED_FEASIBILITY = new Set([
   "PARTIALLY_FEASIBLE",
   "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES"
 ]);
+const EXPECTED_COVERAGE_FIELDS = [
+  "Category",
+  "Process key",
+  "Process name",
+  "Canonical Standard",
+  "Proof level",
+  "Real artifact",
+  "Adapter path",
+  "Normalized target",
+  "Actual output",
+  "Formula term",
+  "Actual adapter test",
+  "Offline status",
+  "Blocker",
+  "Conditional next action"
+];
+const STANDARD_REPORT_SECTIONS = [
+  "Canonical role and current process proof",
+  "Official source inventory",
+  "What can actually be acquired",
+  "Proof-backed artifacts, releases, and schemas",
+  "RetroFi field coverage",
+  "Acquisition and internal publication",
+  "Resolution rules",
+  "Calculation and runtime execution",
+  "Refresh, immutable identity, and publication receipt",
+  "Cost",
+  "Synthetic regression boundary",
+  "Feasibility and supported boundary",
+  "Recommended strategy and later card review"
+];
 
 function sha256(content) {
   return createHash("sha256").update(content).digest("hex");
@@ -153,11 +212,65 @@ export async function validateResearch({
 } = {}) {
   const errors = [];
   const warnings = [];
-  const catalog = JSON.parse(await readFile(CATALOG_PATH, "utf8"));
+  const sourceCatalog = JSON.parse(await readFile(CATALOG_PATH, "utf8"));
+  if (sourceCatalog.feasibilitySource !== FEASIBILITY_SOURCE) {
+    errors.push(
+      "Research catalog does not declare proof-ledger feasibility derivation"
+    );
+  }
+  for (const standard of sourceCatalog.standards) {
+    if (Object.prototype.hasOwnProperty.call(standard, "feasibility")) {
+      errors.push(
+        `${standard.id} declares static feasibility instead of deriving it from process proof`
+      );
+    }
+  }
   const manifest = JSON.parse(await readFile(MANIFEST_PATH, "utf8"));
+  const rebuiltProofLedger = await buildProofLedger({ repoRoot: REPO_ROOT });
+  const proofLedgerSource = await readFile(PROOF_LEDGER_PATH, "utf8");
+  let persistedProofLedger = null;
+  try {
+    persistedProofLedger = JSON.parse(proofLedgerSource);
+    validateProofLedger(persistedProofLedger);
+  } catch (error) {
+    errors.push(`Proof ledger is invalid: ${error.message}`);
+  }
+  if (
+    persistedProofLedger &&
+    JSON.stringify(persistedProofLedger) !==
+      JSON.stringify(rebuiltProofLedger)
+  ) {
+    errors.push(
+      "Proof ledger is stale relative to the canonical bindings and adapter proof manifests"
+    );
+  }
   const sources = await loadOperationalSavingsSources(REPO_ROOT);
   const review = buildOperationalSavingsReview(sources);
   errors.push(...review.errors.map((error) => `Canonical inventory: ${error}`));
+  let mergedView = null;
+  try {
+    mergedView = buildMergedResearchView(review, rebuiltProofLedger);
+  } catch (error) {
+    errors.push(`Canonical and proof research views contradict: ${error.message}`);
+  }
+  const standardFeasibilities = deriveStandardFeasibilities(
+    sourceCatalog.standards,
+    mergedView || rebuiltProofLedger
+  );
+  const feasibilityByStandard = new Map(
+    standardFeasibilities.map((summary) => [summary.standardId, summary])
+  );
+  const catalog = {
+    ...sourceCatalog,
+    standards: sourceCatalog.standards.map((standard) => {
+      const feasibilityEvidence = feasibilityByStandard.get(standard.id);
+      return {
+        ...standard,
+        feasibility: feasibilityEvidence.feasibility,
+        feasibilityEvidence
+      };
+    })
+  };
 
   if (catalog.standards.length !== 19) {
     errors.push(`Expected 19 catalog Standards, found ${catalog.standards.length}`);
@@ -165,6 +278,65 @@ export async function validateResearch({
   for (const fileName of REQUIRED_ROOT_FILES) {
     const exists = await access(join(OUTPUT_ROOT, fileName)).then(() => true).catch(() => false);
     if (!exists) errors.push(`Required research output is missing: ${fileName}`);
+  }
+  const compactDatabase = await readFile(DATABASE_FIXTURE_PATH).catch(
+    () => null
+  );
+  const publicationReceiptSource = await readFile(
+    DATABASE_RECEIPT_PATH,
+    "utf8"
+  ).catch(() => null);
+  if (compactDatabase === null) {
+    errors.push("Required compact research database fixture is missing");
+  }
+  if (publicationReceiptSource === null) {
+    errors.push("Required research database publication receipt is missing");
+  } else {
+    try {
+      const receipt = JSON.parse(publicationReceiptSource);
+      if (
+        receipt.schemaVersion !==
+          "operational-savings/research-database-publication-v1" ||
+        receipt.status !== "COMMITTED"
+      ) {
+        errors.push("Research database publication receipt is not committed");
+      }
+      if (compactDatabase !== null) {
+        const compactIdentity = {
+          byteSize: compactDatabase.byteLength,
+          sha256: sha256(compactDatabase)
+        };
+        if (
+          receipt.compactExport?.fileName !==
+            "research-database.compact.json" ||
+          receipt.compactExport?.byteSize !==
+            compactIdentity.byteSize ||
+          receipt.compactExport?.sha256 !== compactIdentity.sha256
+        ) {
+          errors.push(
+            "Compact research database does not match its publication receipt"
+          );
+        }
+        const expectedGenerationId = sha256(
+          JSON.stringify({
+            database: {
+              byteSize: receipt.database?.byteSize,
+              sha256: receipt.database?.sha256
+            },
+            compactExport: compactIdentity
+          })
+        );
+        if (receipt.generationId !== expectedGenerationId) {
+          errors.push(
+            "Research database publication receipt has an invalid generation ID"
+          );
+        }
+      }
+    } catch (error) {
+      errors.push(
+        `Research database publication receipt is invalid: ${error.message}`
+      );
+    }
   }
   if (
     JSON.stringify([...catalog.classifications].sort()) !==
@@ -215,6 +387,51 @@ export async function validateResearch({
   for (const duplicate of duplicateValues(catalog.standards.map((standard) => standard.slug))) {
     errors.push(`Duplicate Standard slug: ${duplicate}`);
   }
+  for (const standard of catalog.standards) {
+    const evidence = standard.feasibilityEvidence;
+    if (!evidence || evidence.processCount < 1) {
+      errors.push(`${standard.id} has no process-level feasibility evidence`);
+      continue;
+    }
+    if (
+      standard.feasibility === "FEASIBLE_NOW" &&
+      evidence.endToEndProcessCount !== evidence.processCount
+    ) {
+      errors.push(
+        `${standard.id} is FEASIBLE_NOW without every bound process at END_TO_END_REAL`
+      );
+    }
+    if (
+      standard.feasibility === "FEASIBLE_AFTER_MANUAL_SEED" &&
+      evidence.manualExportReadyProcessCount !== evidence.processCount
+    ) {
+      errors.push(
+        `${standard.id} is FEASIBLE_AFTER_MANUAL_SEED without genuine export downstream proof for every bound process`
+      );
+    }
+    if (
+      standard.feasibility === "FEASIBLE_AFTER_ADAPTER_WORK" &&
+      (evidence.endToEndProcessCount !== 0 ||
+        evidence.sourceVerifiedProcessCount === 0)
+    ) {
+      errors.push(
+        `${standard.id} is FEASIBLE_AFTER_ADAPTER_WORK without the required real-source boundary`
+      );
+    }
+    if (
+      standard.feasibility === "PARTIALLY_FEASIBLE" &&
+      !(
+        (evidence.endToEndProcessCount > 0 &&
+          evidence.endToEndProcessCount < evidence.processCount) ||
+        (evidence.manualExportReadyProcessCount > 0 &&
+          evidence.manualExportReadyProcessCount < evidence.processCount)
+      )
+    ) {
+      errors.push(
+        `${standard.id} is PARTIALLY_FEASIBLE without proof limited to a subset of its bound processes`
+      );
+    }
+  }
 
   const standardFiles = await listMatching(join(OUTPUT_ROOT, "standards"), /\.md$/);
   const categoryFiles = await listMatching(join(OUTPUT_ROOT, "categories"), /^ITC-\d{2}\.md$/);
@@ -226,6 +443,12 @@ export async function validateResearch({
   if (JSON.stringify(categoryFiles) !== JSON.stringify(expectedCategoryFiles)) {
     errors.push("Category report filenames differ from the canonical category inventory");
   }
+  const canonicalById = new Map(
+    review.standards.map((standard) => [standard.id, standard])
+  );
+  const categoryById = new Map(
+    review.categoryReviews.map((category) => [category.id, category])
+  );
 
   for (const standard of catalog.standards) {
     const reportPath = join(OUTPUT_ROOT, "standards", `${standard.slug}.md`);
@@ -234,16 +457,84 @@ export async function validateResearch({
       errors.push(`Missing Standard report: ${standard.slug}.md`);
       continue;
     }
-    for (let section = 1; section <= 18; section += 1) {
-      if (!report.includes(`## ${section}. `)) {
-        errors.push(`${standard.id} report is missing section ${section}`);
+    if (mergedView) {
+      const expected = renderStandardReport(
+        standard,
+        canonicalById.get(standard.id),
+        (mergedView.processesByStandard.get(standard.id) || []).map(
+          (process) => ({
+            category: categoryById.get(process.categoryId),
+            process
+          })
+        ),
+        sources.evidenceManifest.evidence_records.filter(
+          (record) => record.standard_id === standard.id
+        ),
+        runSyntheticPrototype(standard)
+      );
+      if (report !== expected) {
+        errors.push(
+          `${standard.id} report is stale or contradicts the merged canonical and proof process view`
+        );
       }
+    }
+    const reportSections = [
+      ...report.matchAll(/^## (\d+)\. (.+)$/gm)
+    ].map((match) => ({
+      number: Number(match[1]),
+      title: match[2]
+    }));
+    if (reportSections.length !== STANDARD_REPORT_SECTIONS.length) {
+      errors.push(
+        `${standard.id} report has ${reportSections.length} numbered sections instead of ${STANDARD_REPORT_SECTIONS.length}`
+      );
+    }
+    for (const [index, title] of STANDARD_REPORT_SECTIONS.entries()) {
+      const section = reportSections[index];
+      if (section?.number !== index + 1 || section?.title !== title) {
+        errors.push(
+          `${standard.id} report section ${index + 1} differs from the generated semantic outline`
+        );
+      }
+    }
+    if (
+      duplicateValues(reportSections.map(({ title }) => title)).length
+    ) {
+      errors.push(`${standard.id} report contains duplicate section titles`);
     }
     if (!report.includes(`**${standard.feasibility}**`)) {
       errors.push(`${standard.id} report is missing its exact feasibility verdict`);
     }
+    if (!report.includes(standard.feasibilityEvidence.basis)) {
+      errors.push(`${standard.id} report is missing its proof-derived feasibility basis`);
+    }
     if (!report.includes("The required number of external calls during a customer estimate is zero.")) {
       errors.push(`${standard.id} report does not state the zero-call runtime boundary`);
+    }
+    if (report.includes("The retained inspected artifact is")) {
+      errors.push(
+        `${standard.id} report labels a planning catalog artifact as retained proof`
+      );
+    }
+    const proofArtifactIds = new Set(
+      rebuiltProofLedger.processes.flatMap((process) =>
+        (process.contributions || [])
+          .filter((contribution) =>
+            contribution.coveredStandardIds.includes(standard.id)
+          )
+          .flatMap((contribution) =>
+            (contribution.realArtifacts || []).map(
+              (artifact) => artifact.artifactId
+            )
+          )
+      )
+    );
+    for (const artifactId of proofArtifactIds) {
+      if (!report.includes(`| ${artifactId} |`)) {
+        errors.push(
+          `${standard.id} report omits retained proof artifact ${artifactId}`
+        );
+      }
     }
     if (!catalog.feasibilityVerdicts.includes(standard.feasibility)) {
       errors.push(`${standard.id} has invalid feasibility ${standard.feasibility}`);
@@ -318,6 +609,31 @@ export async function validateResearch({
     }
   }
 
+  if (mergedView) {
+    const catalogById = new Map(
+      catalog.standards.map((standard) => [standard.id, standard])
+    );
+    for (const category of review.categoryReviews) {
+      const reportPath = join(
+        OUTPUT_ROOT,
+        "categories",
+        `${category.id}.md`
+      );
+      const report = await readFile(reportPath, "utf8").catch(() => null);
+      if (report === null) continue;
+      const expected = renderCategoryReport(
+        category,
+        catalogById,
+        mergedView.processesByCategory.get(category.id) || []
+      );
+      if (report !== expected) {
+        errors.push(
+          `${category.id} report is stale or contradicts the merged canonical and proof process view`
+        );
+      }
+    }
+  }
+
   for (const { category, process } of processes) {
     if (!process.canonicalStandardIds.length) {
       errors.push(`${category.id}/${process.key} has no canonical Standard`);
@@ -347,6 +663,38 @@ export async function validateResearch({
     errors.push("Manifest Standard IDs differ from the catalog");
   }
   for (const entry of manifest.standards) {
+    const expectedStandard = catalog.standards.find(
+      (standard) => standard.id === entry.standardId
+    );
+    if (
+      expectedStandard &&
+      entry.feasibility !== expectedStandard.feasibility
+    ) {
+      errors.push(
+        `${entry.standardId} manifest feasibility differs from process proof`
+      );
+    }
+    if (
+      expectedStandard &&
+      JSON.stringify(entry.feasibilityEvidence) !==
+        JSON.stringify({
+          processCount: expectedStandard.feasibilityEvidence.processCount,
+          endToEndProcessCount:
+            expectedStandard.feasibilityEvidence.endToEndProcessCount,
+          sourceVerifiedProcessCount:
+            expectedStandard.feasibilityEvidence.sourceVerifiedProcessCount,
+          manualExportReadyProcessCount:
+            expectedStandard.feasibilityEvidence
+              .manualExportReadyProcessCount,
+          proofLevelCounts:
+            expectedStandard.feasibilityEvidence.proofLevelCounts,
+          basis: expectedStandard.feasibilityEvidence.basis
+        })
+    ) {
+      errors.push(
+        `${entry.standardId} manifest feasibility evidence is stale`
+      );
+    }
     const samplePath = join(REPO_ROOT, entry.retainedSample.path);
     const content = await readFile(samplePath, "utf8").catch(() => null);
     if (content === null) {
@@ -387,18 +735,80 @@ export async function validateResearch({
       errors.push(`Internal database design omits ${tableName}`);
     }
   }
+  for (const requiredPublicationText of [
+    "content-bound",
+    "research-database.compact.json",
+    "research-database.publication.json",
+    "receipt last as the commit marker",
+    "input_calculation_run_id IS NOT NULL",
+    "source_artifact_id IS NOT NULL"
+  ]) {
+    if (!databaseDesign.includes(requiredPublicationText)) {
+      errors.push(
+        `Internal database design omits publication contract text: ${requiredPublicationText}`
+      );
+    }
+  }
+  const adapterArchitecture = await readFile(
+    join(OUTPUT_ROOT, "shared-adapter-architecture.md"),
+    "utf8"
+  );
+  for (const requiredArchitectureText of [
+    "sourceArtifact: string | null",
+    "inputSha256: string",
+    "content-addressed project inputs",
+    "receipt last"
+  ]) {
+    if (!adapterArchitecture.includes(requiredArchitectureText)) {
+      errors.push(
+        `Shared adapter architecture omits immutable provenance text: ${requiredArchitectureText}`
+      );
+    }
+  }
   const coverage = await readFile(join(OUTPUT_ROOT, "category-process-coverage.md"), "utf8");
+  const expectedCoverage = renderCoverage(
+    processCoverageRows(mergedView || rebuiltProofLedger),
+    standardFeasibilities
+  );
+  if (coverage !== expectedCoverage) {
+    errors.push(
+      "Category-process coverage is stale or contains values not projected from the proof ledger"
+    );
+  }
+  const processSection = coverage.split("\n## Process evidence\n\n")[1] || "";
+  const coverageHeader = processSection.split("\n")[0];
+  const expectedCoverageHeader = `| ${EXPECTED_COVERAGE_FIELDS.join(" | ")} |`;
+  if (coverageHeader !== expectedCoverageHeader) {
+    errors.push(
+      "Coverage report process fields differ from the exact proof-evidence field set"
+    );
+  }
   const coverageRows = coverage.split("\n").filter((line) => /^\| ITC-\d{2} \|/.test(line));
   if (coverageRows.length !== 124) {
     errors.push(`Coverage report contains ${coverageRows.length} process rows instead of 124`);
   }
   for (const row of coverageRows) {
     const cells = row.slice(2, -2).split(" | ");
-    if (!EXPECTED_FEASIBILITY.has(cells[16])) {
-      errors.push(`Coverage row ${cells[0]}/${cells[1]} does not have exactly one valid verdict`);
+    if (cells.length !== EXPECTED_COVERAGE_FIELDS.length) {
+      errors.push(
+        `Coverage row ${cells[0]}/${cells[1]} has ${cells.length} fields instead of ${EXPECTED_COVERAGE_FIELDS.length}`
+      );
+      continue;
     }
-    if (cells[12] !== "0") {
-      errors.push(`Coverage row ${cells[0]}/${cells[1]} has a runtime network dependency`);
+    if (!PROOF_LEVELS.includes(cells[4])) {
+      errors.push(
+        `Coverage row ${cells[0]}/${cells[1]} has invalid proof level ${cells[4]}`
+      );
+    }
+    if (!cells[12]) {
+      errors.push(
+        `Coverage row ${cells[0]}/${cells[1]} omits its precise blocker field`
+      );
+    }
+    if (!cells[13]) {
+      errors.push(
+        `Coverage row ${cells[0]}/${cells[1]} omits its proof-conditional next action`
+      );
     }
   }
 
@@ -473,7 +883,8 @@ function uniqueUrls(urls) {
 function basenameFromArtifact(artifact) {
   const mapping = {
     "upgrades_lookup.json": "comstock-upgrades.json",
-    "pk8q-dim8.json?$limit=5": "energy-star-dishwashers.json",
+    "pk8q-dim8.json?$limit=50000&$order=pd_id":
+      "energy-star-commercial-dishwashers-full.json",
     "PVWatts V8 Los Angeles response": "pvwatts-v8-response.json",
     "usurdb.csv.gz": "usurdb.csv.gz",
     "EPA CHP catalog PDF": "epa-chp-catalog.pdf",
@@ -482,6 +893,8 @@ function basenameFromArtifact(artifact) {
     "ws-commercial-excel-writeable-tables.xlsx": "watersense-ci-worksheets.xlsx",
     "FEMP exterior-lighting HTML": "femp-exterior-lighting.html",
     "USNO rise, set, and twilight definitions HTML": "usno-rise-set.html",
+    "USNO one-day GeoJSON astronomy-validation response for San Francisco on 2026-06-21":
+      "usno-sf-2026-06-21.json",
     "CFS Equipment Calculator.xlsx": "energy-star-cfs-calculator.xlsx"
   };
   return mapping[artifact] || artifact;

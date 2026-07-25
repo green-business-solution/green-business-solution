@@ -1,30 +1,41 @@
 # STD-REOPT-LOCAL-DISPATCH - REopt interval dispatch and bill optimization
 
-## 1. RetroFi role
+## 1. Canonical role and current process proof
 
 This Standard is used by 8 categories and 8 category-local process instances.
 The categories are ITC-16, ITC-23, ITC-24, ITC-25, ITC-26, ITC-27, ITC-28, ITC-31.
 The process keys are reopt_local_dispatch.
 The formula terms supplied are baseline_annual_bill, baseline_grid_and_fuel_bill, managed_annual_bill, proposed_annual_bill, proposed_grid_and_fuel_bill, proposed_unmanaged_charging_bill, unmanaged_annual_bill.
-The current claimed output set contains 7 distinct output descriptions.
-The present automation limitation is: Incomplete tariff screens represented as detailed optimization and inferred charging or storage constraints.
+The canonical output set contains 7 distinct output descriptions.
 
-| Evidence ID | Source title | Version | Status | Exact artifact |
-| --- | --- | --- | --- | --- |
-| E-REOPT-DISPATCH | REopt API source repository | Unpinned | UNVERIFIED | Versioned REopt input schema, solver, and result schema |
+| Category and process | Execution-verified proof level | Adapter | Actual adapter test result | Current blocker | Conditional next action |
+| --- | --- | --- | --- | --- | --- |
+| ITC-16/reopt_local_dispatch | DOCUMENTATION_ONLY | None implemented | None required or recorded for the current proof state | MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
+| ITC-23/reopt_local_dispatch | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/reopt/run.mjs | reopt-offline-proof: NOT_COVERED<br>reopt-real-source-schema-proof: NOT_COVERED<br>reopt-source-schema-failure-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| ITC-24/reopt_local_dispatch | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/reopt/run.mjs | reopt-immutable-identity-failure-proof: NOT_COVERED<br>reopt-offline-proof: NOT_COVERED<br>reopt-run-evidence-failure-proof: NOT_COVERED<br>reopt-solar-input-boundary-failure-proof: NOT_COVERED<br>reopt-solar-storage-publication-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| ITC-25/reopt_local_dispatch | DOCUMENTATION_ONLY | None implemented | None required or recorded for the current proof state | MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
+| ITC-26/reopt_local_dispatch | DOCUMENTATION_ONLY | None implemented | None required or recorded for the current proof state | MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
+| ITC-27/reopt_local_dispatch | DOCUMENTATION_ONLY | None implemented | None required or recorded for the current proof state | MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
+| ITC-28/reopt_local_dispatch | DOCUMENTATION_ONLY | None implemented | None required or recorded for the current proof state | MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
+| ITC-31/reopt_local_dispatch | DOCUMENTATION_ONLY | None implemented | None required or recorded for the current proof state | MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
 
 ## 2. Official source inventory
 
 The primary organization is National Laboratory of the Rockies.
 The selected official source is REopt.jl.
-The pinned version is 0.59.2, git commit f952cabdf3e60f6e88eef80bb7bc9e7e24bac643.
-The release date or release state is 2026-05-14.
+The catalog acquisition target is 0.59.2, git commit f952cabdf3e60f6e88eef80bb7bc9e7e24bac643.
+Its release date or release state is 2026-05-14.
 The expected update cadence is Package release based.
 The license finding is Apache-2.0 with NOTICE requirements.
 The legal-review requirement is Retain LICENSE and NOTICE in any distributed local package.
+These catalog values describe the planned source inventory and do not replace proof-manifest artifact identity.
 
 - https://github.com/NatLabRockies/REopt.jl
 - https://natlabrockies.github.io/REopt.jl/stable/
+
+| Evidence ID | Source title | Version | Status | Exact artifact |
+| --- | --- | --- | --- | --- |
+| E-REOPT-DISPATCH | REopt API source repository | Unpinned | UNVERIFIED | Versioned REopt input schema, solver, and result schema |
 
 ## 3. What can actually be acquired
 
@@ -41,12 +52,33 @@ The legal-review requirement is Retain LICENSE and NOTICE in any distributed loc
 | JSON scenario inputs | https://github.com/NatLabRockies/REopt.jl | No authentication, registration, or API key observed for this route | Not applicable to a static artifact, repository, local package, or manual export | Not separately sized; Route-specific source structure | 0.59.2, git commit f952cabdf3e60f6e88eef80bb7bc9e7e24bac643; Package release based; Monitor URL and checksum drift | Public acquisition appears automatable, subject to artifact-specific license review | Not separately probed; retained as a documented alternative |
 
 The tested access result is: Repository cloned and input structs, tariff implementation, scenario fixtures, and result fields inspected; Julia is not installed in the research environment.
-The retained inspected artifact is test/scenarios and src/core/electric_tariff.jl, Julia and JSON; source repository content is pinned by commit where applicable.
+The planning catalog observation is test/scenarios and src/core/electric_tariff.jl, Julia and JSON; no artifact checksum is recorded in the planning catalog.
 The access-cost classification is completely free.
 
-## 4. Real source structure
+## 4. Proof-backed artifacts, releases, and schemas
 
-The observed source-native fields or model inputs are:
+The following table is generated from current proof contributions that explicitly name this Standard.
+It reports retained artifact releases, versions, locators, and integrity values instead of treating the planning catalog observation as executed proof.
+
+| Artifact ID | Evidence role | Retained release or version | Exact locator | Integrity | Current proof state | Bound processes |
+| --- | --- | --- | --- | --- | --- | --- |
+| artifact:pvwatts:official-fixture | Proof-manifest artifact | official repository fixture | https://github.com/NatLabRockies/ssc.git | sha256:b806b704a8542aa22ab2ad9c06ece19dcd766eee75777b426039b73f23dfaa61; commit:ba7a7968a115baa0c250597ce2381c7ffb27fbf2; 3419 bytes | DOCUMENTATION_ONLY | ITC-24/reopt_local_dispatch |
+| artifact:pvwatts:phoenix-tmy2 | Proof-manifest artifact | official repository weather fixture | https://github.com/NatLabRockies/ssc.git | sha256:311b8871e989b40d0016f7019dcabc06ebf38e16509c51842fce4bf1e6f8c591; commit:ba7a7968a115baa0c250597ce2381c7ffb27fbf2; 501341 bytes | DOCUMENTATION_ONLY | ITC-24/reopt_local_dispatch |
+| artifact:pvwatts:ssc-303 | Proof-manifest artifact | SSC 303 | https://github.com/NatLabRockies/REopt.jl.git | sha256:db933646389fa94f41af34066d65034681d5836f1bd29644f9b2a934a01b788f; commit:f952cabdf3e60f6e88eef80bb7bc9e7e24bac643; 37852576 bytes | DOCUMENTATION_ONLY | ITC-24/reopt_local_dispatch |
+| artifact:reopt-jl-project-toml:0.59.2 | PUBLIC_GIT_REPOSITORY | 0.59.2 | https://github.com/NatLabRockies/REopt.jl/blob/f952cabdf3e60f6e88eef80bb7bc9e7e24bac643/Project.toml | sha256:f67d05bba64f2d17f3bdb8944e1b17b3713e1de8b87ba8e52a5c742c3737a0c6; commit:f952cabdf3e60f6e88eef80bb7bc9e7e24bac643 | DOCUMENTATION_ONLY | ITC-23/reopt_local_dispatch, ITC-24/reopt_local_dispatch |
+| artifact:retrofi:pvwatts-interval-series:d57fd0f03e904bebe7b6056c9e41385fd081eb313b165681c5ca2533bc9c65f0 | DERIVED_FROM_PINNED_PVWATTS_CALCULATION | reopt-solar-storage-proof-v1 | repo://scripts/research/operational-savings/containers/reopt/pvwatts-interval-series.json | sha256:d57fd0f03e904bebe7b6056c9e41385fd081eb313b165681c5ca2533bc9c65f0; 96046 bytes | DOCUMENTATION_ONLY | ITC-24/reopt_local_dispatch |
+| artifact:retrofi:reopt-build-manifest:919505d5684c853bf332cf6a73fefce9ddd88d8f518810aed729c565b21b3c8f | GENERATED_CONTAINER_BUILD_EVIDENCE | reopt-solar-storage-proof-v1 | repo://scripts/research/operational-savings/containers/reopt/build-manifest.json | sha256:919505d5684c853bf332cf6a73fefce9ddd88d8f518810aed729c565b21b3c8f; 9921 bytes | DOCUMENTATION_ONLY | ITC-24/reopt_local_dispatch |
+| artifact:retrofi:reopt-container:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717 | RESEARCH_ECR_EXACT_DIGEST | reopt-0.59.2-f952cab-arm64 | 945129430686.dkr.ecr.us-east-1.amazonaws.com/retrofi-research-reopt@sha256:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717 | sha256:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717; 606085102 bytes | DOCUMENTATION_ONLY | ITC-24/reopt_local_dispatch |
+| artifact:retrofi:reopt-solar-storage-proof:d47b6ad66e555d0676ebde6e975f08b78c7ab13c123849a3cebaac805f2ae801 | GENERATED_REOPT_MODEL_EVIDENCE | reopt-solar-storage-proof-v1 | repo://scripts/research/operational-savings/containers/reopt/solar-storage-proof.json | sha256:d47b6ad66e555d0676ebde6e975f08b78c7ab13c123849a3cebaac805f2ae801; 3273 bytes | DOCUMENTATION_ONLY | ITC-24/reopt_local_dispatch |
+| artifact:retrofi:reopt-solar-storage-spec:39c97cf3b30265d68ddfc910b51e6e7dadc4b5a86f9e10447ac1d018ff197a2c | TRACKED_RETROFI_RESEARCH_FIXTURE | reopt-solar-storage-proof-v1 | repo://scripts/research/operational-savings/containers/reopt/retrofi-solar-storage-spec.json | sha256:39c97cf3b30265d68ddfc910b51e6e7dadc4b5a86f9e10447ac1d018ff197a2c; 1698 bytes | DOCUMENTATION_ONLY | ITC-24/reopt_local_dispatch |
+
+The current proof manifests record these inspected schemas:
+
+| Schema ID | Artifact ID | Format | Extractor | Required native fields | Current proof state |
+| --- | --- | --- | --- | --- | --- |
+| schema:reopt-jl:f952cabdf3e60f6e88eef80bb7bc9e7e24bac643 | artifact:reopt-jl-project-toml:0.59.2 | JULIA_SOURCE_AND_JSON_SCENARIO | scripts/research/operational-savings/adapters/reopt/inspect-schema.mjs | ElectricStorageDefaults.min_kw; ElectricStorageDefaults.max_kw; ElectricStorageDefaults.min_kwh; ElectricStorageDefaults.max_kwh; ElectricStorageDefaults.charge_efficiency; ElectricStorageDefaults.discharge_efficiency; ElectricStorageDefaults.soc_init_fraction; ElectricStorageDefaults.soc_min_fraction; ElectricStorageDefaults.fixed_soc_series_fraction; PV.min_kw; PV.max_kw; PV.production_factor_series; PV.can_net_meter; PV.can_wholesale; PV.can_export_beyond_nem_limit; ElectricTariff.year_one_bill_before_tax; PV.year_one_energy_produced_kwh; PV.electric_to_load_series_kw; PV.electric_to_storage_series_kw; ElectricStorage.soc_series_fraction; ElectricStorage.storage_to_load_series_kw | DOCUMENTATION_ONLY |
+
+Catalog-native field names that still require proof-backed inspection are:
 
 - `ElectricLoad.loads_kw`
 - `ElectricTariff`
@@ -59,17 +91,8 @@ The observed source-native fields or model inputs are:
 - `dispatch series`
 - `warnings`
 
-These names are research requirements from the source inventory, not claims about an observed source schema.
-Exact source types, units, enumerations, nullability, keys, workbook coordinates, or model declarations must come from the source-specific proof manifest under `scripts/research/operational-savings/adapters/reopt-local-dispatch/`.
-If no proof manifest records direct inspection evidence, this Standard remains incomplete.
-
-Product and record sources must preserve a natural source identifier plus a release identifier as the composite natural key.
-Model sources must preserve the complete input schema, package version, configuration, warnings, and output schema.
-Dates remain source-native timestamps in raw snapshots and normalize to UTC timestamps or date-only effective intervals in query tables.
-Enumerations remain source-native in raw storage and map through versioned crosswalk rows.
 Null means unknown or not reported and must never be converted to zero.
-Withdrawn, expired, superseded, and inactive records remain historically retained but are excluded from current resolution by default.
-Duplicate manufacturer and model strings are normalized for search only, while the original source text remains immutable.
+Inactive, withdrawn, superseded, and historical records remain immutable and are excluded from current resolution unless an explicit historical query selects them.
 
 ## 5. RetroFi field coverage
 
@@ -138,102 +161,68 @@ Duplicate manufacturer and model strings are normalized for search only, while t
 | Site power limit | reopt_local_dispatch; ITC-31 | Project Document | Annual Operational Savings > Documented Site power limit from Nameplate, Measurement, Audit, or Contractor Specification | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROJECT_DOCUMENT | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Managed charging template | reopt_local_dispatch; ITC-31 | Project Document | Annual Operational Savings > Documented Managed charging template from Submeter, Controls Trend, Audit, or Contractor Specification | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROJECT_DOCUMENT | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Unmanaged charging template | reopt_local_dispatch; ITC-31 | Project Document | Annual Operational Savings > Documented Unmanaged charging template from Submeter, Controls Trend, Audit, or Contractor Specification | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROJECT_DOCUMENT | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Baseline annual bill | reopt_local_dispatch; ITC-16, ITC-23, ITC-24, ITC-25, ITC-27, ITC-28 | test/scenarios and src/core/electric_tariff.jl | ElectricLoad.loads_kw; ElectricTariff; ElectricStorage; PV; Wind; CHP; year_one_energy_cost_before_tax; year_one_demand_cost_before_tax; dispatch series; warnings | annual_savings_usd = baseline_annual_bill_usd - proposed_annual_bill_usd; all bill components must come from the same pinned tariff and time basis | USD/year | DERIVABLE_FROM_SOURCE | Incomplete tariff screens represented as detailed optimization and inferred charging or storage constraints |
-| Proposed annual bill | reopt_local_dispatch; ITC-16, ITC-23, ITC-24, ITC-25, ITC-27 | test/scenarios and src/core/electric_tariff.jl | ElectricLoad.loads_kw; ElectricTariff; ElectricStorage; PV; Wind; CHP; year_one_energy_cost_before_tax; year_one_demand_cost_before_tax; dispatch series; warnings | annual_savings_usd = baseline_annual_bill_usd - proposed_annual_bill_usd; all bill components must come from the same pinned tariff and time basis | USD/year | DERIVABLE_FROM_SOURCE | Incomplete tariff screens represented as detailed optimization and inferred charging or storage constraints |
-| Baseline annual grid and fuel bill | reopt_local_dispatch; ITC-26 | test/scenarios and src/core/electric_tariff.jl | ElectricLoad.loads_kw; ElectricTariff; ElectricStorage; PV; Wind; CHP; year_one_energy_cost_before_tax; year_one_demand_cost_before_tax; dispatch series; warnings | annual_savings_usd = baseline_annual_bill_usd - proposed_annual_bill_usd; all bill components must come from the same pinned tariff and time basis | USD/year | DERIVABLE_FROM_SOURCE | Incomplete tariff screens represented as detailed optimization and inferred charging or storage constraints |
-| Proposed annual grid and fuel bill | reopt_local_dispatch; ITC-26 | test/scenarios and src/core/electric_tariff.jl | ElectricLoad.loads_kw; ElectricTariff; ElectricStorage; PV; Wind; CHP; year_one_energy_cost_before_tax; year_one_demand_cost_before_tax; dispatch series; warnings | annual_savings_usd = baseline_annual_bill_usd - proposed_annual_bill_usd; all bill components must come from the same pinned tariff and time basis | USD/year | DERIVABLE_FROM_SOURCE | Incomplete tariff screens represented as detailed optimization and inferred charging or storage constraints |
-| Proposed unmanaged-charging annual bill | reopt_local_dispatch; ITC-28 | test/scenarios and src/core/electric_tariff.jl | ElectricLoad.loads_kw; ElectricTariff; ElectricStorage; PV; Wind; CHP; year_one_energy_cost_before_tax; year_one_demand_cost_before_tax; dispatch series; warnings | annual_savings_usd = baseline_annual_bill_usd - proposed_annual_bill_usd; all bill components must come from the same pinned tariff and time basis | USD/year | DERIVABLE_FROM_SOURCE | Incomplete tariff screens represented as detailed optimization and inferred charging or storage constraints |
-| Unmanaged annual bill | reopt_local_dispatch; ITC-31 | test/scenarios and src/core/electric_tariff.jl | ElectricLoad.loads_kw; ElectricTariff; ElectricStorage; PV; Wind; CHP; year_one_energy_cost_before_tax; year_one_demand_cost_before_tax; dispatch series; warnings | annual_savings_usd = baseline_annual_bill_usd - proposed_annual_bill_usd; all bill components must come from the same pinned tariff and time basis | USD/year | DERIVABLE_FROM_SOURCE | Incomplete tariff screens represented as detailed optimization and inferred charging or storage constraints |
-| Managed annual bill | reopt_local_dispatch; ITC-31 | test/scenarios and src/core/electric_tariff.jl | ElectricLoad.loads_kw; ElectricTariff; ElectricStorage; PV; Wind; CHP; year_one_energy_cost_before_tax; year_one_demand_cost_before_tax; dispatch series; warnings | annual_savings_usd = baseline_annual_bill_usd - proposed_annual_bill_usd; all bill components must come from the same pinned tariff and time basis | USD/year | DERIVABLE_FROM_SOURCE | Incomplete tariff screens represented as detailed optimization and inferred charging or storage constraints |
+| Baseline annual bill | reopt_local_dispatch; ITC-16, ITC-23, ITC-24, ITC-25, ITC-27, ITC-28 | artifact:pvwatts:official-fixture; artifact:pvwatts:phoenix-tmy2; artifact:pvwatts:ssc-303; artifact:reopt-jl-project-toml:0.59.2; artifact:retrofi:pvwatts-interval-series:d57fd0f03e904bebe7b6056c9e41385fd081eb313b165681c5ca2533bc9c65f0; artifact:retrofi:reopt-build-manifest:919505d5684c853bf332cf6a73fefce9ddd88d8f518810aed729c565b21b3c8f; artifact:retrofi:reopt-container:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717; artifact:retrofi:reopt-solar-storage-proof:d47b6ad66e555d0676ebde6e975f08b78c7ab13c123849a3cebaac805f2ae801; artifact:retrofi:reopt-solar-storage-spec:39c97cf3b30265d68ddfc910b51e6e7dadc4b5a86f9e10447ac1d018ff197a2c | ElectricLoad.loads_kw; ElectricTariff; ElectricStorage; PV; Wind; CHP; year_one_energy_cost_before_tax; year_one_demand_cost_before_tax; dispatch series; warnings | annual_savings_usd = baseline_annual_bill_usd - proposed_annual_bill_usd; all bill components must come from the same pinned tariff and time basis | USD/year | DERIVABLE_FROM_SOURCE | Incomplete tariff screens represented as detailed optimization and inferred charging or storage constraints |
+| Proposed annual bill | reopt_local_dispatch; ITC-16, ITC-23, ITC-24, ITC-25, ITC-27 | artifact:pvwatts:official-fixture; artifact:pvwatts:phoenix-tmy2; artifact:pvwatts:ssc-303; artifact:reopt-jl-project-toml:0.59.2; artifact:retrofi:pvwatts-interval-series:d57fd0f03e904bebe7b6056c9e41385fd081eb313b165681c5ca2533bc9c65f0; artifact:retrofi:reopt-build-manifest:919505d5684c853bf332cf6a73fefce9ddd88d8f518810aed729c565b21b3c8f; artifact:retrofi:reopt-container:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717; artifact:retrofi:reopt-solar-storage-proof:d47b6ad66e555d0676ebde6e975f08b78c7ab13c123849a3cebaac805f2ae801; artifact:retrofi:reopt-solar-storage-spec:39c97cf3b30265d68ddfc910b51e6e7dadc4b5a86f9e10447ac1d018ff197a2c | ElectricLoad.loads_kw; ElectricTariff; ElectricStorage; PV; Wind; CHP; year_one_energy_cost_before_tax; year_one_demand_cost_before_tax; dispatch series; warnings | annual_savings_usd = baseline_annual_bill_usd - proposed_annual_bill_usd; all bill components must come from the same pinned tariff and time basis | USD/year | DERIVABLE_FROM_SOURCE | Incomplete tariff screens represented as detailed optimization and inferred charging or storage constraints |
+| Baseline annual grid and fuel bill | reopt_local_dispatch; ITC-26 | No retained proof artifact | ElectricLoad.loads_kw; ElectricTariff; ElectricStorage; PV; Wind; CHP; year_one_energy_cost_before_tax; year_one_demand_cost_before_tax; dispatch series; warnings | annual_savings_usd = baseline_annual_bill_usd - proposed_annual_bill_usd; all bill components must come from the same pinned tariff and time basis | USD/year | DERIVABLE_FROM_SOURCE | Incomplete tariff screens represented as detailed optimization and inferred charging or storage constraints |
+| Proposed annual grid and fuel bill | reopt_local_dispatch; ITC-26 | No retained proof artifact | ElectricLoad.loads_kw; ElectricTariff; ElectricStorage; PV; Wind; CHP; year_one_energy_cost_before_tax; year_one_demand_cost_before_tax; dispatch series; warnings | annual_savings_usd = baseline_annual_bill_usd - proposed_annual_bill_usd; all bill components must come from the same pinned tariff and time basis | USD/year | DERIVABLE_FROM_SOURCE | Incomplete tariff screens represented as detailed optimization and inferred charging or storage constraints |
+| Proposed unmanaged-charging annual bill | reopt_local_dispatch; ITC-28 | No retained proof artifact | ElectricLoad.loads_kw; ElectricTariff; ElectricStorage; PV; Wind; CHP; year_one_energy_cost_before_tax; year_one_demand_cost_before_tax; dispatch series; warnings | annual_savings_usd = baseline_annual_bill_usd - proposed_annual_bill_usd; all bill components must come from the same pinned tariff and time basis | USD/year | DERIVABLE_FROM_SOURCE | Incomplete tariff screens represented as detailed optimization and inferred charging or storage constraints |
+| Unmanaged annual bill | reopt_local_dispatch; ITC-31 | No retained proof artifact | ElectricLoad.loads_kw; ElectricTariff; ElectricStorage; PV; Wind; CHP; year_one_energy_cost_before_tax; year_one_demand_cost_before_tax; dispatch series; warnings | annual_savings_usd = baseline_annual_bill_usd - proposed_annual_bill_usd; all bill components must come from the same pinned tariff and time basis | USD/year | DERIVABLE_FROM_SOURCE | Incomplete tariff screens represented as detailed optimization and inferred charging or storage constraints |
+| Managed annual bill | reopt_local_dispatch; ITC-31 | No retained proof artifact | ElectricLoad.loads_kw; ElectricTariff; ElectricStorage; PV; Wind; CHP; year_one_energy_cost_before_tax; year_one_demand_cost_before_tax; dispatch series; warnings | annual_savings_usd = baseline_annual_bill_usd - proposed_annual_bill_usd; all bill components must come from the same pinned tariff and time basis | USD/year | DERIVABLE_FROM_SOURCE | Incomplete tariff screens represented as detailed optimization and inferred charging or storage constraints |
 
 For every `DERIVABLE_FROM_SOURCE` row, the governing derivation is: annual_savings_usd = baseline_annual_bill_usd - proposed_annual_bill_usd; all bill components must come from the same pinned tariff and time basis.
 No field owned by Profile, Bill, Linked Opportunity, Project Document, or User is silently replaced with a source default.
 
-## 6. Acquisition workflow
+## 6. Acquisition and internal publication
 
 ```text
 REopt.jl
 -> Public Julia package repository
--> immutable raw snapshot
--> SHA-256 checksum and media-type validation
--> schema and enumeration validation
--> source-specific normalization and deduplication
--> model_versions + model_input_schemas + calculation_runs + calculation_warnings + selected_value_provenance
+-> immutable checksummed raw artifact
+-> source-specific schema and enumeration validation
+-> typed normalization into model_versions + model_input_schemas + calculation_runs + calculation_warnings + selected_value_provenance
 -> deterministic reopt-local-dispatch adapter
--> typed formula input
--> calculation result with provenance
+-> typed Standard output
+-> category formula mapping
+-> immutable calculation and provenance
 ```
 
-Acquisition runs under a scheduler or operator action and never during a customer estimate.
-A failed checksum, schema drift, or incomplete artifact leaves the prior published release active.
+Acquisition runs under a scheduler or approved operator action and never during a customer estimate.
+A failed checksum, schema validation, normalization, or publication step leaves the prior accepted release and publication receipt active.
+Implementation evidence must come from executed migrations, populated table counts, exact artifact identities, and the committed compact proof publication.
 
-## 7. Internal database schema
+## 7. Resolution rules
 
-The intended normalized targets are model_versions, model_input_schemas, calculation_runs, calculation_warnings, selected_value_provenance.
-Implementation evidence must come from executed migrations and populated table counts in the committed compact proof export.
-No generic per-Standard JSON payload table is claimed as an implemented source schema.
-Each source-specific adapter must publish typed columns derived from its inspected native structure or remain incomplete.
-
-## 8. Exact resolution
-
-Identifiers are Unicode-normalized, trimmed, case-folded for search, and compared with punctuation-insensitive aliases only after exact original matching fails.
-Manufacturer aliases and model aliases are versioned rows, never destructive edits.
-Equipment class, capacity, geography, effective date, active status, source version, and test procedure are mandatory filters whenever the source exposes them.
-An exact path must return one compatible active record.
-Zero records returns a typed unavailable result.
+Exact resolution requires one compatible active record after applying every source-supported identity, equipment class, capacity, geography, effective-date, and test-procedure filter.
+Zero compatible records returns a typed unavailable result.
 Multiple compatible records return an ambiguity error unless the source defines a deterministic edition or submodel key.
-The original identifier, matched alias, filters, and rejected candidates remain in provenance.
-
-## 9. Requirements-based resolution
-
-Mandatory filters are the category's explicit equipment class, performance requirement, capacity boundary, geography, date, active status, test-procedure version, and source release.
-The eligible population contains only records satisfying every mandatory filter.
-Inactive, withdrawn, superseded, incompatible-unit, missing-required-field, and cross-test-procedure records are excluded.
-The source release is never mixed with another release inside one population.
-A single eligible record may be selected directly.
-Multiple eligible records use an official recommended value only when the source defines one, then a weighted median only when a defensible source weight exists, then an ordinary median only for a true scalar benchmark population.
+Requirements resolution admits only records satisfying every mandatory project and category constraint from one source release.
+Benchmark resolution requires an authoritative, category-specific, unit-compatible population and a retained numeric selection rule.
+An official recommended value takes precedence, followed by a defensible source-weighted median, then an ordinary median only for an exchangeable scalar population.
 Structured records and model result sets are never median-selected.
+Every selection retains its filters, eligible population, sample size, method, fallback level, uncertainty, and rejected candidates.
 
-## 10. Benchmark resolution
-
-The benchmark population must be authoritative, category-specific, unit-compatible, and filtered to the same context dimensions used by the formula.
-The minimum sample size is five unless an official source explicitly publishes one typical value or a category-specific report approves a different threshold.
-The weighting field must come from the source and is never inferred from record order.
-The weighted median is the first value whose cumulative positive weight reaches at least half of total eligible weight after sorting by value.
-The ordinary median is permitted only when no defensible weight exists and the population is an exchangeable scalar population.
-The selected value retains filters, population size, sample size, method, fallback level, and uncertainty.
-The unsupported boundary is Incomplete tariff screens represented as detailed optimization and inferred charging or storage constraints.
-
-## 11. Calculation or local-model execution
+## 8. Calculation and runtime execution
 
 The exact output contract contains: Baseline annual bill; Proposed annual bill; Baseline annual grid and fuel bill; Proposed annual grid and fuel bill; Proposed unmanaged-charging annual bill; Unmanaged annual bill; Managed annual bill.
 The governing source equation or transformation is annual_savings_usd = baseline_annual_bill_usd - proposed_annual_bill_usd; all bill components must come from the same pinned tariff and time basis.
-The local execution mode is Pinned local Julia service or compiled worker with no hosted REopt API dependency.
-Inputs are rejected for missing required fields, incompatible units, ambiguous identifiers, invalid effective dates, out-of-range physical values, or a mismatched model version.
-Outputs retain their native unit and a normalized unit from the repository unit registry.
-Warnings are first-class result fields and cannot be dropped by the category adapter.
-Reproducibility requires the raw-artifact checksum, source release, adapter version, input hash, model or formula version, and output hash.
-
-## 12. Refresh and versioning
-
-Refresh follows Package release based.
-Release detection compares official release metadata and artifact checksums.
-A changed checksum under an unchanged source version is quarantined for review.
-Schema drift compares columns, types, required fields, enumeration values, workbook sheets, or model input declarations against the prior accepted fingerprint.
-Raw snapshots, normalized releases, crosswalks, and selection outputs are immutable.
-Publication uses an atomic pointer to the accepted release.
-Rollback changes only that pointer and records an operator reason.
-Deprecated releases remain available for historical calculation replay.
-Stale data is labeled and blocked when an effective-date or certification-status guarantee can no longer be made.
-
-## 13. Runtime design
-
 The selected runtime design is Pinned local Julia service or compiled worker with no hosted REopt API dependency.
 The required number of external calls during a customer estimate is zero.
-The adapter reads a published internal release or executes a pinned local model only.
-If the source is offline, existing published releases and reproducible historical calculations continue to work.
+Inputs are rejected for missing required fields, incompatible units, ambiguous identifiers, invalid dates, impossible physical values, or a mismatched model version.
+Warnings are first-class result fields and cannot be dropped by the category adapter.
+Reproducibility requires the source-artifact or content-addressed project-input identity, source release when applicable, adapter version, input hash, model or formula version, and output hash.
 
-## 14. Cost
+## 9. Refresh, immutable identity, and publication receipt
+
+Refresh follows Package release based.
+Source IDs, release IDs, artifact IDs, project-input hashes, calculation IDs, and model-version IDs are content-bound identities.
+An upsert may confirm an identical record but may not silently rewrite content behind one of those identities.
+A source-backed dependency pins a source artifact and release, while a project-owned dependency may leave those fields null only when its exact input run and input SHA-256 carry the provenance.
+Database publication builds the SQLite database, compact export, and receipt in temporary paths.
+The publisher verifies byte sizes, SHA-256 values, and one generation ID before replacing the database and compact export, then renames the receipt last as the commit marker.
+Consumers verify `docs/operational-savings-automation-research/fixtures/research-database.compact.json` against `docs/operational-savings-automation-research/fixtures/research-database.publication.json`.
+A failed publication preserves the prior committed generation.
+
+## 10. Cost
 
 One-time engineering effort is 220-360 hours.
 Estimated raw storage is 3 GB.
@@ -244,7 +233,7 @@ External source cost is $0 per month.
 Estimated internal storage and compute cost is $1 at 100 calculations per month, $6 at 1,000, and $45 at 10,000.
 These figures exclude ordinary shared database and observability overhead and are planning estimates, not vendor quotes.
 
-## 15. Synthetic regression boundary
+## 11. Synthetic regression boundary
 
 The offline command is:
 
@@ -254,25 +243,22 @@ node scripts/research/operational-savings/run-synthetic-prototypes.mjs --json
 
 The retained compact sample is `docs/operational-savings-automation-research/samples/reopt-local-dispatch.sample.json`.
 Its local output kind is `model_result_set`, its selection rule is `PINNED_LOCAL_FORMULA:annualBillDelta`, and its output unit is `USD/year`.
-This synthetic regression executes without network access, but it does not prove acquisition, schema inspection, source-specific parsing, a real model run, database publication, or formula-term reachability.
-Only the separate real-proof registry and source-backed tests may satisfy those gates.
+This synthetic regression does not prove acquisition, source-specific parsing, a real model run, database publication, or category formula-term reachability.
 
-## 16. Feasibility verdict
+## 12. Feasibility and supported boundary
 
-**FEASIBLE_AFTER_ADAPTER_WORK**
+**NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES**
 
+This verdict is derived from 8 bound processes.
+No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary.
+The proof ledger records 0 end-to-end real processes, 0 source-verified processes, and 0 processes with genuine manual-export downstream proof.
 The supported boundary is Complete interval load, complete internal tariff, explicit technology inputs, and a pinned solver configuration.
 The unsupported boundary is Incomplete tariff screens represented as detailed optimization and inferred charging or storage constraints.
 
-## 17. Final recommended strategy
+## 13. Recommended strategy and later card review
 
 Package REopt.jl 0.59.2 with HiGHS in a reproducible local worker, strip all API-era dependencies, validate exact interval lengths, and store the complete input, solver version, status, and result hashes.
-This is the single recommended production path for this Standard.
 The rejected alternative is: The retired hosted API path is rejected because it is unavailable and violates zero-network runtime.
-
-## 18. Potential later Information Card changes
-
 No Information Card change is made on this research branch.
-Later review may update the visible source version, fallback wording, input ownership, category scope, or status to match the supported boundary documented above.
-Any formula change must be separately researched, reviewed, and approved.
-Any fallback must name its authoritative population and exact numeric selection rule.
+Later review may update visible source versions, fallback wording, ownership, category scope, or status only after the generated proof view supports the change.
+Any formula change requires separate research, review, and approval.

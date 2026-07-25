@@ -6,12 +6,23 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Process coverage
 
-| Process key | Process name | Canonical Standard | Required inputs | Exact outputs | Formula terms | Source feasibility | Runtime external calls | Current blocker |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| flush_activity | Flush Activity Resolution | STD-CONTEXT-BENCHMARKS | Toilet or urinal type; Female eligible population; Male eligible population; Customer or visitor population when applicable; In-scope fixture count; Operating days per week; Active weeks per year; Observed restroom study when available | Total annual flushes across the in-scope fixture group | total_annual_flushes_group | PARTIALLY_FEASIBLE | 0 | The retained WaterSense fixture proves the female toilet, male toilet, and male urinal daily assumptions and annual flush-count equation. A category calculation golden fixture remains pending, but the source fields and no-double-count boundary are explicit. |
-| existing_flush_rate | Existing Flush Volume Resolution | STD-CONTEXT-BENCHMARKS | Existing toilet or urinal type; Existing label, specification, audit, or measurement when available | One existing gallons-per-flush value | gpf_existing | PARTIALLY_FEASIBLE | 0 | The retained EPA activity fixture does not supply installed gallons-per-flush values. Exact project evidence is supported, while an installed-volume benchmark remains implementation-pending. |
-| exact-proposed-fixture-rating | Exact Proposed Flush Fixture Rating Lookup | STD-WATERSENSE-FIXTURES | Exact proposed fixture make and model from the linked opportunity; Fixture type and application | Proposed rated gallons per flush with units and product provenance | gpf_proposed | FEASIBLE_AFTER_MANUAL_SEED | 0 | The official WaterSense Product Search exposes a downloadable complete model list for supported toilet and urinal categories. No retained product export or category adapter currently proves the exact rated gallons per flush lookup, so source access is verified while field-level execution remains pending. The product source does not supply existing installed performance or usage frequency. |
-| requirement-proposed-fixture-rating | Requirement-Based Proposed Flush Fixture Resolution | STD-WATERSENSE-FIXTURES | Fixture requirements from the linked opportunity; Fixture type and application; Required water-use criterion | One selected proposed rated gallons per flush, with the eligible compatible fixture population, selection rule, units, and source provenance retained internally | gpf_proposed | FEASIBLE_AFTER_MANUAL_SEED | 0 | The official WaterSense criteria define compatible proposed rated gallons per flush requirements. The official product-search or downloadable-product adapter and retained compatible population are not yet implemented, so the source-supported filtering method is verified but execution proof for the selected median is pending. The source does not supply existing ratings or usage frequency. |
+### Canonical process contract
+
+| Process key | Process name | Canonical Standard | Required inputs | Exact output and formula term |
+| --- | --- | --- | --- | --- |
+| flush_activity | Flush Activity Resolution | STD-CONTEXT-BENCHMARKS | Toilet or urinal type [User]; Female eligible population [User]; Male eligible population [User]; Customer or visitor population when applicable [User]; In-scope fixture count [User]; Operating days per week [User]; Active weeks per year [User]; Observed restroom study when available [Project Document] | Total annual flushes across the in-scope fixture group -> total_annual_flushes_group (flushes/year; PROJECT_TOTAL) |
+| existing_flush_rate | Existing Flush Volume Resolution | STD-CONTEXT-BENCHMARKS | Existing toilet or urinal type [User]; Existing label, specification, audit, or measurement when available [Project Document] | One existing gallons-per-flush value -> gpf_existing (gallons/flush; PER_FIXTURE) |
+| exact-proposed-fixture-rating | Exact Proposed Flush Fixture Rating Lookup | STD-WATERSENSE-FIXTURES | Exact proposed fixture make and model from the linked opportunity [Linked Opportunity]; Fixture type and application [Linked Opportunity] | Proposed rated gallons per flush with units and product provenance -> gpf_proposed (gallons/flush; PER_FIXTURE) |
+| requirement-proposed-fixture-rating | Requirement-Based Proposed Flush Fixture Resolution | STD-WATERSENSE-FIXTURES | Fixture requirements from the linked opportunity [Linked Opportunity]; Fixture type and application [Linked Opportunity]; Required water-use criterion [Linked Opportunity] | One selected proposed rated gallons per flush, with the eligible compatible fixture population, selection rule, units, and source provenance retained internally -> gpf_proposed (gallons/flush; PER_FIXTURE) |
+
+### Current execution evidence
+
+| Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
+| --- | --- | --- | --- | --- |
+| flush_activity | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/context-benchmarks/run.mjs | context-watersense-flush-activity-real-proof: NOT_COVERED<br>context-watersense-flush-scope-failure-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| existing_flush_rate | DOCUMENTATION_ONLY | None implemented | None required or recorded for the current proof state | MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
+| exact-proposed-fixture-rating | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/watersense-fixtures/operator-import.mjs | watersense-fixtures-access-boundary-proof: NOT_COVERED<br>watersense-fixtures-acquisition-path-failure-proof: NOT_COVERED<br>watersense-fixtures-operator-contract: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| requirement-proposed-fixture-rating | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/watersense-fixtures/operator-import.mjs | watersense-fixtures-access-boundary-proof: NOT_COVERED<br>watersense-fixtures-acquisition-path-failure-proof: NOT_COVERED<br>watersense-fixtures-operator-contract: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## End-to-end graph
 
@@ -22,13 +33,17 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Feasibility
 
-The category depends on these source-level verdicts: PARTIALLY_FEASIBLE, FEASIBLE_AFTER_MANUAL_SEED.
-An exact path is feasible only when every bound Profile, Bill, Linked Opportunity, Project Document, and User input is present and every Standard adapter returns an unambiguous compatible result.
-A benchmark path is feasible only where the category has a retained authoritative population and exact selection rule.
+The category depends on these source-level verdicts: NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES.
+The process table reports the final proof level after execution-record verification, not a higher level that a manifest may have declared before the current run.
+An exact path is usable only when every owned input is present and every Standard adapter returns one unambiguous compatible result.
+A benchmark path is usable only where the category has a retained authoritative population and exact selection rule.
 The runtime external-call count remains zero.
 
-## Recommended next action
+## Conditional next actions
 
-Implement and accept the shared source-family adapters before connecting this category to any calculation runtime.
-Add one category golden fixture for each supported exact or benchmark path.
-Keep unsupported paths explicit rather than filling them with generic defaults.
+| Process key | Current proof level | Next action |
+| --- | --- | --- |
+| flush_activity | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| existing_flush_rate | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
+| exact-proposed-fixture-rating | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| requirement-proposed-fixture-rating | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |

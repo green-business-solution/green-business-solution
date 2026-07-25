@@ -1,0 +1,85 @@
+{
+  "baseline": {
+    "annualLoadKwh": 439460,
+    "inputSha256": "8a66a0459e489b1f205c884ab22a4051d2cf158002a6126ce8a2d28823905c6a",
+    "solverSeconds": 0.563,
+    "status": "optimal",
+    "terminationStatus": "OPTIMAL",
+    "yearOneBillBeforeTaxUsd": 89827,
+    "yearOneDemandCostBeforeTaxUsd": 18360,
+    "yearOneEnergyCostBeforeTaxUsd": 71467
+  },
+  "formulaBindings": {
+    "baseline_annual_bill": {
+      "unit": "USD/year",
+      "value": 89827
+    },
+    "proposed_annual_bill": {
+      "unit": "USD/year",
+      "value": 87586.78
+    }
+  },
+  "imageDigest": "sha256:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717",
+  "inputBoundaries": {
+    "canGridCharge": false,
+    "intervalCount": 8760,
+    "intervalHours": 1,
+    "observesDaylightSavingTime": false,
+    "pvCapacityDcKw": 4,
+    "storageChargeEfficiency": 0.95,
+    "storageDischargeEfficiency": 0.95,
+    "storageInitialSocFraction": 0.5,
+    "storageNameplateEnergyKwh": 10,
+    "storagePowerKw": 4,
+    "storageReserveFraction": 0.2,
+    "storageUsableEnergyKwh": 8,
+    "timeZone": "America/Phoenix",
+    "utcOffsetHours": -7
+  },
+  "networkEnforcement": "DOCKER_NONE",
+  "outputSha256": "2bab0bbd1dde3732cb5914d33ac135c2d87feeac518e0af618bfa90bad748e3b",
+  "packageVersions": {
+    "HiGHS": "1.12.0",
+    "HiGHS_jll": "1.8.0+0",
+    "JuMP": "1.23.6",
+    "Julia": "1.10.4",
+    "MathOptInterface": "1.34.0"
+  },
+  "proposed": {
+    "annualLoadKwh": 439460,
+    "gridToStorageKwh": 0,
+    "inputSha256": "da5fd6c0174c6a592b7c615358d60ed4ffb16e81c530cd09e8e9f3477c9caa9c",
+    "pvCapacityDcKw": 4,
+    "pvCurtailedKwh": 0,
+    "pvProductionFactorSeriesSha256": "f5f8ef6e0352cd2c19e51f6191268022a95a35579ad4df3fd4e0cc252d56add3",
+    "pvToGridKwh": 0,
+    "pvToLoadKwh": 4026.547,
+    "pvToStorageKwh": 3016.674,
+    "pvYearOneEnergyProducedKwh": 7043,
+    "solverSeconds": 0.973,
+    "status": "optimal",
+    "storageDischargeKwh": 2725.389,
+    "storageDischargeSeriesSha256": "6bdc960457e429d49ee886c7775c1a1827ae6019b388daca7c3c90104ac34206",
+    "storageNameplateEnergyKwh": 10,
+    "storagePowerKw": 4,
+    "storageSocInitialFraction": 0.5,
+    "storageSocSeriesSha256": "0ca30ed4df219b7fe7e3178f94e63dfa7be37a073adf3ba9685ac82b40f6a018",
+    "storageSocTerminalFraction": 0.2,
+    "terminationStatus": "OPTIMAL",
+    "yearOneBillBeforeTaxUsd": 87586.78,
+    "yearOneDemandCostBeforeTaxUsd": 17453.62,
+    "yearOneEnergyCostBeforeTaxUsd": 70133.16
+  },
+  "pvwattsAnnualEnergyKwh": 7043.197332586394,
+  "pvwattsInputSha256": "e3f415eb40b37927dd12a9aa4c48ffa5512b09f7a5c18c97386e539a843b180e",
+  "pvwattsOutputSha256": "4447dfd0255ba2194a685c2ed2221325c0d7f3488d2a6a82a1166a37e0614532",
+  "pvwattsSeriesFileSha256": "d57fd0f03e904bebe7b6056c9e41385fd081eb313b165681c5ca2533bc9c65f0",
+  "pvwattsSeriesPath": "pvwatts-interval-series.json",
+  "pvwattsSeriesSha256": "a842a7a51583fca8b7c559a1ed12b16aa9d396ec7c6b92dbfabfc282dbaf0f1c",
+  "runtimeUser": "65532:65532",
+  "scenarioKind": "retrofi_pvwatts_fixed_solar_storage_pair",
+  "schemaVersion": "retrofi/reopt-solar-storage-proof-v1",
+  "sourceCommit": "f952cabdf3e60f6e88eef80bb7bc9e7e24bac643",
+  "specPath": "retrofi-solar-storage-spec.json",
+  "specSha256": "39c97cf3b30265d68ddfc910b51e6e7dadc4b5a86f9e10447ac1d018ff197a2c"
+}

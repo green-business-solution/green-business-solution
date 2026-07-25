@@ -16,6 +16,9 @@ It covers 19 canonical Standards, 124 category-local processes, and 54 categorie
 - [Deployment readiness](deployment-readiness.md)
 - [Unresolved product decisions](unresolved-product-decisions.md)
 - [Source download manifest](source-download-manifest.json)
+- [Real-proof ledger](proof-ledger.v2.json)
+- [Compact research database](fixtures/research-database.compact.json)
+- [Database publication receipt](fixtures/research-database.publication.json)
 - [Standard reports](standards/)
 - [Category reports](categories/)
 - [Retained compact samples](samples/)
@@ -29,5 +32,6 @@ npx vitest run scripts/research/operational-savings/tests
 ```
 
 The synthetic prototype runner performs no network access and cannot satisfy a real-proof gate.
-Large downloaded artifacts and cloned repositories remain under the ignored `scripts/research/operational-savings/.cache/` directory.
+Research S3 is the durable source of truth for acquired and normalized artifacts, while research ECR is the durable source of truth for runnable model images.
+The ignored `scripts/research/operational-savings/.cache/` directory is temporary working space and is not treated as durable evidence.
 The generated reports do not change the approved formulas, trees, bindings, ownership decisions, statuses, or Information Cards.

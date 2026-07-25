@@ -1,10 +1,10 @@
 {
   "schemaVersion": "operational-savings/research-sample-v1",
   "standardId": "STD-OPERATING-SCHEDULE",
-  "source": "Explicit calendar schedules, USNO daylight definitions, and approved reference schedules",
-  "sourceVersion": "USNO definitions current 2026-07-23",
-  "observedArtifact": "USNO rise, set, and twilight definitions HTML",
-  "observedArtifactSha256": "178f7024fdbce65bf3c3ee80f758ec3429e0115dff4d538cf54c59a978f58281",
+  "source": "Caller-owned explicit calendar and site inputs; a pinned USNO one-day response validates only the astronomy-model boundary",
+  "sourceVersion": "project-owned operating-schedule input contract v1; USNO API 4.0.1 response acquired 2026-07-24",
+  "observedArtifact": "USNO one-day GeoJSON astronomy-validation response for San Francisco on 2026-06-21",
+  "observedArtifactSha256": "e096159b03d9fe91f287898142a567809a83d794f6c8aaad6b8809bb2378f812",
   "evidenceBoundary": "Explicit calendar schedule method",
   "sampleIsFullSourceArtifact": false,
   "prototype": {
@@ -31,9 +31,9 @@
     },
     "unit": "hours/year",
     "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
-    "source": "Explicit calendar schedules, USNO daylight definitions, and approved reference schedules",
-    "sourceVersion": "USNO definitions current 2026-07-23",
-    "sourceArtifact": "USNO rise, set, and twilight definitions HTML",
+    "source": "Caller-owned explicit calendar and site inputs; a pinned USNO one-day response validates only the astronomy-model boundary",
+    "sourceVersion": "project-owned operating-schedule input contract v1; USNO API 4.0.1 response acquired 2026-07-24",
+    "sourceArtifact": "USNO one-day GeoJSON astronomy-validation response for San Francisco on 2026-06-21",
     "filters": {
       "weekdayHours": 10,
       "weekdaysPerWeek": 5,
@@ -49,7 +49,7 @@
     "warnings": [],
     "provenance": {
       "sourceEvidence": "Explicit calendar schedule method",
-      "sha256": "c5d0d0cca43e1e25b0a092127af08cbbcff427aab67e62d35a7c797272b4046a"
+      "sha256": "3d2e042df876582562fe369ebf0cd1c07da30005a9216f80149bf89e1926db2f"
     }
   }
 }

@@ -3,6 +3,7 @@
   "reviewedOn": "2026-07-23",
   "sourceCommit": "5ebdf470fdff8b04d38a2ab362b85f40ebd1f0d0",
   "runtimeExternalCalls": 0,
+  "feasibilitySource": "Derived from buildProofLedger process evidence during generation",
   "classifications": [
     "DIRECTLY_AVAILABLE",
     "DERIVABLE_FROM_SOURCE",
@@ -68,7 +69,6 @@
         "benchmark_populations",
         "benchmark_values"
       ],
-      "feasibility": "FEASIBLE_AFTER_ADAPTER_WORK",
       "supportedBoundary": "Archetype screening for an approved one-to-one measure and eligible building segment",
       "unsupportedBoundary": "Project-specific equipment performance, combined upgrade arithmetic, and any percentile without retained population size and weights",
       "recommendedStrategy": "Acquire the pinned Release 3 dictionaries and annual-result partitions once, aggregate paired baseline and upgrade rows in DuckDB, review the retrofit crosswalk, and publish only the approved California and national segment summaries.",
@@ -155,7 +155,6 @@
         "benchmark_values",
         "model_versions"
       ],
-      "feasibility": "FEASIBLE_AFTER_ADAPTER_WORK",
       "supportedBoundary": "Explicit Scout ECM definitions whose markets and efficiency units match a reviewed RetroFi retrofit",
       "unsupportedBoundary": "Keyword-selected measures, prospective assumptions without review, and generic savings factors applied outside the source market",
       "recommendedStrategy": "Pin one Scout release, validate each approved ECM JSON against its source schema, execute preparation offline, and publish only reviewed reduction factors with the complete market selector.",
@@ -240,7 +239,6 @@
         "source_releases",
         "source_artifacts"
       ],
-      "feasibility": "FEASIBLE_AFTER_MANUAL_SEED",
       "supportedBoundary": "Exact active compatible basic-model records from a retained product export",
       "unsupportedBoundary": "Unknown existing equipment, historical status without retained exports, and requirement-based baselines inferred from current certified products",
       "recommendedStrategy": "Create one operator runbook per product family, export the official certification table, validate its template fingerprint, normalize exact basic models, and publish an approved immutable release.",
@@ -277,7 +275,7 @@
         "https://data.energystar.gov/resource/pk8q-dim8.json",
         "https://www.energystar.gov/products/productstr"
       ],
-      "version": "Active product-family specifications; dishwasher dataset inspected 2026-07-23",
+      "version": "Active product-family specifications; full dishwasher dataset revision 2026-07-24T13:28:47.000Z",
       "releaseDate": "Continuously updated",
       "updateCadence": "Daily for product data",
       "license": "EPA data access is public; ENERGY STAR marks and partner association have separate trademark rules",
@@ -289,11 +287,11 @@
         "Product Finder exports",
         "Specification PDFs"
       ],
-      "testedAccess": "Socrata dishwasher query returned HTTP 200 and five current product records without credentials",
-      "observedArtifact": "pk8q-dim8.json?$limit=5",
+      "testedAccess": "Socrata dishwasher bulk query returned HTTP 200 and the complete 418-row current certified-product snapshot without credentials",
+      "observedArtifact": "pk8q-dim8.json?$limit=50000&$order=pd_id",
       "observedFormat": "JSON",
-      "observedSizeBytes": 3772,
-      "observedSha256": "3a48590aea34a8b63696488c052cb31cb059502356a2dc51a68122528fb28ae5",
+      "observedSizeBytes": 370605,
+      "observedSha256": "a746b679f6ae2a9ce30f1fe115d1e279adccca49e684d3a6a35fc2e76fdb43ba",
       "nativeFields": [
         "pd_id",
         "brand_name",
@@ -301,8 +299,13 @@
         "machine_type",
         "sanitation_method",
         "water_use_gallons_per_rack_gpr",
+        "water_use_gallons_per_hour_gph",
         "washing_energy_consumption_kwh_rack_for_low_temp_and_dual_sanitizing_machines",
+        "washing_energy_consumption_kwh_rack_for_high_temp_and_dual_sanitizing_machines",
         "idle_energy_rate_for_low_temp_kw",
+        "idle_energy_rate_for_high_temp_kw",
+        "booster_heater_idle_energy_rate_for_high_temp_and_dual_sanitizing_machines_kw",
+        "racks_per_hour",
         "date_available_on_market",
         "date_qualified"
       ],
@@ -312,9 +315,10 @@
         "equipment_products",
         "equipment_certifications",
         "equipment_performance_fields",
+        "energy_star_commercial_dishwashers",
+        "energy_star_dishwasher_operating_modes",
         "product_taxonomy_crosswalks"
       ],
-      "feasibility": "FEASIBLE_NOW",
       "supportedBoundary": "Exact active product and requirements-based proposed-product resolution within each product-family schema",
       "unsupportedBoundary": "Unknown installed-equipment baselines and cross-family field assumptions",
       "recommendedStrategy": "Ingest each required family independently, pin its active specification, preserve native fields, normalize identifiers conservatively, and reject ambiguous exact-model matches.",
@@ -399,7 +403,6 @@
         "calculation_runs",
         "calculation_warnings"
       ],
-      "feasibility": "FEASIBLE_AFTER_ADAPTER_WORK",
       "supportedBoundary": "Exact project inputs mapped to one named MEASUR module with source-native units",
       "unsupportedBoundary": "Generic MEASUR calls, inferred equipment design inputs, or reuse of one module's output contract for another module",
       "recommendedStrategy": "Compile and package the pinned calculator library in a controlled build image, create one typed adapter per category and module, and port the upstream golden cases into RetroFi offline acceptance tests.",
@@ -479,7 +482,6 @@
         "calculation_runs",
         "calculation_warnings"
       ],
-      "feasibility": "FEASIBLE_AFTER_ADAPTER_WORK",
       "supportedBoundary": "One-tank solar water-heating configurations with explicit design, weather, draw, and backup inputs",
       "unsupportedBoundary": "Automatic system sizing, missing draw profiles, and pool-specific or otherwise incompatible thermal systems",
       "recommendedStrategy": "Package SSC or PySAM locally, pin a weather snapshot, validate the complete SWH input schema, and retain both native thermal output and the capped displaced backup-resource derivation.",
@@ -559,7 +561,6 @@
         "climate_crosswalks",
         "calculation_runs"
       ],
-      "feasibility": "FEASIBLE_AFTER_ADAPTER_WORK",
       "supportedBoundary": "PV production after all required project design and location inputs are supplied",
       "unsupportedBoundary": "System sizing, tariff value, missing geometry, and assumed losses presented as source outputs",
       "recommendedStrategy": "Use the real API response as a regression oracle, then execute the same pinned pvwattsv8 module locally with retained weather files and reject any input set that depends on an unstated design assumption.",
@@ -643,7 +644,6 @@
         "climate_crosswalks",
         "calculation_runs"
       ],
-      "feasibility": "FEASIBLE_AFTER_ADAPTER_WORK",
       "supportedBoundary": "Specified turbine, hub height, losses, and compatible wind resource",
       "unsupportedBoundary": "Turbine selection, hub-height inference, and generic statewide wind production",
       "recommendedStrategy": "Cache only the California resource cells required by active projects, execute SSC locally, and retain the exact resource cell, turbine curve, hub height, loss inputs, and warnings.",
@@ -732,7 +732,6 @@
         "tariff_demand_charges",
         "tariff_export_rules"
       ],
-      "feasibility": "FEASIBLE_AFTER_ADAPTER_WORK",
       "supportedBoundary": "Complete, approved, effective, account-matched tariffs reconciled to a bill or controlling tariff sheet",
       "unsupportedBoundary": "Raw historical URDB records treated as current, missing ratchets or non-bypassable charges, and tariff selection based only on geography",
       "recommendedStrategy": "Ingest the full bulk snapshot, normalize the nested schedules, then operate a California publication queue that requires utility, schedule, sector, eligibility, effective date, source-document evidence, and bill reconciliation before a tariff can be used.",
@@ -814,7 +813,6 @@
         "calculation_warnings",
         "selected_value_provenance"
       ],
-      "feasibility": "FEASIBLE_AFTER_ADAPTER_WORK",
       "supportedBoundary": "Complete interval load, complete internal tariff, explicit technology inputs, and a pinned solver configuration",
       "unsupportedBoundary": "Incomplete tariff screens represented as detailed optimization and inferred charging or storage constraints",
       "recommendedStrategy": "Package REopt.jl 0.59.2 with HiGHS in a reproducible local worker, strip all API-era dependencies, validate exact interval lengths, and store the complete input, solver version, status, and result hashes.",
@@ -887,7 +885,6 @@
         "benchmark_values",
         "calculation_assumptions"
       ],
-      "feasibility": "FEASIBLE_AFTER_ADAPTER_WORK",
       "supportedBoundary": "Screening estimates for a matched prime mover and size class with explicit operating schedule",
       "unsupportedBoundary": "Manufacturer guarantees, project-specific part-load curves, interconnection, outage performance, and fuel availability",
       "recommendedStrategy": "Transcribe the current catalog tables with dual review, retain table and page citations, map only compatible prime mover and size classes, and execute the documented fuel and useful-heat equations locally.",
@@ -963,7 +960,6 @@
         "equipment_performance_fields",
         "product_taxonomy_crosswalks"
       ],
-      "feasibility": "FEASIBLE_NOW",
       "supportedBoundary": "Exact vehicle records and explicit compatible vehicle pairs",
       "unsupportedBoundary": "Arbitrary class medians without population review and commercial fleet duty not represented by light-duty labels",
       "recommendedStrategy": "Ingest the bulk file, normalize exact IDs and conservative make-model aliases, retain model year and modification date, and require either exact records or a separately approved compatible pair.",
@@ -1037,7 +1033,6 @@
         "equipment_certifications",
         "equipment_performance_fields"
       ],
-      "feasibility": "FEASIBLE_AFTER_MANUAL_SEED",
       "supportedBoundary": "Exact or requirements-filtered proposed labeled fixtures after a retained official export",
       "unsupportedBoundary": "Existing fixture performance, public lavatory products outside the specification scope, and commercial usage frequency",
       "recommendedStrategy": "Use the official full-list export through an operator workflow, validate the product-family schema, and publish only active compatible products and their native rated values.",
@@ -1118,7 +1113,6 @@
         "benchmark_values",
         "calculation_assumptions"
       ],
-      "feasibility": "FEASIBLE_AFTER_ADAPTER_WORK",
       "supportedBoundary": "U.S. ZIP-based design comparison for explicit hydrozones, plant factors, areas, and irrigation methods",
       "unsupportedBoundary": "Real-time irrigation scheduling, actual measured water use, and missing landscape design inputs",
       "recommendedStrategy": "Extract only required climate columns in a streaming XLSX reader, recreate the documented Version 2.0 water-budget method locally, and retain the source ZIP and every user-supplied design input.",
@@ -1190,7 +1184,6 @@
         "calculation_runs",
         "selected_value_provenance"
       ],
-      "feasibility": "PARTIALLY_FEASIBLE",
       "supportedBoundary": "Exact measured leak and cooling-tower operational calculations",
       "unsupportedBoundary": "Default leak rates, default duration, and automatic savings from a checklist item alone",
       "recommendedStrategy": "Use the workbook to define structured intake fields, require measurements or reconciled meter records, and calculate only after the project evidence establishes flow, duration, and system boundary.",
@@ -1258,7 +1251,6 @@
         "equipment_performance_fields",
         "calculation_assumptions"
       ],
-      "feasibility": "FEASIBLE_NOW",
       "supportedBoundary": "FEMP application categories and exact or requirements-matched proposed luminaires",
       "unsupportedBoundary": "Existing fixture wattage inferred from FEMP proposed-efficiency requirements",
       "recommendedStrategy": "Transcribe the seven application rows with page checksum and dual review, then resolve exact proposed power or a requirements-filtered qualifying product before applying the local hours equation.",
@@ -1293,50 +1285,57 @@
     {
       "id": "STD-OPERATING-SCHEDULE",
       "slug": "operating-schedule",
-      "organization": "U.S. Naval Observatory and U.S. Department of Energy",
-      "officialSource": "Explicit calendar schedules, USNO daylight definitions, and approved reference schedules",
+      "organization": "RetroFi project or profile owner, with U.S. Naval Observatory astronomy validation",
+      "officialSource": "Caller-owned explicit calendar and site inputs; a pinned USNO one-day response validates only the astronomy-model boundary",
       "officialUrls": [
         "https://aa.usno.navy.mil/faq/RST_defs",
-        "https://www.energy.gov/cmei/buildings/commercial-reference-buildings"
+        "https://aa.usno.navy.mil/api/rstt/oneday?date=2026-06-21&coords=37.7749,-122.4194&tz=-8&dst=true"
       ],
-      "version": "USNO definitions current 2026-07-23",
-      "releaseDate": "Current definitions",
-      "updateCadence": "Definitions are stable; calendars change annually; reference schedules change by model release",
-      "license": "Federal definitions and model assets; retain source-specific metadata",
+      "version": "project-owned operating-schedule input contract v1; USNO API 4.0.1 response acquired 2026-07-24",
+      "releaseDate": "Project inputs are versioned per calculation; retained USNO response date 2026-06-21",
+      "updateCadence": "Hash every project input per calculation and revalidate astronomy behavior when the local algorithm or USNO API changes",
+      "license": "Project inputs require project-authorized use; USNO astronomical data is U.S. government data",
       "legalReview": "Low",
       "accessClass": "completely free",
       "accessRoutes": [
-        "Explicit profile or project schedule",
-        "Local calendar arithmetic",
-        "USNO daylight definition page",
-        "Approved DOE reference-building schedule files"
+        "Content-addressed explicit project or profile schedule",
+        "Local deterministic calendar and solar-event arithmetic",
+        "Pinned USNO one-day API response for astronomy validation only"
       ],
-      "testedAccess": "The USNO definition page downloaded and explicit schedule arithmetic was inspected in current category trees",
-      "observedArtifact": "USNO rise, set, and twilight definitions HTML",
-      "observedFormat": "HTML",
-      "observedSizeBytes": 27057,
-      "observedSha256": "178f7024fdbce65bf3c3ee80f758ec3429e0115dff4d538cf54c59a978f58281",
+      "testedAccess": "A pinned USNO GeoJSON response was acquired and compared with the local solar-event algorithm; separate source-controlled project-input fixtures exercise weekly, difference, and daylight branches",
+      "observedArtifact": "USNO one-day GeoJSON astronomy-validation response for San Francisco on 2026-06-21",
+      "observedFormat": "GeoJSON",
+      "observedSizeBytes": 1271,
+      "observedSha256": "e096159b03d9fe91f287898142a567809a83d794f6c8aaad6b8809bb2378f812",
       "nativeFields": [
-        "weekday intervals",
-        "weekend intervals",
-        "holiday exclusions",
-        "season",
-        "latitude and longitude",
-        "sunrise and sunset definition",
-        "annual hours"
+        "projectInput.year",
+        "projectInput.timeZone",
+        "projectInput.weekly",
+        "projectInput.exceptions",
+        "projectInput.holidays",
+        "projectInput.activeWeeks",
+        "projectInput.latitude",
+        "projectInput.longitude",
+        "projectInput.switchOnOffsetMinutes",
+        "projectInput.switchOffOffsetMinutes",
+        "astronomyValidation.properties.data.sundata[].phen",
+        "astronomyValidation.properties.data.sundata[].time",
+        "astronomyValidation.properties.data.tz",
+        "astronomyValidation.properties.data.isdst"
       ],
-      "derivation": "annual_hours = sum_calendar_days max(0, local_end_time - local_start_time) after holiday and seasonal rules; daylight hours use the selected USNO event definition and local coordinates",
-      "runtimeDesign": "Local deterministic calendar engine with optional approved reference-schedule artifacts",
+      "derivation": "Weekly annual hours are the sum of actual elapsed durations across enumerated local-date intervals after explicit exceptions, holidays, and active-week rules; schedule savings are existing hours minus proposed hours; daylight hours come from a local solar-event model using project site inputs, while USNO validates the astronomy boundary only",
+      "runtimeDesign": "Run the deterministic calendar or solar model offline, persist a SHA-256 hash of the exact project input on the calculation run, leave primary source artifact and release null for project-owned values, and attach USNO only as an astronomy_model_validation dependency for daylight calculations",
       "internalTargets": [
-        "calculation_assumptions",
-        "benchmark_values",
-        "model_input_schemas"
+        "operating_schedule_references",
+        "calculation_runs",
+        "selected_values",
+        "selected_value_provenance",
+        "calculation_source_dependencies"
       ],
-      "feasibility": "FEASIBLE_AFTER_ADAPTER_WORK",
-      "supportedBoundary": "Explicit schedules and a narrow approved context schedule with documented calendar and timezone",
-      "unsupportedBoundary": "A generic building-type schedule presented as actual operation and daylight without coordinates or event definition",
-      "recommendedStrategy": "Prefer explicit profile or project schedules, calculate annual hours locally with a pinned calendar and timezone library, and use reference schedules only as labeled screening assumptions.",
-      "rejectedAlternative": "A single fixed 8,760-hour fraction is rejected because holidays, seasons, weekends, and daylight materially change category outputs.",
+      "supportedBoundary": "Explicit project or profile schedules with a calendar year and IANA time zone, plus non-polar daylight controls with explicit site coordinates and offsets",
+      "unsupportedBoundary": "A generic building-type schedule presented as actual operation, USNO presented as the source of project annual hours, or polar daylight cases without a supported event model",
+      "recommendedStrategy": "Require explicit project or profile inputs, hash the exact normalized input for each calculation, compute hours locally, and keep external astronomy validation separate from value provenance.",
+      "rejectedAlternative": "A single fixed 8,760-hour fraction and USNO-attributed project schedule are rejected because neither represents the caller's actual calendar, exceptions, or controls.",
       "prototype": {
         "operation": "formula",
         "sourceEvidence": "Explicit calendar schedule method",
@@ -1406,7 +1405,6 @@
         "model_versions",
         "calculation_runs"
       ],
-      "feasibility": "FEASIBLE_NOW",
       "supportedBoundary": "Matched rack or flight machine, explicit hot-water boundary, temperature rise, heater fuel, and heater efficiency",
       "unsupportedBoundary": "Treating all machine water as hot water without the building and booster boundary or converting flight gallons per hour to racks",
       "recommendedStrategy": "Retain the workbook checksum and exact formula cells, normalize rack and flight activity separately, and execute the specific-heat conversion locally with explicit building and booster stages.",
@@ -1487,7 +1485,6 @@
         "selected_values",
         "selected_value_provenance"
       ],
-      "feasibility": "PARTIALLY_FEASIBLE",
       "supportedBoundary": "Only the reviewed category and context combinations represented by retained authoritative fixtures",
       "unsupportedBoundary": "A universal fallback, a cross-category median, or any context process without a pinned population and exact selection rule",
       "recommendedStrategy": "Keep the shared selection contract but require every category benchmark to register its own source, filters, unit, population, minimum sample size, selected-value rule, and unsupported boundary.",

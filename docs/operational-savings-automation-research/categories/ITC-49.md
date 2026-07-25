@@ -6,9 +6,17 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Process coverage
 
-| Process key | Process name | Canonical Standard | Required inputs | Exact outputs | Formula terms | Source feasibility | Runtime external calls | Current blocker |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| context_benchmarks | Walk-In Component Energy Benchmark | STD-CONTEXT-BENCHMARKS | Component type and DOE equipment class; Walk-in temperature class; Indoor or outdoor configuration; Panel area when a panel intensity is selected; Existing efficiency level from a Project Document; Proposed efficiency level from the linked opportunity | One class-matched existing annual component energy; One class-matched proposed annual component energy | current_annual_refrigeration_kWh; proposed_annual_refrigeration_kWh | PARTIALLY_FEASIBLE | 0 | The retained DOE fixture records reviewed class rows and native units from Tables IV.31, IV.32, and IV.33. It proves a class-matched component benchmark, not whole-box project energy. The category remains blocked when the component boundary, class filters, panel area, or same-duty project scope is unavailable. No category calculation golden fixture is retained, so end-to-end execution proof remains pending. |
+### Canonical process contract
+
+| Process key | Process name | Canonical Standard | Required inputs | Exact output and formula term |
+| --- | --- | --- | --- | --- |
+| context_benchmarks | Walk-In Component Energy Benchmark | STD-CONTEXT-BENCHMARKS | Component type and DOE equipment class [User]; Walk-in temperature class [User]; Indoor or outdoor configuration [User]; Panel area when a panel intensity is selected [Project Document]; Existing efficiency level from a Project Document [Project Document]; Proposed efficiency level from the linked opportunity [Linked Opportunity] | One class-matched existing annual component energy -> current_annual_refrigeration_kWh (kWh/year; PER_EQUIPMENT_UNIT); One class-matched proposed annual component energy -> proposed_annual_refrigeration_kWh (kWh/year; PER_EQUIPMENT_UNIT) |
+
+### Current execution evidence
+
+| Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
+| --- | --- | --- | --- | --- |
+| context_benchmarks | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/context-benchmarks/doe-walkin.mjs | context-doe-walkin-real-proof: NOT_COVERED<br>context-doe-walkin-scope-failure-proof: NOT_COVERED<br>context-doe-walkin-source-mutation-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## End-to-end graph
 
@@ -16,13 +24,14 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Feasibility
 
-The category depends on these source-level verdicts: PARTIALLY_FEASIBLE.
-An exact path is feasible only when every bound Profile, Bill, Linked Opportunity, Project Document, and User input is present and every Standard adapter returns an unambiguous compatible result.
-A benchmark path is feasible only where the category has a retained authoritative population and exact selection rule.
+The category depends on these source-level verdicts: NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES.
+The process table reports the final proof level after execution-record verification, not a higher level that a manifest may have declared before the current run.
+An exact path is usable only when every owned input is present and every Standard adapter returns one unambiguous compatible result.
+A benchmark path is usable only where the category has a retained authoritative population and exact selection rule.
 The runtime external-call count remains zero.
 
-## Recommended next action
+## Conditional next actions
 
-Implement and accept the shared source-family adapters before connecting this category to any calculation runtime.
-Add one category golden fixture for each supported exact or benchmark path.
-Keep unsupported paths explicit rather than filling them with generic defaults.
+| Process key | Current proof level | Next action |
+| --- | --- | --- |
+| context_benchmarks | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |

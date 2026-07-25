@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+  "fixtures": [
+    {
+      "id": "compressed-air-estimate-v1",
+      "model": "CompressedAirLeakSurvey",
+      "cliArgument": "compressed-air",
+      "arguments": [
+        "8640",
+        "0.12",
+        "0.1",
+        "130",
+        "0.4",
+        "0.16",
+        "1"
+      ],
+      "expectedOutputs": {
+        "annualTotalElectricity": 138.24,
+        "annualTotalElectricityCost": 16.5888,
+        "totalFlowRate": 0.1,
+        "annualTotalFlowRate": 51840
+      },
+      "absoluteTolerance": 1e-09,
+      "relativeTolerance": 1e-10
+    },
+    {
+      "id": "equipment-golden-v1",
+      "model": "MotorEfficiency+PSATResult+FanResult+CoolingTower",
+      "cliArgument": "equipment",
+      "arguments": [
+        "60",
+        "1600",
+        "0",
+        "150",
+        "0.25",
+        "-1",
+        "3",
+        "0.95",
+        "6",
+        "0.382",
+        "1780",
+        "1",
+        "1",
+        "1",
+        "1",
+        "0",
+        "1",
+        "60",
+        "200",
+        "1780",
+        "3",
+        "0.95",
+        "460",
+        "227.29",
+        "0",
+        "1000",
+        "277",
+        "0",
+        "150",
+        "125.857",
+        "480",
+        "8760",
+        "0.06",
+        "1180",
+        "0.07024",
+        "0",
+        "1",
+        "60",
+        "600",
+        "1180",
+        "1",
+        "0.96",
+        "460",
+        "683.2505707137",
+        "1",
+        "460",
+        "460",
+        "660",
+        "129691",
+        "-16.36",
+        "1.1",
+        "0.988",
+        "0",
+        "0",
+        "0.595398315",
+        "8760",
+        "0.06",
+        "59.5119",
+        "81.6495",
+        "87.98386",
+        "76",
+        "1",
+        "0",
+        "2"
+      ],
+      "expectedOutputs": {
+        "motor": {
+          "existingEfficiency": 0.8867837735583464,
+          "proposedEfficiency": 0.9226247725330855
+        },
+        "psat": {
+          "existingInputKw": 150,
+          "proposedInputKw": 149.64012475884022,
+          "existingPumpEfficiency": 0.3810942535343008,
+          "proposedPumpEfficiency": 0.382,
+          "existingAnnualEnergyMwh": 1314,
+          "proposedAnnualEnergyMwh": 1310.8474928874405
+        },
+        "fan": {
+          "existingInputKw": 460,
+          "proposedInputKw": 460.00014402241186,
+          "existingFanEfficiency": 0.5953983150358069,
+          "proposedFanEfficiency": 0.595398315,
+          "existingAnnualEnergyMwh": 4029.6,
+          "proposedAnnualEnergyMwh": 4029.6012616363278
+        },
+        "coolingTower": {
+          "existingFanPowerHp": 55.14996187617361,
+          "existingFanEnergyKwh": 41.141871559625514,
+          "proposedFanPowerHp": 44.78961473708352,
+          "proposedFanEnergyKwh": 33.41305259386431,
+          "avoidedFanEnergyKwh": 7.7288189657612065
+        }
+      },
+      "absoluteTolerance": 1e-09,
+      "relativeTolerance": 1e-10
+    }
+  ]
+}

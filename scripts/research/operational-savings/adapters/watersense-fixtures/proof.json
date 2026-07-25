@@ -1,0 +1,199 @@
+{
+  "schemaVersion": "operational-savings/real-proof-manifest-v1",
+  "standardId": "STD-WATERSENSE-FIXTURES",
+  "slug": "watersense-fixtures",
+  "adapterPath": "scripts/research/operational-savings/adapters/watersense-fixtures/operator-import.mjs",
+  "artifacts": [
+    {
+      "artifactId": "artifact:watersense-product-search-access-probe:2026-07-23",
+      "sourceUrl": "https://www.epa.gov/watersense/product-search",
+      "cachePath": "scripts/research/operational-savings/.cache/probes/watersense-product.html",
+      "release": "Product Search page acquired 2026-07-23",
+      "sha256": "25b7f23f3a094c0eb81bc52510977672da547984709ec85be55c64c20db72ce4",
+      "sizeBytes": 55399,
+      "acquisitionMode": "PUBLIC_HTML_ACCESS_PROBE",
+      "official": true
+    }
+  ],
+  "observedSchemas": [],
+  "normalizedTargets": [],
+  "tests": [
+    {
+      "testId": "watersense-fixtures-operator-contract",
+      "path": "scripts/research/operational-savings/tests/watersense-fixtures-operator.test.mjs",
+      "name": "rejects incomplete mappings and unsupported unit claims",
+      "kind": "FAILURE",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:watersense-product-search-access-probe:2026-07-23"
+      ],
+      "sourceNativeFields": [],
+      "mutationCases": [
+        "missing canonical role",
+        "unsupported rated unit"
+      ]
+    },
+    {
+      "testId": "watersense-fixtures-access-boundary-proof",
+      "path": "scripts/research/operational-savings/tests/watersense-fixtures-operator.test.mjs",
+      "name": "pins the repository operator-import contract but not a product schema",
+      "kind": "REAL_SOURCE_PARTIAL",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:watersense-product-search-access-probe:2026-07-23"
+      ],
+      "sourceNativeFields": []
+    },
+    {
+      "testId": "watersense-fixtures-acquisition-path-failure-proof",
+      "path": "scripts/research/operational-savings/tests/watersense-fixtures-operator.test.mjs",
+      "name": "rejects secret-derived or guessed acquisition paths",
+      "kind": "FAILURE",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:watersense-product-search-access-probe:2026-07-23"
+      ],
+      "mutationCases": [
+        "wrong source page",
+        "copied API key",
+        "accessed environment endpoint"
+      ]
+    }
+  ],
+  "processClaims": [
+    {
+      "categoryId": "ITC-32",
+      "processKey": "exact-proposed-fixture-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:watersense-product-search-access-probe:2026-07-23"
+      ],
+      "testIds": [
+        "watersense-fixtures-operator-contract",
+        "watersense-fixtures-access-boundary-proof",
+        "watersense-fixtures-acquisition-path-failure-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": false,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": false,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "A human must use the official displayed full-list download action and retain the unchanged product XLSX plus the reviewed operator sidecar. No product export or observed product schema is present."
+    },
+    {
+      "categoryId": "ITC-32",
+      "processKey": "requirement-proposed-fixture-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:watersense-product-search-access-probe:2026-07-23"
+      ],
+      "testIds": [
+        "watersense-fixtures-operator-contract",
+        "watersense-fixtures-access-boundary-proof",
+        "watersense-fixtures-acquisition-path-failure-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": false,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": false,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "A human must use the official displayed full-list download action and retain the unchanged product XLSX plus the reviewed operator sidecar. No compatible product population or selection rule has been executed."
+    },
+    {
+      "categoryId": "ITC-33",
+      "processKey": "exact-proposed-fixture-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:watersense-product-search-access-probe:2026-07-23"
+      ],
+      "testIds": [
+        "watersense-fixtures-operator-contract",
+        "watersense-fixtures-access-boundary-proof",
+        "watersense-fixtures-acquisition-path-failure-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": false,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": false,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "A human must use the official displayed full-list download action and retain the unchanged product XLSX plus the reviewed operator sidecar. No product export or observed product schema is present."
+    },
+    {
+      "categoryId": "ITC-33",
+      "processKey": "requirement-proposed-fixture-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:watersense-product-search-access-probe:2026-07-23"
+      ],
+      "testIds": [
+        "watersense-fixtures-operator-contract",
+        "watersense-fixtures-access-boundary-proof",
+        "watersense-fixtures-acquisition-path-failure-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": false,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": false,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "A human must use the official displayed full-list download action and retain the unchanged product XLSX plus the reviewed operator sidecar. No compatible product population or selection rule has been executed."
+    }
+  ],
+  "feasibility": "FEASIBLE_AFTER_MANUAL_SEED",
+  "remainingBlockers": [
+    "No official full-list product XLSX is retained.",
+    "The product schema, natural key, certification statuses, category units, and null behavior are not observed.",
+    "The adapter never accesses the environment endpoint or copies the web application's API key."
+  ]
+}

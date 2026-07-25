@@ -6,10 +6,19 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Process coverage
 
-| Process key | Process name | Canonical Standard | Required inputs | Exact outputs | Formula terms | Source feasibility | Runtime external calls | Current blocker |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| context_benchmarks | Solar Water-Heating Input Benchmark | STD-CONTEXT-BENCHMARKS | Business activity; Building type; Building area; Operating schedule; Electricity use from the bill when water heating is electric; Gas use from the bill when water heating is gas; Collector requirements from the linked opportunity; Available collector and storage Project Document; Available hot-water-load Project Document; Available backup-system Project Document | One context-matched collector and storage configuration; One annual hot-water load; One backup-system efficiency | collector_and_storage_configuration; annual_delivered_hot_water_load; backup_efficiency | PARTIALLY_FEASIBLE | 0 | The DOE reference-building source supports context matching, while SAM supplies the simulation method only after inputs are selected. A retained category benchmark fixture is not yet present, so the selection adapter remains implementation-pending and must not be attributed to SAM. |
-| sam_solar_thermal | Solar Thermal Production Simulation | STD-SAM-SOLAR-THERMAL | Site location; Collector and storage design from the linked opportunity; Collector and storage design from a Project Document; Annual hot-water load from a Project Document; Annual hot-water load from the connected context benchmark; Backup fuel type; Backup-system efficiency from a Project Document; Backup-system efficiency from the connected context benchmark | Annual useful solar thermal output and displaced backup resource, with simulation inputs, units, and source version | SAM_output | FEASIBLE_AFTER_ADAPTER_WORK | 0 | The official SAM tool and open-source repository were checked, and local simulation is possible. No retained category fixture or golden calculation exists, and SAM does not supply missing collector design, hot-water load, or backup-system inputs. |
+### Canonical process contract
+
+| Process key | Process name | Canonical Standard | Required inputs | Exact output and formula term |
+| --- | --- | --- | --- | --- |
+| context_benchmarks | Solar Water-Heating Input Benchmark | STD-CONTEXT-BENCHMARKS | Business activity [Profile]; Building type [Profile]; Building area [Profile]; Operating schedule [User]; Electricity use from the bill when water heating is electric [Bill]; Gas use from the bill when water heating is gas [Bill]; Collector requirements from the linked opportunity [Linked Opportunity]; Available collector and storage Project Document [Project Document]; Available hot-water-load Project Document [Project Document]; Available backup-system Project Document [Project Document] | One context-matched collector and storage configuration -> collector_and_storage_configuration (record set; RECORD_SET); One annual hot-water load -> annual_delivered_hot_water_load (kWh-thermal/year; PROJECT_TOTAL); One backup-system efficiency -> backup_efficiency (fraction; PROJECT_TOTAL) |
+| sam_solar_thermal | Solar Thermal Production Simulation | STD-SAM-SOLAR-THERMAL | Site location [Profile]; Collector and storage design from the linked opportunity [Linked Opportunity]; Collector and storage design from a Project Document [Project Document]; Annual hot-water load from a Project Document [Project Document]; Annual hot-water load from the connected context benchmark [Standard Output]; Backup fuel type [User]; Backup-system efficiency from a Project Document [Project Document]; Backup-system efficiency from the connected context benchmark [Standard Output] | Annual useful solar thermal output and displaced backup resource, with simulation inputs, units, and source version -> SAM_output (kWh-thermal/year; PER_YEAR) |
+
+### Current execution evidence
+
+| Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
+| --- | --- | --- | --- | --- |
+| context_benchmarks | DOCUMENTATION_ONLY | None implemented | None required or recorded for the current proof state | MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
+| sam_solar_thermal | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/sam-solar-thermal/run.mjs | sam-solar-thermal-publication-failure: NOT_COVERED<br>sam-solar-thermal-real-database-publication: NOT_COVERED<br>sam-solar-thermal-real-ssc-execution: NOT_COVERED<br>sam-solar-thermal-ssc-version-failure: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## End-to-end graph
 
@@ -18,13 +27,15 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Feasibility
 
-The category depends on these source-level verdicts: PARTIALLY_FEASIBLE, FEASIBLE_AFTER_ADAPTER_WORK.
-An exact path is feasible only when every bound Profile, Bill, Linked Opportunity, Project Document, and User input is present and every Standard adapter returns an unambiguous compatible result.
-A benchmark path is feasible only where the category has a retained authoritative population and exact selection rule.
+The category depends on these source-level verdicts: NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES.
+The process table reports the final proof level after execution-record verification, not a higher level that a manifest may have declared before the current run.
+An exact path is usable only when every owned input is present and every Standard adapter returns one unambiguous compatible result.
+A benchmark path is usable only where the category has a retained authoritative population and exact selection rule.
 The runtime external-call count remains zero.
 
-## Recommended next action
+## Conditional next actions
 
-Implement and accept the shared source-family adapters before connecting this category to any calculation runtime.
-Add one category golden fixture for each supported exact or benchmark path.
-Keep unsupported paths explicit rather than filling them with generic defaults.
+| Process key | Current proof level | Next action |
+| --- | --- | --- |
+| context_benchmarks | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
+| sam_solar_thermal | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |

@@ -1,0 +1,260 @@
+{
+  "schemaVersion": 1,
+  "buildContextProvenance": {
+    "status": "UNCOMMITTED_HISTORICAL_BUILD_CONTEXT",
+    "historicalRepositoryCommit": null,
+    "contentIdentityStatus": "POST_HOC_EXACT_FILE_HASHES",
+    "recordedImageBuildContextAttested": false,
+    "note": "These hashes identify the present build and verification files exactly. They do not prove that this uncommitted repository context produced the already-recorded image digest. A future commit will bind this content prospectively."
+  },
+  "image": {
+    "repositoryTag": "retrofit-research-measur:amo-tools-bdc33b8-arm64",
+    "targetPlatform": "linux/arm64",
+    "localImageId": "sha256:0eb47e05f2fefa78ca86958140741181b5d2260b743da1c3b670a4f6c7540393",
+    "localRepoDigests": [
+      "retrofit-research-measur@sha256:0eb47e05f2fefa78ca86958140741181b5d2260b743da1c3b670a4f6c7540393"
+    ],
+    "sizeBytes": 30924920,
+    "runtimeUser": "65532:65532"
+  },
+  "baseImage": {
+    "reference": "ubuntu:24.04",
+    "indexDigest": "sha256:4fbb8e6a8395de5a7550b33509421a2bafbc0aab6c06ba2cef9ebffbc7092d90",
+    "arm64ManifestDigest": "sha256:7f622ca8766bccb22f04242ecb6f19f770b2f08827dc4b8c707de5e78a6da7ab"
+  },
+  "builderImage": {
+    "reference": "gcc:13.3.0-bookworm",
+    "indexDigest": "sha256:1d71f0f3450214bef38fe09e6f610fb6cca90cf97b43f4ce845bfc32a4168818",
+    "arm64ManifestDigest": "sha256:9b78318009f4b2c8ea27aaea79d710bccb28ae362c467f3a54d1c63d4a4f7a72"
+  },
+  "source": {
+    "repository": "https://github.com/ORNL-AMO/AMO-Tools-Suite",
+    "commit": "bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+    "gitTreeSha1": "8c9c6c3f81ea8f938642ff52d54dcafeeba42914",
+    "committedAt": "2025-01-27T09:55:48-06:00",
+    "archiveFormat": "git-archive-tar",
+    "archiveSha256": "8d0b14a6d86454b7530b1c94290f0e1dc24b72f8fb8ed9d551c9d525c0fd6fb4",
+    "archiveSizeBytes": 13793280,
+    "archiveCreationCommand": "git -C scripts/research/operational-savings/.cache/repos/amo-tools-suite archive --format=tar bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+    "cachePath": "scripts/research/operational-savings/.cache/repos/amo-tools-suite",
+    "sourceOrganization": "Oak Ridge National Laboratory",
+    "role": "EXACT_CONTAINER_SOURCE_ARCHIVE",
+    "official": true,
+    "license": {
+      "spdxId": "LicenseRef-ORNL-AMO-Permissive",
+      "upstreamName": "AMO Tools Suite OPEN SOURCE LICENSE (Permissive)",
+      "path": "/opt/measur/LICENSE.txt",
+      "sourcePath": "LICENSE.txt",
+      "byteSize": 2227,
+      "sha256": "7372b9cff1cab763899bf6c4516b44163f8442fd38d0a3786e3ceafc0e81df62",
+      "copyright": "Copyright 2018, UT-Battelle, LLC"
+    }
+  },
+  "build": {
+    "status": "COMPLETED_AND_EXACT_IMAGE_VERIFIED",
+    "builtAt": "2026-07-24T20:02:41.622677376Z",
+    "builtAtEvidence": {
+      "kind": "LOCAL_IMAGE_CONFIG_CREATED",
+      "imageId": "sha256:0eb47e05f2fefa78ca86958140741181b5d2260b743da1c3b670a4f6c7540393",
+      "inspectionField": ".Created"
+    },
+    "historicalInvocationCaptured": false,
+    "commandSemantics": "This is the exact source-controlled build entry point and its pinned Docker reproduction command. They are not represented as retained copies of the historical shell invocation.",
+    "command": "node scripts/research/operational-savings/containers/measur/build.mjs",
+    "reproductionCommand": "node scripts/research/operational-savings/containers/measur/build.mjs",
+    "dockerCommand": "docker buildx build --platform linux/arm64 --load --provenance=false --sbom=false --tag retrofit-research-measur:amo-tools-bdc33b8-arm64 --build-arg GCC_IMAGE=gcc:13.3.0-bookworm@sha256:1d71f0f3450214bef38fe09e6f610fb6cca90cf97b43f4ce845bfc32a4168818 --build-arg MEASUR_ARCHIVE_SHA256=8d0b14a6d86454b7530b1c94290f0e1dc24b72f8fb8ed9d551c9d525c0fd6fb4 --build-arg MEASUR_COMMIT=bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b scripts/research/operational-savings/containers/measur",
+    "arguments": {
+      "GCC_IMAGE": "gcc:13.3.0-bookworm@sha256:1d71f0f3450214bef38fe09e6f610fb6cca90cf97b43f4ce845bfc32a4168818",
+      "MEASUR_ARCHIVE_SHA256": "8d0b14a6d86454b7530b1c94290f0e1dc24b72f8fb8ed9d551c9d525c0fd6fb4",
+      "MEASUR_COMMIT": "bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "UBUNTU_IMAGE": "ubuntu:24.04@sha256:4fbb8e6a8395de5a7550b33509421a2bafbc0aab6c06ba2cef9ebffbc7092d90"
+    },
+    "sourceRequirements": {
+      "commitVerified": true,
+      "cleanWorktreeRequired": true,
+      "archiveChecksumVerifiedInsideBuild": true,
+      "licenseChecksumVerifiedInsideBuild": true
+    },
+    "harnessExtraction": {
+      "compressedAir": {
+        "adapterPath": "../../adapters/doe-measur/run.mjs",
+        "templateIdentifier": "COMPRESSED_AIR_HARNESS_SOURCE"
+      },
+      "equipment": {
+        "adapterPath": "../../adapters/doe-measur/equipment.mjs",
+        "templateIdentifier": "EQUIPMENT_HARNESS_SOURCE"
+      }
+    },
+    "environment": {
+      "dockerClientVersion": "29.6.1",
+      "dockerServerVersion": "29.6.1",
+      "dockerBuildxVersion": "v0.35.0-desktop.2",
+      "dockerServerPlatform": "linux/arm64",
+      "dockerServerKernel": "6.12.76-linuxkit",
+      "containerGccVersion": "13.3.0",
+      "runtimeGlibcVersion": "2.39"
+    },
+    "statusEvidence": {
+      "localImageId": "sha256:0eb47e05f2fefa78ca86958140741181b5d2260b743da1c3b670a4f6c7540393",
+      "ecrImageDigest": "sha256:0eb47e05f2fefa78ca86958140741181b5d2260b743da1c3b670a4f6c7540393",
+      "runtimeVerificationStatus": "PASS"
+    }
+  },
+  "buildInputs": [
+    {
+      "path": ".dockerignore",
+      "sha256": "949420a4b0ab2cbb46f0b2752fed07e6cbd5e9bfdf6f348003b2f5fb90cd3f7b"
+    },
+    {
+      "path": "Dockerfile",
+      "sha256": "8db16ff3d6f5535865ed0af670c918e568e38aa5d60e0b11365d08a0872c53f6"
+    },
+    {
+      "path": "build.mjs",
+      "sha256": "2c0e7b56925aa053415b8fa9c8b18c258ab34771267e29bd0d91bd99aaaf518d"
+    },
+    {
+      "path": "entrypoint.sh",
+      "sha256": "584fa52a249eaccfd41f26d5c130dad36c034b22a4f90f29d73221a12b40f0e2"
+    },
+    {
+      "path": "../../adapters/doe-measur/run.mjs",
+      "sha256": "00e1a5631460c5609ee6f9b8234e8e0d278d98250d44a0558e5340dd07ddfd9e"
+    },
+    {
+      "path": "../../adapters/doe-measur/equipment.mjs",
+      "sha256": "a2122dda6c25d65ed894501bc7b1fd3716767cce5c19fb5f7f4cdd761d6608fc"
+    }
+  ],
+  "verificationInputs": [
+    {
+      "path": "fixtures.json",
+      "sha256": "224c0be5d06a2e9215ee27475f3826bb69ab4739f4ef003fca977589fab182a5"
+    },
+    {
+      "path": "verify.mjs",
+      "sha256": "df3fb224946a838eb18693e86f02b9293c5994cad187a90b44b67fb947f7369c"
+    }
+  ],
+  "runtime": {
+    "verificationCommand": "node scripts/research/operational-savings/containers/measur/verify.mjs",
+    "commonDockerArguments": [
+      "--rm",
+      "--network",
+      "none",
+      "--read-only",
+      "--cap-drop",
+      "ALL",
+      "--security-opt",
+      "no-new-privileges",
+      "--pull",
+      "never"
+    ],
+    "binaries": [
+      {
+        "path": "/usr/local/libexec/measur-compressed-air",
+        "sha256": "c92712b7daf86da5059cbac0b0e9a846406fa6c7c9b30e918096621798a53de2"
+      },
+      {
+        "path": "/usr/local/libexec/measur-equipment",
+        "sha256": "743a85121506af4e3acdd115221f962232620a9434709a4c8688b776b34a76d4"
+      }
+    ],
+    "nativeModules": [
+      "CompressedAirLeakSurvey",
+      "MotorEfficiency",
+      "PSATResult",
+      "FanResult",
+      "CoolingTower::FanEnergyConsumption"
+    ]
+  },
+  "proofRuns": [
+    {
+      "fixtureId": "compressed-air-estimate-v1",
+      "calculator": "CompressedAirLeakSurvey",
+      "network": "docker-none",
+      "status": "PASS"
+    },
+    {
+      "fixtureId": "equipment-golden-v1",
+      "calculator": "MotorEfficiency+PSATResult+FanResult+CoolingTower",
+      "network": "docker-none",
+      "status": "PASS"
+    }
+  ],
+  "verification": {
+    "status": "PASS",
+    "verifiedAt": "2026-07-24T20:05:03Z",
+    "architecture": "linux/arm64",
+    "networkMode": "none",
+    "readOnlyRootFilesystem": true,
+    "capabilitiesDropped": "ALL",
+    "noNewPrivileges": true,
+    "runtimeUserVerified": true,
+    "fixtureHashesVerified": true,
+    "licenseHashVerified": true,
+    "actualOutputs": {
+      "compressed-air-estimate-v1": {
+        "annualTotalElectricity": 138.24,
+        "annualTotalElectricityCost": 16.5888,
+        "totalFlowRate": 0.1,
+        "annualTotalFlowRate": 51840
+      },
+      "equipment-golden-v1": {
+        "motor": {
+          "existingEfficiency": 0.8867837735583464,
+          "proposedEfficiency": 0.9226247725330855
+        },
+        "psat": {
+          "existingInputKw": 150,
+          "proposedInputKw": 149.64012475884022,
+          "existingPumpEfficiency": 0.3810942535343008,
+          "proposedPumpEfficiency": 0.382,
+          "existingAnnualEnergyMwh": 1314,
+          "proposedAnnualEnergyMwh": 1310.8474928874405
+        },
+        "fan": {
+          "existingInputKw": 460,
+          "proposedInputKw": 460.00014402241186,
+          "existingFanEfficiency": 0.5953983150358069,
+          "proposedFanEfficiency": 0.595398315,
+          "existingAnnualEnergyMwh": 4029.6,
+          "proposedAnnualEnergyMwh": 4029.6012616363278
+        },
+        "coolingTower": {
+          "existingFanPowerHp": 55.14996187617361,
+          "existingFanEnergyKwh": 41.141871559625514,
+          "proposedFanPowerHp": 44.78961473708352,
+          "proposedFanEnergyKwh": 33.41305259386431,
+          "avoidedFanEnergyKwh": 7.7288189657612065
+        }
+      }
+    }
+  },
+  "ecr": {
+    "accountId": "945129430686",
+    "region": "us-east-1",
+    "repositoryName": "retrofi-research-measur",
+    "repositoryUri": "945129430686.dkr.ecr.us-east-1.amazonaws.com/retrofi-research-measur",
+    "imageTag": "amo-tools-bdc33b8-arm64",
+    "imageDigest": "sha256:0eb47e05f2fefa78ca86958140741181b5d2260b743da1c3b670a4f6c7540393",
+    "imageUri": "945129430686.dkr.ecr.us-east-1.amazonaws.com/retrofi-research-measur@sha256:0eb47e05f2fefa78ca86958140741181b5d2260b743da1c3b670a4f6c7540393",
+    "pushedAt": "2026-07-24T20:09:31.548Z",
+    "imageSizeBytes": 30923487,
+    "imageManifestMediaType": "application/vnd.oci.image.manifest.v1+json",
+    "verificationStatus": "VERIFIED_EXACT_DIGEST",
+    "verifiedAt": "2026-07-24T20:10:03Z",
+    "exactDigestPulled": true,
+    "runtimeVerificationStatus": "PASS",
+    "verificationCommand": "MEASUR_IMAGE='945129430686.dkr.ecr.us-east-1.amazonaws.com/retrofi-research-measur@sha256:0eb47e05f2fefa78ca86958140741181b5d2260b743da1c3b670a4f6c7540393' node scripts/research/operational-savings/containers/measur/verify.mjs",
+    "scan": {
+      "status": "COMPLETE",
+      "completedAt": "2026-07-24T20:09:40.000Z",
+      "critical": 0,
+      "high": 0,
+      "medium": 9,
+      "low": 0,
+      "disposition": "Research-only image. Execute as non-root with Docker networking disabled. Do not deploy for customer calculations."
+    }
+  }
+}

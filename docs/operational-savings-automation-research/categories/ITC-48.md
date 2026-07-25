@@ -6,9 +6,17 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Process coverage
 
-| Process key | Process name | Canonical Standard | Required inputs | Exact outputs | Formula terms | Source feasibility | Runtime external calls | Current blocker |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| context_benchmarks | Comparable Cooking-Duty Resolver | STD-CONTEXT-BENCHMARKS | Existing cooking equipment type and resource; Proposed induction equipment type and resource; Identical tested cooking duty definition; Annual activity in that tested duty unit; Exact project test records when available | One existing resource intensity per identical tested cooking duty; One proposed resource intensity per identical tested cooking duty | existing_resource_per_activity_r; proposed_resource_per_activity_r | PARTIALLY_FEASIBLE | 0 | The retained ENERGY STAR CFS calculator fixture proves the electric-cooktop 20-pound water-boil duty, conventional and efficient cooking efficiencies, 1.03 and 0.91 kWh per boil values, and annualization equation. It does not prove gas-to-induction savings or a different cooking duty, so those cases remain blocked without exact comparable project tests. No category calculation golden fixture is retained, so end-to-end execution proof remains pending. |
+### Canonical process contract
+
+| Process key | Process name | Canonical Standard | Required inputs | Exact output and formula term |
+| --- | --- | --- | --- | --- |
+| context_benchmarks | Comparable Cooking-Duty Resolver | STD-CONTEXT-BENCHMARKS | Existing cooking equipment type and resource [User]; Proposed induction equipment type and resource [Linked Opportunity]; Identical tested cooking duty definition [Project Document]; Annual activity in that tested duty unit [User]; Exact project test records when available [Project Document] | One existing resource intensity per identical tested cooking duty -> existing_resource_per_activity_r (resource/certified activity; PER_EVENT); One proposed resource intensity per identical tested cooking duty -> proposed_resource_per_activity_r (resource/certified activity; PER_EVENT) |
+
+### Current execution evidence
+
+| Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
+| --- | --- | --- | --- | --- |
+| context_benchmarks | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/context-benchmarks/run.mjs | context-cfs-cooktop-source-proof: NOT_COVERED<br>context-cfs-workbook-mutation-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## End-to-end graph
 
@@ -16,13 +24,14 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Feasibility
 
-The category depends on these source-level verdicts: PARTIALLY_FEASIBLE.
-An exact path is feasible only when every bound Profile, Bill, Linked Opportunity, Project Document, and User input is present and every Standard adapter returns an unambiguous compatible result.
-A benchmark path is feasible only where the category has a retained authoritative population and exact selection rule.
+The category depends on these source-level verdicts: NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES.
+The process table reports the final proof level after execution-record verification, not a higher level that a manifest may have declared before the current run.
+An exact path is usable only when every owned input is present and every Standard adapter returns one unambiguous compatible result.
+A benchmark path is usable only where the category has a retained authoritative population and exact selection rule.
 The runtime external-call count remains zero.
 
-## Recommended next action
+## Conditional next actions
 
-Implement and accept the shared source-family adapters before connecting this category to any calculation runtime.
-Add one category golden fixture for each supported exact or benchmark path.
-Keep unsupported paths explicit rather than filling them with generic defaults.
+| Process key | Current proof level | Next action |
+| --- | --- | --- |
+| context_benchmarks | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |

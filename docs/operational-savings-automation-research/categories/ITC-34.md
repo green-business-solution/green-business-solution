@@ -6,9 +6,17 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Process coverage
 
-| Process key | Process name | Canonical Standard | Required inputs | Exact outputs | Formula terms | Source feasibility | Runtime external calls | Current blocker |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| watersense_landscape | Landscape Water Budget Calculation | STD-WATERSENSE-LANDSCAPE | Approximate Landscape Area for Each Hydrozone; Recognizable Plant or Landscape Type for Each Hydrozone; Irrigation method; Irrigation efficiency, if known from a nameplate, measurement, audit, or contractor specification; Controller treatment; Site ZIP Code | Baseline annual design water allowance; Proposed annual design water allowance | baseline_design_allowance_gallons; proposed_design_allowance_gallons | FEASIBLE_AFTER_ADAPTER_WORK | 0 | The official Version 2.0 scope and equations were checked, and the retained fixture validates the design-method boundary. The tool compares designed allowances and does not prove actual existing consumption, irrigation scheduling, or whole-site bill allocation. The category adapter and formula-level golden test have not yet been added. |
+### Canonical process contract
+
+| Process key | Process name | Canonical Standard | Required inputs | Exact output and formula term |
+| --- | --- | --- | --- | --- |
+| watersense_landscape | Landscape Water Budget Calculation | STD-WATERSENSE-LANDSCAPE | Approximate Landscape Area for Each Hydrozone [User]; Recognizable Plant or Landscape Type for Each Hydrozone [User]; Irrigation method [User]; Irrigation efficiency, if known from a nameplate, measurement, audit, or contractor specification [Project Document]; Controller treatment [User]; Site ZIP Code [Profile] | Baseline annual design water allowance -> baseline_design_allowance_gallons (gallons/year; PROJECT_TOTAL); Proposed annual design water allowance -> proposed_design_allowance_gallons (gallons/year; PROJECT_TOTAL) |
+
+### Current execution evidence
+
+| Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
+| --- | --- | --- | --- | --- |
+| watersense_landscape | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/watersense-landscape/run.mjs | watersense-landscape-header-failure-proof: NOT_COVERED<br>watersense-landscape-input-failure-proof: NOT_COVERED<br>watersense-landscape-real-workbook-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## End-to-end graph
 
@@ -16,13 +24,14 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Feasibility
 
-The category depends on these source-level verdicts: FEASIBLE_AFTER_ADAPTER_WORK.
-An exact path is feasible only when every bound Profile, Bill, Linked Opportunity, Project Document, and User input is present and every Standard adapter returns an unambiguous compatible result.
-A benchmark path is feasible only where the category has a retained authoritative population and exact selection rule.
+The category depends on these source-level verdicts: NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES.
+The process table reports the final proof level after execution-record verification, not a higher level that a manifest may have declared before the current run.
+An exact path is usable only when every owned input is present and every Standard adapter returns one unambiguous compatible result.
+A benchmark path is usable only where the category has a retained authoritative population and exact selection rule.
 The runtime external-call count remains zero.
 
-## Recommended next action
+## Conditional next actions
 
-Implement and accept the shared source-family adapters before connecting this category to any calculation runtime.
-Add one category golden fixture for each supported exact or benchmark path.
-Keep unsupported paths explicit rather than filling them with generic defaults.
+| Process key | Current proof level | Next action |
+| --- | --- | --- |
+| watersense_landscape | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |

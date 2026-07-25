@@ -1,0 +1,50 @@
+{
+  "sourceCommit": "f952cabdf3e60f6e88eef80bb7bc9e7e24bac643",
+  "inputSpecPath": "retrofi-storage-spec.json",
+  "metrics": {
+    "yearOneEnergySavingsBeforeTaxUsd": 2613.279999999999,
+    "yearOneBillSavingsBeforeTaxUsd": 5794.800000000003,
+    "yearOneDemandSavingsBeforeTaxUsd": 3181.5200000000004
+  },
+  "packageVersions": {
+    "HiGHS_jll": "1.8.0+0",
+    "HiGHS": "1.12.0",
+    "Julia": "1.10.4",
+    "MathOptInterface": "1.34.0",
+    "JuMP": "1.23.6"
+  },
+  "scenarioKind": "retrofi_local_storage_pair",
+  "outputSha256": "500efe497ec25fba345b271ed67e7c644eb9a21df7bd4ab95fa4b70befc7b68e",
+  "proposed": {
+    "storagePowerKw": 25.0,
+    "storageDischargeKwh": 13839.339999999993,
+    "status": "optimal",
+    "annualLoadKwh": 439460.0,
+    "storageDischargeSeriesSha256": "7bf71babfd9821dab22ff81d1a3add84d2136f9fea665c5707fc65662231bd75",
+    "yearOneEnergyCostBeforeTaxUsd": 68853.72,
+    "solverSeconds": 0.912,
+    "terminationStatus": "OPTIMAL",
+    "storageEnergyKwh": 50.0,
+    "storageSocSeriesSha256": "3947f827e5f616c16c57c4074c47ca0e488a9b79bf8d6229b6a82135f7897ebd",
+    "inputSha256": "055ecfb5857738e2ed4a65d2e8eece82fba79da66fe2f354aae6ec2bdf5d546b",
+    "yearOneBillBeforeTaxUsd": 84032.2,
+    "yearOneDemandCostBeforeTaxUsd": 15178.48
+  },
+  "schemaVersion": "retrofi/reopt-storage-proof-v1",
+  "inputSpecSha256": "ee968d5fd50e1c5afbe401aace33b35bf78601cc67313a888b4ec981d88f8fd9",
+  "baseline": {
+    "storagePowerKw": 0.0,
+    "storageDischargeKwh": 0.0,
+    "status": "optimal",
+    "annualLoadKwh": 439460.0,
+    "storageDischargeSeriesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "yearOneEnergyCostBeforeTaxUsd": 71467.0,
+    "solverSeconds": 0.099,
+    "terminationStatus": "OPTIMAL",
+    "storageEnergyKwh": 0.0,
+    "storageSocSeriesSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "inputSha256": "981b03b933f7b0083b7006ca6ad681fcaf10554864a6f5339b66cc45ff986634",
+    "yearOneBillBeforeTaxUsd": 89827.0,
+    "yearOneDemandCostBeforeTaxUsd": 18360.0
+  }
+}

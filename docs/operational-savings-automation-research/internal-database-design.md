@@ -21,6 +21,8 @@ Pinned models belong in reproducible packages with checksums, while their inputs
 | equipment_products | Normalized product identity | id | source_release_id, native_id, manufacturer, brand, model, normalized_model |
 | equipment_certifications | Certification and status history | id | product_id, specification, test_procedure, effective_from, effective_to, active |
 | equipment_performance_fields | Typed source-native product metrics | id | certification_id, field_key, numeric_value, text_value, unit_id |
+| energy_star_commercial_dishwashers | ENERGY STAR commercial-dishwasher summary fields | product_id | machine_type, sanitation_method, water_gallons_per_rack, washing_kwh_per_rack, idle_energy_rate_kw, date_qualified |
+| energy_star_dishwasher_operating_modes | Mode-specific ENERGY STAR commercial-dishwasher metrics | id | product_id, operating_mode, water_gallons_per_rack, washing_kwh_per_rack, idle_energy_rate_kw, booster_idle_energy_rate_kw, racks_per_hour |
 | installed_baseline_benchmarks | Approved installed-equipment populations | id | population_id, equipment_class, context_json |
 | building_upgrade_measures | ComStock and Scout measure definitions | id | release_id, native_measure_id, name, method |
 | building_archetype_benchmarks | Precomputed building resource deltas | id | measure_id, geography_id, archetype, resource, value, unit_id |
@@ -36,12 +38,14 @@ Pinned models belong in reproducible packages with checksums, while their inputs
 | retrofit_measure_crosswalks | RetroFi to building measure IDs | id | source_release_id, retrofit_id, measure_id, approval_status |
 | benchmark_populations | Immutable eligible population definitions | id | source_release_id, population_key, filters_json, minimum_sample_size |
 | benchmark_values | Selected official, weighted-median, or median values | id | population_id, field_key, value, unit_id, sample_size, selection_rule |
+| operating_schedule_references | Pinned source-backed astronomy or schedule validation observations | id | source_release_id, reference_kind, location, local_date, event_name, local_time, native_text |
 | model_versions | Pinned executable models | id | name, version, commit_sha, package_sha256, license |
 | model_input_schemas | Model input contracts | id | model_version_id, schema_json, fingerprint |
 | calculation_assumptions | Versioned RetroFi-owned assumptions | id | assumption_key, value_json, unit_id, effective_from, approved_by |
 | selected_values | One selected value or structure per resolver | id | calculation_run_id, process_key, result_kind, value_json, unit_id |
 | selected_value_provenance | Complete selected-value trace | id | selected_value_id, release_id, artifact_id, filters_json, population_id, fallback_level |
 | calculation_runs | Reproducible local executions | id | adapter_version, input_hash, model_version_id, started_at, result_hash, status |
+| calculation_source_dependencies | Typed lineage from a calculation to upstream runs or retained source artifacts | calculation_run_id + dependency_role | input_calculation_run_id, source_artifact_id, source_fields_json, transformation |
 | calculation_warnings | Typed warnings and review gates | id | calculation_run_id, code, severity, message |
 
 ## Core PostgreSQL-compatible schema
@@ -107,16 +111,40 @@ CREATE TABLE selected_value_provenance (
   fallback_level text NOT NULL,
   warnings jsonb NOT NULL
 );
+
+CREATE TABLE calculation_source_dependencies (
+  calculation_run_id uuid NOT NULL REFERENCES calculation_runs(id),
+  dependency_role text NOT NULL,
+  input_calculation_run_id uuid REFERENCES calculation_runs(id),
+  source_artifact_id uuid REFERENCES source_artifacts(id),
+  source_fields_json jsonb NOT NULL,
+  transformation text NOT NULL,
+  PRIMARY KEY (calculation_run_id, dependency_role),
+  CHECK (
+    input_calculation_run_id IS NOT NULL
+    OR source_artifact_id IS NOT NULL
+  )
+);
 ```
 
 ## Versioning and publication
 
 Every raw artifact and normalized release is immutable.
+Source, release, artifact, model-version, assumption, calculation-run, selected-value, and dependency identities are content-bound.
+An idempotent insert may confirm identical content, but no upsert may replace different content behind an existing identity.
 A source release moves through discovered, acquired, validated, normalized, reviewed, published, deprecated, and rejected states.
 Only a published release may be selected by an estimate.
 Publication is an atomic source-specific pointer and rollback changes that pointer without deleting data.
 Effective dates are separate from ingestion and publication dates.
 Historical calculations pin their source-release IDs and remain reproducible after a newer release is published.
+A source-backed calculation dependency pins its source artifact.
+A project, profile, bill, linked-opportunity, or document dependency may omit the source artifact only when it pins an immutable upstream calculation run whose input hash records the exact owned input.
+`calculation_source_dependencies` enforces that every dependency has an upstream calculation run, a source artifact, or both.
+
+The research database publisher builds the SQLite database, compact JSON export, and publication receipt in temporary paths.
+It hashes the database and compact export, records their byte sizes under one generation ID, renames the data files, and renames the receipt last as the commit marker.
+Consumers must verify `docs/operational-savings-automation-research/fixtures/research-database.compact.json` against `docs/operational-savings-automation-research/fixtures/research-database.publication.json` before use.
+If any build, rename, or verification step fails, the prior committed generation remains authoritative.
 
 ## Deduplication and matching
 

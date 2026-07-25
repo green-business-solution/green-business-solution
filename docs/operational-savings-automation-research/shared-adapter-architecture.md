@@ -41,9 +41,11 @@ interface ResultEnvelope<T> {
   value: T | null;
   unit: string | null;
   scope: string;
-  source: string;
-  sourceVersion: string;
-  sourceArtifact: string;
+  inputOwnership: "SOURCE" | "PROJECT_OR_PROFILE";
+  source: string | null;
+  sourceVersion: string | null;
+  sourceArtifact: string | null;
+  inputSha256: string;
   filters: Record<string, unknown>;
   eligiblePopulation: unknown[];
   sampleSize: number;
@@ -55,7 +57,9 @@ interface ResultEnvelope<T> {
 }
 ```
 
-Every result contains the selected value or structure, unit, scope, source, source version, source artifact, filters, eligible population, sample size, selection rule, fallback level, uncertainty, warnings, and provenance.
+Every result contains the selected value or structure, unit, scope, ownership, exact input hash, filters, eligible population, sample size, selection rule, fallback level, uncertainty, warnings, and provenance.
+A source-backed result also contains its source, release, and artifact identities.
+A project-owned result leaves those source fields null and proves the exact input through its content hash and immutable input calculation run.
 Unavailable is a successful typed result when the source cannot lawfully or technically supply a required value.
 
 ## Estimate-time flow
@@ -79,6 +83,18 @@ Normalized Profile
 Later exact inputs supersede benchmark selections by creating a new calculation run.
 Historical runs remain immutable.
 Category-overlap guards compare retrofit identity, physical resource boundary, time interval, and upstream savings component before summing results.
+
+## Identity and publication contract
+
+Source IDs, release IDs, artifact IDs, model-version IDs, input hashes, and calculation IDs identify immutable content.
+Adapters may reuse an existing row only after every identity-bearing field matches.
+They fail closed on conflicting content instead of rewriting a retained release, artifact, assumption, calculation, selected value, or dependency.
+`calculation_source_dependencies` requires an upstream calculation run or a source artifact for every dependency.
+This permits content-addressed project inputs without falsely attributing them to an external source.
+
+The offline proof publisher creates the database, compact export, and receipt as one generation.
+It verifies byte sizes and SHA-256 values before publishing, then installs the receipt last.
+The prior generation remains usable if publication fails before that final commit marker.
 
 ## Error policy
 

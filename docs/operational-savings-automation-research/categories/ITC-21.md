@@ -6,9 +6,17 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Process coverage
 
-| Process key | Process name | Canonical Standard | Required inputs | Exact outputs | Formula terms | Source feasibility | Runtime external calls | Current blocker |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| epa_chp_performance | Combined Heat and Power Performance Balance | STD-EPA-CHP-PERFORMANCE | Prime mover; Input fuel; Selected Unit Model, if known; Total installed capacity; Annual capacity factor; Coincident onsite electric-load constraint, if known; Coincident useful thermal-load constraint; Existing Boiler Nameplate or Combustion-Test Information, if known | Annual electricity generation; Annual CHP input fuel; Annual useful recovered heat | generation; CHP_input_fuel; useful_heat | FEASIBLE_AFTER_ADAPTER_WORK | 0 | The official technology pages, efficiency method, and calculator download were checked. The category adapter and retained source fixture are still absent, and the source does not identify an exact unit or supply site capacity, schedule, or thermal coincidence. |
+### Canonical process contract
+
+| Process key | Process name | Canonical Standard | Required inputs | Exact output and formula term |
+| --- | --- | --- | --- | --- |
+| epa_chp_performance | Combined Heat and Power Performance Balance | STD-EPA-CHP-PERFORMANCE | Prime mover [Linked Opportunity]; Input fuel [Linked Opportunity]; Selected Unit Model, if known [Linked Opportunity]; Total installed capacity [Linked Opportunity]; Annual capacity factor [Linked Opportunity]; Coincident onsite electric-load constraint, if known [Project Document]; Coincident useful thermal-load constraint [Project Document]; Existing Boiler Nameplate or Combustion-Test Information, if known [Project Document] | Annual electricity generation -> generation (kWh/year; PROJECT_TOTAL); Annual CHP input fuel -> CHP_input_fuel (fuel-unit/year; PROJECT_TOTAL); Annual useful recovered heat -> useful_heat (energy/year; PROJECT_TOTAL) |
+
+### Current execution evidence
+
+| Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
+| --- | --- | --- | --- | --- |
+| epa_chp_performance | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/epa-chp/run.mjs | epa-chp-itc21-formula-proof: NOT_COVERED<br>epa-chp-offline-proof: NOT_COVERED<br>epa-chp-real-catalog-proof: NOT_COVERED<br>epa-chp-required-row-failure-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## End-to-end graph
 
@@ -16,13 +24,14 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Feasibility
 
-The category depends on these source-level verdicts: FEASIBLE_AFTER_ADAPTER_WORK.
-An exact path is feasible only when every bound Profile, Bill, Linked Opportunity, Project Document, and User input is present and every Standard adapter returns an unambiguous compatible result.
-A benchmark path is feasible only where the category has a retained authoritative population and exact selection rule.
+The category depends on these source-level verdicts: NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES.
+The process table reports the final proof level after execution-record verification, not a higher level that a manifest may have declared before the current run.
+An exact path is usable only when every owned input is present and every Standard adapter returns one unambiguous compatible result.
+A benchmark path is usable only where the category has a retained authoritative population and exact selection rule.
 The runtime external-call count remains zero.
 
-## Recommended next action
+## Conditional next actions
 
-Implement and accept the shared source-family adapters before connecting this category to any calculation runtime.
-Add one category golden fixture for each supported exact or benchmark path.
-Keep unsupported paths explicit rather than filling them with generic defaults.
+| Process key | Current proof level | Next action |
+| --- | --- | --- |
+| epa_chp_performance | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |

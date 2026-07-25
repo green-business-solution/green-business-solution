@@ -1,32 +1,36 @@
 # STD-COMSTOCK-ANNUAL-DELTA - ComStock annual upgrade resource delta
 
-## 1. RetroFi role
+## 1. Canonical role and current process proof
 
 This Standard is used by 1 category and 1 category-local process instance.
 The categories are ITC-01.
 The process keys are comstock_annual_delta.
 The formula terms supplied are median_ComStock_delta_r_per_ft².
-The current claimed output set contains 1 distinct output description.
-The present automation limitation is: Project-specific equipment performance, combined upgrade arithmetic, and any percentile without retained population size and weights.
+The canonical output set contains 1 distinct output description.
 
-| Evidence ID | Source title | Version | Status | Exact artifact |
-| --- | --- | --- | --- | --- |
-| E-COMSTOCK-DELTA | ComStock 2025 Release 3 data | 2025 Release 3 | UNVERIFIED | OEDI metadata_and_annual_results Parquet plus data_dictionary.tsv and enumeration_dictionary.tsv |
-| E-COMSTOCK-TAXONOMY | ComStock upgrade measures | 2025 Release 3 | UNVERIFIED | measure_name_crosswalk.csv and upgrades_lookup.json |
+| Category and process | Execution-verified proof level | Adapter | Actual adapter test result | Current blocker | Conditional next action |
+| --- | --- | --- | --- | --- | --- |
+| ITC-01/comstock_annual_delta | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/comstock/run.mjs | comstock-artifact-network-failure-proof: NOT_COVERED<br>comstock-real-release-3-annual-delta-proof: NOT_COVERED<br>comstock-resolution-failure-proof: NOT_COVERED<br>comstock-schema-failure-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## 2. Official source inventory
 
 The primary organization is National Laboratory of the Rockies.
 The selected official source is ComStock 2025 Release 3.
-The pinned version is 2025 Release 3.
-The release date or release state is 2025-11.
+The catalog acquisition target is 2025 Release 3.
+Its release date or release state is 2025-11.
 The expected update cadence is Release based, historically several releases per year.
 The license finding is OEDI data is published for public access; retain release-specific license and attribution metadata.
 The legal-review requirement is Confirm the license metadata attached to every OEDI release before production publication.
+These catalog values describe the planned source inventory and do not replace proof-manifest artifact identity.
 
 - https://natlabrockies.github.io/ComStock.github.io/docs/data.html
 - https://natlabrockies.github.io/ComStock.github.io/docs/upgrade_measures/upgrade_measures.html
 - https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/comstock_amy2018_release_3/upgrades_lookup.json
+
+| Evidence ID | Source title | Version | Status | Exact artifact |
+| --- | --- | --- | --- | --- |
+| E-COMSTOCK-DELTA | ComStock 2025 Release 3 data | 2025 Release 3 | UNVERIFIED | OEDI metadata_and_annual_results Parquet plus data_dictionary.tsv and enumeration_dictionary.tsv |
+| E-COMSTOCK-TAXONOMY | ComStock upgrade measures | 2025 Release 3 | UNVERIFIED | measure_name_crosswalk.csv and upgrades_lookup.json |
 
 ## 3. What can actually be acquired
 
@@ -43,12 +47,30 @@ The legal-review requirement is Confirm the license metadata attached to every O
 | Public measure_name_crosswalk.csv | https://natlabrockies.github.io/ComStock.github.io/docs/data.html | No authentication, registration, or API key observed for this route | Not applicable to a static artifact, repository, local package, or manual export | Not separately sized; Route-specific source structure | 2025 Release 3; Release based, historically several releases per year; Monitor URL and checksum drift | Public acquisition appears automatable, subject to artifact-specific license review | Not separately probed; retained as a documented alternative |
 
 The tested access result is: HTTP 200 for the Release 3 upgrades lookup; full annual Parquet acquisition was not attempted because of size.
-The retained inspected artifact is upgrades_lookup.json, JSON, 3752 bytes, sha256:c3ba607e650d3b78cd86f08ef3cd6e632b7e622797a970cd8f16812e41a1ce5a.
+The planning catalog observation is upgrades_lookup.json, JSON, 3752 bytes, sha256:c3ba607e650d3b78cd86f08ef3cd6e632b7e622797a970cd8f16812e41a1ce5a.
 The access-cost classification is completely free.
 
-## 4. Real source structure
+## 4. Proof-backed artifacts, releases, and schemas
 
-The observed source-native fields or model inputs are:
+The following table is generated from current proof contributions that explicitly name this Standard.
+It reports retained artifact releases, versions, locators, and integrity values instead of treating the planning catalog observation as executed proof.
+
+| Artifact ID | Evidence role | Retained release or version | Exact locator | Integrity | Current proof state | Bound processes |
+| --- | --- | --- | --- | --- | --- | --- |
+| artifact:comstock-2025-release-3-ca-g0600750-upgrade-0 | PUBLIC_OEDI_DOWNLOAD | 2025 ComStock Release 3 | https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/comstock_amy2018_release_3/metadata_and_annual_results/by_state_and_county/full/parquet/state=CA/county=G0600750/CA_G0600750_upgrade0.parquet | sha256:df4d4e40099a4c73f128fcc621cfc5b7facc6eb621e13eddf21a43bc87afdc40; 16866929 bytes | DOCUMENTATION_ONLY | ITC-01/comstock_annual_delta |
+| artifact:comstock-2025-release-3-ca-g0600750-upgrade-43 | PUBLIC_OEDI_DOWNLOAD | 2025 ComStock Release 3 | https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/comstock_amy2018_release_3/metadata_and_annual_results/by_state_and_county/full/parquet/state=CA/county=G0600750/CA_G0600750_upgrade43.parquet | sha256:1c658e2a59a83f24f55fab04187cd0cde6546c6bf5e43dc8beb456479403dbde; 19572532 bytes | DOCUMENTATION_ONLY | ITC-01/comstock_annual_delta |
+| artifact:comstock-2025-release-3-data-dictionary | PUBLIC_OEDI_DOWNLOAD | 2025 ComStock Release 3 | https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/comstock_amy2018_release_3/data_dictionary.tsv | sha256:11c03e4794ed12c5d8fc81c1253d97c033f217c79cc217e00110052b2d23ea4b; 250000 bytes | DOCUMENTATION_ONLY | ITC-01/comstock_annual_delta |
+| artifact:comstock-2025-release-3-enumeration-dictionary | PUBLIC_OEDI_DOWNLOAD | 2025 ComStock Release 3 | https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/comstock_amy2018_release_3/enumeration_dictionary.tsv | sha256:0d721355dc3f1cee2f42e6db750c0de2daef1773404bab3125d1bda1960e007e; 30953 bytes | DOCUMENTATION_ONLY | ITC-01/comstock_annual_delta |
+| artifact:comstock-2025-release-3-measure-crosswalk | PUBLIC_OEDI_DOWNLOAD | 2025 ComStock Release 3 | https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/comstock_amy2018_release_3/measure_name_crosswalk.csv | sha256:cf87e5905df7291b4d2bbbd9491ad3f0cde55b3e5e43298308c429c9454b4462; 20900 bytes | DOCUMENTATION_ONLY | ITC-01/comstock_annual_delta |
+| artifact:comstock-2025-release-3-upgrades | PUBLIC_OEDI_DOWNLOAD | 2025 ComStock Release 3 | https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/comstock_amy2018_release_3/upgrades_lookup.json | sha256:c3ba607e650d3b78cd86f08ef3cd6e632b7e622797a970cd8f16812e41a1ce5a; 3752 bytes | DOCUMENTATION_ONLY | ITC-01/comstock_annual_delta |
+
+The current proof manifests record these inspected schemas:
+
+| Schema ID | Artifact ID | Format | Extractor | Required native fields | Current proof state |
+| --- | --- | --- | --- | --- | --- |
+| schema:comstock-2025-release-3-bundle |  | COMSTOCK_RELEASE_BUNDLE | scripts/research/operational-savings/adapters/comstock/inspect-schema.mjs | bldg_id; weight; upgrade; applicability; completed_status; dataset; in.comstock_building_type; in.county_name; in.state; in.sqft..ft2; out.electricity.total.energy_consumption..kwh; measure_id; 2025_comstock_amy2018_release_3_upgrade_id; 2025_comstock_amy2018_release_3_upgrade_name | DOCUMENTATION_ONLY |
+
+Catalog-native field names that still require proof-backed inspection are:
 
 - `upgrade_id`
 - `upgrade_name`
@@ -58,17 +80,8 @@ The observed source-native fields or model inputs are:
 - `baseline annual resource fields`
 - `upgrade annual resource fields`
 
-These names are research requirements from the source inventory, not claims about an observed source schema.
-Exact source types, units, enumerations, nullability, keys, workbook coordinates, or model declarations must come from the source-specific proof manifest under `scripts/research/operational-savings/adapters/comstock-annual-delta/`.
-If no proof manifest records direct inspection evidence, this Standard remains incomplete.
-
-Product and record sources must preserve a natural source identifier plus a release identifier as the composite natural key.
-Model sources must preserve the complete input schema, package version, configuration, warnings, and output schema.
-Dates remain source-native timestamps in raw snapshots and normalize to UTC timestamps or date-only effective intervals in query tables.
-Enumerations remain source-native in raw storage and map through versioned crosswalk rows.
 Null means unknown or not reported and must never be converted to zero.
-Withdrawn, expired, superseded, and inactive records remain historically retained but are excluded from current resolution by default.
-Duplicate manufacturer and model strings are normalized for search only, while the original source text remains immutable.
+Inactive, withdrawn, superseded, and historical records remain immutable and are excluded from current resolution unless an explicit historical query selects them.
 
 ## 5. RetroFi field coverage
 
@@ -79,96 +92,62 @@ Duplicate manufacturer and model strings are normalized for search only, while t
 | Building Type | comstock_annual_delta; ITC-01 | Profile | Annual Operational Savings > Annual resource delta by resource > Building Type | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Site State or County | comstock_annual_delta; ITC-01 | Profile | Annual Operational Savings > Annual resource delta by resource > Site State or County | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
 | Building Area, approximate unless subsequently verified | comstock_annual_delta; ITC-01 | Profile | Annual Operational Savings > Annual resource delta by resource > Building Area, approximate unless subsequently verified | Normalize the owned value to the process input contract without substituting another tree path. | Process-native input unit | REQUIRES_PROFILE | The external source cannot supply a value owned by Profile, Bill, Linked Opportunity, Project Document, or User. |
-| Annual electricity and fuel-use change per square foot for the approved measure and building segment, with source version and units | comstock_annual_delta; ITC-01 | upgrades_lookup.json | upgrade_id; upgrade_name; building_id; weight; floor_area; baseline annual resource fields; upgrade annual resource fields | delta_per_ft2 = (baseline_annual_resource - upgrade_annual_resource) / floor_area; population summaries use the release weight after identical eligibility filters | resource-unit/ft2-year | DERIVABLE_FROM_SOURCE | Project-specific equipment performance, combined upgrade arithmetic, and any percentile without retained population size and weights |
+| Annual electricity and fuel-use change per square foot for the approved measure and building segment, with source version and units | comstock_annual_delta; ITC-01 | artifact:comstock-2025-release-3-ca-g0600750-upgrade-0; artifact:comstock-2025-release-3-ca-g0600750-upgrade-43; artifact:comstock-2025-release-3-data-dictionary; artifact:comstock-2025-release-3-enumeration-dictionary; artifact:comstock-2025-release-3-measure-crosswalk; artifact:comstock-2025-release-3-upgrades | upgrade_id; upgrade_name; building_id; weight; floor_area; baseline annual resource fields; upgrade annual resource fields | delta_per_ft2 = (baseline_annual_resource - upgrade_annual_resource) / floor_area; population summaries use the release weight after identical eligibility filters | resource-unit/ft2-year | DERIVABLE_FROM_SOURCE | Project-specific equipment performance, combined upgrade arithmetic, and any percentile without retained population size and weights |
 
 For every `DERIVABLE_FROM_SOURCE` row, the governing derivation is: delta_per_ft2 = (baseline_annual_resource - upgrade_annual_resource) / floor_area; population summaries use the release weight after identical eligibility filters.
 No field owned by Profile, Bill, Linked Opportunity, Project Document, or User is silently replaced with a source default.
 
-## 6. Acquisition workflow
+## 6. Acquisition and internal publication
 
 ```text
 ComStock 2025 Release 3
 -> Public OEDI S3 Parquet partitions
--> immutable raw snapshot
--> SHA-256 checksum and media-type validation
--> schema and enumeration validation
--> source-specific normalization and deduplication
--> building_upgrade_measures + building_archetype_benchmarks + retrofit_measure_crosswalks + benchmark_populations + benchmark_values
+-> immutable checksummed raw artifact
+-> source-specific schema and enumeration validation
+-> typed normalization into building_upgrade_measures + building_archetype_benchmarks + retrofit_measure_crosswalks + benchmark_populations + benchmark_values
 -> deterministic comstock-annual-delta adapter
--> typed formula input
--> calculation result with provenance
+-> typed Standard output
+-> category formula mapping
+-> immutable calculation and provenance
 ```
 
-Acquisition runs under a scheduler or operator action and never during a customer estimate.
-A failed checksum, schema drift, or incomplete artifact leaves the prior published release active.
+Acquisition runs under a scheduler or approved operator action and never during a customer estimate.
+A failed checksum, schema validation, normalization, or publication step leaves the prior accepted release and publication receipt active.
+Implementation evidence must come from executed migrations, populated table counts, exact artifact identities, and the committed compact proof publication.
 
-## 7. Internal database schema
+## 7. Resolution rules
 
-The intended normalized targets are building_upgrade_measures, building_archetype_benchmarks, retrofit_measure_crosswalks, benchmark_populations, benchmark_values.
-Implementation evidence must come from executed migrations and populated table counts in the committed compact proof export.
-No generic per-Standard JSON payload table is claimed as an implemented source schema.
-Each source-specific adapter must publish typed columns derived from its inspected native structure or remain incomplete.
-
-## 8. Exact resolution
-
-Identifiers are Unicode-normalized, trimmed, case-folded for search, and compared with punctuation-insensitive aliases only after exact original matching fails.
-Manufacturer aliases and model aliases are versioned rows, never destructive edits.
-Equipment class, capacity, geography, effective date, active status, source version, and test procedure are mandatory filters whenever the source exposes them.
-An exact path must return one compatible active record.
-Zero records returns a typed unavailable result.
+Exact resolution requires one compatible active record after applying every source-supported identity, equipment class, capacity, geography, effective-date, and test-procedure filter.
+Zero compatible records returns a typed unavailable result.
 Multiple compatible records return an ambiguity error unless the source defines a deterministic edition or submodel key.
-The original identifier, matched alias, filters, and rejected candidates remain in provenance.
-
-## 9. Requirements-based resolution
-
-Mandatory filters are the category's explicit equipment class, performance requirement, capacity boundary, geography, date, active status, test-procedure version, and source release.
-The eligible population contains only records satisfying every mandatory filter.
-Inactive, withdrawn, superseded, incompatible-unit, missing-required-field, and cross-test-procedure records are excluded.
-The source release is never mixed with another release inside one population.
-A single eligible record may be selected directly.
-Multiple eligible records use an official recommended value only when the source defines one, then a weighted median only when a defensible source weight exists, then an ordinary median only for a true scalar benchmark population.
+Requirements resolution admits only records satisfying every mandatory project and category constraint from one source release.
+Benchmark resolution requires an authoritative, category-specific, unit-compatible population and a retained numeric selection rule.
+An official recommended value takes precedence, followed by a defensible source-weighted median, then an ordinary median only for an exchangeable scalar population.
 Structured records and model result sets are never median-selected.
+Every selection retains its filters, eligible population, sample size, method, fallback level, uncertainty, and rejected candidates.
 
-## 10. Benchmark resolution
-
-The benchmark population must be authoritative, category-specific, unit-compatible, and filtered to the same context dimensions used by the formula.
-The minimum sample size is five unless an official source explicitly publishes one typical value or a category-specific report approves a different threshold.
-The weighting field must come from the source and is never inferred from record order.
-The weighted median is the first value whose cumulative positive weight reaches at least half of total eligible weight after sorting by value.
-The ordinary median is permitted only when no defensible weight exists and the population is an exchangeable scalar population.
-The selected value retains filters, population size, sample size, method, fallback level, and uncertainty.
-The unsupported boundary is Project-specific equipment performance, combined upgrade arithmetic, and any percentile without retained population size and weights.
-
-## 11. Calculation or local-model execution
+## 8. Calculation and runtime execution
 
 The exact output contract contains: Annual electricity and fuel-use change per square foot for the approved measure and building segment, with source version and units.
 The governing source equation or transformation is delta_per_ft2 = (baseline_annual_resource - upgrade_annual_resource) / floor_area; population summaries use the release weight after identical eligibility filters.
-The local execution mode is Build-time Parquet aggregation published as a compact versioned lookup artifact.
-Inputs are rejected for missing required fields, incompatible units, ambiguous identifiers, invalid effective dates, out-of-range physical values, or a mismatched model version.
-Outputs retain their native unit and a normalized unit from the repository unit registry.
-Warnings are first-class result fields and cannot be dropped by the category adapter.
-Reproducibility requires the raw-artifact checksum, source release, adapter version, input hash, model or formula version, and output hash.
-
-## 12. Refresh and versioning
-
-Refresh follows Release based, historically several releases per year.
-Release detection compares official release metadata and artifact checksums.
-A changed checksum under an unchanged source version is quarantined for review.
-Schema drift compares columns, types, required fields, enumeration values, workbook sheets, or model input declarations against the prior accepted fingerprint.
-Raw snapshots, normalized releases, crosswalks, and selection outputs are immutable.
-Publication uses an atomic pointer to the accepted release.
-Rollback changes only that pointer and records an operator reason.
-Deprecated releases remain available for historical calculation replay.
-Stale data is labeled and blocked when an effective-date or certification-status guarantee can no longer be made.
-
-## 13. Runtime design
-
 The selected runtime design is Build-time Parquet aggregation published as a compact versioned lookup artifact.
 The required number of external calls during a customer estimate is zero.
-The adapter reads a published internal release or executes a pinned local model only.
-If the source is offline, existing published releases and reproducible historical calculations continue to work.
+Inputs are rejected for missing required fields, incompatible units, ambiguous identifiers, invalid dates, impossible physical values, or a mismatched model version.
+Warnings are first-class result fields and cannot be dropped by the category adapter.
+Reproducibility requires the source-artifact or content-addressed project-input identity, source release when applicable, adapter version, input hash, model or formula version, and output hash.
 
-## 14. Cost
+## 9. Refresh, immutable identity, and publication receipt
+
+Refresh follows Release based, historically several releases per year.
+Source IDs, release IDs, artifact IDs, project-input hashes, calculation IDs, and model-version IDs are content-bound identities.
+An upsert may confirm an identical record but may not silently rewrite content behind one of those identities.
+A source-backed dependency pins a source artifact and release, while a project-owned dependency may leave those fields null only when its exact input run and input SHA-256 carry the provenance.
+Database publication builds the SQLite database, compact export, and receipt in temporary paths.
+The publisher verifies byte sizes, SHA-256 values, and one generation ID before replacing the database and compact export, then renames the receipt last as the commit marker.
+Consumers verify `docs/operational-savings-automation-research/fixtures/research-database.compact.json` against `docs/operational-savings-automation-research/fixtures/research-database.publication.json`.
+A failed publication preserves the prior committed generation.
+
+## 10. Cost
 
 One-time engineering effort is 100-160 hours.
 Estimated raw storage is 60 GB.
@@ -179,7 +158,7 @@ External source cost is $0 per month.
 Estimated internal storage and compute cost is $2.50 at 100 calculations per month, $3 at 1,000, and $6 at 10,000.
 These figures exclude ordinary shared database and observability overhead and are planning estimates, not vendor quotes.
 
-## 15. Synthetic regression boundary
+## 11. Synthetic regression boundary
 
 The offline command is:
 
@@ -189,25 +168,22 @@ node scripts/research/operational-savings/run-synthetic-prototypes.mjs --json
 
 The retained compact sample is `docs/operational-savings-automation-research/samples/comstock-annual-delta.sample.json`.
 Its local output kind is `product_record`, its selection rule is `EXACT_NORMALIZED_IDENTIFIER`, and its output unit is `record`.
-This synthetic regression executes without network access, but it does not prove acquisition, schema inspection, source-specific parsing, a real model run, database publication, or formula-term reachability.
-Only the separate real-proof registry and source-backed tests may satisfy those gates.
+This synthetic regression does not prove acquisition, source-specific parsing, a real model run, database publication, or category formula-term reachability.
 
-## 16. Feasibility verdict
+## 12. Feasibility and supported boundary
 
-**FEASIBLE_AFTER_ADAPTER_WORK**
+**NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES**
 
+This verdict is derived from 1 bound process.
+No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary.
+The proof ledger records 0 end-to-end real processes, 0 source-verified processes, and 0 processes with genuine manual-export downstream proof.
 The supported boundary is Archetype screening for an approved one-to-one measure and eligible building segment.
 The unsupported boundary is Project-specific equipment performance, combined upgrade arithmetic, and any percentile without retained population size and weights.
 
-## 17. Final recommended strategy
+## 13. Recommended strategy and later card review
 
 Acquire the pinned Release 3 dictionaries and annual-result partitions once, aggregate paired baseline and upgrade rows in DuckDB, review the retrofit crosswalk, and publish only the approved California and national segment summaries.
-This is the single recommended production path for this Standard.
 The rejected alternative is: Runtime OEDI queries are rejected because they add a network dependency and expose a very large analytical dataset to customer-request latency.
-
-## 18. Potential later Information Card changes
-
 No Information Card change is made on this research branch.
-Later review may update the visible source version, fallback wording, input ownership, category scope, or status to match the supported boundary documented above.
-Any formula change must be separately researched, reviewed, and approved.
-Any fallback must name its authoritative population and exact numeric selection rule.
+Later review may update visible source versions, fallback wording, ownership, category scope, or status only after the generated proof view supports the change.
+Any formula change requires separate research, review, and approval.

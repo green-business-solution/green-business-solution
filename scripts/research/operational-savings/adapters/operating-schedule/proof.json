@@ -1,0 +1,530 @@
+{
+  "schemaVersion": "operational-savings/real-proof-manifest-v1",
+  "standardId": "STD-OPERATING-SCHEDULE",
+  "slug": "operating-schedule",
+  "adapterPath": "scripts/research/operational-savings/adapters/operating-schedule/run.mjs",
+  "artifacts": [
+    {
+      "artifactId": "artifact:usno-rise-set:sf-2026-06-21",
+      "sourceUrl": "https://aa.usno.navy.mil/api/rstt/oneday?date=2026-06-21&coords=37.7749,-122.4194&tz=-8&dst=true",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/usno-sf-2026-06-21.json",
+      "release": "USNO API 4.0.1 response acquired 2026-07-24",
+      "sha256": "e096159b03d9fe91f287898142a567809a83d794f6c8aaad6b8809bb2378f812",
+      "sizeBytes": 1271,
+      "acquisitionMode": "PUBLIC_API_ACQUISITION_ONLY",
+      "official": true,
+      "evidenceRole": "ASTRONOMY_MODEL_VALIDATION_ONLY"
+    },
+    {
+      "artifactId": "artifact:project-operating-schedule-fixtures:v1",
+      "sourceId": "source:project-operating-schedule-input-fixtures",
+      "cachePath": "scripts/research/operational-savings/adapters/operating-schedule/project-schedule-fixtures.v1.json",
+      "release": "source-controlled test fixture v1",
+      "sha256": "6f04cc946059db68af035991cfa40a30652ced58b24ec0800173ee8f1bb268aa",
+      "sizeBytes": 1733,
+      "acquisitionMode": "SOURCE_CONTROLLED_SYNTHETIC_FIXTURE",
+      "official": false,
+      "synthetic": true,
+      "evidenceRole": "CONTENT_ADDRESSED_PROJECT_INPUT_TEST_FIXTURE"
+    }
+  ],
+  "observedSchemas": [
+    {
+      "schemaId": "schema:usno-rise-set:api-v4",
+      "artifactId": "artifact:usno-rise-set:sf-2026-06-21",
+      "format": "GEOJSON",
+      "extractor": "scripts/research/operational-savings/adapters/operating-schedule/run.mjs",
+      "requiredNativeFields": [
+        "apiversion",
+        "geometry.coordinates",
+        "properties.data.tz",
+        "properties.data.isdst",
+        "properties.data.sundata[].phen",
+        "properties.data.sundata[].time"
+      ]
+    },
+    {
+      "schemaId": "schema:project-operating-schedule-fixtures:v1",
+      "artifactId": "artifact:project-operating-schedule-fixtures:v1",
+      "format": "JSON",
+      "extractor": "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs",
+      "requiredNativeFields": [
+        "schemaVersion",
+        "inputOwnership",
+        "cases.*.year",
+        "cases.*.timeZone",
+        "cases.*.categoryId",
+        "cases.*.processKey",
+        "cases.*.formulaTerm",
+        "cases.*.expectedValue"
+      ]
+    }
+  ],
+  "normalizedTargets": [
+    "operating_schedule_references",
+    "calculation_runs",
+    "selected_values",
+    "selected_value_provenance",
+    "calculation_source_dependencies"
+  ],
+  "tests": [
+    {
+      "testId": "operating-schedule-usno-schema-proof",
+      "path": "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs",
+      "name": "pins and publishes the official USNO GeoJSON schema",
+      "kinds": [
+        "REAL_SCHEMA",
+        "NORMALIZATION",
+        "DATABASE_PUBLICATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:usno-rise-set:sf-2026-06-21"
+      ],
+      "sourceNativeFields": [
+        "apiversion",
+        "properties.data.sundata[].phen",
+        "properties.data.sundata[].time"
+      ]
+    },
+    {
+      "testId": "operating-schedule-usno-astronomy-comparison-proof",
+      "path": "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs",
+      "name": "matches the official USNO sunrise and sunset within two minutes",
+      "kinds": [
+        "LOCAL_MODEL_EXECUTION",
+        "OFFLINE_EXECUTION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:usno-rise-set:sf-2026-06-21"
+      ],
+      "sourceNativeFields": [
+        "properties.data.sundata[].phen",
+        "properties.data.sundata[].time"
+      ]
+    },
+    {
+      "testId": "operating-schedule-usno-schema-mutation-proof",
+      "path": "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs",
+      "name": "fails closed when the USNO schema loses a required phenomenon",
+      "kind": "MUTATION",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:usno-rise-set:sf-2026-06-21"
+      ],
+      "mutationCases": [
+        "missing required USNO phenomenon"
+      ]
+    },
+    {
+      "testId": "operating-schedule-usno-checksum-mutation-proof",
+      "path": "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs",
+      "name": "fails closed when the pinned USNO artifact checksum changes",
+      "kind": "MUTATION",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:usno-rise-set:sf-2026-06-21"
+      ],
+      "mutationCases": [
+        "pinned USNO checksum mismatch"
+      ]
+    },
+    {
+      "testId": "operating-schedule-project-fixture-proof",
+      "path": "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs",
+      "name": "pins the project-owned schedule fixture separately from USNO evidence",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:project-operating-schedule-fixtures:v1"
+      ],
+      "sourceNativeFields": [
+        "schemaVersion",
+        "inputOwnership",
+        "cases"
+      ]
+    },
+    {
+      "testId": "operating-schedule-itc02-fixed-project-input-proof",
+      "path": "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs",
+      "name": "executes the separate ITC-02 fixed-schedule branch from project inputs",
+      "kinds": [
+        "LOCAL_MODEL_EXECUTION",
+        "NORMALIZATION",
+        "RESOLVER",
+        "DATABASE_PUBLICATION",
+        "OFFLINE_EXECUTION",
+        "FORMULA_INPUT_MAPPING"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:project-operating-schedule-fixtures:v1"
+      ],
+      "sourceNativeFields": [
+        "year",
+        "timeZone",
+        "weekly"
+      ]
+    },
+    {
+      "testId": "operating-schedule-itc02-daylight-project-input-proof",
+      "path": "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs",
+      "name": "runs a full-year daylight-control model with the USNO-validated solar boundary",
+      "kinds": [
+        "LOCAL_MODEL_EXECUTION",
+        "RESOLVER",
+        "OFFLINE_EXECUTION",
+        "FORMULA_INPUT_MAPPING",
+        "FAILURE"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:project-operating-schedule-fixtures:v1"
+      ],
+      "sourceNativeFields": [
+        "year",
+        "timeZone",
+        "latitude",
+        "longitude",
+        "switchOnOffsetMinutes",
+        "switchOffOffsetMinutes"
+      ],
+      "mutationCases": [
+        "unsupported polar daylight"
+      ]
+    },
+    {
+      "testId": "operating-schedule-itc02-daylight-provenance-proof",
+      "path": "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs",
+      "name": "records USNO only as daylight astronomy validation evidence",
+      "kinds": [
+        "NORMALIZATION",
+        "DATABASE_PUBLICATION",
+        "FORMULA_INPUT_MAPPING",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:project-operating-schedule-fixtures:v1",
+        "artifact:usno-rise-set:sf-2026-06-21"
+      ],
+      "sourceNativeFields": [
+        "projectInput.year",
+        "projectInput.timeZone",
+        "projectInput.latitude",
+        "projectInput.longitude",
+        "astronomyValidation.properties.data.sundata[].phen",
+        "astronomyValidation.properties.data.sundata[].time"
+      ],
+      "mutationCases": [
+        "removed astronomy validation dependency"
+      ]
+    },
+    {
+      "testId": "operating-schedule-itc09-project-input-proof",
+      "path": "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs",
+      "name": "maps an explicit schedule reduction to avoided recirculation hours",
+      "kinds": [
+        "LOCAL_MODEL_EXECUTION",
+        "NORMALIZATION",
+        "RESOLVER",
+        "DATABASE_PUBLICATION",
+        "OFFLINE_EXECUTION",
+        "FORMULA_INPUT_MAPPING",
+        "FAILURE"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:project-operating-schedule-fixtures:v1"
+      ],
+      "sourceNativeFields": [
+        "year",
+        "timeZone",
+        "existingWeekly",
+        "proposedWeekly"
+      ],
+      "mutationCases": [
+        "proposed schedule exceeds existing schedule"
+      ]
+    },
+    {
+      "testId": "operating-schedule-itc12-project-input-proof",
+      "path": "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs",
+      "name": "maps the ITC-12 project schedule fixture without USNO value attribution",
+      "kinds": [
+        "LOCAL_MODEL_EXECUTION",
+        "RESOLVER",
+        "OFFLINE_EXECUTION",
+        "FORMULA_INPUT_MAPPING"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:project-operating-schedule-fixtures:v1"
+      ],
+      "sourceNativeFields": [
+        "year",
+        "timeZone",
+        "weekly"
+      ]
+    },
+    {
+      "testId": "operating-schedule-itc12-publication-proof",
+      "path": "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs",
+      "name": "publishes exact schedule formula values and provenance to the research database",
+      "kinds": [
+        "NORMALIZATION",
+        "DATABASE_PUBLICATION",
+        "FORMULA_INPUT_MAPPING",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:project-operating-schedule-fixtures:v1"
+      ],
+      "sourceNativeFields": [
+        "year",
+        "timeZone",
+        "weekly"
+      ],
+      "mutationCases": [
+        "tampered project input snapshot checksum"
+      ]
+    }
+  ],
+  "processClaims": [
+    {
+      "contributionId": "operating-schedule:itc02-daylight:usno-astronomy-validation",
+      "categoryId": "ITC-02",
+      "processKey": "daylight-lighting-hours",
+      "proofLevel": "REAL_SOURCE_PARTIAL",
+      "artifactIds": [
+        "artifact:usno-rise-set:sf-2026-06-21"
+      ],
+      "testIds": [
+        "operating-schedule-usno-schema-proof",
+        "operating-schedule-usno-astronomy-comparison-proof",
+        "operating-schedule-usno-schema-mutation-proof",
+        "operating-schedule-usno-checksum-mutation-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "provenanceRefs": [
+        "artifact:usno-rise-set:sf-2026-06-21",
+        "operating-schedule-usno-astronomy-comparison-proof"
+      ],
+      "remainingBlocker": "The retained USNO response validates only one astronomy-model boundary. It does not supply project location, control settings, or annual operating hours."
+    },
+    {
+      "contributionId": "operating-schedule:itc02-daylight:project-input-calculation",
+      "categoryId": "ITC-02",
+      "processKey": "daylight-lighting-hours",
+      "proofLevel": "SYNTHETIC_ONLY",
+      "syntheticOnly": true,
+      "artifactIds": [
+        "artifact:project-operating-schedule-fixtures:v1"
+      ],
+      "testIds": [
+        "operating-schedule-project-fixture-proof",
+        "operating-schedule-itc02-daylight-project-input-proof",
+        "operating-schedule-itc02-daylight-provenance-proof"
+      ],
+      "gates": {
+        "sourcePinned": false,
+        "artifactAcquired": false,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "annual_on_hours": 4309.045630604579
+      },
+      "formulaTerms": [
+        "annual_on_hours"
+      ],
+      "formulaMappings": [
+        {
+          "outputName": "Annual daylight-based operating hours",
+          "formulaTerm": "annual_on_hours",
+          "unit": "hours/year",
+          "scope": "PER_YEAR",
+          "testId": "operating-schedule-itc02-daylight-project-input-proof"
+        }
+      ],
+      "provenanceRefs": [
+        "artifact:project-operating-schedule-fixtures:v1",
+        "operating-schedule-itc02-daylight-provenance-proof"
+      ],
+      "remainingBlocker": "The executed site inputs are a source-controlled synthetic fixture. Production calculation inputs must be supplied and content-addressed per project or profile."
+    },
+    {
+      "categoryId": "ITC-02",
+      "processKey": "fixed-lighting-hours",
+      "proofLevel": "SYNTHETIC_ONLY",
+      "syntheticOnly": true,
+      "artifactIds": [
+        "artifact:project-operating-schedule-fixtures:v1"
+      ],
+      "testIds": [
+        "operating-schedule-project-fixture-proof",
+        "operating-schedule-itc02-fixed-project-input-proof"
+      ],
+      "gates": {
+        "sourcePinned": false,
+        "artifactAcquired": false,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": false
+      },
+      "actualOutput": {
+        "annual_on_hours": 416
+      },
+      "formulaTerms": [
+        "annual_on_hours"
+      ],
+      "formulaMappings": [
+        {
+          "outputName": "Annual operating hours",
+          "formulaTerm": "annual_on_hours",
+          "unit": "hours/year",
+          "scope": "PER_YEAR",
+          "testId": "operating-schedule-itc02-fixed-project-input-proof"
+        }
+      ],
+      "remainingBlocker": "The executed weekly schedule is a source-controlled synthetic fixture. Production annual hours require a content-addressed project or profile schedule."
+    },
+    {
+      "categoryId": "ITC-09",
+      "processKey": "operating_schedule",
+      "proofLevel": "SYNTHETIC_ONLY",
+      "syntheticOnly": true,
+      "artifactIds": [
+        "artifact:project-operating-schedule-fixtures:v1"
+      ],
+      "testIds": [
+        "operating-schedule-project-fixture-proof",
+        "operating-schedule-itc09-project-input-proof"
+      ],
+      "gates": {
+        "sourcePinned": false,
+        "artifactAcquired": false,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "avoided_run_hours": 208
+      },
+      "formulaTerms": [
+        "avoided_run_hours"
+      ],
+      "formulaMappings": [
+        {
+          "outputName": "Avoided annual recirculation pump run hours",
+          "formulaTerm": "avoided_run_hours",
+          "unit": "hours/year",
+          "scope": "PER_YEAR",
+          "testId": "operating-schedule-itc09-project-input-proof"
+        }
+      ],
+      "remainingBlocker": "The executed existing and proposed schedules are source-controlled synthetic fixtures. Production avoided hours require content-addressed project schedules."
+    },
+    {
+      "categoryId": "ITC-12",
+      "processKey": "operating_schedule",
+      "proofLevel": "SYNTHETIC_ONLY",
+      "syntheticOnly": true,
+      "artifactIds": [
+        "artifact:project-operating-schedule-fixtures:v1"
+      ],
+      "testIds": [
+        "operating-schedule-project-fixture-proof",
+        "operating-schedule-itc12-project-input-proof",
+        "operating-schedule-itc12-publication-proof"
+      ],
+      "gates": {
+        "sourcePinned": false,
+        "artifactAcquired": false,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "annual_hours": 416
+      },
+      "formulaTerms": [
+        "annual_hours"
+      ],
+      "formulaMappings": [
+        {
+          "outputName": "Annual operating hours",
+          "formulaTerm": "annual_hours",
+          "unit": "hours/year",
+          "scope": "PER_YEAR",
+          "testId": "operating-schedule-itc12-project-input-proof"
+        }
+      ],
+      "remainingBlocker": "The executed weekly schedule is a source-controlled synthetic fixture. Production annual hours require a content-addressed project or profile schedule."
+    }
+  ],
+  "feasibility": "PARTIALLY_FEASIBLE",
+  "remainingBlockers": [
+    "Project and profile schedules remain caller-owned calculation inputs and must not be inferred from USNO.",
+    "The retained USNO response validates the local astronomy boundary only.",
+    "Production schedule branches require content-addressed project or profile inputs."
+  ]
+}

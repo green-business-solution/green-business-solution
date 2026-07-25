@@ -6,10 +6,19 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Process coverage
 
-| Process key | Process name | Canonical Standard | Required inputs | Exact outputs | Formula terms | Source feasibility | Runtime external calls | Current blocker |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| exact-backup-routine-inputs | Exact Backup-Power Routine-Use Input Resolution | STD-CONTEXT-BENCHMARKS | Tested fuel use per operating hour per unit; Scheduled annual test operating hours per unit; Standby electric input kilowatts per unit; Annual standby energized hours per unit | One exact backup-power routine-use input set | exact_backup_routine_input_set | PARTIALLY_FEASIBLE | 0 | The exact path is deterministic when compatible Project Documents supply the required fields. No category golden fixture is retained, so implementation proof remains pending. |
-| fema-full-load-diesel-test-fuel | FEMA Full-Load Diesel Test-Fuel Calculation | STD-CONTEXT-BENCHMARKS | Confirmed diesel-generator technology and fuel type; Diesel generator rated capacity in kilowatts; Scheduled annual full-load test operating hours per unit | Annual full-load diesel test fuel per equipment unit | benchmark_annual_test_fuel_per_unit | PARTIALLY_FEASIBLE | 0 | The retained FEMA page and deep source fixture prove the 0.07 full-load diesel coefficient and formula. The source does not supply annual test hours or standby electricity, and no category golden fixture is retained, so only the narrow formula is verified while full category execution remains pending. |
+### Canonical process contract
+
+| Process key | Process name | Canonical Standard | Required inputs | Exact output and formula term |
+| --- | --- | --- | --- | --- |
+| exact-backup-routine-inputs | Exact Backup-Power Routine-Use Input Resolution | STD-CONTEXT-BENCHMARKS | Tested fuel use per operating hour per unit [Project Document]; Scheduled annual test operating hours per unit [Project Document]; Standby electric input kilowatts per unit [Project Document]; Annual standby energized hours per unit [Project Document] | One exact backup-power routine-use input set -> exact_backup_routine_input_set (record set; RECORD_SET) |
+| fema-full-load-diesel-test-fuel | FEMA Full-Load Diesel Test-Fuel Calculation | STD-CONTEXT-BENCHMARKS | Confirmed diesel-generator technology and fuel type [User]; Diesel generator rated capacity in kilowatts [Project Document]; Scheduled annual full-load test operating hours per unit [Project Document] | Annual full-load diesel test fuel per equipment unit -> benchmark_annual_test_fuel_per_unit (fuel-unit/year; PER_EQUIPMENT_UNIT) |
+
+### Current execution evidence
+
+| Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
+| --- | --- | --- | --- | --- |
+| exact-backup-routine-inputs | DOCUMENTATION_ONLY | None implemented | None required or recorded for the current proof state | MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
+| fema-full-load-diesel-test-fuel | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/context-benchmarks/run.mjs | context-fema-full-load-diesel-real-proof: NOT_COVERED<br>context-fema-scope-failure-proof: NOT_COVERED<br>context-fema-source-mutation-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## End-to-end graph
 
@@ -18,13 +27,15 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Feasibility
 
-The category depends on these source-level verdicts: PARTIALLY_FEASIBLE.
-An exact path is feasible only when every bound Profile, Bill, Linked Opportunity, Project Document, and User input is present and every Standard adapter returns an unambiguous compatible result.
-A benchmark path is feasible only where the category has a retained authoritative population and exact selection rule.
+The category depends on these source-level verdicts: NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES.
+The process table reports the final proof level after execution-record verification, not a higher level that a manifest may have declared before the current run.
+An exact path is usable only when every owned input is present and every Standard adapter returns one unambiguous compatible result.
+A benchmark path is usable only where the category has a retained authoritative population and exact selection rule.
 The runtime external-call count remains zero.
 
-## Recommended next action
+## Conditional next actions
 
-Implement and accept the shared source-family adapters before connecting this category to any calculation runtime.
-Add one category golden fixture for each supported exact or benchmark path.
-Keep unsupported paths explicit rather than filling them with generic defaults.
+| Process key | Current proof level | Next action |
+| --- | --- | --- |
+| exact-backup-routine-inputs | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
+| fema-full-load-diesel-test-fuel | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |

@@ -87,7 +87,7 @@ Categories touched: ITC-02, ITC-08, ITC-09, ITC-12, ITC-16, ITC-20, ITC-23, ITC-
 Estimated effort: 490-820 hours.
 External source fees: $0 for the selected routes.
 Prerequisites: source license review, immutable raw storage, shared release registry, unit registry, and typed adapter envelope.
-Primary risk: Real-time irrigation scheduling, actual measured water use, and missing landscape design inputs; Default leak rates, default duration, and automatic savings from a checklist item alone; A generic building-type schedule presented as actual operation and daylight without coordinates or event definition; A universal fallback, a cross-category median, or any context process without a pinned population and exact selection rule.
+Primary risk: Real-time irrigation scheduling, actual measured water use, and missing landscape design inputs; Default leak rates, default duration, and automatic savings from a checklist item alone; A generic building-type schedule presented as actual operation, USNO presented as the source of project annual hours, or polar daylight cases without a supported event model; A universal fallback, a cross-category median, or any context process without a pinned population and exact selection rule.
 Required fixtures: one source schema fixture per source family, one exact-path fixture per process shape, and category golden fixtures for every enabled calculation path.
 Acceptance and deployment criterion: Every enabled benchmark has a pinned population and every measured method rejects missing evidence.
 
