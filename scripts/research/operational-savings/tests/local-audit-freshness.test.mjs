@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { execFile } from "node:child_process";
 import {
   mkdir,
   mkdtemp,
@@ -7,15 +8,18 @@ import {
 } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { promisify } from "node:util";
 import { afterEach, expect, test } from "vitest";
 
 import {
   assertLocalArtifactAuditFresh,
+  assertLocalArtifactAuditInventoryWorktree,
   assertLocalArtifactAuditWorktree,
   auditedDirectoryTreeIdentity
 } from "../storage/local-audit-freshness.mjs";
 
 const temporaryRoots = [];
+const execFileAsync = promisify(execFile);
 
 afterEach(async () => {
   await Promise.all(
@@ -176,6 +180,82 @@ test("binds an audit to the exact worktree", async () => {
     assertLocalArtifactAuditWorktree({
       audit: context.audit,
       repoRoot: join(context.root, "other")
+    })
+  ).toThrow(/AUDIT_WORKTREE_MISMATCH/);
+});
+
+test("allows read-only inventory from a verified linked Git worktree only", async () => {
+  const repository = await mkdtemp(
+    join(tmpdir(), "audit-worktree-repository-")
+  );
+  const linkedWorktree = await mkdtemp(
+    join(tmpdir(), "audit-worktree-linked-")
+  );
+  await rm(linkedWorktree, {
+    recursive: true,
+    force: true
+  });
+  temporaryRoots.push(repository, linkedWorktree);
+  await execFileAsync("/usr/bin/git", ["init"], {
+    cwd: repository
+  });
+  await execFileAsync(
+    "/usr/bin/git",
+    ["config", "user.email", "audit@example.invalid"],
+    { cwd: repository }
+  );
+  await execFileAsync(
+    "/usr/bin/git",
+    ["config", "user.name", "Audit Test"],
+    { cwd: repository }
+  );
+  await writeFile(
+    join(repository, "tracked.txt"),
+    "tracked\n"
+  );
+  await execFileAsync(
+    "/usr/bin/git",
+    ["add", "tracked.txt"],
+    { cwd: repository }
+  );
+  await execFileAsync(
+    "/usr/bin/git",
+    ["commit", "-m", "audit fixture"],
+    { cwd: repository }
+  );
+  await execFileAsync(
+    "/usr/bin/git",
+    [
+      "worktree",
+      "add",
+      "--detach",
+      linkedWorktree,
+      "HEAD"
+    ],
+    { cwd: repository }
+  );
+  const audit = {
+    scope: {
+      worktree: repository
+    }
+  };
+
+  expect(
+    assertLocalArtifactAuditInventoryWorktree({
+      audit,
+      repoRoot: linkedWorktree
+    })
+  ).toBe(repository);
+  expect(() =>
+    assertLocalArtifactAuditWorktree({
+      audit,
+      repoRoot: linkedWorktree
+    })
+  ).toThrow(/AUDIT_WORKTREE_MISMATCH/);
+  expect(() =>
+    assertLocalArtifactAuditInventoryWorktree({
+      audit,
+      repoRoot: join(repository, "unrelated")
     })
   ).toThrow(/AUDIT_WORKTREE_MISMATCH/);
 });

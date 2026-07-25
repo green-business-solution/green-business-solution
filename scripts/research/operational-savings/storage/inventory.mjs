@@ -29,7 +29,7 @@ import {
 } from "../lib/subprocess-environment.mjs";
 import {
   assertLocalArtifactAuditFresh,
-  assertLocalArtifactAuditWorktree
+  assertLocalArtifactAuditInventoryWorktree
 } from "./local-audit-freshness.mjs";
 import {
   OCI_IMAGE_INDEX_MEDIA_TYPE,
@@ -4967,7 +4967,7 @@ export async function buildResearchStorageInventory({
     repoRoot,
     originalLocalArtifacts
   });
-  assertLocalArtifactAuditWorktree({
+  assertLocalArtifactAuditInventoryWorktree({
     audit: localArtifactAudit,
     repoRoot
   });

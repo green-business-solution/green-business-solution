@@ -1,5 +1,10 @@
 import { createHash } from "node:crypto";
-import { createReadStream } from "node:fs";
+import {
+  createReadStream,
+  lstatSync,
+  readFileSync,
+  realpathSync
+} from "node:fs";
 import {
   lstat,
   readdir,
@@ -218,6 +223,115 @@ export function assertLocalArtifactAuditWorktree({
     });
   }
   return resolve(repoRoot);
+}
+
+function isLinkedWorktreeOfAuditRoot({
+  auditWorktree,
+  repoRoot
+}) {
+  try {
+    const root = realpathSync(repoRoot);
+    const auditRoot = realpathSync(auditWorktree);
+    const auditGitDirectory = join(auditRoot, ".git");
+    const auditGitDetails = lstatSync(auditGitDirectory);
+    if (
+      !auditGitDetails.isDirectory() ||
+      auditGitDetails.isSymbolicLink()
+    ) {
+      return false;
+    }
+    const commonGitDirectory = realpathSync(
+      auditGitDirectory
+    );
+    const linkedGitFile = join(root, ".git");
+    const linkedGitDetails = lstatSync(linkedGitFile);
+    if (
+      !linkedGitDetails.isFile() ||
+      linkedGitDetails.isSymbolicLink()
+    ) {
+      return false;
+    }
+    const gitdirPrefix = "gitdir:";
+    const linkedDeclaration = readFileSync(
+      linkedGitFile,
+      "utf8"
+    ).trim();
+    if (
+      !linkedDeclaration
+        .toLowerCase()
+        .startsWith(gitdirPrefix)
+    ) {
+      return false;
+    }
+    const adminDirectory = realpathSync(
+      resolve(
+        root,
+        linkedDeclaration.slice(gitdirPrefix.length).trim()
+      )
+    );
+    const worktreesDirectory = realpathSync(
+      join(commonGitDirectory, "worktrees")
+    );
+    const adminRelativePath = relative(
+      worktreesDirectory,
+      adminDirectory
+    );
+    if (
+      !adminRelativePath ||
+      adminRelativePath === ".." ||
+      adminRelativePath.startsWith(`..${sep}`) ||
+      adminRelativePath.includes(sep)
+    ) {
+      return false;
+    }
+    const commonDeclaration = readFileSync(
+      join(adminDirectory, "commondir"),
+      "utf8"
+    ).trim();
+    if (
+      !commonDeclaration ||
+      realpathSync(
+        resolve(adminDirectory, commonDeclaration)
+      ) !== commonGitDirectory
+    ) {
+      return false;
+    }
+    const worktreeGitDeclaration = readFileSync(
+      join(adminDirectory, "gitdir"),
+      "utf8"
+    ).trim();
+    return (
+      worktreeGitDeclaration.length > 0 &&
+      realpathSync(
+        resolve(adminDirectory, worktreeGitDeclaration)
+      ) === realpathSync(linkedGitFile)
+    );
+  } catch {
+    return false;
+  }
+}
+
+export function assertLocalArtifactAuditInventoryWorktree({
+  audit,
+  repoRoot
+}) {
+  if (
+    typeof audit.scope?.worktree === "string" &&
+    (
+      resolve(audit.scope.worktree) === resolve(repoRoot) ||
+      isLinkedWorktreeOfAuditRoot({
+        auditWorktree: audit.scope.worktree,
+        repoRoot
+      })
+    )
+  ) {
+    return resolve(audit.scope.worktree);
+  }
+  throw staleAuditError({
+    reason: "AUDIT_WORKTREE_MISMATCH",
+    expected: resolve(repoRoot),
+    actual: audit.scope?.worktree ?? null
+  });
 }
 
 export async function assertLocalArtifactAuditFresh({
