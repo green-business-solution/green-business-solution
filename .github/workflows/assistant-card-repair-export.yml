@@ -6,6 +6,11 @@ on:
       - docs/operational-savings-information-trees
     paths:
       - .github/workflows/assistant-card-repair-export.yml
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/assistant-card-repair-export.yml
   workflow_dispatch:
 
 permissions:
