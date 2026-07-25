@@ -783,6 +783,8 @@ async function actualInstalledPackageRoots(
 }
 
 async function installedBinLinkCatalog(nodeModulesRoot) {
+  const resolvedNodeModulesRoot =
+    await realpath(nodeModulesRoot);
   const binRoot = join(nodeModulesRoot, ".bin");
   const details = await lstat(binRoot).catch((error) => {
     if (error.code === "ENOENT") return null;
@@ -807,7 +809,7 @@ async function installedBinLinkCatalog(nodeModulesRoot) {
     const target = await readlink(path);
     const resolvedTarget = await realpath(path);
     const targetRelative = relative(
-      nodeModulesRoot,
+      resolvedNodeModulesRoot,
       resolvedTarget
     );
     if (

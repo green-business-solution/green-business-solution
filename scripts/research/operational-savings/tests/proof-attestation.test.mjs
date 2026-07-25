@@ -729,6 +729,9 @@ test("binds workspace links and rejects extraneous installed package roots", asy
       mkdir(join(repository, "node_modules/dependency"), {
         recursive: true
       }),
+      mkdir(join(repository, "node_modules/.bin"), {
+        recursive: true
+      }),
       mkdir(join(repository, "node_modules/@gbs"), {
         recursive: true
       }),
@@ -750,10 +753,18 @@ test("binds workspace links and rejects extraneous installed package roots", asy
         "export default true;\n"
       ),
       writeFile(
+        join(repository, "node_modules/dependency/cli.cjs"),
+        "module.exports = true;\n"
+      ),
+      writeFile(
         join(repository, "apps/api/index.mjs"),
         "export const api = true;\n"
       )
     ]);
+    await symlink(
+      "../dependency/cli.cjs",
+      join(repository, "node_modules/.bin/dependency")
+    );
     await symlink(
       "../../apps/api",
       join(repository, "node_modules/@gbs/api"),
@@ -762,6 +773,7 @@ test("binds workspace links and rejects extraneous installed package roots", asy
     const identity =
       await installedDependencyTreeIdentity(repository);
     expect(identity.workspaceLinkCount).toBe(1);
+    expect(identity.binLinkCount).toBe(1);
     expect(identity.installedPackageRootCount).toBe(2);
 
     await mkdir(
