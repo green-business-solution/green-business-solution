@@ -1426,6 +1426,13 @@ test("promotes declared proof only when the exact named test passes against the 
         (file) => file.path.split("/").includes(".cache")
       )
     ).toBe(false);
+    expect(
+      record.sourceEvidenceFingerprint.files.some(
+        (file) =>
+          file.path ===
+          "scripts/research/operational-savings/containers/post-hoc-replay-receipt.v1.json"
+      )
+    ).toBe(false);
     expect(record.artifactIdentityCatalog).toMatchObject({
       artifactCount: 1,
       artifacts: [

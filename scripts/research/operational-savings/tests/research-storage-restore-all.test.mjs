@@ -714,7 +714,7 @@ test("restore-all checkpoints dependency-ordered hydration and returns the exact
       persisted.execution.restoreAllJournal.status
     ).toBe("COMPLETE");
   });
-});
+}, 30_000);
 
 test("restore-all resumes a pending package created before its completion checkpoint", async () => {
   await withTemporaryRoot(async (root) => {

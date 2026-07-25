@@ -29,7 +29,7 @@ export const PROOF_ARTIFACT_IDENTITY_CATALOG_SCHEMA_VERSION =
 export const PROOF_EXECUTION_TOOLCHAIN_SCHEMA_VERSION =
   "operational-savings/proof-execution-toolchain-v2";
 export const PROOF_EXECUTION_CACHE_IDENTITY_SCHEMA_VERSION =
-  "operational-savings/proof-execution-cache-identity-v1";
+  "operational-savings/proof-execution-cache-identity-v2";
 export const PROOF_EXECUTION_RECORD_TYPE =
   "LOCAL_CONTENT_BOUND_RUN_RECORD";
 export const DEFAULT_PROOF_EXECUTION_RUN_RECORD_RELATIVE_PATH =
@@ -499,6 +499,10 @@ async function collectFingerprintPaths({
                 resolve(
                   root,
                   "scripts/research/operational-savings/.cache"
+                ),
+                resolve(
+                  root,
+                  "scripts/research/operational-savings/containers/post-hoc-replay-receipt.v1.json"
                 )
               ]
             : []
@@ -1222,30 +1226,46 @@ export async function buildProofCacheIdentity({
   repoRoot
 }) {
   const root = resolve(repoRoot);
-  const cacheRoot = resolve(
-    root,
-    "scripts/research/operational-savings/.cache"
-  );
-  const rootDetails = await lstat(cacheRoot);
-  if (
-    !rootDetails.isDirectory() ||
-    rootDetails.isSymbolicLink()
-  ) {
-    throw new Error(
-      "PROOF_EXECUTION_CACHE_ENTRY_UNSAFE: the research cache must be a regular directory"
+  const inputRoots = [
+    "scripts/research/operational-savings/.cache",
+    "tmp"
+  ].map((relativePath) => ({
+    relativePath,
+    absolutePath: resolve(root, relativePath)
+  }));
+  const identifiedPaths = [];
+  for (const inputRoot of inputRoots) {
+    const rootDetails = await lstat(
+      inputRoot.absolutePath
     );
+    if (
+      !rootDetails.isDirectory() ||
+      rootDetails.isSymbolicLink()
+    ) {
+      throw new Error(
+        `PROOF_EXECUTION_CACHE_ENTRY_UNSAFE: the research-local input must be a regular directory: ${inputRoot.relativePath}`
+      );
+    }
+    for (const path of await regularFilesBelow(
+      inputRoot.absolutePath
+    )) {
+      identifiedPaths.push({
+        path,
+        relativePath: toPosixPath(relative(root, path))
+      });
+    }
   }
-  const paths = await regularFilesBelow(cacheRoot);
-  const files = new Array(paths.length);
+  const files = new Array(identifiedPaths.length);
   let nextIndex = 0;
   await Promise.all(
     Array.from(
-      { length: Math.min(4, paths.length) },
+      { length: Math.min(4, identifiedPaths.length) },
       async () => {
-        while (nextIndex < paths.length) {
+        while (nextIndex < identifiedPaths.length) {
           const index = nextIndex;
           nextIndex += 1;
-          const path = paths[index];
+          const { path, relativePath } =
+            identifiedPaths[index];
           const before = await lstat(path);
           const sha256 = await sha256File(path);
           const after = await lstat(path);
@@ -1265,7 +1285,7 @@ export async function buildProofCacheIdentity({
             );
           }
           files[index] = {
-            path: toPosixPath(relative(cacheRoot, path)),
+            path: relativePath,
             sizeBytes: after.size,
             executable: Boolean(after.mode & 0o111),
             sha256

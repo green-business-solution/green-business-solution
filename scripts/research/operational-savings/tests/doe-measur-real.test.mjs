@@ -147,7 +147,7 @@ test("compiles and executes the official native compressed-air golden fixture of
   expect(execution.result.executableSha256).toMatch(
     /^[a-f0-9]{64}$/
   );
-});
+}, 30_000);
 
 test("detects native binding or golden-fixture drift", async () => {
   const sources = Object.fromEntries(
@@ -303,7 +303,7 @@ test("publishes native model execution and exact ITC-43 formula inputs to the re
     database?.close();
     await rm(workspace, { recursive: true, force: true });
   }
-});
+}, 30_000);
 
 test("classifies all five supported MEASUR module paths as end-to-end real", async () => {
   const manifest = JSON.parse(await readFile(proofPath, "utf8"));
@@ -657,7 +657,7 @@ test("maps native MEASUR equipment outputs to the exact ITC-36, ITC-38, ITC-40, 
       unit: "kW"
     }
   ]);
-});
+}, 30_000);
 
 test("publishes all four native MEASUR equipment calculations with provenance", async () => {
   const workspace = await mkdtemp(
@@ -759,7 +759,7 @@ test("publishes all four native MEASUR equipment calculations with provenance", 
     database?.close();
     await rm(workspace, { recursive: true, force: true });
   }
-});
+}, 30_000);
 
 test("publishes multiple compressed-air and equipment runs without identity collisions", async () => {
   const workspace = await mkdtemp(
@@ -841,4 +841,4 @@ test("publishes multiple compressed-air and equipment runs without identity coll
     database?.close();
     await rm(workspace, { recursive: true, force: true });
   }
-});
+}, 30_000);

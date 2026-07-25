@@ -58,6 +58,7 @@ const ADAPTERS_ROOT =
 const NODE_MODULES_ROOT = "node_modules";
 const RESEARCH_CACHE_ROOT =
   "scripts/research/operational-savings/.cache";
+const RESEARCH_WORKTREE_INPUT_ROOT = "tmp";
 const CONFIG_OVERRIDE_ARGUMENTS = new Set([
   "--config",
   "-c"
@@ -426,6 +427,15 @@ export async function materializeCommittedProofSnapshot({
       cacheDestination
     );
     await cloneDirectory(cacheSource, cacheDestination);
+    const worktreeInputSource = resolve(
+      root,
+      RESEARCH_WORKTREE_INPUT_ROOT
+    );
+    await lstat(worktreeInputSource);
+    await cloneDirectory(
+      worktreeInputSource,
+      resolve(destination, RESEARCH_WORKTREE_INPUT_ROOT)
+    );
     return {
       snapshotRoot: destination,
       sourceCommit: snapshotCommit,

@@ -32,6 +32,7 @@ import {
 import {
   assertProofExecutionIsolationMatches,
   assertProofExecutionSnapshotMatches,
+  buildProofCacheIdentity,
   buildProofExecutionToolchainIdentity,
   installedDependencyTreeIdentity,
   repoRelativePath,
@@ -71,7 +72,8 @@ function sha256Canonical(value) {
 function cacheIdentity(content) {
   const files = [
     {
-      path: "proof-cache.txt",
+      path:
+        "scripts/research/operational-savings/.cache/proof-cache.txt",
       sizeBytes: Buffer.byteLength(content),
       executable: false,
       sha256: createHash("sha256")
@@ -81,7 +83,7 @@ function cacheIdentity(content) {
   ];
   const payload = {
     schemaVersion:
-      "operational-savings/proof-execution-cache-identity-v1",
+      "operational-savings/proof-execution-cache-identity-v2",
     files
   };
   return {
@@ -126,11 +128,15 @@ async function initializeSnapshotFixture(repository) {
     mkdir(
       cacheRoot,
       { recursive: true }
+    ),
+    mkdir(
+      join(repository, "tmp"),
+      { recursive: true }
     )
   ]);
   await writeFile(
     join(repository, ".gitignore"),
-    "node_modules/\n"
+    "node_modules/\n/tmp/\n"
   );
   await writeFile(
     join(cacheRoot, ".gitignore"),
@@ -139,6 +145,10 @@ async function initializeSnapshotFixture(repository) {
   await writeFile(
     join(repository, "proof-source.txt"),
     "committed\n"
+  );
+  await writeFile(
+    join(repository, "tmp/proof-input.txt"),
+    "private input\n"
   );
   await git(
     [
@@ -156,6 +166,59 @@ async function initializeSnapshotFixture(repository) {
   );
   return stdout.trim();
 }
+
+test("binds the cache and ignored worktree inputs into one exact identity", async () => {
+  const repository = await mkdtemp(
+    join(tmpdir(), "retrofi-proof-local-inputs-")
+  );
+  try {
+    const cachePath = join(
+      repository,
+      "scripts/research/operational-savings/.cache/input.bin"
+    );
+    const worktreeInputPath = join(
+      repository,
+      "tmp/input.bin"
+    );
+    await Promise.all([
+      mkdir(
+        join(
+          repository,
+          "scripts/research/operational-savings/.cache"
+        ),
+        { recursive: true }
+      ),
+      mkdir(join(repository, "tmp"), {
+        recursive: true
+      })
+    ]);
+    await Promise.all([
+      writeFile(cachePath, "cache input\n"),
+      writeFile(worktreeInputPath, "worktree input\n")
+    ]);
+    const before = await buildProofCacheIdentity({
+      repoRoot: repository
+    });
+    expect(before.schemaVersion).toBe(
+      "operational-savings/proof-execution-cache-identity-v2"
+    );
+    expect(before.files.map(({ path }) => path)).toEqual([
+      "scripts/research/operational-savings/.cache/input.bin",
+      "tmp/input.bin"
+    ]);
+
+    await writeFile(worktreeInputPath, "changed input\n");
+    const after = await buildProofCacheIdentity({
+      repoRoot: repository
+    });
+    expect(after.digest).not.toBe(before.digest);
+  } finally {
+    await rm(repository, {
+      recursive: true,
+      force: true
+    });
+  }
+});
 
 test("forces the tracked Vitest config for the complete real suite", () => {
   const arguments_ = buildRealProofVitestArguments([
@@ -406,6 +469,10 @@ test("runs from a detached committed snapshot that ignores a mutation-and-revert
       repository,
       "scripts/research/operational-savings/.cache"
     );
+    const worktreeInputPath = join(
+      repository,
+      "tmp/proof-input.txt"
+    );
     await git(["init"], repository);
     await git(
       ["config", "user.email", "proof@example.invalid"],
@@ -422,6 +489,10 @@ test("runs from a detached committed snapshot that ignores a mutation-and-revert
       mkdir(
         cacheRoot,
         { recursive: true }
+      ),
+      mkdir(
+        join(repository, "tmp"),
+        { recursive: true }
       )
     ]);
     const dependencyPath = join(
@@ -434,11 +505,12 @@ test("runs from a detached committed snapshot that ignores a mutation-and-revert
     );
     await Promise.all([
       writeFile(dependencyPath, "original dependency\n"),
-      writeFile(cachePath, "original cache\n")
+      writeFile(cachePath, "original cache\n"),
+      writeFile(worktreeInputPath, "original input\n")
     ]);
     await writeFile(
       join(repository, ".gitignore"),
-      "node_modules/\n"
+      "node_modules/\n/tmp/\n"
     );
     await writeFile(
       join(cacheRoot, ".gitignore"),
@@ -495,12 +567,19 @@ test("runs from a detached committed snapshot that ignores a mutation-and-revert
         "utf8"
       )
     ).toBe("original cache\n");
+    expect(
+      await readFile(
+        join(snapshotRoot, "tmp/proof-input.txt"),
+        "utf8"
+      )
+    ).toBe("original input\n");
 
     await writeFile(sourcePath, "transient mutation\n");
     await writeFile(sourcePath, "committed\n");
     await Promise.all([
       writeFile(dependencyPath, "mutated dependency\n"),
-      writeFile(cachePath, "mutated cache\n")
+      writeFile(cachePath, "mutated cache\n"),
+      writeFile(worktreeInputPath, "mutated input\n")
     ]);
 
     expect(
@@ -527,6 +606,12 @@ test("runs from a detached committed snapshot that ignores a mutation-and-revert
         "utf8"
       )
     ).toBe("original cache\n");
+    expect(
+      await readFile(
+        join(snapshotRoot, "tmp/proof-input.txt"),
+        "utf8"
+      )
+    ).toBe("original input\n");
     await verifyCommittedProofSnapshotClean({
       repoRoot: repository,
       snapshotRoot,
