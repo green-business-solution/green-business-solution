@@ -20934,8 +20934,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1344,
         "expectedSha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/5fc45236b9446107ff2415ce77c807cee2862cb6fac22b8a73826d0693b0980e/b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5/packaging-26.2-py3-none-any.whl/packaging-26.2.dist-info/licenses/LICENSE.BSD",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -20943,7 +20943,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/packaging-26.2-py3-none-any.whl",
           "parentExpectedSha256": "5fc45236b9446107ff2415ce77c807cee2862cb6fac22b8a73826d0693b0980e",
           "memberPath": "packaging-26.2.dist-info/licenses/LICENSE.BSD",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:56.958Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -21060,7 +21061,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -21110,8 +21111,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1093,
         "expectedSha256": "130e3a64d5fdd5d096a752694634a7d9df284469de86e5732100268041e3d686",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897/130e3a64d5fdd5d096a752694634a7d9df284469de86e5732100268041e3d686/urllib3-2.7.0-py3-none-any.whl/urllib3-2.7.0.dist-info/licenses/LICENSE.txt",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -21119,7 +21120,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/urllib3-2.7.0-py3-none-any.whl",
           "parentExpectedSha256": "9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897",
           "memberPath": "urllib3-2.7.0.dist-info/licenses/LICENSE.txt",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:56.998Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -21236,7 +21238,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -21286,8 +21288,8 @@
         "contentType": "text/markdown",
         "expectedSizeBytes": 3511,
         "expectedSha256": "103166b62b80443afb9eb3488e052ea06be0cff566b908f199e561fde49af19f",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/9fad7dcb1aac3c7f0584a5a8133e3a43eeb2fe127f47e3632d43d677c66c102b/103166b62b80443afb9eb3488e052ea06be0cff566b908f199e561fde49af19f/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl/numpy/random/LICENSE.md",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -21295,7 +21297,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
           "parentExpectedSha256": "9fad7dcb1aac3c7f0584a5a8133e3a43eeb2fe127f47e3632d43d677c66c102b",
           "memberPath": "numpy/random/LICENSE.md",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:57.049Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -21412,7 +21415,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -21462,8 +21465,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1091,
         "expectedSha256": "ca836a5f9ecca3b2f350230faa20a48fb8b145653b5568d784862df864706b9b",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c/ca836a5f9ecca3b2f350230faa20a48fb8b145653b5568d784862df864706b9b/pytest-9.1.1-py3-none-any.whl/pytest-9.1.1.dist-info/licenses/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -21471,7 +21474,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pytest-9.1.1-py3-none-any.whl",
           "parentExpectedSha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
           "memberPath": "pytest-9.1.1.dist-info/licenses/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:57.089Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -21588,7 +21592,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -21638,8 +21642,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 46838,
         "expectedSha256": "4daf14e37432e7026165979ecb7a39930707a3e89bef4876cfaf9dad36ed364a",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/e19ebea31758fac5893a2ac360fedd00116cbb7628e650842a6691ba7ca28a21/4daf14e37432e7026165979ecb7a39930707a3e89bef4876cfaf9dad36ed364a/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl/scipy-1.17.1.dist-info/LICENSE.txt",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -21647,7 +21651,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
           "parentExpectedSha256": "e19ebea31758fac5893a2ac360fedd00116cbb7628e650842a6691ba7ca28a21",
           "memberPath": "scipy-1.17.1.dist-info/LICENSE.txt",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:57.152Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -21764,7 +21769,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -21814,8 +21819,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 4816,
         "expectedSha256": "d75938dec098f06f0ac3c00853065d94f020be1c3c62ef1dc2975ba15b4d9b0e",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/c52f7ad20ef476806ed212380b1d54d20310c8b86bdc2c9a68b51f0024a44472/d75938dec098f06f0ac3c00853065d94f020be1c3c62ef1dc2975ba15b4d9b0e/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl/matplotlib/mpl-data/fonts/ttf/LICENSE_DEJAVU",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -21823,7 +21828,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
           "parentExpectedSha256": "c52f7ad20ef476806ed212380b1d54d20310c8b86bdc2c9a68b51f0024a44472",
           "memberPath": "matplotlib/mpl-data/fonts/ttf/LICENSE_DEJAVU",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:57.199Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -21940,7 +21946,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -21990,8 +21996,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 10174,
         "expectedSha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/5fc45236b9446107ff2415ce77c807cee2862cb6fac22b8a73826d0693b0980e/0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594/packaging-26.2-py3-none-any.whl/packaging-26.2.dist-info/licenses/LICENSE.APACHE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -21999,7 +22005,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/packaging-26.2-py3-none-any.whl",
           "parentExpectedSha256": "5fc45236b9446107ff2415ce77c807cee2862cb6fac22b8a73826d0693b0980e",
           "memberPath": "packaging-26.2.dist-info/licenses/LICENSE.APACHE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:57.238Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -22116,7 +22123,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -22166,8 +22173,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1077,
         "expectedSha256": "2a6b4d5f884d4d7a1bf04ea7df1944cf12b32e35a79a86d0a075a2d3f40fb9ac",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/63579f9a0628e06278f7e47b7d7d5b6ce20dc65c5e96a6f3ca99a6adca0396e8/2a6b4d5f884d4d7a1bf04ea7df1944cf12b32e35a79a86d0a075a2d3f40fb9ac/backoff-2.2.1-py3-none-any.whl/backoff-2.2.1.dist-info/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -22175,7 +22182,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/backoff-2.2.1-py3-none-any.whl",
           "parentExpectedSha256": "63579f9a0628e06278f7e47b7d7d5b6ce20dc65c5e96a6f3ca99a6adca0396e8",
           "memberPath": "backoff-2.2.1.dist-info/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:57.274Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -22292,7 +22300,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -22342,8 +22350,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 3572,
         "expectedSha256": "ed9bf58c6d74d3fad9d92d1d67d9bff8141d8ab60de784516b0711364fd43357",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/e19ebea31758fac5893a2ac360fedd00116cbb7628e650842a6691ba7ca28a21/ed9bf58c6d74d3fad9d92d1d67d9bff8141d8ab60de784516b0711364fd43357/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl/scipy/integrate/LICENSE_DOP",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -22351,7 +22359,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
           "parentExpectedSha256": "e19ebea31758fac5893a2ac360fedd00116cbb7628e650842a6691ba7ca28a21",
           "memberPath": "scipy/integrate/LICENSE_DOP",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:57.329Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -22468,7 +22477,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -22518,8 +22527,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 10847,
         "expectedSha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/26a473dbb4162108b27901492546f83c76fdcea3d0eadff00ae7a07e18dcce09/a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl/orjson-3.11.9.dist-info/licenses/LICENSE-APACHE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -22527,7 +22536,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
           "parentExpectedSha256": "26a473dbb4162108b27901492546f83c76fdcea3d0eadff00ae7a07e18dcce09",
           "memberPath": "orjson-3.11.9.dist-info/licenses/LICENSE-APACHE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:57.366Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -22644,7 +22654,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -22694,8 +22704,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1497,
         "expectedSha256": "f1218143d766da3fea66f13396b7f15df46a83303f29bf96ba6e98eb4d42f408",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30/f1218143d766da3fea66f13396b7f15df46a83303f29bf96ba6e98eb4d42f408/cycler-0.12.1-py3-none-any.whl/cycler-0.12.1.dist-info/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -22703,7 +22713,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/cycler-0.12.1-py3-none-any.whl",
           "parentExpectedSha256": "85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30",
           "memberPath": "cycler-0.12.1.dist-info/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:57.404Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -22820,7 +22831,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -22870,8 +22881,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 63442,
         "expectedSha256": "822e8e528147569a41975592aee19c11992ab667ba50451cd929031d5fc74491",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/c52f7ad20ef476806ed212380b1d54d20310c8b86bdc2c9a68b51f0024a44472/822e8e528147569a41975592aee19c11992ab667ba50451cd929031d5fc74491/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl/matplotlib-3.11.1.dist-info/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -22879,7 +22890,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
           "parentExpectedSha256": "c52f7ad20ef476806ed212380b1d54d20310c8b86bdc2c9a68b51f0024a44472",
           "memberPath": "matplotlib-3.11.1.dist-info/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:57.447Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -22996,7 +23008,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -23046,8 +23058,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1057,
         "expectedSha256": "314e4e91be3baa93c0fb4bccc9e4e97cd643eb839b065af921782c2175fe9909",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/55927d532399c2c646100ff7feb48eaa940ad70f42cd68e1328f3ded9f81ca24/314e4e91be3baa93c0fb4bccc9e4e97cd643eb839b065af921782c2175fe9909/rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl/rpds_py-2026.6.3.dist-info/licenses/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -23055,7 +23067,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
           "parentExpectedSha256": "55927d532399c2c646100ff7feb48eaa940ad70f42cd68e1328f3ded9f81ca24",
           "memberPath": "rpds_py-2026.6.3.dist-info/licenses/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:57.485Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -23172,7 +23185,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -23222,8 +23235,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1543,
         "expectedSha256": "a2755eb34bddfc97dc39cbeebe352744d989c1e0f7fab7baacb9fc9a9ee3e1b4",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/bae534b357516f12258862d1f0181d911032d0467f215bfcd1c264b4da579047/a2755eb34bddfc97dc39cbeebe352744d989c1e0f7fab7baacb9fc9a9ee3e1b4/numpy_financial-1.0.0-py3-none-any.whl/numpy_financial-1.0.0.dist-info/LICENSE.txt",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -23231,7 +23244,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/numpy_financial-1.0.0-py3-none-any.whl",
           "parentExpectedSha256": "bae534b357516f12258862d1f0181d911032d0467f215bfcd1c264b4da579047",
           "memberPath": "numpy_financial-1.0.0.dist-info/LICENSE.txt",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:57.523Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -23348,7 +23362,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -23398,8 +23412,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1720,
         "expectedSha256": "106d55c931fd6a84822e5345d900273d059f1c27310d02567ccb313c5d18c55d",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/e19ebea31758fac5893a2ac360fedd00116cbb7628e650842a6691ba7ca28a21/106d55c931fd6a84822e5345d900273d059f1c27310d02567ccb313c5d18c55d/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl/scipy/spatial/qhull_src/COPYING_QHULL.txt",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -23407,7 +23421,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
           "parentExpectedSha256": "e19ebea31758fac5893a2ac360fedd00116cbb7628e650842a6691ba7ca28a21",
           "memberPath": "scipy/spatial/qhull_src/COPYING_QHULL.txt",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:57.586Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -23524,7 +23539,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -23574,8 +23589,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 38,
         "expectedSha256": "f5110972dedad2b4e9d314518daf3b7d72d6e02e499acd802181de6f74571dcc",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0/f5110972dedad2b4e9d314518daf3b7d72d6e02e499acd802181de6f74571dcc/requests-2.34.2-py3-none-any.whl/requests-2.34.2.dist-info/licenses/NOTICE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -23583,7 +23598,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/requests-2.34.2-py3-none-any.whl",
           "parentExpectedSha256": "2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0",
           "memberPath": "requests-2.34.2.dist-info/licenses/NOTICE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:57.626Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -23700,7 +23716,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -23750,8 +23766,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 10142,
         "expectedSha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0/09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b/requests-2.34.2-py3-none-any.whl/requests-2.34.2.dist-info/licenses/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -23759,7 +23775,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/requests-2.34.2-py3-none-any.whl",
           "parentExpectedSha256": "2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0",
           "memberPath": "requests-2.34.2.dist-info/licenses/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:57.667Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -23876,7 +23893,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -23926,8 +23943,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 13936,
         "expectedSha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8/3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf/typing_extensions-4.16.0-py3-none-any.whl/typing_extensions-4.16.0.dist-info/licenses/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -23935,7 +23952,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/typing_extensions-4.16.0-py3-none-any.whl",
           "parentExpectedSha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
           "memberPath": "typing_extensions-4.16.0.dist-info/licenses/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:57.707Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -24052,7 +24070,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -24102,8 +24120,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1514,
         "expectedSha256": "c80c39b5fce06ba4897e14e0b0a88b54458334d951eb1361402ffad2cfb863b4",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/e19ebea31758fac5893a2ac360fedd00116cbb7628e650842a6691ba7ca28a21/c80c39b5fce06ba4897e14e0b0a88b54458334d951eb1361402ffad2cfb863b4/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl/scipy/_lib/_uarray/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -24111,7 +24129,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
           "parentExpectedSha256": "e19ebea31758fac5893a2ac360fedd00116cbb7628e650842a6691ba7ca28a21",
           "memberPath": "scipy/_lib/_uarray/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:57.764Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -24228,7 +24247,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -24278,8 +24297,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 20022,
         "expectedSha256": "94a83aaee0729a0f302d34acc4acecbd9d58366f262429075fe557e4a54b2e69",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/ef3048ef05dbb552b89817713d9cac912e00d0fde4a3105c00d29e52e10c89af/94a83aaee0729a0f302d34acc4acecbd9d58366f262429075fe557e4a54b2e69/fonttools-4.63.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl/fonttools-4.63.0.dist-info/licenses/LICENSE.external",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -24287,7 +24306,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/fonttools-4.63.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
           "parentExpectedSha256": "ef3048ef05dbb552b89817713d9cac912e00d0fde4a3105c00d29e52e10c89af",
           "memberPath": "fonttools-4.63.0.dist-info/licenses/LICENSE.external",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:57.805Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -24404,7 +24424,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -24454,8 +24474,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 52127,
         "expectedSha256": "5c1052e921e62d36ccda50a61585e9c0444b80c62f39b57c4f3f0d5fb62f5071",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/73fa87b08a7ef706f8aafda39ddaccf2a99047bea62d8c88a0361bcafb2237bc/5c1052e921e62d36ccda50a61585e9c0444b80c62f39b57c4f3f0d5fb62f5071/pandas-3.0.5-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl/pandas-3.0.5.dist-info/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -24463,7 +24483,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pandas-3.0.5-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
           "parentExpectedSha256": "73fa87b08a7ef706f8aafda39ddaccf2a99047bea62d8c88a0361bcafb2237bc",
           "memberPath": "pandas-3.0.5.dist-info/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:57.852Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -24580,7 +24601,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -24630,8 +24651,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1023,
         "expectedSha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/26a473dbb4162108b27901492546f83c76fdcea3d0eadff00ae7a07e18dcce09/23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl/orjson-3.11.9.dist-info/licenses/LICENSE-MIT",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -24639,7 +24660,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
           "parentExpectedSha256": "26a473dbb4162108b27901492546f83c76fdcea3d0eadff00ae7a07e18dcce09",
           "memberPath": "orjson-3.11.9.dist-info/licenses/LICENSE-MIT",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:57.888Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -24756,7 +24778,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -24806,8 +24828,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1071,
         "expectedSha256": "6d0d41bfe170ac6c7dc248c9a63e254d0fb45a60d50a8257d0af92c6e249b887",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/9b2aff1c7b3884512b9512c3eaadd9bab39fb45042ffaaa1dd08ff2b9f8109d9/6d0d41bfe170ac6c7dc248c9a63e254d0fb45a60d50a8257d0af92c6e249b887/charset_normalizer-3.4.9-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl/charset_normalizer-3.4.9.dist-info/licenses/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -24815,7 +24837,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/charset_normalizer-3.4.9-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
           "parentExpectedSha256": "9b2aff1c7b3884512b9512c3eaadd9bab39fb45042ffaaa1dd08ff2b9f8109d9",
           "memberPath": "charset_normalizer-3.4.9.dist-info/licenses/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:57.925Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -24932,7 +24955,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -24982,8 +25005,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 197,
         "expectedSha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/5fc45236b9446107ff2415ce77c807cee2862cb6fac22b8a73826d0693b0980e/cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48/packaging-26.2-py3-none-any.whl/packaging-26.2.dist-info/licenses/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -24991,7 +25014,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/packaging-26.2-py3-none-any.whl",
           "parentExpectedSha256": "5fc45236b9446107ff2415ce77c807cee2862cb6fac22b8a73826d0693b0980e",
           "memberPath": "packaging-26.2.dist-info/licenses/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:57.961Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -25108,7 +25132,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -25158,8 +25182,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1534,
         "expectedSha256": "34170979fc64f4f5e6dfa66ef27dec314ffffc5852000c60f4836ec1dfbf156e",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/92d9abc807cf7d0e047b95ca5d957cf4792fcd04e920ca70d48add15c1a90ea7/34170979fc64f4f5e6dfa66ef27dec314ffffc5852000c60f4836ec1dfbf156e/contourpy-1.3.3-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl/contourpy-1.3.3.dist-info/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -25167,7 +25191,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/contourpy-1.3.3-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
           "parentExpectedSha256": "92d9abc807cf7d0e047b95ca5d957cf4792fcd04e920ca70d48add15c1a90ea7",
           "memberPath": "contourpy-1.3.3.dist-info/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:57.998Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -25284,7 +25309,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -25334,8 +25359,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1057,
         "expectedSha256": "4f92a015a13c4d1a040bef018aa13430b4f1bc73b41b16bb846c346766de7439",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce/4f92a015a13c4d1a040bef018aa13430b4f1bc73b41b16bb846c346766de7439/jsonschema-4.26.0-py3-none-any.whl/jsonschema-4.26.0.dist-info/licenses/COPYING",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -25343,7 +25368,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/jsonschema-4.26.0-py3-none-any.whl",
           "parentExpectedSha256": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
           "memberPath": "jsonschema-4.26.0.dist-info/licenses/COPYING",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:58.037Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -25460,7 +25486,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -25510,8 +25536,8 @@
         "contentType": "text/markdown",
         "expectedSizeBytes": 1541,
         "expectedSha256": "1a9a4f0e3d479a27240ddd59a9137a66ab4a0f9dfdc8ca6188cc0bfd85187f04",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/7f952cbe720b688055e3f87de14f5c3e5fdaa8bc3928985c4077ca689de849a2/1a9a4f0e3d479a27240ddd59a9137a66ab4a0f9dfdc8ca6188cc0bfd85187f04/idna-3.18-py3-none-any.whl/idna-3.18.dist-info/licenses/LICENSE.md",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -25519,7 +25545,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/idna-3.18-py3-none-any.whl",
           "parentExpectedSha256": "7f952cbe720b688055e3f87de14f5c3e5fdaa8bc3928985c4077ca689de849a2",
           "memberPath": "idna-3.18.dist-info/licenses/LICENSE.md",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:58.075Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -25636,7 +25663,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -25686,8 +25713,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1057,
         "expectedSha256": "42dcd63495f87b4eb7c7757afa379bb55a53f94afd7a5f657d9adf57236e515c",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231/42dcd63495f87b4eb7c7757afa379bb55a53f94afd7a5f657d9adf57236e515c/referencing-0.37.0-py3-none-any.whl/referencing-0.37.0.dist-info/licenses/COPYING",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -25695,7 +25722,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/referencing-0.37.0-py3-none-any.whl",
           "parentExpectedSha256": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
           "memberPath": "referencing-0.37.0.dist-info/licenses/COPYING",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:58.113Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -25812,7 +25840,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -25862,8 +25890,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1057,
         "expectedSha256": "42dcd63495f87b4eb7c7757afa379bb55a53f94afd7a5f657d9adf57236e515c",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe/42dcd63495f87b4eb7c7757afa379bb55a53f94afd7a5f657d9adf57236e515c/jsonschema_specifications-2025.9.1-py3-none-any.whl/jsonschema_specifications-2025.9.1.dist-info/licenses/COPYING",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -25871,7 +25899,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/jsonschema_specifications-2025.9.1-py3-none-any.whl",
           "parentExpectedSha256": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
           "memberPath": "jsonschema_specifications-2025.9.1.dist-info/licenses/COPYING",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:58.151Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -25988,7 +26017,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -26038,8 +26067,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 11358,
         "expectedSha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/2f731a156cd9e4123d1433dec51a22ba74702d349457fe76c65bba0f1f7958e0/cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30/or-tools_aarch64_AlmaLinux-8.10_cpp_v9.14.6206.tar.gz/or-tools_aarch64_almalinux-8.10_cpp_v9.14.6206/share/doc/ortools/LICENSE",
         "extractionPlan": {
           "archiveFormat": "TAR_GZIP",
@@ -26047,7 +26076,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/artifacts/or-tools_aarch64_AlmaLinux-8.10_cpp_v9.14.6206.tar.gz",
           "parentExpectedSha256": "2f731a156cd9e4123d1433dec51a22ba74702d349457fe76c65bba0f1f7958e0",
           "memberPath": "or-tools_aarch64_AlmaLinux-8.10_cpp_v9.14.6206/share/doc/ortools/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:58.657Z"
         }
       },
       "sourceOrganization": "Google",
@@ -26164,7 +26194,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -26216,8 +26246,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 5476,
         "expectedSha256": "bab3d31dfef07f483624f2f65f2711e76065b8e7273278b1c071ede1041c9959",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/c52f7ad20ef476806ed212380b1d54d20310c8b86bdc2c9a68b51f0024a44472/bab3d31dfef07f483624f2f65f2711e76065b8e7273278b1c071ede1041c9959/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl/matplotlib/mpl-data/fonts/ttf/LICENSE_STIX",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -26225,7 +26255,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
           "parentExpectedSha256": "c52f7ad20ef476806ed212380b1d54d20310c8b86bdc2c9a68b51f0024a44472",
           "memberPath": "matplotlib/mpl-data/fonts/ttf/LICENSE_STIX",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:58.700Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -26342,7 +26373,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -26392,8 +26423,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1110,
         "expectedSha256": "d6b65e6c213a5d0b577911d34d6e5949b9f59d76c238c5071a2f3fc16cfb2606",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746/d6b65e6c213a5d0b577911d34d6e5949b9f59d76c238c5071a2f3fc16cfb2606/pluggy-1.6.0-py3-none-any.whl/pluggy-1.6.0.dist-info/licenses/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -26401,7 +26432,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pluggy-1.6.0-py3-none-any.whl",
           "parentExpectedSha256": "e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746",
           "memberPath": "pluggy-1.6.0.dist-info/licenses/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:58.736Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -26518,7 +26550,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -26568,8 +26600,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1101,
         "expectedSha256": "8d3928f9dc4490fd635707cb88eb26bd764102a7282954307d3e5167a577e8a4",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/9149cad251584d5fb4981be1ecde53a1ca46c891a79788c0df828d2f166bda28/8d3928f9dc4490fd635707cb88eb26bd764102a7282954307d3e5167a577e8a4/pyyaml-6.0.3-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl/pyyaml-6.0.3.dist-info/licenses/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -26577,7 +26609,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pyyaml-6.0.3-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
           "parentExpectedSha256": "9149cad251584d5fb4981be1ecde53a1ca46c891a79788c0df828d2f166bda28",
           "memberPath": "pyyaml-6.0.3.dist-info/licenses/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:58.775Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -26694,7 +26727,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -26744,8 +26777,8 @@
         "contentType": "application/octet-stream",
         "expectedSizeBytes": 10873,
         "expectedSha256": "0db603a5f4499f690c4425477ff664c166da325d3acc3b5a8d4de3db072443d0",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/81a9e26dd42fd28a23a2d169d86d7ac03b46e2f8b59ed4698fb4785f946d0176/0db603a5f4499f690c4425477ff664c166da325d3acc3b5a8d4de3db072443d0/pygments-2.20.0-py3-none-any.whl/pygments-2.20.0.dist-info/licenses/AUTHORS",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -26753,7 +26786,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pygments-2.20.0-py3-none-any.whl",
           "parentExpectedSha256": "81a9e26dd42fd28a23a2d169d86d7ac03b46e2f8b59ed4698fb4785f946d0176",
           "memberPath": "pygments-2.20.0.dist-info/licenses/AUTHORS",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:58.814Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -26870,7 +26904,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -26920,8 +26954,8 @@
         "contentType": "text/markdown",
         "expectedSizeBytes": 1498,
         "expectedSha256": "c254b2b5fd30ae3c89d36ba061730563b9760fca04f1b746a1b2c3157da2c789",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/e19ebea31758fac5893a2ac360fedd00116cbb7628e650842a6691ba7ca28a21/c254b2b5fd30ae3c89d36ba061730563b9760fca04f1b746a1b2c3157da2c789/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl/scipy/fft/_pocketfft/LICENSE.md",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -26929,7 +26963,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
           "parentExpectedSha256": "e19ebea31758fac5893a2ac360fedd00116cbb7628e650842a6691ba7ca28a21",
           "memberPath": "scipy/fft/_pocketfft/LICENSE.md",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:58.871Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -27046,7 +27081,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -27096,8 +27131,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1331,
         "expectedSha256": "a9d66f1d526df02e29dce73436d34e56e8632f46c275bbdffc70569e882f9f17",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/81a9e26dd42fd28a23a2d169d86d7ac03b46e2f8b59ed4698fb4785f946d0176/a9d66f1d526df02e29dce73436d34e56e8632f46c275bbdffc70569e882f9f17/pygments-2.20.0-py3-none-any.whl/pygments-2.20.0.dist-info/licenses/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -27105,7 +27140,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pygments-2.20.0-py3-none-any.whl",
           "parentExpectedSha256": "81a9e26dd42fd28a23a2d169d86d7ac03b46e2f8b59ed4698fb4785f946d0176",
           "memberPath": "pygments-2.20.0.dist-info/licenses/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:58.911Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -27222,7 +27258,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -27272,8 +27308,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 3289,
         "expectedSha256": "529c40e5f67f2f88904657a9f7879ae2f8dc76bc9bfef9cb10d988b48804ed61",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/b2af221f268f5af85e776a73d62b0845fc8baf8ef0abfae79d29c77d0e776aaf/529c40e5f67f2f88904657a9f7879ae2f8dc76bc9bfef9cb10d988b48804ed61/kiwisolver-1.5.0-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl/kiwisolver-1.5.0.dist-info/licenses/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -27281,7 +27317,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/kiwisolver-1.5.0-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
           "parentExpectedSha256": "b2af221f268f5af85e776a73d62b0845fc8baf8ef0abfae79d29c77d0e776aaf",
           "memberPath": "kiwisolver-1.5.0.dist-info/licenses/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:58.949Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -27398,7 +27435,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -27448,8 +27485,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 989,
         "expectedSha256": "e93716da6b9c0d5a4a1df60fe695b370f0695603d21f6f83f053e42cfc10caf7",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775/e93716da6b9c0d5a4a1df60fe695b370f0695603d21f6f83f053e42cfc10caf7/certifi-2026.7.22-py3-none-any.whl/certifi-2026.7.22.dist-info/licenses/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -27457,7 +27494,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/certifi-2026.7.22-py3-none-any.whl",
           "parentExpectedSha256": "62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775",
           "memberPath": "certifi-2026.7.22.dist-info/licenses/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:58.985Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -27574,7 +27612,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -27624,8 +27662,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1109,
         "expectedSha256": "882115c95dfc2af1eeb6714f8ec6d5cbcabf667caff8729f42420da63f714e9f",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309/882115c95dfc2af1eeb6714f8ec6d5cbcabf667caff8729f42420da63f714e9f/attrs-26.1.0-py3-none-any.whl/attrs-26.1.0.dist-info/licenses/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -27633,7 +27671,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/attrs-26.1.0-py3-none-any.whl",
           "parentExpectedSha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
           "memberPath": "attrs-26.1.0.dist-info/licenses/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:59.022Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -27750,7 +27789,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -27800,8 +27839,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1062,
         "expectedSha256": "a5425f9dc14ac74d4c5f0b679e941f2442e32cca7452a4418d5b1a49893ebe4e",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/850ba148bd908d7e2411587e247a1e4f0327839c40e2e5e6d05a007ecc69911d/a5425f9dc14ac74d4c5f0b679e941f2442e32cca7452a4418d5b1a49893ebe4e/pyparsing-3.3.2-py3-none-any.whl/pyparsing-3.3.2.dist-info/licenses/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -27809,7 +27848,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pyparsing-3.3.2-py3-none-any.whl",
           "parentExpectedSha256": "850ba148bd908d7e2411587e247a1e4f0327839c40e2e5e6d05a007ecc69911d",
           "memberPath": "pyparsing-3.3.2.dist-info/licenses/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:59.059Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -27926,7 +27966,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -27976,8 +28016,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1556,
         "expectedSha256": "80619b7049f08c81683ad0e01f08f257a840652dd71ee83146d36658c7d2c2b9",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/1d8214789a24de455a8b8bd8ae6fe3c6b69a5e3d64aa8a8e5d68e694bbcb285a/80619b7049f08c81683ad0e01f08f257a840652dd71ee83146d36658c7d2c2b9/python_dotenv-1.2.2-py3-none-any.whl/python_dotenv-1.2.2.dist-info/licenses/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -27985,7 +28025,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/python_dotenv-1.2.2-py3-none-any.whl",
           "parentExpectedSha256": "1d8214789a24de455a8b8bd8ae6fe3c6b69a5e3d64aa8a8e5d68e694bbcb285a",
           "memberPath": "python_dotenv-1.2.2.dist-info/licenses/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:59.094Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -28102,7 +28143,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -28152,8 +28193,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1066,
         "expectedSha256": "4375ba20e2b9c6c4e7cad2940a628fd90e95cc3d50ee92aae755715d8ba1fbd0",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274/4375ba20e2b9c6c4e7cad2940a628fd90e95cc3d50ee92aae755715d8ba1fbd0/six-1.17.0-py2.py3-none-any.whl/six-1.17.0.dist-info/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -28161,7 +28202,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/six-1.17.0-py2.py3-none-any.whl",
           "parentExpectedSha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
           "memberPath": "six-1.17.0.dist-info/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:59.130Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -28278,7 +28320,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -28328,8 +28370,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 70307,
         "expectedSha256": "dda12a98c1979cf3d94df1cff45d27a4cb3f04a60c76f76902ac54cac03ec0ce",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/d9c7f76c0673154f044e9d78c8655fb4213f6ca31a836df48b40fe5d187717b9/dda12a98c1979cf3d94df1cff45d27a4cb3f04a60c76f76902ac54cac03ec0ce/pillow-12.3.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl/pillow-12.3.0.dist-info/licenses/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -28337,7 +28379,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pillow-12.3.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
           "parentExpectedSha256": "d9c7f76c0673154f044e9d78c8655fb4213f6ca31a836df48b40fe5d187717b9",
           "memberPath": "pillow-12.3.0.dist-info/licenses/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:59.172Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -28454,7 +28497,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -28504,8 +28547,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 48680,
         "expectedSha256": "b01a781fe2f8b83292cf6ebca087576437fbe514218a0062f841e458bdafe4ba",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/9fad7dcb1aac3c7f0584a5a8133e3a43eeb2fe127f47e3632d43d677c66c102b/b01a781fe2f8b83292cf6ebca087576437fbe514218a0062f841e458bdafe4ba/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl/numpy-1.26.4.dist-info/LICENSE.txt",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -28513,7 +28556,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
           "parentExpectedSha256": "9fad7dcb1aac3c7f0584a5a8133e3a43eeb2fe127f47e3632d43d677c66c102b",
           "memberPath": "numpy-1.26.4.dist-info/LICENSE.txt",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:59.219Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -28630,7 +28674,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -28680,8 +28724,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1593,
         "expectedSha256": "05f3b88351988ecfad10abe92c0c50e5875c6452d5009a0084cc291551ffcca6",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/9fad7dcb1aac3c7f0584a5a8133e3a43eeb2fe127f47e3632d43d677c66c102b/05f3b88351988ecfad10abe92c0c50e5875c6452d5009a0084cc291551ffcca6/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl/numpy/ma/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -28689,7 +28733,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
           "parentExpectedSha256": "9fad7dcb1aac3c7f0584a5a8133e3a43eeb2fe127f47e3632d43d677c66c102b",
           "memberPath": "numpy/ma/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:59.264Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -28806,7 +28851,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -28856,8 +28901,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 16727,
         "expectedSha256": "66a3107d5ad6a058aab753eaac2047ccb2ed0e39465dd0fe5844da3e300d5172",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/26a473dbb4162108b27901492546f83c76fdcea3d0eadff00ae7a07e18dcce09/66a3107d5ad6a058aab753eaac2047ccb2ed0e39465dd0fe5844da3e300d5172/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl/orjson-3.11.9.dist-info/licenses/LICENSE-MPL-2.0",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -28865,7 +28910,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
           "parentExpectedSha256": "26a473dbb4162108b27901492546f83c76fdcea3d0eadff00ae7a07e18dcce09",
           "memberPath": "orjson-3.11.9.dist-info/licenses/LICENSE-MPL-2.0",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:59.302Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -28982,7 +29028,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -29032,8 +29078,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1018,
         "expectedSha256": "fbc539f47d0cf83bc61378080fb873d5c14630126cacbfe754035c3926daa5ec",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/9fad7dcb1aac3c7f0584a5a8133e3a43eeb2fe127f47e3632d43d677c66c102b/fbc539f47d0cf83bc61378080fb873d5c14630126cacbfe754035c3926daa5ec/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl/numpy/core/include/numpy/random/LICENSE.txt",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -29041,7 +29087,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
           "parentExpectedSha256": "9fad7dcb1aac3c7f0584a5a8133e3a43eeb2fe127f47e3632d43d677c66c102b",
           "memberPath": "numpy/core/include/numpy/random/LICENSE.txt",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:59.349Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -29158,7 +29205,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -29208,8 +29255,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1098,
         "expectedSha256": "3409fa91f7ace557894632676656e32264fe5ef7581535725dc9a23774551bd4",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12/3409fa91f7ace557894632676656e32264fe5ef7581535725dc9a23774551bd4/iniconfig-2.3.0-py3-none-any.whl/iniconfig-2.3.0.dist-info/licenses/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -29217,7 +29264,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/iniconfig-2.3.0-py3-none-any.whl",
           "parentExpectedSha256": "f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12",
           "memberPath": "iniconfig-2.3.0.dist-info/licenses/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:59.386Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -29334,7 +29382,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -29384,8 +29432,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1072,
         "expectedSha256": "6787208f83f659ccbc2223b2fde952ffa6f7e8aca62f1a8a2bf5bc51bb1b2383",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/ef3048ef05dbb552b89817713d9cac912e00d0fde4a3105c00d29e52e10c89af/6787208f83f659ccbc2223b2fde952ffa6f7e8aca62f1a8a2bf5bc51bb1b2383/fonttools-4.63.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl/fonttools-4.63.0.dist-info/licenses/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -29393,7 +29441,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/fonttools-4.63.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
           "parentExpectedSha256": "ef3048ef05dbb552b89817713d9cac912e00d0fde4a3105c00d29e52e10c89af",
           "memberPath": "fonttools-4.63.0.dist-info/licenses/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:59.425Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -29510,7 +29559,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -29560,8 +29609,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 1349,
         "expectedSha256": "cf08b60a4ded986b58a617cb8304373bda5c4eff42fb4e30d7597b616e116e87",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/9a5db42bc5dff014806c58a20b9eae7322a134abb6fce3c92c181bfb275ec5b3/cf08b60a4ded986b58a617cb8304373bda5c4eff42fb4e30d7597b616e116e87/xlsxwriter-3.2.9-py3-none-any.whl/xlsxwriter-3.2.9.dist-info/LICENSE.txt",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -29569,7 +29618,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/xlsxwriter-3.2.9-py3-none-any.whl",
           "parentExpectedSha256": "9a5db42bc5dff014806c58a20b9eae7322a134abb6fce3c92c181bfb275ec5b3",
           "memberPath": "xlsxwriter-3.2.9.dist-info/LICENSE.txt",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:59.463Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -29686,7 +29736,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -29736,8 +29786,8 @@
         "contentType": "text/plain",
         "expectedSizeBytes": 2889,
         "expectedSha256": "ba00f51a0d92823b5a1cde27d8b5b9d2321e67ed8da9bc163eff96d5e17e577e",
-        "uploadReady": false,
-        "state": "EMBEDDED_LICENSE_EXTRACTION_REQUIRED",
+        "uploadReady": true,
+        "state": "EMBEDDED_LICENSE_MATERIALIZED",
         "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/embedded-licenses/a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427/ba00f51a0d92823b5a1cde27d8b5b9d2321e67ed8da9bc163eff96d5e17e577e/python_dateutil-2.9.0.post0-py2.py3-none-any.whl/python_dateutil-2.9.0.post0.dist-info/LICENSE",
         "extractionPlan": {
           "archiveFormat": "ZIP",
@@ -29745,7 +29795,8 @@
           "parentLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
           "parentExpectedSha256": "a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427",
           "memberPath": "python_dateutil-2.9.0.post0.dist-info/LICENSE",
-          "materialized": false
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:59.499Z"
         }
       },
       "sourceOrganization": "Python package publishers via Python Package Index",
@@ -29862,7 +29913,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -29914,18 +29965,22 @@
           "scope": "DETERMINISTIC_GIT_INDEX_LISTING"
         },
         "contentType": "application/x-git-bundle",
-        "expectedSizeBytes": null,
-        "expectedSha256": null,
-        "uploadReady": false,
-        "state": "SOURCE_ARCHIVE_REQUIRED",
+        "expectedSizeBytes": 3168288,
+        "expectedSha256": "db844a9eb9fd600f6b76ebda8974d13615f7212293f9a2d36d2e2df5999d68ad",
+        "uploadReady": true,
+        "state": "ARCHIVE_MATERIALIZED",
         "archivePlan": {
           "format": "git-bundle-v2",
           "sourceCommit": "bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
           "sourceTree": "8c9c6c3f81ea8f938642ff52d54dcafeeba42914",
           "deterministicIdentity": "ebe75d23396cbc0480d4f13118536741a4f55d8cd0c97abb2a29ce467188cc25",
           "outputFileName": "amo-tools-suite-bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b.bundle",
-          "materialized": false
-        }
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:52.550Z",
+          "archiveSizeBytes": 3168288,
+          "archiveSha256": "db844a9eb9fd600f6b76ebda8974d13615f7212293f9a2d36d2e2df5999d68ad"
+        },
+        "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/amo-tools-suite-bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b.bundle"
       },
       "s3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/raw/ornl-amo-amo-tools-suite/git-bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b/ebe75d23396cbc0480d4f13118536741a4f55d8cd0c97abb2a29ce467188cc25/amo-tools-suite-bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b.bundle",
       "acquisitionTimestamp": "2026-07-24T16:52:21.909Z",
@@ -30179,7 +30234,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -30234,18 +30289,22 @@
           "scope": "DETERMINISTIC_GIT_INDEX_LISTING"
         },
         "contentType": "application/x-git-bundle",
-        "expectedSizeBytes": null,
-        "expectedSha256": null,
-        "uploadReady": false,
-        "state": "SOURCE_ARCHIVE_REQUIRED",
+        "expectedSizeBytes": 199124800,
+        "expectedSha256": "11310fde6d69c559edfb23e7db41126468148e2cd12320bc90cbcac4783fe776",
+        "uploadReady": true,
+        "state": "ARCHIVE_MATERIALIZED",
         "archivePlan": {
           "format": "git-bundle-v2",
           "sourceCommit": "f952cabdf3e60f6e88eef80bb7bc9e7e24bac643",
           "sourceTree": "e807b62ab249fca7b59ac6ab7bb71725f504cc5f",
           "deterministicIdentity": "f44546112e043b267e5afdfe2e8927146b3ce7b028f03d4a4c2ce164ca9f4015",
           "outputFileName": "reopt-f952cabdf3e60f6e88eef80bb7bc9e7e24bac643.bundle",
-          "materialized": false
-        }
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:53.955Z",
+          "archiveSizeBytes": 199124800,
+          "archiveSha256": "11310fde6d69c559edfb23e7db41126468148e2cd12320bc90cbcac4783fe776"
+        },
+        "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/reopt-f952cabdf3e60f6e88eef80bb7bc9e7e24bac643.bundle"
       },
       "s3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/raw/natlabrockies-reopt.jl/git-f952cabdf3e60f6e88eef80bb7bc9e7e24bac643/f44546112e043b267e5afdfe2e8927146b3ce7b028f03d4a4c2ce164ca9f4015/reopt-f952cabdf3e60f6e88eef80bb7bc9e7e24bac643.bundle",
       "acquisitionTimestamp": "2026-07-24T16:52:25.051Z",
@@ -30471,7 +30530,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -30536,18 +30595,22 @@
           "scope": "DETERMINISTIC_GIT_INDEX_LISTING"
         },
         "contentType": "application/x-git-bundle",
-        "expectedSizeBytes": null,
-        "expectedSha256": null,
-        "uploadReady": false,
-        "state": "SOURCE_ARCHIVE_REQUIRED",
+        "expectedSizeBytes": 362209196,
+        "expectedSha256": "6d7cc095d046d6292b26b8c8b5630b6b16b43ec9a4de3672cdaedb4b0bfde939",
+        "uploadReady": true,
+        "state": "ARCHIVE_MATERIALIZED",
         "archivePlan": {
           "format": "git-bundle-v2",
           "sourceCommit": "72bcf419eb1cb37379f163563344b0ec61507fd3",
           "sourceTree": "569d2f41ce883cb475f8f1cb8009f5f14ba76ee6",
           "deterministicIdentity": "58254672ca61977ed3acaa42976cda49f738b2bda227dea2e997962bf2ca5c80",
           "outputFileName": "scout-72bcf419eb1cb37379f163563344b0ec61507fd3.bundle",
-          "materialized": false
-        }
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:55.784Z",
+          "archiveSizeBytes": 362209196,
+          "archiveSha256": "6d7cc095d046d6292b26b8c8b5630b6b16b43ec9a4de3672cdaedb4b0bfde939"
+        },
+        "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/scout-72bcf419eb1cb37379f163563344b0ec61507fd3.bundle"
       },
       "s3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/raw/trynthink-scout/git-72bcf419eb1cb37379f163563344b0ec61507fd3/58254672ca61977ed3acaa42976cda49f738b2bda227dea2e997962bf2ca5c80/scout-72bcf419eb1cb37379f163563344b0ec61507fd3.bundle",
       "acquisitionTimestamp": "2026-07-24T18:46:53.000Z",
@@ -30691,7 +30754,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -30745,18 +30808,22 @@
           "scope": "DETERMINISTIC_GIT_INDEX_LISTING"
         },
         "contentType": "application/x-git-bundle",
-        "expectedSizeBytes": null,
-        "expectedSha256": null,
-        "uploadReady": false,
-        "state": "SOURCE_ARCHIVE_REQUIRED",
+        "expectedSizeBytes": 185645954,
+        "expectedSha256": "1f33352f55eb41511839816eac38396335c588f3ae57cf9f5be36a8f7c803886",
+        "uploadReady": true,
+        "state": "ARCHIVE_MATERIALIZED",
         "archivePlan": {
           "format": "git-bundle-v2",
           "sourceCommit": "ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
           "sourceTree": "96139bdb4b541e7198cec6dec9793e062e2f3330",
           "deterministicIdentity": "a47684c2f96489142c8ec912aa3e968c4a2ccf1985356e0e303dbceae2fed7cf",
           "outputFileName": "ssc-ba7a7968a115baa0c250597ce2381c7ffb27fbf2.bundle",
-          "materialized": false
-        }
+          "materialized": true,
+          "materializedAt": "2026-07-25T08:13:56.874Z",
+          "archiveSizeBytes": 185645954,
+          "archiveSha256": "1f33352f55eb41511839816eac38396335c588f3ae57cf9f5be36a8f7c803886"
+        },
+        "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/ssc-ba7a7968a115baa0c250597ce2381c7ffb27fbf2.bundle"
       },
       "s3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/raw/natlabrockies-ssc/git-ba7a7968a115baa0c250597ce2381c7ffb27fbf2/a47684c2f96489142c8ec912aa3e968c4a2ccf1985356e0e303dbceae2fed7cf/ssc-ba7a7968a115baa0c250597ce2381c7ffb27fbf2.bundle",
       "acquisitionTimestamp": "2026-07-24T16:52:24.723Z",
@@ -30952,7 +31019,7 @@
           "kmsKeyId": null,
           "uploadedAt": null,
           "verifiedAt": null,
-          "verificationStatus": "ARCHIVE_NOT_MATERIALIZED",
+          "verificationStatus": "NOT_UPLOADED",
           "deletionStatus": "LOCAL_RETAINED"
         }
       },
@@ -35770,8 +35837,9 @@
       "expectedSizeBytes": 1344,
       "expectedSha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-packaging-26.2-py3-none-any.whl-5fc45236b944/b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5/packaging-26.2-py3-none-any.whl/packaging-26.2.dist-info/licenses/LICENSE.BSD",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:56.958Z"
     },
     {
       "packageId": "embedded-license:1183e9c499396c094ec09798",
@@ -35783,8 +35851,9 @@
       "expectedSizeBytes": 1093,
       "expectedSha256": "130e3a64d5fdd5d096a752694634a7d9df284469de86e5732100268041e3d686",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-urllib3-2.7.0-py3-none-any.whl-9fb4c81ebbb1/130e3a64d5fdd5d096a752694634a7d9df284469de86e5732100268041e3d686/urllib3-2.7.0-py3-none-any.whl/urllib3-2.7.0.dist-info/licenses/LICENSE.txt",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:56.998Z"
     },
     {
       "packageId": "embedded-license:1c66cc1bca481e0fd88d9c84",
@@ -35796,8 +35865,9 @@
       "expectedSizeBytes": 3511,
       "expectedSha256": "103166b62b80443afb9eb3488e052ea06be0cff566b908f199e561fde49af19f",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_a-9fad7dcb1aac/103166b62b80443afb9eb3488e052ea06be0cff566b908f199e561fde49af19f/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl/numpy/random/LICENSE.md",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:57.049Z"
     },
     {
       "packageId": "embedded-license:2e0c9c7acd599ef9b6653a3c",
@@ -35809,8 +35879,9 @@
       "expectedSizeBytes": 1091,
       "expectedSha256": "ca836a5f9ecca3b2f350230faa20a48fb8b145653b5568d784862df864706b9b",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-pytest-9.1.1-py3-none-any.whl-37a86b45efb9/ca836a5f9ecca3b2f350230faa20a48fb8b145653b5568d784862df864706b9b/pytest-9.1.1-py3-none-any.whl/pytest-9.1.1.dist-info/licenses/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:57.089Z"
     },
     {
       "packageId": "embedded-license:2e8d70fbcde3e069688fdf10",
@@ -35822,8 +35893,9 @@
       "expectedSizeBytes": 46838,
       "expectedSha256": "4daf14e37432e7026165979ecb7a39930707a3e89bef4876cfaf9dad36ed364a",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_-e19ebea31758/4daf14e37432e7026165979ecb7a39930707a3e89bef4876cfaf9dad36ed364a/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl/scipy-1.17.1.dist-info/LICENSE.txt",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:57.152Z"
     },
     {
       "packageId": "embedded-license:31e065b5f0edbbf38d5e231a",
@@ -35835,8 +35907,9 @@
       "expectedSizeBytes": 4816,
       "expectedSha256": "d75938dec098f06f0ac3c00853065d94f020be1c3c62ef1dc2975ba15b4d9b0e",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_-c52f7ad20ef4/d75938dec098f06f0ac3c00853065d94f020be1c3c62ef1dc2975ba15b4d9b0e/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl/matplotlib/mpl-data/fonts/ttf/LICENSE_DEJAVU",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:57.199Z"
     },
     {
       "packageId": "embedded-license:3356e485199f37478ec102ae",
@@ -35848,8 +35921,9 @@
       "expectedSizeBytes": 10174,
       "expectedSha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-packaging-26.2-py3-none-any.whl-5fc45236b944/0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594/packaging-26.2-py3-none-any.whl/packaging-26.2.dist-info/licenses/LICENSE.APACHE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:57.238Z"
     },
     {
       "packageId": "embedded-license:380ba2ddb73518421be4dc01",
@@ -35861,8 +35935,9 @@
       "expectedSizeBytes": 1077,
       "expectedSha256": "2a6b4d5f884d4d7a1bf04ea7df1944cf12b32e35a79a86d0a075a2d3f40fb9ac",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-backoff-2.2.1-py3-none-any.whl-63579f9a0628/2a6b4d5f884d4d7a1bf04ea7df1944cf12b32e35a79a86d0a075a2d3f40fb9ac/backoff-2.2.1-py3-none-any.whl/backoff-2.2.1.dist-info/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:57.274Z"
     },
     {
       "packageId": "embedded-license:38ca0564d7dbc80b06717b4c",
@@ -35874,8 +35949,9 @@
       "expectedSizeBytes": 3572,
       "expectedSha256": "ed9bf58c6d74d3fad9d92d1d67d9bff8141d8ab60de784516b0711364fd43357",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_-e19ebea31758/ed9bf58c6d74d3fad9d92d1d67d9bff8141d8ab60de784516b0711364fd43357/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl/scipy/integrate/LICENSE_DOP",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:57.329Z"
     },
     {
       "packageId": "embedded-license:3d405790a145ee4878bb5a31",
@@ -35887,8 +35963,9 @@
       "expectedSizeBytes": 10847,
       "expectedSha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_-26a473dbb416/a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl/orjson-3.11.9.dist-info/licenses/LICENSE-APACHE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:57.366Z"
     },
     {
       "packageId": "embedded-license:4148e8d92b69cce5a7c04509",
@@ -35900,8 +35977,9 @@
       "expectedSizeBytes": 1497,
       "expectedSha256": "f1218143d766da3fea66f13396b7f15df46a83303f29bf96ba6e98eb4d42f408",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-cycler-0.12.1-py3-none-any.whl-85cef7cff222/f1218143d766da3fea66f13396b7f15df46a83303f29bf96ba6e98eb4d42f408/cycler-0.12.1-py3-none-any.whl/cycler-0.12.1.dist-info/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:57.404Z"
     },
     {
       "packageId": "embedded-license:447b3549763d7ef4db63f49e",
@@ -35913,8 +35991,9 @@
       "expectedSizeBytes": 63442,
       "expectedSha256": "822e8e528147569a41975592aee19c11992ab667ba50451cd929031d5fc74491",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_-c52f7ad20ef4/822e8e528147569a41975592aee19c11992ab667ba50451cd929031d5fc74491/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl/matplotlib-3.11.1.dist-info/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:57.447Z"
     },
     {
       "packageId": "embedded-license:4ba240c1b536599bd665b700",
@@ -35926,8 +36005,9 @@
       "expectedSizeBytes": 1057,
       "expectedSha256": "314e4e91be3baa93c0fb4bccc9e4e97cd643eb839b065af921782c2175fe9909",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_aarch64.manylinux20-55927d532399/314e4e91be3baa93c0fb4bccc9e4e97cd643eb839b065af921782c2175fe9909/rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl/rpds_py-2026.6.3.dist-info/licenses/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:57.485Z"
     },
     {
       "packageId": "embedded-license:4c49339be53b1cf04df190ce",
@@ -35939,8 +36019,9 @@
       "expectedSizeBytes": 1543,
       "expectedSha256": "a2755eb34bddfc97dc39cbeebe352744d989c1e0f7fab7baacb9fc9a9ee3e1b4",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-numpy_financial-1.0.0-py3-none-any.whl-bae534b35751/a2755eb34bddfc97dc39cbeebe352744d989c1e0f7fab7baacb9fc9a9ee3e1b4/numpy_financial-1.0.0-py3-none-any.whl/numpy_financial-1.0.0.dist-info/LICENSE.txt",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:57.523Z"
     },
     {
       "packageId": "embedded-license:4d0f779728ff3517570b232e",
@@ -35952,8 +36033,9 @@
       "expectedSizeBytes": 1720,
       "expectedSha256": "106d55c931fd6a84822e5345d900273d059f1c27310d02567ccb313c5d18c55d",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_-e19ebea31758/106d55c931fd6a84822e5345d900273d059f1c27310d02567ccb313c5d18c55d/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl/scipy/spatial/qhull_src/COPYING_QHULL.txt",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:57.586Z"
     },
     {
       "packageId": "embedded-license:4d6c181e511b0648244356f8",
@@ -35965,8 +36047,9 @@
       "expectedSizeBytes": 38,
       "expectedSha256": "f5110972dedad2b4e9d314518daf3b7d72d6e02e499acd802181de6f74571dcc",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-requests-2.34.2-py3-none-any.whl-2a0d60c172f8/f5110972dedad2b4e9d314518daf3b7d72d6e02e499acd802181de6f74571dcc/requests-2.34.2-py3-none-any.whl/requests-2.34.2.dist-info/licenses/NOTICE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:57.626Z"
     },
     {
       "packageId": "embedded-license:68f9b9130a851206d06c2741",
@@ -35978,8 +36061,9 @@
       "expectedSizeBytes": 10142,
       "expectedSha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-requests-2.34.2-py3-none-any.whl-2a0d60c172f8/09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b/requests-2.34.2-py3-none-any.whl/requests-2.34.2.dist-info/licenses/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:57.667Z"
     },
     {
       "packageId": "embedded-license:702e3588f8797dfcf01105c9",
@@ -35991,8 +36075,9 @@
       "expectedSizeBytes": 13936,
       "expectedSha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-typing_extensions-4.16.0-py3-none-any.whl-481caa481374/3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf/typing_extensions-4.16.0-py3-none-any.whl/typing_extensions-4.16.0.dist-info/licenses/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:57.707Z"
     },
     {
       "packageId": "embedded-license:7845de5d7e5e37cba2829e9a",
@@ -36004,8 +36089,9 @@
       "expectedSizeBytes": 1514,
       "expectedSha256": "c80c39b5fce06ba4897e14e0b0a88b54458334d951eb1361402ffad2cfb863b4",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_-e19ebea31758/c80c39b5fce06ba4897e14e0b0a88b54458334d951eb1361402ffad2cfb863b4/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl/scipy/_lib/_uarray/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:57.764Z"
     },
     {
       "packageId": "embedded-license:7893a8344827ed63dc85f2e4",
@@ -36017,8 +36103,9 @@
       "expectedSizeBytes": 20022,
       "expectedSha256": "94a83aaee0729a0f302d34acc4acecbd9d58366f262429075fe557e4a54b2e69",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-fonttools-4.63.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_-ef3048ef05db/94a83aaee0729a0f302d34acc4acecbd9d58366f262429075fe557e4a54b2e69/fonttools-4.63.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl/fonttools-4.63.0.dist-info/licenses/LICENSE.external",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:57.805Z"
     },
     {
       "packageId": "embedded-license:79c1f6b5b1bd77635e293b0a",
@@ -36030,8 +36117,9 @@
       "expectedSizeBytes": 52127,
       "expectedSha256": "5c1052e921e62d36ccda50a61585e9c0444b80c62f39b57c4f3f0d5fb62f5071",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-pandas-3.0.5-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_-73fa87b08a7e/5c1052e921e62d36ccda50a61585e9c0444b80c62f39b57c4f3f0d5fb62f5071/pandas-3.0.5-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl/pandas-3.0.5.dist-info/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:57.852Z"
     },
     {
       "packageId": "embedded-license:83018aeb321a15f2a5205b44",
@@ -36043,8 +36131,9 @@
       "expectedSizeBytes": 1023,
       "expectedSha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_-26a473dbb416/23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl/orjson-3.11.9.dist-info/licenses/LICENSE-MIT",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:57.888Z"
     },
     {
       "packageId": "embedded-license:83eba9f431457ab23cc240ca",
@@ -36056,8 +36145,9 @@
       "expectedSizeBytes": 1071,
       "expectedSha256": "6d0d41bfe170ac6c7dc248c9a63e254d0fb45a60d50a8257d0af92c6e249b887",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-charset_normalizer-3.4.9-cp312-cp312-manylinux2014_aarch64.many-9b2aff1c7b38/6d0d41bfe170ac6c7dc248c9a63e254d0fb45a60d50a8257d0af92c6e249b887/charset_normalizer-3.4.9-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl/charset_normalizer-3.4.9.dist-info/licenses/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:57.925Z"
     },
     {
       "packageId": "embedded-license:8437e6bf08667baa3774cf21",
@@ -36069,8 +36159,9 @@
       "expectedSizeBytes": 197,
       "expectedSha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-packaging-26.2-py3-none-any.whl-5fc45236b944/cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48/packaging-26.2-py3-none-any.whl/packaging-26.2.dist-info/licenses/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:57.961Z"
     },
     {
       "packageId": "embedded-license:89590055123f50aa50b33964",
@@ -36082,8 +36173,9 @@
       "expectedSizeBytes": 1534,
       "expectedSha256": "34170979fc64f4f5e6dfa66ef27dec314ffffc5852000c60f4836ec1dfbf156e",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-contourpy-1.3.3-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_-92d9abc807cf/34170979fc64f4f5e6dfa66ef27dec314ffffc5852000c60f4836ec1dfbf156e/contourpy-1.3.3-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl/contourpy-1.3.3.dist-info/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:57.998Z"
     },
     {
       "packageId": "embedded-license:8cd32fa8d88e27a543ad7c4e",
@@ -36095,8 +36187,9 @@
       "expectedSizeBytes": 1057,
       "expectedSha256": "4f92a015a13c4d1a040bef018aa13430b4f1bc73b41b16bb846c346766de7439",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-jsonschema-4.26.0-py3-none-any.whl-d489f15263b8/4f92a015a13c4d1a040bef018aa13430b4f1bc73b41b16bb846c346766de7439/jsonschema-4.26.0-py3-none-any.whl/jsonschema-4.26.0.dist-info/licenses/COPYING",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:58.037Z"
     },
     {
       "packageId": "embedded-license:92ac39c54bfad17435cdf7b5",
@@ -36108,8 +36201,9 @@
       "expectedSizeBytes": 1541,
       "expectedSha256": "1a9a4f0e3d479a27240ddd59a9137a66ab4a0f9dfdc8ca6188cc0bfd85187f04",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-idna-3.18-py3-none-any.whl-7f952cbe720b/1a9a4f0e3d479a27240ddd59a9137a66ab4a0f9dfdc8ca6188cc0bfd85187f04/idna-3.18-py3-none-any.whl/idna-3.18.dist-info/licenses/LICENSE.md",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:58.075Z"
     },
     {
       "packageId": "embedded-license:93fb8b72372a2895107f4e42",
@@ -36121,8 +36215,9 @@
       "expectedSizeBytes": 1057,
       "expectedSha256": "42dcd63495f87b4eb7c7757afa379bb55a53f94afd7a5f657d9adf57236e515c",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-referencing-0.37.0-py3-none-any.whl-381329a9f996/42dcd63495f87b4eb7c7757afa379bb55a53f94afd7a5f657d9adf57236e515c/referencing-0.37.0-py3-none-any.whl/referencing-0.37.0.dist-info/licenses/COPYING",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:58.113Z"
     },
     {
       "packageId": "embedded-license:97dd86bf80bc385c103d1e32",
@@ -36134,8 +36229,9 @@
       "expectedSizeBytes": 1057,
       "expectedSha256": "42dcd63495f87b4eb7c7757afa379bb55a53f94afd7a5f657d9adf57236e515c",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-jsonschema_specifications-2025.9.1-py3-none-any.whl-98802fee3a11/42dcd63495f87b4eb7c7757afa379bb55a53f94afd7a5f657d9adf57236e515c/jsonschema_specifications-2025.9.1-py3-none-any.whl/jsonschema_specifications-2025.9.1.dist-info/licenses/COPYING",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:58.151Z"
     },
     {
       "packageId": "embedded-license:9d2e2f12b2febd13396df270",
@@ -36147,8 +36243,9 @@
       "expectedSizeBytes": 11358,
       "expectedSha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
       "plannedKey": "licenses/google-or-tools/9.14.6206-2f731a156cd9/cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30/or-tools_aarch64_AlmaLinux-8.10_cpp_v9.14.6206.tar.gz/or-tools_aarch64_almalinux-8.10_cpp_v9.14.6206/share/doc/ortools/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:58.657Z"
     },
     {
       "packageId": "embedded-license:a1005ffec85654a832870315",
@@ -36160,8 +36257,9 @@
       "expectedSizeBytes": 5476,
       "expectedSha256": "bab3d31dfef07f483624f2f65f2711e76065b8e7273278b1c071ede1041c9959",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_-c52f7ad20ef4/bab3d31dfef07f483624f2f65f2711e76065b8e7273278b1c071ede1041c9959/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl/matplotlib/mpl-data/fonts/ttf/LICENSE_STIX",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:58.700Z"
     },
     {
       "packageId": "embedded-license:a390c73d7476bba1027831dd",
@@ -36173,8 +36271,9 @@
       "expectedSizeBytes": 1110,
       "expectedSha256": "d6b65e6c213a5d0b577911d34d6e5949b9f59d76c238c5071a2f3fc16cfb2606",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-pluggy-1.6.0-py3-none-any.whl-e920276dd681/d6b65e6c213a5d0b577911d34d6e5949b9f59d76c238c5071a2f3fc16cfb2606/pluggy-1.6.0-py3-none-any.whl/pluggy-1.6.0.dist-info/licenses/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:58.736Z"
     },
     {
       "packageId": "embedded-license:abe3399e75f6c754ad53be87",
@@ -36186,8 +36285,9 @@
       "expectedSizeBytes": 1101,
       "expectedSha256": "8d3928f9dc4490fd635707cb88eb26bd764102a7282954307d3e5167a577e8a4",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-pyyaml-6.0.3-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_a-9149cad25158/8d3928f9dc4490fd635707cb88eb26bd764102a7282954307d3e5167a577e8a4/pyyaml-6.0.3-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl/pyyaml-6.0.3.dist-info/licenses/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:58.775Z"
     },
     {
       "packageId": "embedded-license:ae49f56a9098d53b527e44c8",
@@ -36199,8 +36299,9 @@
       "expectedSizeBytes": 10873,
       "expectedSha256": "0db603a5f4499f690c4425477ff664c166da325d3acc3b5a8d4de3db072443d0",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-pygments-2.20.0-py3-none-any.whl-81a9e26dd42f/0db603a5f4499f690c4425477ff664c166da325d3acc3b5a8d4de3db072443d0/pygments-2.20.0-py3-none-any.whl/pygments-2.20.0.dist-info/licenses/AUTHORS",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:58.814Z"
     },
     {
       "packageId": "embedded-license:b1b5a6584f0474e58007da3c",
@@ -36212,8 +36313,9 @@
       "expectedSizeBytes": 1498,
       "expectedSha256": "c254b2b5fd30ae3c89d36ba061730563b9760fca04f1b746a1b2c3157da2c789",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_-e19ebea31758/c254b2b5fd30ae3c89d36ba061730563b9760fca04f1b746a1b2c3157da2c789/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl/scipy/fft/_pocketfft/LICENSE.md",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:58.871Z"
     },
     {
       "packageId": "embedded-license:b2b691f583e05f0ac072515a",
@@ -36225,8 +36327,9 @@
       "expectedSizeBytes": 1331,
       "expectedSha256": "a9d66f1d526df02e29dce73436d34e56e8632f46c275bbdffc70569e882f9f17",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-pygments-2.20.0-py3-none-any.whl-81a9e26dd42f/a9d66f1d526df02e29dce73436d34e56e8632f46c275bbdffc70569e882f9f17/pygments-2.20.0-py3-none-any.whl/pygments-2.20.0.dist-info/licenses/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:58.911Z"
     },
     {
       "packageId": "embedded-license:b4802d24577ff15b546b4369",
@@ -36238,8 +36341,9 @@
       "expectedSizeBytes": 3289,
       "expectedSha256": "529c40e5f67f2f88904657a9f7879ae2f8dc76bc9bfef9cb10d988b48804ed61",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-kiwisolver-1.5.0-cp312-cp312-manylinux_2_24_aarch64.manylinux_2-b2af221f268f/529c40e5f67f2f88904657a9f7879ae2f8dc76bc9bfef9cb10d988b48804ed61/kiwisolver-1.5.0-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl/kiwisolver-1.5.0.dist-info/licenses/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:58.949Z"
     },
     {
       "packageId": "embedded-license:b4c9b545cf4cc6a6b5359569",
@@ -36251,8 +36355,9 @@
       "expectedSizeBytes": 989,
       "expectedSha256": "e93716da6b9c0d5a4a1df60fe695b370f0695603d21f6f83f053e42cfc10caf7",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-certifi-2026.7.22-py3-none-any.whl-62f22742b58a/e93716da6b9c0d5a4a1df60fe695b370f0695603d21f6f83f053e42cfc10caf7/certifi-2026.7.22-py3-none-any.whl/certifi-2026.7.22.dist-info/licenses/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:58.985Z"
     },
     {
       "packageId": "embedded-license:c9840fc954a9df93a5402b1e",
@@ -36264,8 +36369,9 @@
       "expectedSizeBytes": 1109,
       "expectedSha256": "882115c95dfc2af1eeb6714f8ec6d5cbcabf667caff8729f42420da63f714e9f",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-attrs-26.1.0-py3-none-any.whl-c647aa4a12df/882115c95dfc2af1eeb6714f8ec6d5cbcabf667caff8729f42420da63f714e9f/attrs-26.1.0-py3-none-any.whl/attrs-26.1.0.dist-info/licenses/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:59.022Z"
     },
     {
       "packageId": "embedded-license:ce7d1b8d85990a590f3297cc",
@@ -36277,8 +36383,9 @@
       "expectedSizeBytes": 1062,
       "expectedSha256": "a5425f9dc14ac74d4c5f0b679e941f2442e32cca7452a4418d5b1a49893ebe4e",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-pyparsing-3.3.2-py3-none-any.whl-850ba148bd90/a5425f9dc14ac74d4c5f0b679e941f2442e32cca7452a4418d5b1a49893ebe4e/pyparsing-3.3.2-py3-none-any.whl/pyparsing-3.3.2.dist-info/licenses/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:59.059Z"
     },
     {
       "packageId": "embedded-license:d320e07f35316bcfb3f30d3c",
@@ -36290,8 +36397,9 @@
       "expectedSizeBytes": 1556,
       "expectedSha256": "80619b7049f08c81683ad0e01f08f257a840652dd71ee83146d36658c7d2c2b9",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-python_dotenv-1.2.2-py3-none-any.whl-1d8214789a24/80619b7049f08c81683ad0e01f08f257a840652dd71ee83146d36658c7d2c2b9/python_dotenv-1.2.2-py3-none-any.whl/python_dotenv-1.2.2.dist-info/licenses/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:59.094Z"
     },
     {
       "packageId": "embedded-license:d9fc6d6244337061e0e5256f",
@@ -36303,8 +36411,9 @@
       "expectedSizeBytes": 1066,
       "expectedSha256": "4375ba20e2b9c6c4e7cad2940a628fd90e95cc3d50ee92aae755715d8ba1fbd0",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-six-1.17.0-py2.py3-none-any.whl-4721f391ed90/4375ba20e2b9c6c4e7cad2940a628fd90e95cc3d50ee92aae755715d8ba1fbd0/six-1.17.0-py2.py3-none-any.whl/six-1.17.0.dist-info/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:59.130Z"
     },
     {
       "packageId": "embedded-license:e111b7ab850e39b083cbe4fb",
@@ -36316,8 +36425,9 @@
       "expectedSizeBytes": 70307,
       "expectedSha256": "dda12a98c1979cf3d94df1cff45d27a4cb3f04a60c76f76902ac54cac03ec0ce",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-pillow-12.3.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28-d9c7f76c0673/dda12a98c1979cf3d94df1cff45d27a4cb3f04a60c76f76902ac54cac03ec0ce/pillow-12.3.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl/pillow-12.3.0.dist-info/licenses/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:59.172Z"
     },
     {
       "packageId": "embedded-license:eaa31775e436558795b892a2",
@@ -36329,8 +36439,9 @@
       "expectedSizeBytes": 48680,
       "expectedSha256": "b01a781fe2f8b83292cf6ebca087576437fbe514218a0062f841e458bdafe4ba",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_a-9fad7dcb1aac/b01a781fe2f8b83292cf6ebca087576437fbe514218a0062f841e458bdafe4ba/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl/numpy-1.26.4.dist-info/LICENSE.txt",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:59.219Z"
     },
     {
       "packageId": "embedded-license:ed924599d84d07902707582d",
@@ -36342,8 +36453,9 @@
       "expectedSizeBytes": 1593,
       "expectedSha256": "05f3b88351988ecfad10abe92c0c50e5875c6452d5009a0084cc291551ffcca6",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_a-9fad7dcb1aac/05f3b88351988ecfad10abe92c0c50e5875c6452d5009a0084cc291551ffcca6/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl/numpy/ma/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:59.264Z"
     },
     {
       "packageId": "embedded-license:fa06a9a7d6eee5db343be3dc",
@@ -36355,8 +36467,9 @@
       "expectedSizeBytes": 16727,
       "expectedSha256": "66a3107d5ad6a058aab753eaac2047ccb2ed0e39465dd0fe5844da3e300d5172",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_-26a473dbb416/66a3107d5ad6a058aab753eaac2047ccb2ed0e39465dd0fe5844da3e300d5172/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl/orjson-3.11.9.dist-info/licenses/LICENSE-MPL-2.0",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:59.302Z"
     },
     {
       "packageId": "embedded-license:fac6c649e6305e4e723a8f20",
@@ -36368,8 +36481,9 @@
       "expectedSizeBytes": 1018,
       "expectedSha256": "fbc539f47d0cf83bc61378080fb873d5c14630126cacbfe754035c3926daa5ec",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_a-9fad7dcb1aac/fbc539f47d0cf83bc61378080fb873d5c14630126cacbfe754035c3926daa5ec/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl/numpy/core/include/numpy/random/LICENSE.txt",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:59.349Z"
     },
     {
       "packageId": "embedded-license:fb127a1c8c45e79296f20072",
@@ -36381,8 +36495,9 @@
       "expectedSizeBytes": 1098,
       "expectedSha256": "3409fa91f7ace557894632676656e32264fe5ef7581535725dc9a23774551bd4",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-iniconfig-2.3.0-py3-none-any.whl-f631c04d2c48/3409fa91f7ace557894632676656e32264fe5ef7581535725dc9a23774551bd4/iniconfig-2.3.0-py3-none-any.whl/iniconfig-2.3.0.dist-info/licenses/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:59.386Z"
     },
     {
       "packageId": "embedded-license:fc0a5197be6559efc49d3389",
@@ -36394,8 +36509,9 @@
       "expectedSizeBytes": 1072,
       "expectedSha256": "6787208f83f659ccbc2223b2fde952ffa6f7e8aca62f1a8a2bf5bc51bb1b2383",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-fonttools-4.63.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_-ef3048ef05db/6787208f83f659ccbc2223b2fde952ffa6f7e8aca62f1a8a2bf5bc51bb1b2383/fonttools-4.63.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl/fonttools-4.63.0.dist-info/licenses/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:59.425Z"
     },
     {
       "packageId": "embedded-license:fdf8c1c646cb17f629ff943a",
@@ -36407,8 +36523,9 @@
       "expectedSizeBytes": 1349,
       "expectedSha256": "cf08b60a4ded986b58a617cb8304373bda5c4eff42fb4e30d7597b616e116e87",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-xlsxwriter-3.2.9-py3-none-any.whl-9a5db42bc5df/cf08b60a4ded986b58a617cb8304373bda5c4eff42fb4e30d7597b616e116e87/xlsxwriter-3.2.9-py3-none-any.whl/xlsxwriter-3.2.9.dist-info/LICENSE.txt",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:59.463Z"
     },
     {
       "packageId": "embedded-license:ff9d379ad5062f2da6873b24",
@@ -36420,8 +36537,9 @@
       "expectedSizeBytes": 2889,
       "expectedSha256": "ba00f51a0d92823b5a1cde27d8b5b9d2321e67ed8da9bc163eff96d5e17e577e",
       "plannedKey": "licenses/pypi.org/scout-72bcf419-locked-python-3.12-linux-arm64-wheelhouse-python_dateutil-2.9.0.post0-py2.py3-none-any.whl-a8b2bc7bffae/ba00f51a0d92823b5a1cde27d8b5b9d2321e67ed8da9bc163eff96d5e17e577e/python_dateutil-2.9.0.post0-py2.py3-none-any.whl/python_dateutil-2.9.0.post0.dist-info/LICENSE",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "materializedAt": "2026-07-25T08:13:59.499Z"
     }
   ],
   "proofCriticalFiles": [
@@ -38150,9 +38268,12 @@
       "sourceOrganization": "Oak Ridge National Laboratory; ORNL-AMO",
       "s3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/raw/ornl-amo-amo-tools-suite/git-bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b/ebe75d23396cbc0480d4f13118536741a4f55d8cd0c97abb2a29ce467188cc25/amo-tools-suite-bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b.bundle",
       "acquisitionTimestamp": "2026-07-24T16:52:21.909Z",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false,
-      "blocker": "Create the deterministic source archive, record its SHA-256 and exact size in this manifest, then review license and upload readiness before execution."
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "blocker": null,
+      "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/amo-tools-suite-bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b.bundle",
+      "sizeBytes": 3168288,
+      "sha256": "db844a9eb9fd600f6b76ebda8974d13615f7212293f9a2d36d2e2df5999d68ad"
     },
     {
       "packageId": "git-repository:reopt",
@@ -38165,9 +38286,12 @@
       "sourceOrganization": "National Laboratory of the Rockies",
       "s3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/raw/natlabrockies-reopt.jl/git-f952cabdf3e60f6e88eef80bb7bc9e7e24bac643/f44546112e043b267e5afdfe2e8927146b3ce7b028f03d4a4c2ce164ca9f4015/reopt-f952cabdf3e60f6e88eef80bb7bc9e7e24bac643.bundle",
       "acquisitionTimestamp": "2026-07-24T16:52:25.051Z",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false,
-      "blocker": "Create the deterministic source archive, record its SHA-256 and exact size in this manifest, then review license and upload readiness before execution."
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "blocker": null,
+      "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/reopt-f952cabdf3e60f6e88eef80bb7bc9e7e24bac643.bundle",
+      "sizeBytes": 199124800,
+      "sha256": "11310fde6d69c559edfb23e7db41126468148e2cd12320bc90cbcac4783fe776"
     },
     {
       "packageId": "git-repository:scout",
@@ -38180,9 +38304,12 @@
       "sourceOrganization": "U.S. Department of Energy Building Technologies Office",
       "s3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/raw/trynthink-scout/git-72bcf419eb1cb37379f163563344b0ec61507fd3/58254672ca61977ed3acaa42976cda49f738b2bda227dea2e997962bf2ca5c80/scout-72bcf419eb1cb37379f163563344b0ec61507fd3.bundle",
       "acquisitionTimestamp": "2026-07-24T18:46:53.000Z",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false,
-      "blocker": "Create the deterministic source archive, record its SHA-256 and exact size in this manifest, then review license and upload readiness before execution."
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "blocker": null,
+      "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/scout-72bcf419eb1cb37379f163563344b0ec61507fd3.bundle",
+      "sizeBytes": 362209196,
+      "sha256": "6d7cc095d046d6292b26b8c8b5630b6b16b43ec9a4de3672cdaedb4b0bfde939"
     },
     {
       "packageId": "git-repository:ssc",
@@ -38195,9 +38322,12 @@
       "sourceOrganization": "National Laboratory of the Rockies",
       "s3Uri": "s3://retrofi-operational-savings-research-945129430686-us-east-1/raw/natlabrockies-ssc/git-ba7a7968a115baa0c250597ce2381c7ffb27fbf2/a47684c2f96489142c8ec912aa3e968c4a2ccf1985356e0e303dbceae2fed7cf/ssc-ba7a7968a115baa0c250597ce2381c7ffb27fbf2.bundle",
       "acquisitionTimestamp": "2026-07-24T16:52:24.723Z",
-      "status": "NOT_MATERIALIZED",
-      "uploadReady": false,
-      "blocker": "Create the deterministic source archive, record its SHA-256 and exact size in this manifest, then review license and upload readiness before execution."
+      "status": "MATERIALIZED_NOT_UPLOADED",
+      "uploadReady": true,
+      "blocker": null,
+      "localFilePath": "scripts/research/operational-savings/.cache/migration-staging/ssc-ba7a7968a115baa0c250597ce2381c7ffb27fbf2.bundle",
+      "sizeBytes": 185645954,
+      "sha256": "1f33352f55eb41511839816eac38396335c588f3ae57cf9f5be36a8f7c803886"
     }
   ],
   "normalizedDatabaseAndOutputFixtures": [
@@ -41087,5 +41217,5 @@
     "packageCount": 210,
     "contentSha256": "826c63b309ff326c6dc730be2f6bbfbdd5a0ad07527f9de382f5c70010e31d0a"
   },
-  "manifestContentSha256": "1bcf11dd21bbf11af8212789334d9e1278a1f2229ba026da0e234b2a3c3f4eea"
+  "manifestContentSha256": "0d10237702579e862485b019b4173dc0c2da189038ccbbce82820ca5c0d81987"
 }
