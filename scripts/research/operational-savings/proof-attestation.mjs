@@ -90,7 +90,7 @@ function toolPath(toolchainIdentity, toolId) {
       `PROOF_EXECUTION_TOOL_MISSING: ${toolId} is absent from the bound toolchain`
     );
   }
-  return tool.resolvedPath;
+  return tool.requestedPath ?? tool.resolvedPath;
 }
 
 export function sanitizedProofExecutionEnvironment({

@@ -895,6 +895,14 @@ test("fails closed when original and private cache identities differ", {
   const originalCache = cacheIdentity("original\n");
   const snapshotCache = cacheIdentity("snapshot\n");
   expect(
+    toolchain.tools.find(
+      (tool) => tool.toolId === "measur-cxx"
+    )
+  ).toMatchObject({
+    requestedPath: "/usr/bin/clang++",
+    resolvedPath: "/usr/bin/clang++"
+  });
+  expect(
     toolchain.bindingScope.unboundInputs
   ).toEqual(
     expect.arrayContaining([

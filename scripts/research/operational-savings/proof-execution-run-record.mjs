@@ -1159,10 +1159,7 @@ async function buildFreshProofExecutionToolchainIdentity(
     root,
     "node_modules/vitest/vitest.mjs"
   );
-  const [clangPath, pythonPath] = await Promise.all([
-    xcrunToolPath("clang++"),
-    xcrunToolPath("python3")
-  ]);
+  const pythonPath = await xcrunToolPath("python3");
   const toolDefinitions = [
     {
       toolId: "node-runtime",
@@ -1175,7 +1172,7 @@ async function buildFreshProofExecutionToolchainIdentity(
     ...ABSOLUTE_EXECUTION_TOOLS,
     {
       toolId: "measur-cxx",
-      path: clangPath
+      path: "/usr/bin/clang++"
     },
     {
       toolId: "ssc-python",
