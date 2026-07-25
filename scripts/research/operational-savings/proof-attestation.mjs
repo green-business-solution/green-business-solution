@@ -47,6 +47,8 @@ export const DEFAULT_REPOSITORY_ROOT = fileURLToPath(
 export const REAL_PROOF_TEST_ROOT =
   "scripts/research/operational-savings/tests";
 export const TRACKED_VITEST_CONFIG = "vite.config.ts";
+export const ATTESTED_PROOF_RUN_TEMP_PREFIX =
+  "vitest-proof-attested-run-";
 
 const DEFAULT_VITEST_PATH = fileURLToPath(
   new URL("../../../node_modules/vitest/vitest.mjs", import.meta.url)
@@ -862,7 +864,7 @@ export async function runProofExecutionAttestation({
     resolve(root, ADAPTERS_ROOT)
   );
   const runDirectory = await mkdtemp(
-    join(tmpdir(), "retrofi-proof-attested-run-")
+    join(tmpdir(), ATTESTED_PROOF_RUN_TEMP_PREFIX)
   );
   let snapshotRoot = null;
   let snapshotAttempted = false;

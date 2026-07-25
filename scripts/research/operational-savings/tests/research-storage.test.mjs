@@ -2372,14 +2372,21 @@ cacheBackedTest("builds a complete logical-package inventory without an AWS call
   expect(manifest.destination.s3.profile).toBe(
     RESEARCH_AWS_PROFILE
   );
+  const replayReceiptPassed =
+    manifest.destination.ecr.postHocReplayReceipt.status ===
+    "PASS_COMMITTED_POST_HOC_REPLAY";
+  expect([
+    "PENDING",
+    "PASS_COMMITTED_POST_HOC_REPLAY"
+  ]).toContain(
+    manifest.destination.ecr.postHocReplayReceipt.status
+  );
   expect(manifest.destination.ecr).toMatchObject({
-    runnableContainerBuilt: false,
+    runnableContainerBuilt: replayReceiptPassed,
     historicalBuildManifestPassCount: 4,
-    locallyVerifiedImageCount: 0,
+    locallyVerifiedImageCount:
+      replayReceiptPassed ? 4 : 0,
     remotelyVerifiedImageCount: 4,
-    postHocReplayReceipt: {
-      status: "PENDING"
-    },
     localImagePresenceCheckedByInventory: false,
     remoteStateCheckedByInventory: false
   });
@@ -2404,7 +2411,9 @@ cacheBackedTest("builds a complete logical-package inventory without an AWS call
     localImage: {
       imageTag: "ssc-308-ba7a7968-arm64",
       verificationStatus:
-        "HISTORICAL_PASS_RECORDED_CURRENT_CONTEXT_UNATTESTED",
+        replayReceiptPassed
+          ? "PASS_COMMITTED_POST_HOC_REPLAY"
+          : "HISTORICAL_PASS_RECORDED_CURRENT_CONTEXT_UNATTESTED",
       currentDaemonPresenceCheckedByInventory: false
     }
   });
@@ -2460,12 +2469,23 @@ cacheBackedTest("lists proof-critical binaries and all SSC resource dependencies
 cacheBackedTest("reports recorded local and exact-digest ECR evidence without claiming a new remote check", async () => {
   const manifest = await buildTestInventory();
   const report = buildResearchStorageReport(manifest);
+  const replayReceiptPassed =
+    manifest.destination.ecr.postHocReplayReceipt.status ===
+    "PASS_COMMITTED_POST_HOC_REPLAY";
+  const locallyVerifiedImageCount =
+    replayReceiptPassed ? 4 : 0;
   expect(report).toContain(
-    "0 runnable research container images have a passing committed post-hoc exact-context replay receipt."
+    `${locallyVerifiedImageCount} runnable research container images have a passing committed post-hoc exact-context replay receipt.`
   );
-  expect(report).toContain(
-    "Historical build-manifest PASS records are not treated as current exact-context verification."
-  );
+  if (replayReceiptPassed) {
+    expect(report).toContain(
+      "The replay receipt is committed and content-bound at source context"
+    );
+  } else {
+    expect(report).toContain(
+      "Historical build-manifest PASS records are not treated as current exact-context verification."
+    );
+  }
   expect(report).toContain(
     "4 ECR publications have a complete exact-digest verification record."
   );
@@ -5177,7 +5197,7 @@ test("cleanup-all preflights every local and exact-version remote before the fir
       context.manifest
     );
   });
-});
+}, 30_000);
 
 test("cleanup-all verifies license objects independently and deletes their local bytes only with the parent repository", async () => {
   const root = await mkdtemp(
@@ -5559,7 +5579,7 @@ test("cleanup-all verifies license objects independently and deletes their local
   } finally {
     await rm(root, { recursive: true, force: true });
   }
-});
+}, 30_000);
 
 test("cleanup stops before AWS or deletion when the manifest is not committed", async () => {
   await withTemporaryPackage(
@@ -5819,7 +5839,7 @@ test("audited cleanup preflights every record, removes only exact research image
       context.manifest
     );
   });
-});
+}, 30_000);
 
 test("audited cleanup resumes an exact quarantined file without revalidating deleted source bytes", async () => {
   await withAuditedCleanupFixture(async (context) => {

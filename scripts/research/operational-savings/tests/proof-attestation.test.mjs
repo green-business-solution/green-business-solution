@@ -16,6 +16,7 @@ import { promisify } from "node:util";
 import { expect, test } from "vitest";
 
 import {
+  ATTESTED_PROOF_RUN_TEMP_PREFIX,
   GIT_PATH,
   REAL_PROOF_TEST_ROOT,
   TRACKED_VITEST_CONFIG,
@@ -38,6 +39,10 @@ import {
   repoRelativePath,
   regularFilesBelow
 } from "../proof-execution-run-record.mjs";
+import {
+  OPERATIONAL_SAVINGS_TEMP_ENTRY_EXCLUSIONS,
+  OPERATIONAL_SAVINGS_TEMP_ENTRY_PREFIXES
+} from "../storage/local-audit-freshness.mjs";
 import {
   NETWORK_ENFORCEMENT,
   networkSandboxRequired
@@ -229,6 +234,21 @@ test("forces the tracked Vitest config for the complete real suite", () => {
     arguments_.slice(-2)
   ).toEqual(["--config", TRACKED_VITEST_CONFIG]);
   expect(arguments_).not.toContain("vite.config.js");
+});
+
+test("keeps the active proof harness outside storage-artifact audit prefixes", () => {
+  expect(
+    OPERATIONAL_SAVINGS_TEMP_ENTRY_PREFIXES.some(
+      (prefix) =>
+        ATTESTED_PROOF_RUN_TEMP_PREFIX.startsWith(prefix)
+    )
+  ).toBe(false);
+  expect(
+    OPERATIONAL_SAVINGS_TEMP_ENTRY_EXCLUSIONS.some(
+      (prefix) =>
+        ATTESTED_PROOF_RUN_TEMP_PREFIX.startsWith(prefix)
+    )
+  ).toBe(false);
 });
 
 test("normalizes canonical report paths beneath a symlinked repository ancestor", async () => {
