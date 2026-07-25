@@ -126,6 +126,14 @@ const AUDITED_COMPLETED_STATUSES = new Set([
 ]);
 const LOCAL_CLEANUP_JOURNAL_SCHEMA_VERSION =
   "operational-savings/local-cleanup-journal-v1";
+const PENDING_CLEANUP_RECOVERY_ALLOWED_COMMITTED_PATHS =
+  new Set([
+    DEFAULT_MANIFEST_RELATIVE_PATH,
+    DEFAULT_REPORT_RELATIVE_PATH,
+    "scripts/research/operational-savings/storage/aws-guard.mjs",
+    "scripts/research/operational-savings/storage/research-storage.mjs",
+    "scripts/research/operational-savings/tests/research-storage.test.mjs"
+  ]);
 const DEFAULT_AUDITED_TEMP_ROOTS = Object.freeze([
   "/private/tmp",
   tmpdir()
@@ -1136,6 +1144,16 @@ async function verifyLocalPackage(
     localPath,
     packageRecord.packageId
   );
+  return verifyLocalPackageBytes(
+    packageRecord,
+    localPath
+  );
+}
+
+async function verifyLocalPackageBytes(
+  packageRecord,
+  localPath
+) {
   const details = await lstat(localPath);
   if (!details.isFile() || details.isSymbolicLink()) {
     throw new Error(
@@ -3137,6 +3155,69 @@ async function assertValidationStillCurrent({
   return current;
 }
 
+async function assertPendingCleanupRecoveryMayProceed({
+  repoRoot,
+  manifestPath,
+  manifest,
+  gitRunner
+}) {
+  const recorded = manifest.execution?.finalCleanupValidation;
+  if (
+    recorded?.status !== "PASSED" ||
+    recorded.noActiveConsumersConfirmed !== true ||
+    !recorded.validatedSourceCommit
+  ) {
+    throw new Error(
+      "PENDING_CLEANUP_RECOVERY_VALIDATION_REQUIRED"
+    );
+  }
+  await assertManifestCleanCommitted({
+    repoRoot,
+    manifestPath,
+    gitRunner
+  });
+  const current = await repositoryValidationIdentity({
+    repoRoot,
+    manifestPath,
+    manifest,
+    gitRunner
+  });
+  const ancestry = await gitRunner(repoRoot, [
+    "merge-base",
+    "--is-ancestor",
+    recorded.validatedSourceCommit,
+    current.headCommit
+  ]);
+  if (ancestry.exitCode !== 0) {
+    throw new Error(
+      "PENDING_CLEANUP_RECOVERY_VALIDATION_NOT_ANCESTOR"
+    );
+  }
+  const changes = successfulGitOutput(
+    await gitRunner(repoRoot, [
+      "diff",
+      "--name-only",
+      recorded.validatedSourceCommit,
+      current.headCommit
+    ]),
+    "PENDING_CLEANUP_RECOVERY_COMMIT_DIFF"
+  )
+    .split("\n")
+    .filter(Boolean);
+  const disallowed = changes.filter(
+    (path) =>
+      !PENDING_CLEANUP_RECOVERY_ALLOWED_COMMITTED_PATHS.has(
+        path
+      )
+  );
+  if (disallowed.length > 0) {
+    throw new Error(
+      `PENDING_CLEANUP_RECOVERY_SOURCE_SCOPE_CHANGED: ${disallowed.join(",")}`
+    );
+  }
+  return current;
+}
+
 async function defaultRepositoryDelete({
   repositoryPath,
   archivePath,
@@ -3299,6 +3380,66 @@ function cleanupQuarantinePath(targetPath, actionId) {
     dirname(targetPath),
     `.${basename(targetPath)}.retrofi-cleanup-${actionId.slice(0, 20)}`
   );
+}
+
+async function assertExistingPackageCleanupQuarantinePath({
+  repoRoot,
+  packageRecord,
+  action,
+  path
+}) {
+  const expectedTargetPath = safeLocalPackagePath(
+    repoRoot,
+    packageRecord
+  );
+  const expectedActionId = cleanupActionIdentity(action);
+  const expectedQuarantinePath = cleanupQuarantinePath(
+    expectedTargetPath,
+    expectedActionId
+  );
+  if (
+    action.actionType !== "PACKAGE_CANONICAL_FILE" ||
+    action.targetPath !== expectedTargetPath ||
+    action.actionId !== expectedActionId ||
+    action.quarantinePath !== expectedQuarantinePath ||
+    path !== expectedQuarantinePath ||
+    !isAbsolute(path) ||
+    resolve(path) !== path ||
+    dirname(path) !== dirname(expectedTargetPath)
+  ) {
+    throw new Error(
+      `PACKAGE_CLEANUP_QUARANTINE_IDENTITY_INVALID: ${packageRecord.packageId}: ${path}`
+    );
+  }
+  const details = await lstat(path);
+  if (details.isSymbolicLink()) {
+    throw new Error(
+      `PACKAGE_CLEANUP_QUARANTINE_SYMLINK_FORBIDDEN: ${packageRecord.packageId}: ${path}`
+    );
+  }
+  const [repoRootRealPath, parentRealPath, pathRealPath] =
+    await Promise.all([
+      realpath(repoRoot),
+      realpath(dirname(path)),
+      realpath(path)
+    ]);
+  const expectedParentRealPath = resolve(
+    repoRootRealPath,
+    relative(repoRoot, dirname(expectedTargetPath))
+  );
+  const expectedPathRealPath = join(
+    expectedParentRealPath,
+    basename(expectedQuarantinePath)
+  );
+  if (
+    parentRealPath !== expectedParentRealPath ||
+    pathRealPath !== expectedPathRealPath
+  ) {
+    throw new Error(
+      `PACKAGE_CLEANUP_QUARANTINE_PATH_ESCAPE: ${packageRecord.packageId}: ${path}`
+    );
+  }
+  return pathRealPath;
 }
 
 async function checkpointCleanupJournal({
@@ -3820,6 +3961,19 @@ async function verifyPackageCleanupActionPath({
     );
   }
   if (action.actionType === "PACKAGE_CANONICAL_FILE") {
+    if (path === action.quarantinePath) {
+      const quarantinePath =
+        await assertExistingPackageCleanupQuarantinePath({
+          repoRoot,
+          packageRecord,
+          action,
+          path
+        });
+      return verifyLocalPackageBytes(
+        packageRecord,
+        quarantinePath
+      );
+    }
     return verifyLocalPackage(
       repoRoot,
       packageRecord,
@@ -4170,6 +4324,152 @@ export async function cleanupPackage({
     });
   return {
     ...result,
+    manifestCheckpointSha256:
+      checkpointState.sourceSha256
+  };
+}
+
+export async function recoverPendingPackageCleanup({
+  repoRoot,
+  manifestPath,
+  manifest,
+  packageId,
+  destination,
+  confirmDeleteLocal,
+  expectedManifestSourceSha256 = null,
+  checkpointManifest = writeManifestAtomically,
+  runner = defaultAwsRunner,
+  gitRunner = defaultGitRunner,
+  deleteFile = unlink,
+  renamePath = rename,
+  now = () => new Date().toISOString()
+}) {
+  if (confirmDeleteLocal !== true) {
+    throw new Error(
+      "LOCAL_DELETE_CONFIRMATION_REQUIRED: pass --confirm-delete-local"
+    );
+  }
+  validateManifestDigest(manifest);
+  const pending =
+    manifest.execution?.localCleanupJournal
+      ?.pendingAction ?? null;
+  if (
+    !pending ||
+    pending.ownerType !== "PACKAGE" ||
+    pending.ownerId !== packageId ||
+    pending.actionType !== "PACKAGE_CANONICAL_FILE" ||
+    !["PENDING", "QUARANTINED"].includes(pending.state)
+  ) {
+    throw new Error(
+      `PENDING_PACKAGE_CLEANUP_RECOVERY_REQUIRED: ${packageId}`
+    );
+  }
+  const packageRecord = packageById(manifest, packageId);
+  if (
+    packageRecord.localRetentionPolicy !==
+      "DELETE_AFTER_VERIFIED_MIGRATION" ||
+    packageRecord.localLifecycle?.ownerPackageId ||
+    (
+      packageRecord.originalLocalArtifacts?.length ??
+      0
+    ) !== 0
+  ) {
+    throw new Error(
+      `PENDING_PACKAGE_CLEANUP_RECOVERY_SCOPE_INVALID: ${packageId}`
+    );
+  }
+  const actions = packageCleanupActions({
+    repoRoot,
+    packageRecord
+  });
+  if (
+    actions.length !== 1 ||
+    actions[0].actionId !== pending.actionId
+  ) {
+    throw new Error(
+      `PENDING_PACKAGE_CLEANUP_RECOVERY_ACTION_SET_INVALID: ${packageId}`
+    );
+  }
+  const action = actions[0];
+  if (
+    (await pathExists(action.targetPath)) ||
+    !(await pathExists(action.quarantinePath))
+  ) {
+    throw new Error(
+      `PENDING_PACKAGE_CLEANUP_RECOVERY_PATH_STATE_INVALID: ${packageId}`
+    );
+  }
+  await assertPendingCleanupRecoveryMayProceed({
+    repoRoot,
+    manifestPath,
+    manifest,
+    gitRunner
+  });
+  const validated = validateResearchDestination(destination);
+  assertCleanupManifestPackageReady(
+    packageRecord,
+    manifest,
+    validated
+  );
+  const executionContext = await verifyExecutionContext(
+    validated,
+    runner
+  );
+  const preflight = await preflightPackageCleanupActions({
+    repoRoot,
+    manifest,
+    packageRecord,
+    destination: validated,
+    runner,
+    now
+  });
+  const checkpointState = {
+    sourceSha256: await cleanupCheckpointSourceSha256(
+      manifestPath,
+      expectedManifestSourceSha256
+    )
+  };
+  const result = await cleanupPackageRecordCheckpointed({
+    repoRoot,
+    manifestPath,
+    manifest,
+    packageRecord,
+    destination: validated,
+    runner,
+    checkpointState,
+    checkpointManifest,
+    deleteFile,
+    deleteRepository: defaultRepositoryDelete,
+    renamePath,
+    now,
+    preflight
+  });
+  checkpointState.sourceSha256 =
+    await checkpointCleanupJournal({
+      manifestPath,
+      manifest,
+      expectedSourceSha256:
+        checkpointState.sourceSha256,
+      checkpointManifest,
+      mutate: (journal) => {
+        journal.status = "COMPLETE";
+        manifest.execution.lastPendingCleanupRecovery = {
+          packageId,
+          actionId: action.actionId,
+          localPaths: result.localPaths,
+          remoteVersionId: result.remoteVersionId,
+          recoveredAt: result.deletedAt,
+          recoveryScope:
+            "EXACT_CHECKPOINTED_QUARANTINE_ONLY"
+        };
+        manifest.execution.lastVerifiedIdentity =
+          executionContext.identity;
+      }
+    });
+  return {
+    ...result,
+    recoveryScope:
+      "EXACT_CHECKPOINTED_QUARANTINE_ONLY",
     manifestCheckpointSha256:
       checkpointState.sourceSha256
   };

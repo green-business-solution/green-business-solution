@@ -22,6 +22,7 @@ import {
   prepareRepositoryArchive,
   recordAllCleanupValidation,
   recordEcrRestoreReplay,
+  recoverPendingPackageCleanup,
   restoreAndReplayEcrImages,
   uploadPackage,
   uploadAllPackages,
@@ -125,6 +126,10 @@ Delete one local standalone file after every remote, restored-byte, validation, 
 
 Preflight every local and exact-version remote package before deleting any eligible local package:
   Use cleanup-all and add --execute --confirm-delete-local.
+
+Recover only one already-checkpointed package quarantine after a cleanup implementation fix:
+  Use recover-pending-cleanup --package <id> and add --execute --confirm-delete-local.
+  The command requires the original validated commit as an ancestor, permits only committed cleanup-control changes, re-verifies the exact S3 version and quarantined bytes, and never starts a new deletion action.
 
 Preflight every committed nonpackage audit record before exact temp-path and research-image cleanup:
   Use cleanup-audited-local and add --execute --confirm-delete-local.
@@ -535,6 +540,61 @@ async function restoreAllCommand(options) {
   };
 }
 
+async function recoverPendingCleanupCommand(options) {
+  const repoRoot = resolve(
+    options["repo-root"] ?? DEFAULT_REPO_ROOT
+  );
+  const manifestPath = absoluteFromRoot(
+    repoRoot,
+    options.manifest,
+    DEFAULT_MANIFEST_RELATIVE_PATH
+  );
+  if (!options.package) {
+    throw new Error(
+      "PACKAGE_REQUIRED: provide --package <id>"
+    );
+  }
+  const { manifest, source } =
+    await readManifest(manifestPath);
+  const pending =
+    manifest.execution?.localCleanupJournal
+      ?.pendingAction ?? null;
+  if (!options.execute) {
+    return {
+      dryRun: true,
+      operation: "recover-pending-cleanup",
+      packageId: options.package,
+      pendingAction: pending,
+      wouldCallAws: true,
+      wouldDeleteLocal: true,
+      wouldStartNewDeletion: false
+    };
+  }
+  const result = await recoverPendingPackageCleanup({
+    repoRoot,
+    manifestPath,
+    manifest,
+    packageId: options.package,
+    destination: validateResearchDestination(
+      destination(options)
+    ),
+    expectedManifestSourceSha256:
+      manifestSourceSha256(source),
+    confirmDeleteLocal:
+      options["confirm-delete-local"] === true
+  });
+  return {
+    dryRun: false,
+    operation: "recover-pending-cleanup",
+    ...result,
+    manifest: {
+      path: manifestPath,
+      sourceSha256:
+        result.manifestCheckpointSha256
+    }
+  };
+}
+
 async function validateCleanupReadinessCommand(options) {
   const repoRoot = resolve(options["repo-root"] ?? DEFAULT_REPO_ROOT);
   const manifestPath = absoluteFromRoot(
@@ -880,6 +940,8 @@ export async function main(argv = process.argv.slice(2)) {
     result = await batchRemoteCommand(command, options);
   } else if (command === "restore-all") {
     result = await restoreAllCommand(options);
+  } else if (command === "recover-pending-cleanup") {
+    result = await recoverPendingCleanupCommand(options);
   } else if (command === "validate-cleanup-readiness") {
     result = await validateCleanupReadinessCommand(options);
   } else if (command === "cleanup-audited-local") {

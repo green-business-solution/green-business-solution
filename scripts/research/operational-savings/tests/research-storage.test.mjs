@@ -3,7 +3,9 @@ import {
   mkdtemp,
   readFile,
   readdir,
+  realpath,
   rm,
+  symlink,
   writeFile
 } from "node:fs/promises";
 import { existsSync } from "node:fs";
@@ -32,6 +34,7 @@ import {
   prepareRepositoryArchive,
   proveRemoteVersionRestorable,
   recordAllCleanupValidation,
+  recoverPendingPackageCleanup,
   FINAL_CLEANUP_VALIDATION_COMMAND,
   sanitizedAwsEnvironment,
   uploadPackage,
@@ -163,6 +166,41 @@ function dirtyManifestValidationGitRunner(
     }
     if (args[0] === "diff" && args.includes("--name-only")) {
       return { exitCode: 0, stdout: "", stderr: "" };
+    }
+    return { exitCode: 0, stdout: "", stderr: "" };
+  });
+}
+
+function pendingCleanupRecoveryGitRunner(
+  changedPaths = [
+    "scripts/research/operational-savings/storage/aws-guard.mjs",
+    "scripts/research/operational-savings/storage/research-storage.mjs",
+    "scripts/research/operational-savings/tests/research-storage.test.mjs"
+  ]
+) {
+  return vi.fn(async (_repoRoot, args) => {
+    if (args[0] === "rev-parse") {
+      return {
+        exitCode: 0,
+        stdout: "recovery-head\n",
+        stderr: ""
+      };
+    }
+    if (args[0] === "ls-tree") {
+      return { exitCode: 0, stdout: "", stderr: "" };
+    }
+    if (args[0] === "status") {
+      return { exitCode: 0, stdout: "", stderr: "" };
+    }
+    if (
+      args[0] === "diff" &&
+      args.includes("--name-only")
+    ) {
+      return {
+        exitCode: 0,
+        stdout: `${changedPaths.join("\n")}\n`,
+        stderr: ""
+      };
     }
     return { exitCode: 0, stdout: "", stderr: "" };
   });
@@ -4985,6 +5023,206 @@ test("package cleanup resumes from a persisted quarantine after deletion interru
           actionId: pending.actionId,
           state: "COMPLETED",
           reconciledFromAbsence: true
+        })
+      ]);
+    }
+  );
+});
+
+test("outside-cache package cleanup resumes only from its exact nonsymlink quarantine sibling", async () => {
+  await withTemporaryPackage(
+    async ({
+      root,
+      manifest,
+      packageRecord,
+      sha256,
+      sizeBytes,
+      localPath
+    }) => {
+      const canonicalRoot = await realpath(root);
+      const objectBytes = await readFile(localPath);
+      const outsideRelativePath =
+        "tmp/pdfs/epa-chp-page-037.png";
+      const outsidePath = join(
+        canonicalRoot,
+        outsideRelativePath
+      );
+      await mkdir(dirname(outsidePath), {
+        recursive: true
+      });
+      await writeFile(outsidePath, objectBytes);
+      await rm(localPath);
+      packageRecord.localPath = outsideRelativePath;
+      resealManifest(manifest);
+      markRemoteVerified(packageRecord, sha256, sizeBytes);
+      markCleanupEligible(
+        manifest,
+        [packageRecord],
+        DEFAULT_MANIFEST_RELATIVE_PATH
+      );
+      const manifestPath = await persistManifest(
+        canonicalRoot,
+        manifest,
+        DEFAULT_MANIFEST_RELATIVE_PATH
+      );
+      const runner = vi.fn(async (args) => {
+        if (args[0] === "sts") return identity();
+        const control = bucketControlResult(args);
+        if (control) return control;
+        if (args[1] === "head-object") {
+          return success(
+            remoteHead({
+              sha256,
+              sizeBytes,
+              versionId:
+                packageRecord.remote.s3.versionId
+            })
+          );
+        }
+        if (args[1] === "get-object") {
+          await writeFile(args.at(-1), objectBytes);
+          return success(
+            remoteHead({
+              sha256,
+              sizeBytes,
+              versionId:
+                packageRecord.remote.s3.versionId
+            })
+          );
+        }
+        throw new Error(
+          `unexpected command ${args.join(" ")}`
+        );
+      });
+      const interruptedDelete = vi.fn(async () => {
+        throw new Error(
+          "SIMULATED_QUARANTINE_DELETE_INTERRUPTION"
+        );
+      });
+      await expect(
+        cleanupPackage({
+          repoRoot: canonicalRoot,
+          manifestPath,
+          manifest,
+          packageId: packageRecord.packageId,
+          destination,
+          confirmDeleteLocal: true,
+          runner,
+          gitRunner: cleanValidationGitRunner(),
+          deleteFile: interruptedDelete,
+          now: () => "2026-07-24T01:30:00.000Z"
+        })
+      ).rejects.toThrow(
+        /SIMULATED_QUARANTINE_DELETE_INTERRUPTION/
+      );
+
+      const interrupted = JSON.parse(
+        await readFile(manifestPath, "utf8")
+      );
+      expect(validateManifestDigest(interrupted)).toBe(
+        interrupted
+      );
+      const pending =
+        interrupted.execution.localCleanupJournal
+          .pendingAction;
+      expect(pending).toMatchObject({
+        actionType: "PACKAGE_CANONICAL_FILE",
+        targetPath: outsidePath,
+        state: "QUARANTINED"
+      });
+      expect(await readFile(pending.quarantinePath)).toEqual(
+        objectBytes
+      );
+
+      const disallowedDelete = vi.fn();
+      await expect(
+        recoverPendingPackageCleanup({
+          repoRoot: canonicalRoot,
+          manifestPath,
+          manifest: interrupted,
+          packageId: packageRecord.packageId,
+          destination,
+          confirmDeleteLocal: true,
+          runner,
+          gitRunner: pendingCleanupRecoveryGitRunner([
+            "src/customer-calculation.ts"
+          ]),
+          deleteFile: disallowedDelete,
+          now: () => "2026-07-24T01:30:30.000Z"
+        })
+      ).rejects.toThrow(
+        /PENDING_CLEANUP_RECOVERY_SOURCE_SCOPE_CHANGED/
+      );
+      expect(disallowedDelete).not.toHaveBeenCalled();
+      expect(await readFile(pending.quarantinePath)).toEqual(
+        objectBytes
+      );
+
+      await rm(pending.quarantinePath);
+      await symlink(
+        join(canonicalRoot, "attacker-controlled"),
+        pending.quarantinePath
+      );
+      await expect(
+        recoverPendingPackageCleanup({
+          repoRoot: canonicalRoot,
+          manifestPath,
+          manifest: interrupted,
+          packageId: packageRecord.packageId,
+          destination,
+          confirmDeleteLocal: true,
+          runner,
+          gitRunner: pendingCleanupRecoveryGitRunner(),
+          deleteFile: vi.fn(),
+          now: () => "2026-07-24T01:31:00.000Z"
+        })
+      ).rejects.toThrow(
+        /PACKAGE_CLEANUP_QUARANTINE_SYMLINK_FORBIDDEN/
+      );
+
+      await rm(pending.quarantinePath);
+      await writeFile(pending.quarantinePath, objectBytes);
+      const resumedDelete = vi.fn(async (path) => {
+        await rm(path);
+      });
+      const resumed = await recoverPendingPackageCleanup({
+        repoRoot: canonicalRoot,
+        manifestPath,
+        manifest: interrupted,
+        packageId: packageRecord.packageId,
+        destination,
+        confirmDeleteLocal: true,
+        runner,
+        gitRunner: pendingCleanupRecoveryGitRunner(),
+        deleteFile: resumedDelete,
+        now: () => "2026-07-24T01:32:00.000Z"
+      });
+      expect(resumedDelete).toHaveBeenCalledWith(
+        pending.quarantinePath
+      );
+      expect(resumed.disposition).toBe(
+        "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION"
+      );
+      const completed = JSON.parse(
+        await readFile(manifestPath, "utf8")
+      );
+      expect(validateManifestDigest(completed)).toBe(
+        completed
+      );
+      expect(
+        completed.execution.localCleanupJournal
+      ).toMatchObject({
+        status: "COMPLETE",
+        pendingAction: null
+      });
+      expect(
+        completed.execution.localCleanupJournal
+          .completedActions
+      ).toEqual([
+        expect.objectContaining({
+          actionId: pending.actionId,
+          state: "COMPLETED",
+          reconciledFromAbsence: false
         })
       ]);
     }
