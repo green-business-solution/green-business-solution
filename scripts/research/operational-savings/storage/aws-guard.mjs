@@ -1320,6 +1320,37 @@ function assertPackageHasExactRestoreReceipt({
   return completion;
 }
 
+function recordOriginalArtifactMaterialization(
+  packageRecord
+) {
+  const hydration = packageRecord.hydration;
+  const generation =
+    hydration?.materializationGeneration;
+  if (
+    !Number.isSafeInteger(generation) ||
+    generation <= 0
+  ) {
+    throw new Error(
+      `ORIGINAL_ARTIFACT_RESTORE_GENERATION_REQUIRED: ${packageRecord.packageId}`
+    );
+  }
+  const actionGenerations = {
+    ...(hydration.cleanupActionGenerationByType ?? {})
+  };
+  actionGenerations.PACKAGE_ORIGINAL_FILE =
+    generation;
+  hydration.cleanupActionGenerationByType =
+    actionGenerations;
+  hydration.materializedCleanupActionTypes = [
+    ...new Set([
+      ...(hydration.materializedCleanupActionTypes ??
+        []),
+      "PACKAGE_ORIGINAL_FILE"
+    ])
+  ].sort();
+  return generation;
+}
+
 export async function materializeOriginalLocalArtifacts({
   repoRoot,
   manifest,
@@ -1375,6 +1406,21 @@ export async function materializeOriginalLocalArtifacts({
     );
   }
   const restoredAt = now();
+  const generationByPackageId = new Map();
+  for (const { packageRecord } of prepared) {
+    if (
+      !generationByPackageId.has(
+        packageRecord.packageId
+      )
+    ) {
+      generationByPackageId.set(
+        packageRecord.packageId,
+        recordOriginalArtifactMaterialization(
+          packageRecord
+        )
+      );
+    }
+  }
   const results = prepared.map((record) => {
     for (const target of [
       record.origin,
@@ -1396,6 +1442,10 @@ export async function materializeOriginalLocalArtifacts({
         record.packageRecord.packageId,
       canonicalLocalPath:
         record.packageRecord.localPath,
+      materializationGeneration:
+        generationByPackageId.get(
+          record.packageRecord.packageId
+        ),
       sizeBytes: record.origin.expectedSizeBytes,
       sha256: record.origin.expectedSha256,
       disposition: record.existedBeforeRestore
@@ -2635,6 +2685,7 @@ export function buildPackageHydrationRecord({
     if (
       ![
         "PACKAGE_CANONICAL_FILE",
+        "PACKAGE_ORIGINAL_FILE",
         "PACKAGE_REPOSITORY"
       ].includes(actionType) ||
       !Number.isSafeInteger(generation) ||
@@ -4153,7 +4204,11 @@ function packageCleanupActions({
         ownerId: packageRecord.packageId,
         actionType: "PACKAGE_ORIGINAL_FILE",
         targetPath: resolve(origin.path),
-        materializationGeneration: 0,
+        materializationGeneration:
+          packageCleanupActionGeneration(
+            packageRecord,
+            "PACKAGE_ORIGINAL_FILE"
+          ),
         expected: {
           originalPath: origin.path,
           sizeBytes: origin.expectedSizeBytes,

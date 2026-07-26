@@ -5384,7 +5384,12 @@ test("original artifact restore requires an exact package receipt and never over
         artifactCount: 1,
         createdPathCount: 1,
         adoptedPathCount: 0,
-        overwriteAllowed: false
+        overwriteAllowed: false,
+        results: [
+          expect.objectContaining({
+            materializationGeneration: 1
+          })
+        ]
       });
       expect(await readFile(originalPath)).toEqual(
         await readFile(localPath)
@@ -5392,6 +5397,17 @@ test("original artifact restore requires an exact package receipt and never over
       expect(origin).toMatchObject({
         cleanupStatus: "LOCAL_RETAINED",
         deletedAt: null
+      });
+      expect(packageRecord.hydration).toMatchObject({
+        materializationGeneration: 1,
+        cleanupActionGenerationByType: {
+          PACKAGE_CANONICAL_FILE: 1,
+          PACKAGE_ORIGINAL_FILE: 1
+        },
+        materializedCleanupActionTypes: [
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
+        ]
       });
 
       const second = await restoreOriginalLocalArtifacts({
@@ -5424,6 +5440,246 @@ test("original artifact restore requires an exact package receipt and never over
     }
   );
 });
+
+test("restored original artifacts receive a fresh cleanup generation", async () => {
+  await withTemporaryPackage(
+    async ({
+      root,
+      manifest,
+      packageRecord,
+      sha256,
+      sizeBytes,
+      localPath
+    }) => {
+      const canonicalRoot = await realpath(root);
+      const objectBytes = await readFile(localPath);
+      const originalRoot = await mkdtemp(
+        "/private/tmp/retrofi-original-generation-"
+      );
+      try {
+        const originalPath = join(
+          originalRoot,
+          "source.json"
+        );
+        await writeFile(originalPath, objectBytes);
+        const origin = {
+          path: originalPath,
+          relation:
+            "EXACT_BYTE_SOURCE_FOR_CANONICAL_CACHE_COPY",
+          expectedSizeBytes: sizeBytes,
+          expectedSha256: sha256,
+          cleanupStatus: "LOCAL_RETAINED",
+          deletedAt: null
+        };
+        packageRecord.originalLocalArtifacts = [origin];
+        manifest.originalLocalArtifacts = [
+          {
+            ...origin,
+            canonicalPackageId:
+              packageRecord.packageId,
+            canonicalLocalPath:
+              packageRecord.localPath,
+            plannedS3Uri: packageRecord.s3Uri
+          }
+        ];
+        markRemoteVerified(
+          packageRecord,
+          sha256,
+          sizeBytes
+        );
+        markCleanupEligible(
+          manifest,
+          [packageRecord],
+          DEFAULT_MANIFEST_RELATIVE_PATH
+        );
+        const manifestPath = await persistManifest(
+          canonicalRoot,
+          manifest,
+          DEFAULT_MANIFEST_RELATIVE_PATH
+        );
+        const runner = vi.fn(async (args) => {
+          if (args[0] === "sts") return identity();
+          const control = bucketControlResult(args);
+          if (control) return control;
+          if (args[1] === "head-object") {
+            return success(
+              remoteHead({
+                sha256,
+                sizeBytes,
+                versionId:
+                  packageRecord.remote.s3.versionId
+              })
+            );
+          }
+          if (args[1] === "get-object") {
+            await writeFile(args.at(-1), objectBytes);
+            return success(
+              remoteHead({
+                sha256,
+                sizeBytes,
+                versionId:
+                  packageRecord.remote.s3.versionId
+              })
+            );
+          }
+          throw new Error(
+            `unexpected command ${args.join(" ")}`
+          );
+        });
+
+        await cleanupPackage({
+          repoRoot: canonicalRoot,
+          manifestPath,
+          manifest,
+          packageId: packageRecord.packageId,
+          destination,
+          confirmDeleteLocal: true,
+          runner,
+          gitRunner: cleanValidationGitRunner(),
+          now: () => "2026-07-24T01:00:00.000Z"
+        });
+        expect(
+          manifest.execution.localCleanupJournal
+            .completedActions.map((action) => ({
+              type: action.actionType,
+              generation:
+                action.materializationGeneration
+            }))
+        ).toEqual(
+          expect.arrayContaining([
+            {
+              type: "PACKAGE_ORIGINAL_FILE",
+              generation: 0
+            },
+            {
+              type: "PACKAGE_CANONICAL_FILE",
+              generation: 0
+            }
+          ])
+        );
+
+        await hydratePackage({
+          repoRoot: canonicalRoot,
+          manifest,
+          packageId: packageRecord.packageId,
+          destination,
+          runner,
+          now: () => "2026-07-24T02:00:00.000Z"
+        });
+        manifest.execution.restoreAllJournal = {
+          status: "COMPLETE",
+          pendingPackageId: null,
+          completedPackages: [
+            {
+              packageId: packageRecord.packageId,
+              restoredVersionId:
+                packageRecord.remote.s3.versionId,
+              restoredSha256: sha256,
+              restoredSizeBytes: sizeBytes,
+              proof: {
+                restoredVersionId:
+                  packageRecord.remote.s3.versionId,
+                restoredSha256: sha256,
+                restoredSizeBytes: sizeBytes
+              }
+            }
+          ]
+        };
+        resealManifest(manifest);
+        await persistManifest(
+          canonicalRoot,
+          manifest,
+          DEFAULT_MANIFEST_RELATIVE_PATH
+        );
+        await restoreOriginalLocalArtifacts({
+          repoRoot: canonicalRoot,
+          manifestPath,
+          manifest,
+          gitRunner: cleanValidationGitRunner(),
+          permittedTempRoot: originalRoot,
+          now: () => "2026-07-24T03:00:00.000Z"
+        });
+        expect(packageRecord.hydration).toMatchObject({
+          materializationGeneration: 1,
+          cleanupActionGenerationByType: {
+            PACKAGE_CANONICAL_FILE: 1,
+            PACKAGE_ORIGINAL_FILE: 1
+          }
+        });
+
+        markCleanupEligible(
+          manifest,
+          [packageRecord],
+          DEFAULT_MANIFEST_RELATIVE_PATH
+        );
+        await persistManifest(
+          canonicalRoot,
+          manifest,
+          DEFAULT_MANIFEST_RELATIVE_PATH
+        );
+        await cleanupPackage({
+          repoRoot: canonicalRoot,
+          manifestPath,
+          manifest,
+          packageId: packageRecord.packageId,
+          destination,
+          confirmDeleteLocal: true,
+          runner,
+          gitRunner: cleanValidationGitRunner(),
+          now: () => "2026-07-24T04:00:00.000Z"
+        });
+
+        const completed =
+          manifest.execution.localCleanupJournal
+            .completedActions;
+        expect(completed).toHaveLength(4);
+        expect(
+          completed.map((action) => ({
+            type: action.actionType,
+            generation:
+              action.materializationGeneration
+          }))
+        ).toEqual(
+          expect.arrayContaining([
+            {
+              type: "PACKAGE_ORIGINAL_FILE",
+              generation: 0
+            },
+            {
+              type: "PACKAGE_CANONICAL_FILE",
+              generation: 0
+            },
+            {
+              type: "PACKAGE_ORIGINAL_FILE",
+              generation: 1
+            },
+            {
+              type: "PACKAGE_CANONICAL_FILE",
+              generation: 1
+            }
+          ])
+        );
+        expect(
+          new Set(
+            completed.map((action) => action.actionId)
+          ).size
+        ).toBe(4);
+        await expect(
+          readFile(originalPath)
+        ).rejects.toThrow();
+        await expect(readFile(localPath)).rejects.toThrow();
+        expect(validateManifestDigest(manifest)).toBe(
+          manifest
+        );
+      } finally {
+        await rm(originalRoot, {
+          recursive: true,
+          force: true
+        });
+      }
+    }
+  );
+}, 30_000);
 
 test("cleanup-all performs no deletion when any restored-byte preflight fails", async () => {
   await withTemporaryPackage(async (context) => {

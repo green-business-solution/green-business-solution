@@ -26,25 +26,25 @@ Every Standard must satisfy all of the following before a production connection 
 
 | Standard | Research verdict | Production blocker |
 | --- | --- | --- |
-| STD-COMSTOCK-ANNUAL-DELTA | FEASIBLE_NOW | Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests. |
-| STD-SCOUT-ECM-SCREEN | PARTIALLY_FEASIBLE | At least one bound process is proved end to end, but the complete Standard process set is not. |
+| STD-COMSTOCK-ANNUAL-DELTA | NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES | No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary. |
+| STD-SCOUT-ECM-SCREEN | NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES | No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary. |
 | STD-DOE-CCMS-RATINGS | NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES | No genuine official export reaches the complete source-to-Standard gate set, so an access probe or planned operator workflow is not counted as a manual seed. |
-| STD-ENERGY-STAR-PRODUCT-DATA | FEASIBLE_AFTER_ADAPTER_WORK | Real source evidence reaches a source-specific parser or Standard output, but no bound process is proved end to end. |
-| STD-DOE-MEASUR | PARTIALLY_FEASIBLE | At least one bound process is proved end to end, but the complete Standard process set is not. |
-| STD-SAM-SOLAR-THERMAL | FEASIBLE_NOW | Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests. |
-| STD-PVWATTS-V8 | FEASIBLE_NOW | Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests. |
-| STD-WIND-SAM | FEASIBLE_NOW | Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests. |
-| STD-INTERVAL-TARIFF | FEASIBLE_NOW | Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests. |
-| STD-REOPT-LOCAL-DISPATCH | PARTIALLY_FEASIBLE | At least one bound process is proved end to end, but the complete Standard process set is not. |
-| STD-EPA-CHP-PERFORMANCE | FEASIBLE_NOW | Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests. |
-| STD-FUELECONOMY-VEHICLES | FEASIBLE_NOW | Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests. |
+| STD-ENERGY-STAR-PRODUCT-DATA | NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES | No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary. |
+| STD-DOE-MEASUR | NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES | No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary. |
+| STD-SAM-SOLAR-THERMAL | NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES | No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary. |
+| STD-PVWATTS-V8 | NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES | No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary. |
+| STD-WIND-SAM | NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES | No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary. |
+| STD-INTERVAL-TARIFF | NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES | No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary. |
+| STD-REOPT-LOCAL-DISPATCH | NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES | No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary. |
+| STD-EPA-CHP-PERFORMANCE | NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES | No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary. |
+| STD-FUELECONOMY-VEHICLES | NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES | No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary. |
 | STD-WATERSENSE-FIXTURES | NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES | No genuine official export reaches the complete source-to-Standard gate set, so an access probe or planned operator workflow is not counted as a manual seed. |
-| STD-WATERSENSE-LANDSCAPE | FEASIBLE_NOW | Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests. |
-| STD-WATERSENSE-CI-OPERATIONS | PARTIALLY_FEASIBLE | At least one bound process is proved end to end, but the complete Standard process set is not. |
-| STD-FEMP-EXTERIOR-LIGHTING | PARTIALLY_FEASIBLE | At least one bound process is proved end to end, but the complete Standard process set is not. |
-| STD-OPERATING-SCHEDULE | PARTIALLY_FEASIBLE | At least one bound process is proved end to end, but the complete Standard process set is not. |
-| STD-DISHWASHER-WATER-HEATING | FEASIBLE_NOW | Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests. |
-| STD-CONTEXT-BENCHMARKS | PARTIALLY_FEASIBLE | At least one bound process is proved end to end, but the complete Standard process set is not. |
+| STD-WATERSENSE-LANDSCAPE | NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES | No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary. |
+| STD-WATERSENSE-CI-OPERATIONS | NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES | No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary. |
+| STD-FEMP-EXTERIOR-LIGHTING | NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES | No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary. |
+| STD-OPERATING-SCHEDULE | NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES | No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary. |
+| STD-DISHWASHER-WATER-HEATING | NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES | No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary. |
+| STD-CONTEXT-BENCHMARKS | NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES | No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary. |
 
 ## Staging and rollout
 
