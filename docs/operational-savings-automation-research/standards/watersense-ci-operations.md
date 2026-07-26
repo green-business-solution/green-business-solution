@@ -10,8 +10,8 @@ The canonical output set contains 3 distinct output descriptions.
 
 | Category and process | Execution-verified proof level | Adapter | Actual adapter test result | Current blocker | Conditional next action |
 | --- | --- | --- | --- | --- | --- |
-| ITC-35/watersense_ci_operations | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/watersense-ci/run.mjs | watersense-ci-native-unit-failure-proof: NOT_COVERED<br>watersense-ci-offline-proof: NOT_COVERED<br>watersense-ci-real-workbook-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
-| ITC-36/watersense_ci_operations | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/watersense-ci/run.mjs | watersense-ci-cooling-tower-unsupported-proof: NOT_COVERED<br>watersense-ci-native-unit-failure-proof: NOT_COVERED<br>watersense-ci-offline-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| ITC-35/watersense_ci_operations | END_TO_END_REAL | scripts/research/operational-savings/adapters/watersense-ci/run.mjs | watersense-ci-native-unit-failure-proof: PASSED; scripts/research/operational-savings/tests/watersense-ci-real.test.mjs :: fails closed on a mutated native unit contract<br>watersense-ci-offline-proof: PASSED; scripts/research/operational-savings/tests/watersense-ci-real.test.mjs :: requires the offline runtime guard<br>watersense-ci-real-workbook-proof: PASSED; scripts/research/operational-savings/tests/watersense-ci-real.test.mjs :: executes the measured flow-duration method and reaches both ITC-35 terms | None | Accept or connect the proved path only within its recorded boundary, and keep the exact execution record current when code, fixtures, artifacts, or canonical bindings change. |
+| ITC-36/watersense_ci_operations | SOURCE_UNSUPPORTED | scripts/research/operational-savings/adapters/watersense-ci/run.mjs | watersense-ci-cooling-tower-unsupported-proof: PASSED; scripts/research/operational-savings/tests/watersense-ci-real.test.mjs :: retains cooling-tower measurements and the absent numeric equation as blockers<br>watersense-ci-native-unit-failure-proof: PASSED; scripts/research/operational-savings/tests/watersense-ci-real.test.mjs :: fails closed on a mutated native unit contract<br>watersense-ci-offline-proof: PASSED; scripts/research/operational-savings/tests/watersense-ci-real.test.mjs :: requires the offline runtime guard | REMAINING_BLOCKER: The reviewed workbook identifies cooling-tower cycles, meters, controls, and conductivity-based blowdown, but it contains no numeric makeup-water equation or native units for existing cycles, proposed cycles, and annual evaporation. | Revise the source strategy or keep the card path explicitly unsupported before implementation. REMAINING_BLOCKER: The reviewed workbook identifies cooling-tower cycles, meters, controls, and conductivity-based blowdown, but it contains no numeric makeup-water equation or native units for existing cycles, proposed cycles, and annual evaporation. |
 
 ## 2. Official source inventory
 
@@ -54,13 +54,13 @@ It reports retained artifact releases, versions, locators, and integrity values 
 
 | Artifact ID | Evidence role | Retained release or version | Exact locator | Integrity | Current proof state | Bound processes |
 | --- | --- | --- | --- | --- | --- | --- |
-| artifact:watersense-ci-operations:2012-10 | PUBLIC_XLSX_DOWNLOAD | WaterSense at Work writeable tables, October 2012 | https://www.epa.gov/sites/default/files/2017-02/ws-commercial-excel-writeable-tables.xlsx | sha256:f69facc89beb2073fdaba88206d20e32151b2f30c53a7f21f7981eeab8c0ab52; 89786 bytes | DOCUMENTATION_ONLY | ITC-35/watersense_ci_operations, ITC-36/watersense_ci_operations |
+| artifact:watersense-ci-operations:2012-10 | PUBLIC_XLSX_DOWNLOAD | WaterSense at Work writeable tables, October 2012 | https://www.epa.gov/sites/default/files/2017-02/ws-commercial-excel-writeable-tables.xlsx | sha256:f69facc89beb2073fdaba88206d20e32151b2f30c53a7f21f7981eeab8c0ab52; 89786 bytes | END_TO_END_REAL, SOURCE_UNSUPPORTED | ITC-35/watersense_ci_operations, ITC-36/watersense_ci_operations |
 
 The current proof manifests record these inspected schemas:
 
 | Schema ID | Artifact ID | Format | Extractor | Required native fields | Current proof state |
 | --- | --- | --- | --- | --- | --- |
-| schema:watersense-ci-operations:2012-10 | artifact:watersense-ci-operations:2012-10 | XLSX | scripts/research/operational-savings/adapters/watersense-ci/inspect-schema.mjs | Title Page!A14; Title Page!A16; Action Plan Checklist!A7:B7; Action Plan Checklist!A43:A44; Water Consumption History!A20:A21; Existing Plumbing Equipment!H2:J2; Water Use Inventory!C2:E2 | DOCUMENTATION_ONLY |
+| schema:watersense-ci-operations:2012-10 | artifact:watersense-ci-operations:2012-10 | XLSX | scripts/research/operational-savings/adapters/watersense-ci/inspect-schema.mjs | Title Page!A14; Title Page!A16; Action Plan Checklist!A7:B7; Action Plan Checklist!A43:A44; Water Consumption History!A20:A21; Existing Plumbing Equipment!H2:J2; Water Use Inventory!C2:E2 | END_TO_END_REAL, SOURCE_UNSUPPORTED |
 
 Catalog-native field names that still require proof-backed inspection are:
 
@@ -165,11 +165,11 @@ This synthetic regression does not prove acquisition, source-specific parsing, a
 
 ## 12. Feasibility and supported boundary
 
-**NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES**
+**PARTIALLY_FEASIBLE**
 
 This verdict is derived from 2 bound processes.
-No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary.
-The proof ledger records 0 end-to-end real processes, 0 source-verified processes, and 0 processes with genuine manual-export downstream proof.
+At least one bound process is proved end to end, but the complete Standard process set is not.
+The proof ledger records 1 end-to-end real process, 1 source-verified process, and 0 processes with genuine manual-export downstream proof.
 The supported boundary is Exact measured leak and cooling-tower operational calculations.
 The unsupported boundary is Default leak rates, default duration, and automatic savings from a checklist item alone.
 
