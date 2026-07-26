@@ -55998,9 +55998,9 @@
     }
   },
   "canonicalInventory": {
-    "schemaVersion": "operational-savings/canonical-inventory-identity-v1",
+    "schemaVersion": "operational-savings/canonical-inventory-identity-v2",
     "packageCount": 210,
-    "contentSha256": "826c63b309ff326c6dc730be2f6bbfbdd5a0ad07527f9de382f5c70010e31d0a"
+    "contentSha256": "f55a398546e214bb9746ffa9a28dac1a95657e11c4caeb2822077c4df20f0a88"
   },
-  "manifestContentSha256": "89f00f1d15d02d7f10dacdad949a215efc9d126385975f782532af0fabf20e86"
+  "manifestContentSha256": "21525a33fe4fd65e7fa8e53d63009e155cadd754ea13f5d72f4b920a475d2b5c"
 }

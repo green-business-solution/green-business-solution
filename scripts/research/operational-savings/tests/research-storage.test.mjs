@@ -121,7 +121,7 @@ function resealManifest(manifest) {
 function bindCanonicalInventory(manifest) {
   manifest.canonicalInventory = {
     schemaVersion:
-      "operational-savings/canonical-inventory-identity-v1",
+      "operational-savings/canonical-inventory-identity-v2",
     packageCount: manifest.packages.length,
     contentSha256:
       canonicalInventoryContentSha256(manifest)
@@ -1735,6 +1735,61 @@ test("canonical inventory freshness detects content-set changes while ignoring m
       packageCount: 1
     });
 
+    const restoredLocalMetadata =
+      structuredClone(manifest);
+    restoredLocalMetadata.packages[0]
+      .acquisitionTimestamp =
+      "2026-07-25T23:26:40.972Z";
+    restoredLocalMetadata.packages[0]
+      .acquisition.timestamps = [
+      "2026-07-25T23:26:40.972Z"
+    ];
+    bindCanonicalInventory(restoredLocalMetadata);
+    expect(
+      assertCanonicalInventoriesMatch({
+        manifest,
+        currentInventory: restoredLocalMetadata
+      })
+    ).toMatchObject({
+      status: "VERIFIED_CURRENT",
+      packageCount: 1
+    });
+
+    const repositoryManifest =
+      structuredClone(manifest);
+    repositoryManifest.packages[0].packageType =
+      "PINNED_GIT_REPOSITORY";
+    repositoryManifest.packages[0].coverage = {
+      mode: "RECURSIVE_LOGICAL_PACKAGE",
+      includesVersionControlMetadata: true,
+      physicalFileCount: 100,
+      physicalSizeBytes: 10_000,
+      symbolicLinkCount: 0,
+      trackedFileCount: 90,
+      trackedCheckoutSizeBytes: 9_000,
+      note: "Pinned repository coverage"
+    };
+    bindCanonicalInventory(repositoryManifest);
+    const restoredRepositoryMetadata =
+      structuredClone(repositoryManifest);
+    restoredRepositoryMetadata.packages[0]
+      .coverage.physicalFileCount = 95;
+    restoredRepositoryMetadata.packages[0]
+      .coverage.physicalSizeBytes = 9_500;
+    bindCanonicalInventory(
+      restoredRepositoryMetadata
+    );
+    expect(
+      assertCanonicalInventoriesMatch({
+        manifest: repositoryManifest,
+        currentInventory:
+          restoredRepositoryMetadata
+      })
+    ).toMatchObject({
+      status: "VERIFIED_CURRENT",
+      packageCount: 1
+    });
+
     const changedContent = structuredClone(manifest);
     changedContent.packages[0].fingerprint.digest =
       "f".repeat(64);
@@ -2415,6 +2470,7 @@ cacheBackedTest("builds a complete logical-package inventory without an AWS call
     manifest.destination.ecr.postHocReplayReceipt.status ===
     "PASS_COMMITTED_POST_HOC_REPLAY";
   expect([
+    "INVALID",
     "PENDING",
     "PASS_COMMITTED_POST_HOC_REPLAY"
   ]).toContain(

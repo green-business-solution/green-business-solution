@@ -1867,6 +1867,39 @@ function canonicalOriginalLocalArtifacts(artifacts) {
     .map(canonicalOriginalLocalArtifactIdentity);
 }
 
+function canonicalAcquisitionIdentity(acquisition) {
+  return {
+    status: acquisition?.status ?? null,
+    modes: [...(acquisition?.modes ?? [])].sort(),
+    blocker: acquisition?.blocker ?? null,
+    timestampEvidence:
+      acquisition?.timestampEvidence ?? null
+  };
+}
+
+function canonicalCoverageIdentity(
+  packageRecord,
+  repositoryPackage
+) {
+  if (!repositoryPackage) {
+    return packageRecord.coverage;
+  }
+  return {
+    mode: packageRecord.coverage?.mode,
+    includesVersionControlMetadata:
+      packageRecord.coverage
+        ?.includesVersionControlMetadata,
+    symbolicLinkCount:
+      packageRecord.coverage?.symbolicLinkCount,
+    trackedFileCount:
+      packageRecord.coverage?.trackedFileCount,
+    trackedCheckoutSizeBytes:
+      packageRecord.coverage
+        ?.trackedCheckoutSizeBytes,
+    note: packageRecord.coverage?.note
+  };
+}
+
 function canonicalPackageInventoryIdentity(packageRecord) {
   const repositoryPackage =
     packageRecord.packageType ===
@@ -1879,15 +1912,18 @@ function canonicalPackageInventoryIdentity(packageRecord) {
       packageRecord.parentPackageId ?? null,
     localRetentionPolicy:
       packageRecord.localRetentionPolicy,
-    coverage: packageRecord.coverage,
+    coverage: canonicalCoverageIdentity(
+      packageRecord,
+      repositoryPackage
+    ),
     fingerprint: packageRecord.fingerprint,
     sourceOrganization:
       packageRecord.sourceOrganization,
-    acquisitionTimestamp:
-      packageRecord.acquisitionTimestamp,
     source: packageRecord.source,
     release: packageRecord.release,
-    acquisition: packageRecord.acquisition,
+    acquisition: canonicalAcquisitionIdentity(
+      packageRecord.acquisition
+    ),
     content: packageRecord.content,
     license: packageRecord.license,
     ingestion: packageRecord.ingestion,
@@ -1939,7 +1975,7 @@ function canonicalPackageInventoryIdentity(packageRecord) {
 export function canonicalInventoryContent(manifest) {
   return {
     schemaVersion:
-      "operational-savings/canonical-inventory-content-v1",
+      "operational-savings/canonical-inventory-content-v2",
     cacheRoot:
       manifest.sourceRepository?.cacheRoot ?? null,
     packages: [...(manifest.packages ?? [])]
@@ -1980,7 +2016,7 @@ export function assertCanonicalInventoryIdentity(
     canonicalInventoryContentSha256(manifest);
   if (
     identity?.schemaVersion !==
-      "operational-savings/canonical-inventory-identity-v1" ||
+      "operational-savings/canonical-inventory-identity-v2" ||
     identity.packageCount !==
       manifest.packages?.length ||
     !/^[a-f0-9]{64}$/.test(
@@ -5226,7 +5262,7 @@ export async function buildResearchStorageInventory({
   };
   manifest.canonicalInventory = {
     schemaVersion:
-      "operational-savings/canonical-inventory-identity-v1",
+      "operational-savings/canonical-inventory-identity-v2",
     packageCount: manifest.packages.length,
     contentSha256:
       canonicalInventoryContentSha256(manifest)
