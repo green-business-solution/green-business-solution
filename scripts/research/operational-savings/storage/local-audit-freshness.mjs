@@ -64,6 +64,7 @@ export const OPERATIONAL_SAVINGS_TEMP_ENTRY_PREFIXES =
   ]);
 export const OPERATIONAL_SAVINGS_TEMP_ENTRY_EXCLUSIONS =
   Object.freeze([
+    "retrofi-research-ecr-auth-",
     "retrofi-web-enrichment-"
   ]);
 

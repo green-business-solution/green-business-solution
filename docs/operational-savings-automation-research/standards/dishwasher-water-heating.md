@@ -10,7 +10,7 @@ The canonical output set contains 5 distinct output descriptions.
 
 | Category and process | Execution-verified proof level | Adapter | Actual adapter test result | Current blocker | Conditional next action |
 | --- | --- | --- | --- | --- | --- |
-| ITC-52/dishwasher-water-heating-conversion | END_TO_END_REAL | scripts/research/operational-savings/adapters/dishwasher-water-heating/run.mjs | dishwasher-water-heating-input-failure-proof: PASSED; scripts/research/operational-savings/tests/dishwasher-water-heating-real.test.mjs :: fails unsupported branches and invalid physical inputs<br>dishwasher-water-heating-real-workbook-proof: PASSED; scripts/research/operational-savings/tests/dishwasher-water-heating-real.test.mjs :: reproduces the workbook electric building and booster factors<br>dishwasher-water-heating-workbook-mutation-proof: PASSED; scripts/research/operational-savings/tests/dishwasher-water-heating-real.test.mjs :: fails mutations to a required workbook formula or cell | None | Accept or connect the proved path only within its recorded boundary, and keep the exact execution record current when code, fixtures, artifacts, or canonical bindings change. |
+| ITC-52/dishwasher-water-heating-conversion | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/dishwasher-water-heating/run.mjs | dishwasher-water-heating-input-failure-proof: NOT_COVERED<br>dishwasher-water-heating-real-workbook-proof: NOT_COVERED<br>dishwasher-water-heating-workbook-mutation-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## 2. Official source inventory
 
@@ -50,13 +50,13 @@ It reports retained artifact releases, versions, locators, and integrity values 
 
 | Artifact ID | Evidence role | Retained release or version | Exact locator | Integrity | Current proof state | Bound processes |
 | --- | --- | --- | --- | --- | --- | --- |
-| artifact:energy-star-cfs-calculator:2024-03 | PUBLIC_XLSX_DOWNLOAD | Workbook published March 2024 | https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx | sha256:3d2abed1938bd1400378a2e0ca2095058fe490b2b599ef15f09056639f06fcd6; 403484 bytes | END_TO_END_REAL | ITC-52/dishwasher-water-heating-conversion |
+| artifact:energy-star-cfs-calculator:2024-03 | PUBLIC_XLSX_DOWNLOAD | Workbook published March 2024 | https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx | sha256:3d2abed1938bd1400378a2e0ca2095058fe490b2b599ef15f09056639f06fcd6; 403484 bytes | DOCUMENTATION_ONLY | ITC-52/dishwasher-water-heating-conversion |
 
 The current proof manifests record these inspected schemas:
 
 | Schema ID | Artifact ID | Format | Extractor | Required native fields | Current proof state |
 | --- | --- | --- | --- | --- | --- |
-| schema:energy-star-cfs-dishwasher-water-heating:2024-03 | artifact:energy-star-cfs-calculator:2024-03 | XLSX_EXACT_CELLS_AND_FORMULAS | scripts/research/operational-savings/adapters/dishwasher-water-heating/inspect-schema.mjs | Dishwasher Calcs!I18 specific heat; Dishwasher Calcs!I19 water density; Dishwasher Calcs!C20:D21 water-heater efficiencies; Dishwasher Calcs!E20:E21 temperature rises; Dishwasher Calcs!C39:D40 resource input per gallon formulas; General Assumptions!C62:C63 resource conversions | END_TO_END_REAL |
+| schema:energy-star-cfs-dishwasher-water-heating:2024-03 | artifact:energy-star-cfs-calculator:2024-03 | XLSX_EXACT_CELLS_AND_FORMULAS | scripts/research/operational-savings/adapters/dishwasher-water-heating/inspect-schema.mjs | Dishwasher Calcs!I18 specific heat; Dishwasher Calcs!I19 water density; Dishwasher Calcs!C20:D21 water-heater efficiencies; Dishwasher Calcs!E20:E21 temperature rises; Dishwasher Calcs!C39:D40 resource input per gallon formulas; General Assumptions!C62:C63 resource conversions | DOCUMENTATION_ONLY |
 
 Catalog-native field names that still require proof-backed inspection are:
 
@@ -170,11 +170,11 @@ This synthetic regression does not prove acquisition, source-specific parsing, a
 
 ## 12. Feasibility and supported boundary
 
-**FEASIBLE_NOW**
+**NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES**
 
 This verdict is derived from 1 bound process.
-Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests.
-The proof ledger records 1 end-to-end real process, 1 source-verified process, and 0 processes with genuine manual-export downstream proof.
+No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary.
+The proof ledger records 0 end-to-end real processes, 0 source-verified processes, and 0 processes with genuine manual-export downstream proof.
 The supported boundary is Matched rack or flight machine, explicit hot-water boundary, temperature rise, heater fuel, and heater efficiency.
 The unsupported boundary is Treating all machine water as hot water without the building and booster boundary or converting flight gallons per hour to racks.
 

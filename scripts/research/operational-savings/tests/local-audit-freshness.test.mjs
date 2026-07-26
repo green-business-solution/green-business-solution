@@ -397,3 +397,39 @@ test("excludes active web-enrichment temporary trees from the operational-saving
     status: "CURRENT"
   });
 });
+
+test("excludes only ephemeral ECR Docker authentication directories from artifact discovery", async () => {
+  const context = await fixture();
+  const authPath = join(
+    context.root,
+    "retrofi-research-ecr-auth-fixture"
+  );
+  await mkdir(authPath);
+  await writeFile(
+    join(authPath, "config.json"),
+    '{"auths":{"example.invalid":{"auth":"secret"}}}\n',
+    "utf8"
+  );
+  await expect(
+    assertLocalArtifactAuditFresh({
+      audit: context.audit,
+      roots: [context.root],
+      prefixes: ["proof-ledger-", "retrofi-research-"]
+    })
+  ).resolves.toMatchObject({
+    status: "CURRENT"
+  });
+
+  await mkdir(
+    join(context.root, "retrofi-research-unrecorded")
+  );
+  await expect(
+    assertLocalArtifactAuditFresh({
+      audit: context.audit,
+      roots: [context.root],
+      prefixes: ["proof-ledger-", "retrofi-research-"]
+    })
+  ).rejects.toThrow(
+    /UNRECORDED_MONITORED_TOP_LEVEL_PATH.*retrofi-research-unrecorded/
+  );
+});

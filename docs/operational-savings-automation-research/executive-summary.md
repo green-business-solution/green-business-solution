@@ -1,6 +1,6 @@
 # Executive summary
 
-The proof ledger currently demonstrates 42 end-to-end real process paths out of 124.
+The proof ledger currently demonstrates 0 end-to-end real process paths out of 124.
 Every other path remains limited to source-level proof, documentation, a synthetic test, an access block, or an unsupported source boundary.
 The repository contains 19 canonical Standards, 124 category-local process instances, 54 categories, 632 explicit input bindings, 215 explicit output bindings, and 497 formula-term contracts.
 All 19 Standards have a source inventory, compact synthetic sample, cost estimate, and proposed supported boundary.
@@ -28,11 +28,11 @@ Direct selected-source fees are estimated at $0 per month, while the major cost 
 
 | Feasibility verdict | Standards |
 | --- | --- |
-| FEASIBLE_NOW | 9 |
+| FEASIBLE_NOW | 0 |
 | FEASIBLE_AFTER_MANUAL_SEED | 0 |
-| FEASIBLE_AFTER_ADAPTER_WORK | 1 |
-| PARTIALLY_FEASIBLE | 7 |
-| NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES | 2 |
+| FEASIBLE_AFTER_ADAPTER_WORK | 0 |
+| PARTIALLY_FEASIBLE | 0 |
+| NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES | 19 |
 
 The recommended first implementation batch is exact public product and tabular methods, followed immediately by a California tariff publication foundation.
 No deployment, AWS access, infrastructure change, workflow change, production-engine change, or Information Card change is part of this branch.
