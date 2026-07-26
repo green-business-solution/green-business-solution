@@ -18,7 +18,7 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 | Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
 | --- | --- | --- | --- | --- |
 | operating_schedule | DOCUMENTATION_ONLY | None implemented | None required or recorded for the current proof state | MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
-| doe_measur | END_TO_END_REAL | scripts/research/operational-savings/adapters/doe-measur/run.mjs | doe-measur-compressed-air-drift-failure-proof: PASSED; scripts/research/operational-savings/tests/doe-measur-real.test.mjs :: detects native binding or golden-fixture drift<br>doe-measur-compressed-air-input-failure-proof: PASSED; scripts/research/operational-savings/tests/doe-measur-real.test.mjs :: requires offline mode and rejects unsupported or invalid project inputs<br>doe-measur-real-compressed-air-native-proof: PASSED; scripts/research/operational-savings/tests/doe-measur-real.test.mjs :: publishes native model execution and exact ITC-43 formula inputs to the research database | None |
+| doe_measur | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/doe-measur/run.mjs | doe-measur-compressed-air-drift-failure-proof: PASSED; scripts/research/operational-savings/tests/doe-measur-real.test.mjs :: detects native binding or golden-fixture drift<br>doe-measur-compressed-air-input-failure-proof: PASSED; scripts/research/operational-savings/tests/doe-measur-real.test.mjs :: requires offline mode and rejects unsupported or invalid project inputs<br>doe-measur-real-compressed-air-native-proof: PASSED; scripts/research/operational-savings/tests/doe-measur-real.test.mjs :: publishes native model execution and exact ITC-43 formula inputs to the research database | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## End-to-end graph
 
@@ -27,7 +27,7 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Feasibility
 
-The category depends on these source-level verdicts: PARTIALLY_FEASIBLE.
+The category depends on these source-level verdicts: NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES.
 The process table reports the final proof level after execution-record verification, not a higher level that a manifest may have declared before the current run.
 An exact path is usable only when every owned input is present and every Standard adapter returns one unambiguous compatible result.
 A benchmark path is usable only where the category has a retained authoritative population and exact selection rule.
@@ -38,4 +38,4 @@ The runtime external-call count remains zero.
 | Process key | Current proof level | Next action |
 | --- | --- | --- |
 | operating_schedule | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
-| doe_measur | END_TO_END_REAL | Accept or connect the proved path only within its recorded boundary, and keep the exact execution record current when code, fixtures, artifacts, or canonical bindings change. |
+| doe_measur | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |

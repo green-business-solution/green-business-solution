@@ -16,7 +16,7 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 | Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
 | --- | --- | --- | --- | --- |
-| epa_chp_performance | END_TO_END_REAL | scripts/research/operational-savings/adapters/epa-chp/run.mjs | epa-chp-itc21-formula-proof: PASSED; scripts/research/operational-savings/tests/epa-chp-real.test.mjs :: reaches every ITC-21 formula term from one exact real system<br>epa-chp-offline-proof: PASSED; scripts/research/operational-savings/tests/epa-chp-real.test.mjs :: requires the offline guard<br>epa-chp-real-catalog-proof: PASSED; scripts/research/operational-savings/tests/epa-chp-real.test.mjs :: publishes an exact real CHP output set and provenance<br>epa-chp-required-row-failure-proof: PASSED; scripts/research/operational-savings/tests/epa-chp-real.test.mjs :: fails closed when an actual required table row is missing | None |
+| epa_chp_performance | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/epa-chp/run.mjs | epa-chp-itc21-formula-proof: PASSED; scripts/research/operational-savings/tests/epa-chp-real.test.mjs :: reaches every ITC-21 formula term from one exact real system<br>epa-chp-offline-proof: PASSED; scripts/research/operational-savings/tests/epa-chp-real.test.mjs :: requires the offline guard<br>epa-chp-real-catalog-proof: PASSED; scripts/research/operational-savings/tests/epa-chp-real.test.mjs :: publishes an exact real CHP output set and provenance<br>epa-chp-required-row-failure-proof: PASSED; scripts/research/operational-savings/tests/epa-chp-real.test.mjs :: fails closed when an actual required table row is missing | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## End-to-end graph
 
@@ -24,7 +24,7 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Feasibility
 
-The category depends on these source-level verdicts: FEASIBLE_NOW.
+The category depends on these source-level verdicts: NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES.
 The process table reports the final proof level after execution-record verification, not a higher level that a manifest may have declared before the current run.
 An exact path is usable only when every owned input is present and every Standard adapter returns one unambiguous compatible result.
 A benchmark path is usable only where the category has a retained authoritative population and exact selection rule.
@@ -34,4 +34,4 @@ The runtime external-call count remains zero.
 
 | Process key | Current proof level | Next action |
 | --- | --- | --- |
-| epa_chp_performance | END_TO_END_REAL | Accept or connect the proved path only within its recorded boundary, and keep the exact execution record current when code, fixtures, artifacts, or canonical bindings change. |
+| epa_chp_performance | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
