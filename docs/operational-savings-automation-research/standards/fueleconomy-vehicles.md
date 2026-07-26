@@ -10,8 +10,8 @@ The canonical output set contains 3 distinct output descriptions.
 
 | Category and process | Execution-verified proof level | Adapter | Actual adapter test result | Current blocker | Conditional next action |
 | --- | --- | --- | --- | --- | --- |
-| ITC-28/fueleconomy_vehicles | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/fueleconomy/run.mjs | fueleconomy-itc28-electric-intensity-proof: NOT_COVERED<br>fueleconomy-missing-column-failure-proof: NOT_COVERED<br>fueleconomy-offline-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
-| ITC-29/fueleconomy_vehicles | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/fueleconomy/run.mjs | fueleconomy-incompatible-pair-failure-proof: NOT_COVERED<br>fueleconomy-offline-proof: NOT_COVERED<br>fueleconomy-real-bulk-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| ITC-28/fueleconomy_vehicles | END_TO_END_REAL | scripts/research/operational-savings/adapters/fueleconomy/run.mjs | fueleconomy-itc28-electric-intensity-proof: PASSED; scripts/research/operational-savings/tests/fueleconomy-real.test.mjs :: maps an exact electric vehicle to ITC-28 intensity and publishes provenance<br>fueleconomy-missing-column-failure-proof: PASSED; scripts/research/operational-savings/tests/fueleconomy-real.test.mjs :: fails closed on a missing source column<br>fueleconomy-offline-proof: PASSED; scripts/research/operational-savings/tests/fueleconomy-real.test.mjs :: requires the runtime network guard | None | Accept or connect the proved path only within its recorded boundary, and keep the exact execution record current when code, fixtures, artifacts, or canonical bindings change. |
+| ITC-29/fueleconomy_vehicles | END_TO_END_REAL | scripts/research/operational-savings/adapters/fueleconomy/run.mjs | fueleconomy-incompatible-pair-failure-proof: PASSED; scripts/research/operational-savings/tests/fueleconomy-real.test.mjs :: fails closed on incompatible exact pairs<br>fueleconomy-offline-proof: PASSED; scripts/research/operational-savings/tests/fueleconomy-real.test.mjs :: requires the runtime network guard<br>fueleconomy-real-bulk-proof: PASSED; scripts/research/operational-savings/tests/fueleconomy-real.test.mjs :: reaches both exact ITC-29 formula terms offline and publishes provenance | None | Accept or connect the proved path only within its recorded boundary, and keep the exact execution record current when code, fixtures, artifacts, or canonical bindings change. |
 
 ## 2. Official source inventory
 
@@ -56,13 +56,13 @@ It reports retained artifact releases, versions, locators, and integrity values 
 
 | Artifact ID | Evidence role | Retained release or version | Exact locator | Integrity | Current proof state | Bound processes |
 | --- | --- | --- | --- | --- | --- | --- |
-| artifact:fueleconomy-vehicles:2026-07-23 | PUBLIC_BULK_DOWNLOAD | bulk snapshot acquired 2026-07-23 | https://www.fueleconomy.gov/feg/epadata/vehicles.csv.zip | sha256:83ee4bf48e65e8e962e55952e0bfbdc6ab94d4bf63f42e2d38aa39143d6f1ecc; 2185627 bytes | DOCUMENTATION_ONLY | ITC-28/fueleconomy_vehicles, ITC-29/fueleconomy_vehicles |
+| artifact:fueleconomy-vehicles:2026-07-23 | PUBLIC_BULK_DOWNLOAD | bulk snapshot acquired 2026-07-23 | https://www.fueleconomy.gov/feg/epadata/vehicles.csv.zip | sha256:83ee4bf48e65e8e962e55952e0bfbdc6ab94d4bf63f42e2d38aa39143d6f1ecc; 2185627 bytes | END_TO_END_REAL | ITC-28/fueleconomy_vehicles, ITC-29/fueleconomy_vehicles |
 
 The current proof manifests record these inspected schemas:
 
 | Schema ID | Artifact ID | Format | Extractor | Required native fields | Current proof state |
 | --- | --- | --- | --- | --- | --- |
-| schema:fueleconomy-vehicles:2026-07-23 | artifact:fueleconomy-vehicles:2026-07-23 | ZIP_CSV | scripts/research/operational-savings/adapters/fueleconomy/inspect-schema.mjs | id; year; make; model; VClass; drive; fuelType1; comb08; combE; modifiedOn | DOCUMENTATION_ONLY |
+| schema:fueleconomy-vehicles:2026-07-23 | artifact:fueleconomy-vehicles:2026-07-23 | ZIP_CSV | scripts/research/operational-savings/adapters/fueleconomy/inspect-schema.mjs | id; year; make; model; VClass; drive; fuelType1; comb08; combE; modifiedOn | END_TO_END_REAL |
 
 Catalog-native field names that still require proof-backed inspection are:
 
@@ -176,11 +176,11 @@ This synthetic regression does not prove acquisition, source-specific parsing, a
 
 ## 12. Feasibility and supported boundary
 
-**NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES**
+**FEASIBLE_NOW**
 
 This verdict is derived from 2 bound processes.
-No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary.
-The proof ledger records 0 end-to-end real processes, 0 source-verified processes, and 0 processes with genuine manual-export downstream proof.
+Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests.
+The proof ledger records 2 end-to-end real processes, 2 source-verified processes, and 0 processes with genuine manual-export downstream proof.
 The supported boundary is Exact vehicle records and explicit compatible vehicle pairs.
 The unsupported boundary is Arbitrary class medians without population review and commercial fleet duty not represented by light-duty labels.
 
