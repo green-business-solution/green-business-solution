@@ -1,0 +1,203 @@
+{
+  "schemaVersion": "operational-savings/real-proof-manifest-v1",
+  "standardId": "STD-FUELECONOMY-VEHICLES",
+  "slug": "fueleconomy",
+  "adapterPath": "scripts/research/operational-savings/adapters/fueleconomy/run.mjs",
+  "artifacts": [
+    {
+      "artifactId": "artifact:fueleconomy-vehicles:2026-07-23",
+      "sourceUrl": "https://www.fueleconomy.gov/feg/epadata/vehicles.csv.zip",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/vehicles.csv.zip",
+      "release": "bulk snapshot acquired 2026-07-23",
+      "sha256": "83ee4bf48e65e8e962e55952e0bfbdc6ab94d4bf63f42e2d38aa39143d6f1ecc",
+      "sizeBytes": 2185627,
+      "acquisitionMode": "PUBLIC_BULK_DOWNLOAD",
+      "official": true
+    }
+  ],
+  "observedSchemas": [
+    {
+      "schemaId": "schema:fueleconomy-vehicles:2026-07-23",
+      "artifactId": "artifact:fueleconomy-vehicles:2026-07-23",
+      "format": "ZIP_CSV",
+      "extractor": "scripts/research/operational-savings/adapters/fueleconomy/inspect-schema.mjs",
+      "requiredNativeFields": [
+        "id",
+        "year",
+        "make",
+        "model",
+        "VClass",
+        "drive",
+        "fuelType1",
+        "comb08",
+        "combE",
+        "modifiedOn"
+      ]
+    }
+  ],
+  "normalizedTargets": [
+    "equipment_products",
+    "equipment_performance_fields",
+    "fuel_economy_vehicles",
+    "selected_values",
+    "selected_value_provenance"
+  ],
+  "tests": [
+    {
+      "testId": "fueleconomy-real-bulk-proof",
+      "path": "scripts/research/operational-savings/tests/fueleconomy-real.test.mjs",
+      "name": "reaches both exact ITC-29 formula terms offline and publishes provenance",
+      "kind": "END_TO_END_REAL",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:fueleconomy-vehicles:2026-07-23"
+      ],
+      "sourceNativeFields": [
+        "id",
+        "VClass",
+        "fuelType1",
+        "comb08",
+        "combE",
+        "modifiedOn"
+      ]
+    },
+    {
+      "testId": "fueleconomy-itc28-electric-intensity-proof",
+      "path": "scripts/research/operational-savings/tests/fueleconomy-real.test.mjs",
+      "name": "maps an exact electric vehicle to ITC-28 intensity and publishes provenance",
+      "kind": "END_TO_END_REAL",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:fueleconomy-vehicles:2026-07-23"
+      ],
+      "sourceNativeFields": [
+        "id",
+        "VClass",
+        "fuelType1",
+        "combE",
+        "modifiedOn"
+      ]
+    },
+    {
+      "testId": "fueleconomy-missing-column-failure-proof",
+      "path": "scripts/research/operational-savings/tests/fueleconomy-real.test.mjs",
+      "name": "fails closed on a missing source column",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:fueleconomy-vehicles:2026-07-23"
+      ],
+      "mutationCases": [
+        "missing required column"
+      ]
+    },
+    {
+      "testId": "fueleconomy-incompatible-pair-failure-proof",
+      "path": "scripts/research/operational-savings/tests/fueleconomy-real.test.mjs",
+      "name": "fails closed on incompatible exact pairs",
+      "kind": "FAILURE",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:fueleconomy-vehicles:2026-07-23"
+      ],
+      "mutationCases": [
+        "incompatible vehicle pair"
+      ]
+    },
+    {
+      "testId": "fueleconomy-offline-proof",
+      "path": "scripts/research/operational-savings/tests/fueleconomy-real.test.mjs",
+      "name": "requires the runtime network guard",
+      "kind": "OFFLINE_EXECUTION",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:fueleconomy-vehicles:2026-07-23"
+      ]
+    }
+  ],
+  "processClaims": [
+    {
+      "categoryId": "ITC-28",
+      "processKey": "fueleconomy_vehicles",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:fueleconomy-vehicles:2026-07-23"
+      ],
+      "testIds": [
+        "fueleconomy-itc28-electric-intensity-proof",
+        "fueleconomy-missing-column-failure-proof",
+        "fueleconomy-offline-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "vehicle_kWh_per_mile": 0.28
+      },
+      "formulaTerms": [
+        "vehicle_kWh_per_mile"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-29",
+      "processKey": "fueleconomy_vehicles",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:fueleconomy-vehicles:2026-07-23"
+      ],
+      "testIds": [
+        "fueleconomy-real-bulk-proof",
+        "fueleconomy-incompatible-pair-failure-proof",
+        "fueleconomy-offline-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "existing_combined_mpg": 32,
+        "proposed_combE": 28
+      },
+      "formulaTerms": [
+        "existing_combined_mpg",
+        "proposed_combE"
+      ],
+      "remainingBlocker": null
+    }
+  ],
+  "feasibility": "PARTIALLY_FEASIBLE",
+  "remainingBlockers": [
+    "A vehicle-class fallback for ITC-28 remains unproved when an exact vehicle source ID is unavailable."
+  ]
+}

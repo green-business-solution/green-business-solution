@@ -1,0 +1,173 @@
+{
+  "schemaVersion": "operational-savings/real-proof-manifest-v1",
+  "standardId": "STD-WATERSENSE-LANDSCAPE",
+  "slug": "watersense-landscape",
+  "adapterPath": "scripts/research/operational-savings/adapters/watersense-landscape/run.mjs",
+  "artifacts": [
+    {
+      "artifactId": "artifact:watersense-landscape:2020-10",
+      "sourceUrl": "https://www.epa.gov/sites/production/files/2020-10/ws-data-information-et-rainfall.xlsx",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/watersense-climate.xlsx",
+      "release": "climate workbook path dated 2020-10",
+      "sha256": "77afb36cff3dcb77eacad4db34a8dba44bd48eb24485c886958afd58e1846273",
+      "sizeBytes": 10078683,
+      "acquisitionMode": "PUBLIC_XLSX_DOWNLOAD",
+      "official": true
+    }
+  ],
+  "methodEvidence": {
+    "artifactId": "artifact:watersense-landscape:water-budget-tool-v2.0",
+    "sourceUrl": "https://www.epa.gov/system/files/documents/2025-12/watersense_water-budget-tool_v2.0.xlsx",
+    "cachePath": "scripts/research/operational-savings/.cache/artifacts/watersense-water-budget-tool-v2.0.xlsx",
+    "version": "WaterSense Water Budget Tool Version 2.0",
+    "sha256": "56fab916b37196655c9cf293928ca7d2f74a95fb44a47c0fc7bf5c770281201a",
+    "sizeBytes": 9678937,
+    "acquisitionMode": "PUBLIC_XLSX_DOWNLOAD",
+    "acquisitionTimestamp": "2026-07-24T19:13:17.000Z",
+    "sourceOrganization": "U.S. Environmental Protection Agency",
+    "licenseContext": "EPA-published WaterSense content is retained privately with U.S. EPA WaterSense attribution. WaterSense marks remain subject to program mark rules.",
+    "role": "AUTHORITATIVE_METHOD_WORKBOOK",
+    "official": true,
+    "originalLocalPath": "/private/tmp/watersense_water-budget-tool_v2.0.xlsx",
+    "nativeCells": [
+      "Step 2-Baseline!E13",
+      "Step 2-Baseline!E15",
+      "Step 2-Baseline!G22",
+      "Step 2-Baseline!G23",
+      "Step 3-Design Scenario!G24",
+      "Step 3-Design Scenario!H24",
+      "Step 3-Design Scenario!H55",
+      "Reference Equations & Data!B94:C100",
+      "Reference Equations & Data!B106:C110",
+      "Reference Equations & Data!B120:C124",
+      "Reference Equations & Data!B130:C131"
+    ]
+  },
+  "observedSchemas": [
+    {
+      "schemaId": "schema:watersense-landscape:2020-10",
+      "artifactId": "artifact:watersense-landscape:2020-10",
+      "format": "XLSX",
+      "extractor": "scripts/research/operational-savings/adapters/watersense-landscape/inspect-schema.mjs",
+      "requiredNativeFields": [
+        "About!A1",
+        "About!A2",
+        "About!C5",
+        "About!B6",
+        "About!B7",
+        "Peak_Month!A1:D31736",
+        "ETo!A1:N55915",
+        "P50!A1:N55915"
+      ]
+    }
+  ],
+  "normalizedTargets": [
+    "watersense_landscape_climate",
+    "calculation_assumptions",
+    "calculation_runs",
+    "selected_values",
+    "selected_value_provenance"
+  ],
+  "tests": [
+    {
+      "testId": "watersense-landscape-real-workbook-proof",
+      "path": "scripts/research/operational-savings/tests/watersense-landscape-real.test.mjs",
+      "name": "executes the exact reviewed Version 2.0 method and reaches both ITC-34 terms",
+      "kind": "END_TO_END_REAL",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:watersense-landscape:2020-10"
+      ],
+      "sourceNativeFields": [
+        "Postal Code",
+        "Peak Watering Month",
+        "Eto",
+        "RAINFALL",
+        "JAN_ET through DEC_ET",
+        "JAN_RF through DEC_RF",
+        "Annual"
+      ]
+    },
+    {
+      "testId": "watersense-landscape-header-failure-proof",
+      "path": "scripts/research/operational-savings/tests/watersense-landscape-real.test.mjs",
+      "name": "fails closed when an observed native header drifts",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:watersense-landscape:2020-10"
+      ],
+      "mutationCases": [
+        "mutated native header"
+      ]
+    },
+    {
+      "testId": "watersense-landscape-input-failure-proof",
+      "path": "scripts/research/operational-savings/tests/watersense-landscape-real.test.mjs",
+      "name": "rejects missing Version 2.0 inputs and incompatible project units",
+      "kind": "FAILURE",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:watersense-landscape:2020-10"
+      ],
+      "mutationCases": [
+        "missing authoritative growing season",
+        "growing-season postal-code mismatch",
+        "unverified growing-season method artifact",
+        "missing hydrozone",
+        "incompatible area unit",
+        "unsupported irrigation-efficiency override"
+      ]
+    }
+  ],
+  "processClaims": [
+    {
+      "categoryId": "ITC-34",
+      "processKey": "watersense_landscape",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:watersense-landscape:2020-10"
+      ],
+      "testIds": [
+        "watersense-landscape-real-workbook-proof",
+        "watersense-landscape-header-failure-proof",
+        "watersense-landscape-input-failure-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "baseline_design_allowance_gallons": 15386.062011576898,
+        "proposed_design_allowance_gallons": 7963.595974738558
+      },
+      "formulaTerms": [
+        "baseline_design_allowance_gallons",
+        "proposed_design_allowance_gallons"
+      ],
+      "remainingBlocker": null
+    }
+  ],
+  "feasibility": "PARTIALLY_FEASIBLE",
+  "remainingBlockers": [
+    "The cached climate workbook does not contain Version 2.0 growing-season start and end months, so arbitrary ZIP execution still requires an authoritative Version 2.0 growing-season lookup.",
+    "The Version 2.0 baseline is a design comparison and must not be presented as measured existing irrigation consumption.",
+    "Exact project hydrozone areas, landscape types, irrigation equipment, and controller treatment remain required."
+  ]
+}

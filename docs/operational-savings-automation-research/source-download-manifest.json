@@ -1,0 +1,1005 @@
+{
+  "schemaVersion": "operational-savings/source-download-manifest-v1",
+  "generatedOn": "2026-07-23",
+  "sourceCommit": "5ebdf470fdff8b04d38a2ab362b85f40ebd1f0d0",
+  "runtimeExternalCalls": 0,
+  "artifactPolicy": {
+    "rawArtifactsCommitted": false,
+    "rawCachePath": "scripts/research/operational-savings/.cache/artifacts",
+    "repositoryCachePath": "scripts/research/operational-savings/.cache/repos",
+    "compactSamplesCommitted": true,
+    "durableRawAndNormalizedStore": "research S3",
+    "durableRunnableModelStore": "research ECR",
+    "localCacheRole": "temporary working space only"
+  },
+  "standards": [
+    {
+      "standardId": "STD-COMSTOCK-ANNUAL-DELTA",
+      "organization": "National Laboratory of the Rockies",
+      "officialSource": "ComStock 2025 Release 3",
+      "officialUrls": [
+        "https://natlabrockies.github.io/ComStock.github.io/docs/data.html",
+        "https://natlabrockies.github.io/ComStock.github.io/docs/upgrade_measures/upgrade_measures.html",
+        "https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/comstock_amy2018_release_3/upgrades_lookup.json"
+      ],
+      "sourceVersion": "2025 Release 3",
+      "releaseDate": "2025-11",
+      "updateCadence": "Release based, historically several releases per year",
+      "license": "OEDI data is published for public access; retain release-specific license and attribution metadata",
+      "legalReview": "Confirm the license metadata attached to every OEDI release before production publication",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public OEDI S3 Parquet partitions",
+        "Public data and enumeration dictionaries",
+        "Public upgrades_lookup.json",
+        "Public measure_name_crosswalk.csv"
+      ],
+      "testedAccess": "HTTP 200 for the Release 3 upgrades lookup; full annual Parquet acquisition was not attempted because of size",
+      "observedArtifact": {
+        "name": "upgrades_lookup.json",
+        "format": "JSON",
+        "sizeBytes": 3752,
+        "sha256": "c3ba607e650d3b78cd86f08ef3cd6e632b7e622797a970cd8f16812e41a1ce5a",
+        "committed": false
+      },
+      "retainedSample": {
+        "path": "docs/operational-savings-automation-research/samples/comstock-annual-delta.sample.json",
+        "sizeBytes": 1963,
+        "sha256": "1d2e583f0942bd937d6dda4b5992704b001a41f1f2b6f85ac977d0658cd1ee6d"
+      },
+      "runtimeDesign": "Build-time Parquet aggregation published as a compact versioned lookup artifact",
+      "feasibility": "FEASIBLE_NOW",
+      "feasibilityEvidence": {
+        "processCount": 1,
+        "endToEndProcessCount": 1,
+        "sourceVerifiedProcessCount": 1,
+        "manualExportReadyProcessCount": 0,
+        "proofLevelCounts": {
+          "END_TO_END_REAL": 1,
+          "SOURCE_TO_STANDARD_REAL": 0,
+          "REAL_SOURCE_PARTIAL": 0,
+          "DOCUMENTATION_ONLY": 0,
+          "SYNTHETIC_ONLY": 0,
+          "ACCESS_BLOCKED": 0,
+          "SOURCE_UNSUPPORTED": 0
+        },
+        "basis": "Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests."
+      }
+    },
+    {
+      "standardId": "STD-SCOUT-ECM-SCREEN",
+      "organization": "U.S. Department of Energy and National Laboratory of the Rockies",
+      "officialSource": "Scout",
+      "officialUrls": [
+        "https://github.com/trynthink/scout",
+        "https://scout-bto.readthedocs.io/"
+      ],
+      "sourceVersion": "Git commit 72bcf419eb1cb37379f163563344b0ec61507fd3",
+      "releaseDate": "2026-07-23",
+      "updateCadence": "Continuous source repository with release tags",
+      "license": "Apache-2.0, with a conditional BSD alternative",
+      "legalReview": "Retain the selected license text and source commit; do not imply DOE endorsement",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public Git repository",
+        "ECM JSON definitions",
+        "Baseline stock and technology data files",
+        "Local Python execution"
+      ],
+      "testedAccess": "Repository cloned and the ECM definitions, schemas, examples, and processing code were inspected",
+      "observedArtifact": {
+        "name": "docs/examples/led_troffers.json",
+        "format": "JSON",
+        "sizeBytes": null,
+        "sha256": null,
+        "committed": false
+      },
+      "retainedSample": {
+        "path": "docs/operational-savings-automation-research/samples/scout-ecm-screen.sample.json",
+        "sizeBytes": 2043,
+        "sha256": "1d72aed5a63f12a6d8baae293de7e24e8c16bcc03df9ff5088272804a8996038"
+      },
+      "runtimeDesign": "Pinned build-time Scout preparation followed by compact approved ECM lookup artifacts",
+      "feasibility": "PARTIALLY_FEASIBLE",
+      "feasibilityEvidence": {
+        "processCount": 3,
+        "endToEndProcessCount": 1,
+        "sourceVerifiedProcessCount": 1,
+        "manualExportReadyProcessCount": 0,
+        "proofLevelCounts": {
+          "END_TO_END_REAL": 1,
+          "SOURCE_TO_STANDARD_REAL": 0,
+          "REAL_SOURCE_PARTIAL": 0,
+          "DOCUMENTATION_ONLY": 0,
+          "SYNTHETIC_ONLY": 0,
+          "ACCESS_BLOCKED": 0,
+          "SOURCE_UNSUPPORTED": 2
+        },
+        "basis": "At least one bound process is proved end to end, but the complete Standard process set is not."
+      }
+    },
+    {
+      "standardId": "STD-DOE-CCMS-RATINGS",
+      "organization": "U.S. Department of Energy",
+      "officialSource": "Compliance Certification Management System certification database",
+      "officialUrls": [
+        "https://www.regulations.doe.gov/certification-data/",
+        "https://www.regulations.doe.gov/ccms/templates"
+      ],
+      "sourceVersion": "Current product-specific certification exports",
+      "releaseDate": "Continuously updated",
+      "updateCadence": "Certification event based",
+      "license": "Federal certification records; access terms and product-export reuse should receive legal review",
+      "legalReview": "Required before redistributing bulk normalized certification records",
+      "accessClass": "free with manual export",
+      "accessRoutes": [
+        "Interactive certification database",
+        "Product-specific analyst export",
+        "Product-specific certification templates",
+        "Authenticated CCMS portal for submitters"
+      ],
+      "testedAccess": "Unauthenticated direct certification-data probe returned HTTP 403 with a 118-byte response",
+      "observedArtifact": {
+        "name": "HTTP 403 response from certification-data root",
+        "format": "HTML error",
+        "sizeBytes": 118,
+        "sha256": null,
+        "committed": false
+      },
+      "retainedSample": {
+        "path": "docs/operational-savings-automation-research/samples/doe-ccms-ratings.sample.json",
+        "sizeBytes": 1679,
+        "sha256": "b6c1c80073f9ae4e341e2da2c99ade2388eeae8ad25f9edf26c0c92517b360af"
+      },
+      "runtimeDesign": "Operator-exported manual seed with automated validation, normalization, and immutable publication",
+      "feasibility": "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES",
+      "feasibilityEvidence": {
+        "processCount": 24,
+        "endToEndProcessCount": 0,
+        "sourceVerifiedProcessCount": 0,
+        "manualExportReadyProcessCount": 0,
+        "proofLevelCounts": {
+          "END_TO_END_REAL": 0,
+          "SOURCE_TO_STANDARD_REAL": 0,
+          "REAL_SOURCE_PARTIAL": 0,
+          "DOCUMENTATION_ONLY": 0,
+          "SYNTHETIC_ONLY": 0,
+          "ACCESS_BLOCKED": 24,
+          "SOURCE_UNSUPPORTED": 0
+        },
+        "basis": "No genuine official export reaches the complete source-to-Standard gate set, so an access probe or planned operator workflow is not counted as a manual seed."
+      }
+    },
+    {
+      "standardId": "STD-ENERGY-STAR-PRODUCT-DATA",
+      "organization": "U.S. Environmental Protection Agency",
+      "officialSource": "ENERGY STAR certified product datasets",
+      "officialUrls": [
+        "https://www.energystar.gov/productfinder/advanced",
+        "https://data.energystar.gov/resource/pk8q-dim8.json",
+        "https://www.energystar.gov/products/productstr"
+      ],
+      "sourceVersion": "Active product-family specifications; full dishwasher dataset revision 2026-07-24T13:28:47.000Z",
+      "releaseDate": "Continuously updated",
+      "updateCadence": "Daily for product data",
+      "license": "EPA data access is public; ENERGY STAR marks and partner association have separate trademark rules",
+      "legalReview": "Review dataset-specific Socrata license metadata and trademark presentation",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public CSV, XML, and Excel family downloads",
+        "Public Socrata SODA API",
+        "Product Finder exports",
+        "Specification PDFs"
+      ],
+      "testedAccess": "Socrata dishwasher bulk query returned HTTP 200 and the complete 418-row current certified-product snapshot without credentials",
+      "observedArtifact": {
+        "name": "pk8q-dim8.json?$limit=50000&$order=pd_id",
+        "format": "JSON",
+        "sizeBytes": 370605,
+        "sha256": "a746b679f6ae2a9ce30f1fe115d1e279adccca49e684d3a6a35fc2e76fdb43ba",
+        "committed": false
+      },
+      "retainedSample": {
+        "path": "docs/operational-savings-automation-research/samples/energy-star-product-data.sample.json",
+        "sizeBytes": 2576,
+        "sha256": "7e5ccf2536df76231035a01ab9f228e4e721df9d8f2c29a2582a08398def9cca"
+      },
+      "runtimeDesign": "Scheduled family-specific bulk ingestion into normalized product and performance tables",
+      "feasibility": "FEASIBLE_AFTER_ADAPTER_WORK",
+      "feasibilityEvidence": {
+        "processCount": 25,
+        "endToEndProcessCount": 0,
+        "sourceVerifiedProcessCount": 2,
+        "manualExportReadyProcessCount": 0,
+        "proofLevelCounts": {
+          "END_TO_END_REAL": 0,
+          "SOURCE_TO_STANDARD_REAL": 0,
+          "REAL_SOURCE_PARTIAL": 2,
+          "DOCUMENTATION_ONLY": 23,
+          "SYNTHETIC_ONLY": 0,
+          "ACCESS_BLOCKED": 0,
+          "SOURCE_UNSUPPORTED": 0
+        },
+        "basis": "Real source evidence reaches a source-specific parser or Standard output, but no bound process is proved end to end."
+      }
+    },
+    {
+      "standardId": "STD-DOE-MEASUR",
+      "organization": "U.S. Department of Energy and Oak Ridge National Laboratory",
+      "officialSource": "MEASUR AMO Tools Suite",
+      "officialUrls": [
+        "https://www.energy.gov/cmei/ito/measur",
+        "https://www.energy.gov/cmei/amo/measur-calculator-list-and-descriptions",
+        "https://github.com/ORNL-AMO/AMO-Tools-Suite"
+      ],
+      "sourceVersion": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "releaseDate": "2025-01-27",
+      "updateCadence": "Source releases and continuous repository updates",
+      "license": "UT-Battelle permissive AMO Tools Suite license",
+      "legalReview": "Retain license and modification notices; do not use DOE or licensor names for endorsement",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public Git repository",
+        "C++ static library",
+        "WebAssembly bindings",
+        "Desktop application",
+        "Local assessment modules and calculators"
+      ],
+      "testedAccess": "Repository cloned and calculator headers, bindings, and C++ golden tests inspected; local build attempt failed because cmake is not installed",
+      "observedArtifact": {
+        "name": "tests/cpp/ElectricityReduction.unit.cpp and CompressedAirLeakSurvey.unit.cpp",
+        "format": "C++ source",
+        "sizeBytes": null,
+        "sha256": null,
+        "committed": false
+      },
+      "retainedSample": {
+        "path": "docs/operational-savings-automation-research/samples/doe-measur.sample.json",
+        "sizeBytes": 1894,
+        "sha256": "27828c9871105d2f8226a3adfbca55acfd452c1976b1c7370457da8281880802"
+      },
+      "runtimeDesign": "Pinned local library or WebAssembly package execution with category-specific adapters",
+      "feasibility": "PARTIALLY_FEASIBLE",
+      "feasibilityEvidence": {
+        "processCount": 17,
+        "endToEndProcessCount": 5,
+        "sourceVerifiedProcessCount": 5,
+        "manualExportReadyProcessCount": 0,
+        "proofLevelCounts": {
+          "END_TO_END_REAL": 5,
+          "SOURCE_TO_STANDARD_REAL": 0,
+          "REAL_SOURCE_PARTIAL": 0,
+          "DOCUMENTATION_ONLY": 12,
+          "SYNTHETIC_ONLY": 0,
+          "ACCESS_BLOCKED": 0,
+          "SOURCE_UNSUPPORTED": 0
+        },
+        "basis": "At least one bound process is proved end to end, but the complete Standard process set is not."
+      }
+    },
+    {
+      "standardId": "STD-SAM-SOLAR-THERMAL",
+      "organization": "National Laboratory of the Rockies",
+      "officialSource": "System Advisor Model solar water heating module and SSC",
+      "officialUrls": [
+        "https://sam.nlr.gov/solar-water-heating.html",
+        "https://github.com/NatLabRockies/ssc"
+      ],
+      "sourceVersion": "SSC git commit ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+      "releaseDate": "2026-07-17",
+      "updateCadence": "SAM and SSC release based",
+      "license": "BSD-3-Clause",
+      "legalReview": "Retain license and source attribution",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public SSC source repository",
+        "Local SSC shared library",
+        "PySAM bindings",
+        "SAM desktop application"
+      ],
+      "testedAccess": "SSC repository cloned; swh compute-module input and output declarations and upstream test input were inspected",
+      "observedArtifact": {
+        "name": "ssc/cmod_swh.cpp and test/input_cases/swh_common.h",
+        "format": "C++ source",
+        "sizeBytes": null,
+        "sha256": null,
+        "committed": false
+      },
+      "retainedSample": {
+        "path": "docs/operational-savings-automation-research/samples/sam-solar-thermal.sample.json",
+        "sizeBytes": 1884,
+        "sha256": "0b0f7c7e33275a87a62242270436683ba2f29a867e9538fbf1caf9919ab10aa5"
+      },
+      "runtimeDesign": "Pinned local SSC execution with weather files and all project design inputs stored internally",
+      "feasibility": "FEASIBLE_NOW",
+      "feasibilityEvidence": {
+        "processCount": 1,
+        "endToEndProcessCount": 1,
+        "sourceVerifiedProcessCount": 1,
+        "manualExportReadyProcessCount": 0,
+        "proofLevelCounts": {
+          "END_TO_END_REAL": 1,
+          "SOURCE_TO_STANDARD_REAL": 0,
+          "REAL_SOURCE_PARTIAL": 0,
+          "DOCUMENTATION_ONLY": 0,
+          "SYNTHETIC_ONLY": 0,
+          "ACCESS_BLOCKED": 0,
+          "SOURCE_UNSUPPORTED": 0
+        },
+        "basis": "Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests."
+      }
+    },
+    {
+      "standardId": "STD-PVWATTS-V8",
+      "organization": "National Laboratory of the Rockies",
+      "officialSource": "PVWatts V8 and SSC pvwattsv8 module",
+      "officialUrls": [
+        "https://developer.nlr.gov/docs/solar/pvwatts/v8/",
+        "https://github.com/NatLabRockies/ssc"
+      ],
+      "sourceVersion": "API 8.5.0, SSC 280; source repository commit ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+      "releaseDate": "API response inspected 2026-07-23",
+      "updateCadence": "Model and weather-dataset release based",
+      "license": "SSC is BSD-3-Clause; weather-source terms must be retained",
+      "legalReview": "Review NSRDB weather-data attribution and redistribution terms",
+      "accessClass": "free with account or API key",
+      "accessRoutes": [
+        "Public hosted ingestion API",
+        "Local SSC module",
+        "PySAM",
+        "Local weather files"
+      ],
+      "testedAccess": "A DEMO_KEY request to developer.nlr.gov returned HTTP 200; the legacy developer.nrel.gov hostname failed DNS resolution",
+      "observedArtifact": {
+        "name": "PVWatts V8 Los Angeles response",
+        "format": "JSON",
+        "sizeBytes": 1680,
+        "sha256": "88e37dd4aa5fb6ac1a633989f8f5eb6015691e08ae326d4ad61d60fb83ff671b",
+        "committed": false
+      },
+      "retainedSample": {
+        "path": "docs/operational-savings-automation-research/samples/pvwatts-v8.sample.json",
+        "sizeBytes": 2174,
+        "sha256": "b5de8f958f2dd5b33dc3f2e5f3fee933f1fb22631d4a649c03b40aec46fe3c30"
+      },
+      "runtimeDesign": "Pinned local SSC execution using internally retained weather files; hosted API is ingestion and regression evidence only",
+      "feasibility": "FEASIBLE_NOW",
+      "feasibilityEvidence": {
+        "processCount": 3,
+        "endToEndProcessCount": 3,
+        "sourceVerifiedProcessCount": 3,
+        "manualExportReadyProcessCount": 0,
+        "proofLevelCounts": {
+          "END_TO_END_REAL": 3,
+          "SOURCE_TO_STANDARD_REAL": 0,
+          "REAL_SOURCE_PARTIAL": 0,
+          "DOCUMENTATION_ONLY": 0,
+          "SYNTHETIC_ONLY": 0,
+          "ACCESS_BLOCKED": 0,
+          "SOURCE_UNSUPPORTED": 0
+        },
+        "basis": "Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests."
+      }
+    },
+    {
+      "standardId": "STD-WIND-SAM",
+      "organization": "National Laboratory of the Rockies",
+      "officialSource": "SAM wind power module, SSC, and Wind Toolkit resources",
+      "officialUrls": [
+        "https://sam.nlr.gov/wind.html",
+        "https://github.com/NatLabRockies/ssc",
+        "https://www.nlr.gov/Wind/Data-Tools"
+      ],
+      "sourceVersion": "SSC git commit ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+      "releaseDate": "2026-07-17",
+      "updateCadence": "Model and wind-resource release based",
+      "license": "SSC is BSD-3-Clause; wind-resource terms vary by artifact",
+      "legalReview": "Retain resource-specific license and attribution",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public SSC repository",
+        "Local SSC shared library",
+        "PySAM",
+        "Public Wind Toolkit data acquisition"
+      ],
+      "testedAccess": "SSC repository cloned and wind compute-module fields inspected; no full Wind Toolkit file was downloaded",
+      "observedArtifact": {
+        "name": "ssc/cmod_windpower.cpp",
+        "format": "C++ source",
+        "sizeBytes": null,
+        "sha256": null,
+        "committed": false
+      },
+      "retainedSample": {
+        "path": "docs/operational-savings-automation-research/samples/wind-sam.sample.json",
+        "sizeBytes": 1755,
+        "sha256": "977fed0af6690d62406b0ec7be5122d34c37b7b304fbdf2167922174700372b0"
+      },
+      "runtimeDesign": "Pinned local SSC execution with a bounded internally retained California wind-resource cache",
+      "feasibility": "FEASIBLE_NOW",
+      "feasibilityEvidence": {
+        "processCount": 2,
+        "endToEndProcessCount": 2,
+        "sourceVerifiedProcessCount": 2,
+        "manualExportReadyProcessCount": 0,
+        "proofLevelCounts": {
+          "END_TO_END_REAL": 2,
+          "SOURCE_TO_STANDARD_REAL": 0,
+          "REAL_SOURCE_PARTIAL": 0,
+          "DOCUMENTATION_ONLY": 0,
+          "SYNTHETIC_ONLY": 0,
+          "ACCESS_BLOCKED": 0,
+          "SOURCE_UNSUPPORTED": 0
+        },
+        "basis": "Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests."
+      }
+    },
+    {
+      "standardId": "STD-INTERVAL-TARIFF",
+      "organization": "National Laboratory of the Rockies, OpenEI, and controlling utilities",
+      "officialSource": "OpenEI Utility Rate Database plus controlling utility tariff sheets",
+      "officialUrls": [
+        "https://data.openei.org/submissions/5",
+        "https://openei.org/apps/USURDB/download/usurdb.csv.gz",
+        "https://apps.openei.org/services/doc/rest/util_rates/?version=4"
+      ],
+      "sourceVersion": "URDB bulk snapshot downloaded 2026-07-23; OEDI page last updated 2025-10-07",
+      "releaseDate": "Bulk file timestamp 2026-07-23",
+      "updateCadence": "URDB records checked annually; controlling tariffs change on utility schedules",
+      "license": "OEDI page states CC BY 4.0 unless noted; API documentation states CC0 unless noted",
+      "legalReview": "Retain the license attached to the specific bulk artifact and the controlling utility document",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public approved-rates CSV gzip bulk download",
+        "Public approved-rates JSON gzip bulk download",
+        "Free-key API with 500-record pagination",
+        "Utility tariff PDFs and tariff books",
+        "Operator-assisted structured import"
+      ],
+      "testedAccess": "Bulk CSV downloaded without a key; API without a key returned HTTP 403 and API_KEY_MISSING despite older prose suggesting otherwise",
+      "observedArtifact": {
+        "name": "usurdb.csv.gz",
+        "format": "Gzip CSV",
+        "sizeBytes": 12218163,
+        "sha256": "89081ef124080ea322516040dc6b2c1945f9f754eced63f3130d4a8f14947032",
+        "committed": false
+      },
+      "retainedSample": {
+        "path": "docs/operational-savings-automation-research/samples/interval-tariff.sample.json",
+        "sizeBytes": 2232,
+        "sha256": "1a20d5534e6f1a39727a1fe1ff27dc4e2dec04f3984f71d0ad245a98ac231bfe"
+      },
+      "runtimeDesign": "Scheduled bulk ingestion followed by California operator approval and publication to an internal effective-dated tariff database",
+      "feasibility": "FEASIBLE_NOW",
+      "feasibilityEvidence": {
+        "processCount": 10,
+        "endToEndProcessCount": 10,
+        "sourceVerifiedProcessCount": 10,
+        "manualExportReadyProcessCount": 0,
+        "proofLevelCounts": {
+          "END_TO_END_REAL": 10,
+          "SOURCE_TO_STANDARD_REAL": 0,
+          "REAL_SOURCE_PARTIAL": 0,
+          "DOCUMENTATION_ONLY": 0,
+          "SYNTHETIC_ONLY": 0,
+          "ACCESS_BLOCKED": 0,
+          "SOURCE_UNSUPPORTED": 0
+        },
+        "basis": "Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests."
+      }
+    },
+    {
+      "standardId": "STD-REOPT-LOCAL-DISPATCH",
+      "organization": "National Laboratory of the Rockies",
+      "officialSource": "REopt.jl",
+      "officialUrls": [
+        "https://github.com/NatLabRockies/REopt.jl",
+        "https://natlabrockies.github.io/REopt.jl/stable/"
+      ],
+      "sourceVersion": "0.59.2, git commit f952cabdf3e60f6e88eef80bb7bc9e7e24bac643",
+      "releaseDate": "2026-05-14",
+      "updateCadence": "Package release based",
+      "license": "Apache-2.0 with NOTICE requirements",
+      "legalReview": "Retain LICENSE and NOTICE in any distributed local package",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public Julia package repository",
+        "Local Julia package execution",
+        "Bundled SSC shared libraries",
+        "JSON scenario inputs"
+      ],
+      "testedAccess": "Repository cloned and input structs, tariff implementation, scenario fixtures, and result fields inspected; Julia is not installed in the research environment",
+      "observedArtifact": {
+        "name": "test/scenarios and src/core/electric_tariff.jl",
+        "format": "Julia and JSON",
+        "sizeBytes": null,
+        "sha256": null,
+        "committed": false
+      },
+      "retainedSample": {
+        "path": "docs/operational-savings-automation-research/samples/reopt-local-dispatch.sample.json",
+        "sizeBytes": 1671,
+        "sha256": "bcecf5ff5b325278ab291b14128528d297749ed24edee9e2a184ce3f38dc5412"
+      },
+      "runtimeDesign": "Pinned local Julia service or compiled worker with no hosted REopt API dependency",
+      "feasibility": "PARTIALLY_FEASIBLE",
+      "feasibilityEvidence": {
+        "processCount": 8,
+        "endToEndProcessCount": 2,
+        "sourceVerifiedProcessCount": 2,
+        "manualExportReadyProcessCount": 0,
+        "proofLevelCounts": {
+          "END_TO_END_REAL": 2,
+          "SOURCE_TO_STANDARD_REAL": 0,
+          "REAL_SOURCE_PARTIAL": 0,
+          "DOCUMENTATION_ONLY": 6,
+          "SYNTHETIC_ONLY": 0,
+          "ACCESS_BLOCKED": 0,
+          "SOURCE_UNSUPPORTED": 0
+        },
+        "basis": "At least one bound process is proved end to end, but the complete Standard process set is not."
+      }
+    },
+    {
+      "standardId": "STD-EPA-CHP-PERFORMANCE",
+      "organization": "U.S. Environmental Protection Agency",
+      "officialSource": "CHP technology catalog and screening methods",
+      "officialUrls": [
+        "https://www.epa.gov/chp/chp-technologies",
+        "https://www.epa.gov/chp/chp-energy-and-emissions-savings-calculator"
+      ],
+      "sourceVersion": "Catalog artifact downloaded 2026-07-23; technology page current February 2026",
+      "releaseDate": "Catalog editions vary by technology",
+      "updateCadence": "Irregular catalog and tool updates",
+      "license": "Federal EPA publications are generally public domain; retain source attribution",
+      "legalReview": "Confirm terms of linked non-EPA supporting datasets if incorporated",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public technology catalog PDFs",
+        "Public calculator workbook",
+        "Public method pages"
+      ],
+      "testedAccess": "A 4.1 MB official CHP technology catalog PDF was downloaded and its tables and method sections were inspected",
+      "observedArtifact": {
+        "name": "EPA CHP catalog PDF",
+        "format": "PDF",
+        "sizeBytes": 4135792,
+        "sha256": "eccea396f5bcc5c86c16a75b8d41b1a4a7b43df064b7363ee7054d53063f0d09",
+        "committed": false
+      },
+      "retainedSample": {
+        "path": "docs/operational-savings-automation-research/samples/epa-chp-performance.sample.json",
+        "sizeBytes": 1919,
+        "sha256": "1afd0a79e23b517e3c65df01b6e6774844d2f2acb112e9ab2fba5f5b97e8b5ba"
+      },
+      "runtimeDesign": "Versioned locally transcribed catalog tables with deterministic CHP equations",
+      "feasibility": "FEASIBLE_NOW",
+      "feasibilityEvidence": {
+        "processCount": 4,
+        "endToEndProcessCount": 4,
+        "sourceVerifiedProcessCount": 4,
+        "manualExportReadyProcessCount": 0,
+        "proofLevelCounts": {
+          "END_TO_END_REAL": 4,
+          "SOURCE_TO_STANDARD_REAL": 0,
+          "REAL_SOURCE_PARTIAL": 0,
+          "DOCUMENTATION_ONLY": 0,
+          "SYNTHETIC_ONLY": 0,
+          "ACCESS_BLOCKED": 0,
+          "SOURCE_UNSUPPORTED": 0
+        },
+        "basis": "Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests."
+      }
+    },
+    {
+      "standardId": "STD-FUELECONOMY-VEHICLES",
+      "organization": "U.S. Department of Energy and U.S. Environmental Protection Agency",
+      "officialSource": "FuelEconomy.gov vehicle data",
+      "officialUrls": [
+        "https://www.fueleconomy.gov/feg/epadata/vehicles.csv.zip",
+        "https://www.fueleconomy.gov/feg/ws/index.shtml"
+      ],
+      "sourceVersion": "1984-current bulk vehicle table downloaded 2026-07-23",
+      "releaseDate": "Continuously updated by model year and corrections",
+      "updateCadence": "Frequent during model-year certification cycles",
+      "license": "U.S. government data; retain agency attribution and inspect any linked third-party content separately",
+      "legalReview": "Low, subject to confirmation of bulk-download terms",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public vehicles.csv.zip bulk download",
+        "Public XML web services",
+        "Public downloadable data files"
+      ],
+      "testedAccess": "The official 2.19 MB ZIP was downloaded and its CSV header and exact vehicle fields were inspected",
+      "observedArtifact": {
+        "name": "vehicles.csv.zip",
+        "format": "ZIP CSV",
+        "sizeBytes": 2185627,
+        "sha256": "83ee4bf48e65e8e962e55952e0bfbdc6ab94d4bf63f42e2d38aa39143d6f1ecc",
+        "committed": false
+      },
+      "retainedSample": {
+        "path": "docs/operational-savings-automation-research/samples/fueleconomy-vehicles.sample.json",
+        "sizeBytes": 1776,
+        "sha256": "6d3d965a92f06db4ee7961b152926b8ccaeae1f1e2b5d68324845290f7604f85"
+      },
+      "runtimeDesign": "Scheduled bulk CSV ingestion into versioned vehicle records and exact-pair resolution",
+      "feasibility": "FEASIBLE_NOW",
+      "feasibilityEvidence": {
+        "processCount": 2,
+        "endToEndProcessCount": 2,
+        "sourceVerifiedProcessCount": 2,
+        "manualExportReadyProcessCount": 0,
+        "proofLevelCounts": {
+          "END_TO_END_REAL": 2,
+          "SOURCE_TO_STANDARD_REAL": 0,
+          "REAL_SOURCE_PARTIAL": 0,
+          "DOCUMENTATION_ONLY": 0,
+          "SYNTHETIC_ONLY": 0,
+          "ACCESS_BLOCKED": 0,
+          "SOURCE_UNSUPPORTED": 0
+        },
+        "basis": "Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests."
+      }
+    },
+    {
+      "standardId": "STD-WATERSENSE-FIXTURES",
+      "organization": "U.S. Environmental Protection Agency",
+      "officialSource": "WaterSense Product Search and product specifications",
+      "officialUrls": [
+        "https://www.epa.gov/watersense/product-search",
+        "https://www.epa.gov/watersense/watersense-label",
+        "https://www.epa.gov/watersense/watersense-frequently-asked-questions"
+      ],
+      "sourceVersion": "Live labeled-product search",
+      "releaseDate": "Continuously updated",
+      "updateCadence": "Certification event based",
+      "license": "EPA states WaterSense-published documents are public domain and asks for EPA WaterSense attribution",
+      "legalReview": "Review the Product Search data-service terms and WaterSense mark usage",
+      "accessClass": "free with manual export",
+      "accessRoutes": [
+        "Product Search web application",
+        "Download full product list from the web application",
+        "Product specification documents",
+        "Operator export"
+      ],
+      "testedAccess": "The public page loaded, but the guessed full-list URL returned HTTP 404 and the application obtains an environment API key dynamically; no secret or environment endpoint was accessed",
+      "observedArtifact": {
+        "name": "Product Search access probe and public specification pages",
+        "format": "HTML and manual export",
+        "sizeBytes": null,
+        "sha256": null,
+        "committed": false
+      },
+      "retainedSample": {
+        "path": "docs/operational-savings-automation-research/samples/watersense-fixtures.sample.json",
+        "sizeBytes": 2297,
+        "sha256": "4616f810c465fe623603805816ff9ba4ae1e994bac73c933b972cfa10b5ebf78"
+      },
+      "runtimeDesign": "Operator-assisted full-list export with automated schema validation and product normalization",
+      "feasibility": "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES",
+      "feasibilityEvidence": {
+        "processCount": 4,
+        "endToEndProcessCount": 0,
+        "sourceVerifiedProcessCount": 0,
+        "manualExportReadyProcessCount": 0,
+        "proofLevelCounts": {
+          "END_TO_END_REAL": 0,
+          "SOURCE_TO_STANDARD_REAL": 0,
+          "REAL_SOURCE_PARTIAL": 0,
+          "DOCUMENTATION_ONLY": 0,
+          "SYNTHETIC_ONLY": 0,
+          "ACCESS_BLOCKED": 4,
+          "SOURCE_UNSUPPORTED": 0
+        },
+        "basis": "No genuine official export reaches the complete source-to-Standard gate set, so an access probe or planned operator workflow is not counted as a manual seed."
+      }
+    },
+    {
+      "standardId": "STD-WATERSENSE-LANDSCAPE",
+      "organization": "U.S. Environmental Protection Agency",
+      "officialSource": "WaterSense Water Budget Tool Version 2.0",
+      "officialUrls": [
+        "https://www.epa.gov/watersense/water-budget-tool",
+        "https://www.epa.gov/sites/production/files/2020-10/ws-data-information-et-rainfall.xlsx"
+      ],
+      "sourceVersion": "Water Budget Tool Version 2.0",
+      "releaseDate": "Page updated 2026-03-10; climate workbook path dated 2020-10",
+      "updateCadence": "Irregular tool and climate-data updates",
+      "license": "EPA-published WaterSense content is public domain with requested attribution",
+      "legalReview": "Confirm any source datasets embedded in the climate workbook",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public web calculator",
+        "Public full climate-data XLSX",
+        "Water Budget data finder"
+      ],
+      "testedAccess": "The official 10.08 MB workbook downloaded; artifact-tool import exhausted the available inspection process twice, so bounded XLSX extraction is required",
+      "observedArtifact": {
+        "name": "ws-data-information-et-rainfall.xlsx",
+        "format": "XLSX",
+        "sizeBytes": 10078683,
+        "sha256": "77afb36cff3dcb77eacad4db34a8dba44bd48eb24485c886958afd58e1846273",
+        "committed": false
+      },
+      "retainedSample": {
+        "path": "docs/operational-savings-automation-research/samples/watersense-landscape.sample.json",
+        "sizeBytes": 1884,
+        "sha256": "fc98a1b94e3fbc582e25755f2d5c82560b5268c72bfd1e2899e415fc377ca540"
+      },
+      "runtimeDesign": "Bounded build-time workbook extraction to a compact ZIP-climate lookup plus local Water Budget equations",
+      "feasibility": "FEASIBLE_NOW",
+      "feasibilityEvidence": {
+        "processCount": 1,
+        "endToEndProcessCount": 1,
+        "sourceVerifiedProcessCount": 1,
+        "manualExportReadyProcessCount": 0,
+        "proofLevelCounts": {
+          "END_TO_END_REAL": 1,
+          "SOURCE_TO_STANDARD_REAL": 0,
+          "REAL_SOURCE_PARTIAL": 0,
+          "DOCUMENTATION_ONLY": 0,
+          "SYNTHETIC_ONLY": 0,
+          "ACCESS_BLOCKED": 0,
+          "SOURCE_UNSUPPORTED": 0
+        },
+        "basis": "Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests."
+      }
+    },
+    {
+      "standardId": "STD-WATERSENSE-CI-OPERATIONS",
+      "organization": "U.S. Environmental Protection Agency",
+      "officialSource": "WaterSense at Work commercial and institutional best-management practices",
+      "officialUrls": [
+        "https://www.epa.gov/watersense/best-management-practices",
+        "https://www.epa.gov/sites/default/files/2017-02/ws-commercial-excel-writeable-tables.xlsx"
+      ],
+      "sourceVersion": "WaterSense at Work workbook published 2017-02; current guidance page",
+      "releaseDate": "2017-02 workbook",
+      "updateCadence": "Irregular guidance updates",
+      "license": "EPA-published WaterSense content is public domain with requested attribution",
+      "legalReview": "Low",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public best-management-practice pages and PDFs",
+        "Public commercial assessment XLSX",
+        "Manual measurements and project records"
+      ],
+      "testedAccess": "The official 89.8 KB workbook was downloaded and all seven sheet names and relevant input columns were inspected",
+      "observedArtifact": {
+        "name": "ws-commercial-excel-writeable-tables.xlsx",
+        "format": "XLSX",
+        "sizeBytes": 89786,
+        "sha256": "f69facc89beb2073fdaba88206d20e32151b2f30c53a7f21f7981eeab8c0ab52",
+        "committed": false
+      },
+      "retainedSample": {
+        "path": "docs/operational-savings-automation-research/samples/watersense-ci-operations.sample.json",
+        "sizeBytes": 1897,
+        "sha256": "8e5fbcd3a92f3403e61c51bf8f69dca0523fb52f9289cba39496111a38754343"
+      },
+      "runtimeDesign": "Local measured-input calculator using project documents and meter records; guidance remains a method source rather than a benchmark database",
+      "feasibility": "PARTIALLY_FEASIBLE",
+      "feasibilityEvidence": {
+        "processCount": 2,
+        "endToEndProcessCount": 1,
+        "sourceVerifiedProcessCount": 1,
+        "manualExportReadyProcessCount": 0,
+        "proofLevelCounts": {
+          "END_TO_END_REAL": 1,
+          "SOURCE_TO_STANDARD_REAL": 0,
+          "REAL_SOURCE_PARTIAL": 0,
+          "DOCUMENTATION_ONLY": 0,
+          "SYNTHETIC_ONLY": 0,
+          "ACCESS_BLOCKED": 0,
+          "SOURCE_UNSUPPORTED": 1
+        },
+        "basis": "At least one bound process is proved end to end, but the complete Standard process set is not."
+      }
+    },
+    {
+      "standardId": "STD-FEMP-EXTERIOR-LIGHTING",
+      "organization": "U.S. Department of Energy Federal Energy Management Program",
+      "officialSource": "Purchasing Energy-Efficient Exterior Lighting",
+      "officialUrls": [
+        "https://www.energy.gov/cmei/femp/purchasing-energy-efficient-exterior-lighting"
+      ],
+      "sourceVersion": "Updated June 2023",
+      "releaseDate": "2023-06",
+      "updateCadence": "Irregular procurement-guidance updates",
+      "license": "Federal guidance; retain DOE FEMP attribution",
+      "legalReview": "Low",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public HTML tables",
+        "Printable federal procurement guidance"
+      ],
+      "testedAccess": "The official page downloaded and Table 1 LER requirements and Table 2 wall-mounted example were inspected",
+      "observedArtifact": {
+        "name": "FEMP exterior-lighting HTML",
+        "format": "HTML",
+        "sizeBytes": 148626,
+        "sha256": "cb50171c667e44e0c8fe1681fac57fcfe22d6adffe6ba1229bd9d103b8fc547a",
+        "committed": false
+      },
+      "retainedSample": {
+        "path": "docs/operational-savings-automation-research/samples/femp-exterior-lighting.sample.json",
+        "sizeBytes": 1798,
+        "sha256": "66dfb67f471d558a0839c2172330f23a8539b41c281f4d695466ff595722d129"
+      },
+      "runtimeDesign": "Small reviewed JSON lookup artifact plus deterministic lighting equation",
+      "feasibility": "PARTIALLY_FEASIBLE",
+      "feasibilityEvidence": {
+        "processCount": 3,
+        "endToEndProcessCount": 2,
+        "sourceVerifiedProcessCount": 2,
+        "manualExportReadyProcessCount": 0,
+        "proofLevelCounts": {
+          "END_TO_END_REAL": 2,
+          "SOURCE_TO_STANDARD_REAL": 0,
+          "REAL_SOURCE_PARTIAL": 0,
+          "DOCUMENTATION_ONLY": 0,
+          "SYNTHETIC_ONLY": 0,
+          "ACCESS_BLOCKED": 0,
+          "SOURCE_UNSUPPORTED": 1
+        },
+        "basis": "At least one bound process is proved end to end, but the complete Standard process set is not."
+      }
+    },
+    {
+      "standardId": "STD-OPERATING-SCHEDULE",
+      "organization": "RetroFi project or profile owner, with U.S. Naval Observatory astronomy validation",
+      "officialSource": "Caller-owned explicit calendar and site inputs; a pinned USNO one-day response validates only the astronomy-model boundary",
+      "officialUrls": [
+        "https://aa.usno.navy.mil/faq/RST_defs",
+        "https://aa.usno.navy.mil/api/rstt/oneday?date=2026-06-21&coords=37.7749,-122.4194&tz=-8&dst=true"
+      ],
+      "sourceVersion": "project-owned operating-schedule input contract v1; USNO API 4.0.1 response acquired 2026-07-24",
+      "releaseDate": "Project inputs are versioned per calculation; retained USNO response date 2026-06-21",
+      "updateCadence": "Hash every project input per calculation and revalidate astronomy behavior when the local algorithm or USNO API changes",
+      "license": "Project inputs require project-authorized use; USNO astronomical data is U.S. government data",
+      "legalReview": "Low",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Content-addressed explicit project or profile schedule",
+        "Local deterministic calendar and solar-event arithmetic",
+        "Pinned USNO one-day API response for astronomy validation only"
+      ],
+      "testedAccess": "A pinned USNO GeoJSON response was acquired and compared with the local solar-event algorithm; separate source-controlled project-input fixtures exercise weekly, difference, and daylight branches",
+      "observedArtifact": {
+        "name": "USNO one-day GeoJSON astronomy-validation response for San Francisco on 2026-06-21",
+        "format": "GeoJSON",
+        "sizeBytes": 1271,
+        "sha256": "e096159b03d9fe91f287898142a567809a83d794f6c8aaad6b8809bb2378f812",
+        "committed": false
+      },
+      "retainedSample": {
+        "path": "docs/operational-savings-automation-research/samples/operating-schedule.sample.json",
+        "sizeBytes": 2166,
+        "sha256": "f04aab22da05aa39ce321e135e88db2532283b279a5f8729b58ff36eaefbc391"
+      },
+      "runtimeDesign": "Run the deterministic calendar or solar model offline, persist a SHA-256 hash of the exact project input on the calculation run, leave primary source artifact and release null for project-owned values, and attach USNO only as an astronomy_model_validation dependency for daylight calculations",
+      "feasibility": "PARTIALLY_FEASIBLE",
+      "feasibilityEvidence": {
+        "processCount": 15,
+        "endToEndProcessCount": 1,
+        "sourceVerifiedProcessCount": 2,
+        "manualExportReadyProcessCount": 0,
+        "proofLevelCounts": {
+          "END_TO_END_REAL": 1,
+          "SOURCE_TO_STANDARD_REAL": 0,
+          "REAL_SOURCE_PARTIAL": 1,
+          "DOCUMENTATION_ONLY": 10,
+          "SYNTHETIC_ONLY": 3,
+          "ACCESS_BLOCKED": 0,
+          "SOURCE_UNSUPPORTED": 0
+        },
+        "basis": "At least one bound process is proved end to end, but the complete Standard process set is not."
+      }
+    },
+    {
+      "standardId": "STD-DISHWASHER-WATER-HEATING",
+      "organization": "U.S. Environmental Protection Agency",
+      "officialSource": "ENERGY STAR Commercial Food Service Equipment Calculator, Dishwasher Calcs",
+      "officialUrls": [
+        "https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx"
+      ],
+      "sourceVersion": "Workbook published March 2024",
+      "releaseDate": "2024-03",
+      "updateCadence": "Calculator and specification release based",
+      "license": "EPA calculator; retain source attribution and review workbook notices",
+      "legalReview": "Low",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public XLSX calculator",
+        "Locally inspected formulas and assumptions"
+      ],
+      "testedAccess": "The official 403 KB workbook downloaded; all 15 sheets, Dishwasher Calcs inputs, formulas, and water-heating factors were inspected",
+      "observedArtifact": {
+        "name": "CFS Equipment Calculator.xlsx",
+        "format": "XLSX",
+        "sizeBytes": 403484,
+        "sha256": "3d2abed1938bd1400378a2e0ca2095058fe490b2b599ef15f09056639f06fcd6",
+        "committed": false
+      },
+      "retainedSample": {
+        "path": "docs/operational-savings-automation-research/samples/dishwasher-water-heating.sample.json",
+        "sizeBytes": 2050,
+        "sha256": "168cf99b000d010646537f4e9c759f6b39210af52f2a3d2ab00c76d52bfe95f4"
+      },
+      "runtimeDesign": "Small immutable calculator-assumption artifact plus deterministic local equation",
+      "feasibility": "FEASIBLE_NOW",
+      "feasibilityEvidence": {
+        "processCount": 1,
+        "endToEndProcessCount": 1,
+        "sourceVerifiedProcessCount": 1,
+        "manualExportReadyProcessCount": 0,
+        "proofLevelCounts": {
+          "END_TO_END_REAL": 1,
+          "SOURCE_TO_STANDARD_REAL": 0,
+          "REAL_SOURCE_PARTIAL": 0,
+          "DOCUMENTATION_ONLY": 0,
+          "SYNTHETIC_ONLY": 0,
+          "ACCESS_BLOCKED": 0,
+          "SOURCE_UNSUPPORTED": 0
+        },
+        "basis": "Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests."
+      }
+    },
+    {
+      "standardId": "STD-CONTEXT-BENCHMARKS",
+      "organization": "Multiple U.S. federal agencies and national laboratories",
+      "officialSource": "Category-specific authoritative context benchmarks",
+      "officialUrls": [
+        "https://www.energy.gov/cmei/buildings/commercial-reference-buildings",
+        "https://www.energy.gov/sites/prod/files/2014/03/f11/forklift_anl_esd.pdf",
+        "https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx",
+        "https://emilms.fema.gov/IS0815/groups/90.html"
+      ],
+      "sourceVersion": "Source-specific versions pinned per benchmark",
+      "releaseDate": "Varies",
+      "updateCadence": "Source-specific",
+      "license": "Source-specific federal publication and dataset terms",
+      "legalReview": "Required for every added benchmark source",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Federal PDFs",
+        "Official XLSX calculators",
+        "Official HTML methods",
+        "National-laboratory reports",
+        "Approved local artifacts"
+      ],
+      "testedAccess": "Existing reviewed fixtures cover lighting, flush activity, forklift intensity, cooktop duty, walk-in components, dishwasher activity, and generator test fuel; several context processes remain unsupported",
+      "observedArtifact": {
+        "name": "Multiple reviewed source fixtures already retained in the repository",
+        "format": "JSON fixtures derived from PDF, XLSX, and HTML",
+        "sizeBytes": null,
+        "sha256": null,
+        "committed": false
+      },
+      "retainedSample": {
+        "path": "docs/operational-savings-automation-research/samples/context-benchmarks.sample.json",
+        "sizeBytes": 2069,
+        "sha256": "756ce5159867b239da22530fb5745e287f558d5e4dc40f8ab477f6c21cafc4e9"
+      },
+      "runtimeDesign": "Registry of small source-specific immutable benchmark artifacts with one adapter per benchmark family",
+      "feasibility": "PARTIALLY_FEASIBLE",
+      "feasibilityEvidence": {
+        "processCount": 20,
+        "endToEndProcessCount": 6,
+        "sourceVerifiedProcessCount": 7,
+        "manualExportReadyProcessCount": 0,
+        "proofLevelCounts": {
+          "END_TO_END_REAL": 6,
+          "SOURCE_TO_STANDARD_REAL": 0,
+          "REAL_SOURCE_PARTIAL": 1,
+          "DOCUMENTATION_ONLY": 13,
+          "SYNTHETIC_ONLY": 0,
+          "ACCESS_BLOCKED": 0,
+          "SOURCE_UNSUPPORTED": 0
+        },
+        "basis": "At least one bound process is proved end to end, but the complete Standard process set is not."
+      }
+    }
+  ]
+}

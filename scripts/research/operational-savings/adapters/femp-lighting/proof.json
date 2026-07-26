@@ -1,0 +1,363 @@
+{
+  "schemaVersion": "operational-savings/real-proof-manifest-v1",
+  "standardId": "STD-FEMP-EXTERIOR-LIGHTING",
+  "slug": "femp-lighting",
+  "adapterPath": "scripts/research/operational-savings/adapters/femp-lighting/run.mjs",
+  "artifacts": [
+    {
+      "artifactId": "artifact:femp-exterior-lighting:2026-07-23",
+      "sourceUrl": "https://www.energy.gov/cmei/femp/purchasing-energy-efficient-exterior-lighting",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/femp-exterior-lighting.html",
+      "release": "page snapshot acquired 2026-07-23; guidance updated June 2023",
+      "sha256": "cb50171c667e44e0c8fe1681fac57fcfe22d6adffe6ba1229bd9d103b8fc547a",
+      "sizeBytes": 148626,
+      "acquisitionMode": "PUBLIC_HTML_TABLE",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:doe-lmc-2015-tables:2017-11",
+      "sourceUrl": "https://www.energy.gov/sites/default/files/2017/12/f46/LMC%202015%20Tables_0.XLSX",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/doe-lmc-2015-tables.xlsx",
+      "release": "2015 baseline, November 2017 report tables",
+      "sha256": "97c36f8d92a721dc2e3245215987d90c828314fa478050ea24c90c750c6fe5f1",
+      "sizeBytes": 1112293,
+      "acquisitionMode": "PUBLIC_XLSX_DOWNLOAD",
+      "acquiredAt": "2026-07-24T19:21:55.000Z",
+      "official": true
+    }
+  ],
+  "observedSchemas": [
+    {
+      "schemaId": "schema:femp-exterior-lighting:2026-07-23",
+      "artifactId": "artifact:femp-exterior-lighting:2026-07-23",
+      "format": "HTML_TABLE",
+      "extractor": "scripts/research/operational-savings/adapters/femp-lighting/inspect-schema.mjs",
+      "tableTitle": "Table 1. Efficiency Requirements for Exterior Lighting",
+      "requiredNativeFields": [
+        "Category",
+        "Luminaire Efficacy Rating (LER)"
+      ],
+      "fields": [
+        {
+          "name": "Category",
+          "enumeration": [
+            "Fuel pump canopy luminaires",
+            "Parking garage luminaires",
+            "Outdoor pole/arm-mounted area and roadway luminaires",
+            "Outdoor pole/arm-mounted decorative luminaires",
+            "Outdoor wall-mounted luminaires",
+            "Bollards",
+            "Floodlight Luminaires"
+          ]
+        },
+        {
+          "name": "Luminaire Efficacy Rating (LER)",
+          "unit": "lumens/watt",
+          "comparator": "greater than or equal"
+        }
+      ]
+    },
+    {
+      "schemaId": "schema:doe-lmc-2015:table-4-29",
+      "artifactId": "artifact:doe-lmc-2015-tables:2017-11",
+      "format": "XLSX_TABLE_4_29",
+      "extractor": "scripts/research/operational-savings/adapters/context-benchmarks/inspect-schema.mjs",
+      "requiredNativeFields": [
+        "Table 4-29!A5:A13 outdoor subsectors",
+        "Table 4-29!L5:L13 average wattage per lamp or luminaire"
+      ],
+      "fields": [
+        {
+          "name": "Average wattage per lamp or luminaire",
+          "unit": "watts/lamp-or-luminaire"
+        }
+      ]
+    }
+  ],
+  "normalizedTargets": [
+    "femp_exterior_lighting_requirements",
+    "benchmark_populations",
+    "benchmark_values",
+    "calculation_runs",
+    "calculation_source_dependencies",
+    "selected_values",
+    "selected_value_provenance"
+  ],
+  "tests": [
+    {
+      "testId": "femp-exterior-lighting-schema-publication-proof",
+      "path": "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs",
+      "name": "parses and publishes the exact seven-row FEMP Table 1 with its pinned checksum",
+      "kinds": [
+        "REAL_SCHEMA",
+        "REAL_PARSER",
+        "NORMALIZATION",
+        "DATABASE_PUBLICATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:femp-exterior-lighting:2026-07-23"
+      ],
+      "sourceNativeFields": [
+        "Category",
+        "Luminaire Efficacy Rating (LER)"
+      ]
+    },
+    {
+      "testId": "femp-exterior-lighting-requirement-mapping-proof",
+      "path": "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs",
+      "name": "maps an exact application and supplied lumen requirement to the ITC-02 power ceiling",
+      "kinds": [
+        "RESOLVER",
+        "DATABASE_PUBLICATION",
+        "OFFLINE_EXECUTION",
+        "FORMULA_INPUT_MAPPING"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:femp-exterior-lighting:2026-07-23"
+      ],
+      "sourceNativeFields": [
+        "Category",
+        "Luminaire Efficacy Rating (LER)"
+      ]
+    },
+    {
+      "testId": "itc02-lighting-composition-real-proof",
+      "path": "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs",
+      "name": "composes real benchmark, requirement, and schedule outputs into annual_kWh",
+      "kinds": [
+        "LOCAL_MODEL_EXECUTION",
+        "NORMALIZATION",
+        "RESOLVER",
+        "DATABASE_PUBLICATION",
+        "OFFLINE_EXECUTION",
+        "FORMULA_INPUT_MAPPING",
+        "FAILURE"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:doe-lmc-2015-tables:2017-11",
+        "artifact:femp-exterior-lighting:2026-07-23"
+      ],
+      "sourceNativeFields": [
+        "Table 4-29!A7",
+        "Table 4-29!L7",
+        "Category",
+        "Luminaire Efficacy Rating (LER)",
+        "projectSchedule.year",
+        "projectSchedule.timeZone",
+        "projectSchedule.weekly"
+      ],
+      "mutationCases": [
+        "mismatched upstream calculation dependency"
+      ]
+    },
+    {
+      "testId": "femp-exterior-lighting-source-boundary-proof",
+      "path": "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs",
+      "name": "rejects exact-product resolution because the FEMP page has no products",
+      "kind": "FAILURE",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:femp-exterior-lighting:2026-07-23"
+      ]
+    },
+    {
+      "testId": "femp-exterior-lighting-resolution-failure-proof",
+      "path": "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs",
+      "name": "fails closed on unknown applications and invalid required light output",
+      "kind": "FAILURE",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:femp-exterior-lighting:2026-07-23"
+      ],
+      "mutationCases": [
+        "unknown application",
+        "invalid required light output",
+        "wrong schedule process",
+        "invalid fixture count"
+      ]
+    },
+    {
+      "testId": "femp-exterior-lighting-schema-mutation-proof",
+      "path": "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs",
+      "name": "fails header, threshold-unit, and duplicate-application schema mutations",
+      "kind": "MUTATION",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:femp-exterior-lighting:2026-07-23"
+      ],
+      "mutationCases": [
+        "missing table header",
+        "unit-polluted efficacy requirement",
+        "duplicate application requirement"
+      ]
+    },
+    {
+      "testId": "femp-exterior-lighting-checksum-mutation-proof",
+      "path": "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs",
+      "name": "fails a corrupt artifact checksum",
+      "kind": "MUTATION",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:femp-exterior-lighting:2026-07-23"
+      ],
+      "mutationCases": [
+        "corrupt artifact checksum"
+      ]
+    },
+    {
+      "testId": "femp-exterior-lighting-offline-proof",
+      "path": "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs",
+      "name": "requires offline mode and makes no runtime network call",
+      "kinds": [
+        "OFFLINE_EXECUTION",
+        "FAILURE"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:femp-exterior-lighting:2026-07-23"
+      ]
+    }
+  ],
+  "processClaims": [
+    {
+      "categoryId": "ITC-02",
+      "processKey": "lighting-replacement-calculation",
+      "coveredStandardIds": [
+        "STD-FEMP-EXTERIOR-LIGHTING",
+        "STD-OPERATING-SCHEDULE"
+      ],
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:doe-lmc-2015-tables:2017-11",
+        "artifact:femp-exterior-lighting:2026-07-23"
+      ],
+      "testIds": [
+        "itc02-lighting-composition-real-proof",
+        "femp-exterior-lighting-resolution-failure-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "annual_kWh": 733.6126984126986
+      },
+      "formulaTerms": [
+        "annual_kWh"
+      ],
+      "provenanceRefs": [
+        "artifact:doe-lmc-2015-tables:2017-11",
+        "artifact:femp-exterior-lighting:2026-07-23",
+        "itc02-lighting-composition-real-proof"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-02",
+      "processKey": "requirement-new-fixture-watts",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:femp-exterior-lighting:2026-07-23"
+      ],
+      "testIds": [
+        "femp-exterior-lighting-schema-publication-proof",
+        "femp-exterior-lighting-requirement-mapping-proof",
+        "femp-exterior-lighting-resolution-failure-proof",
+        "femp-exterior-lighting-schema-mutation-proof",
+        "femp-exterior-lighting-checksum-mutation-proof",
+        "femp-exterior-lighting-offline-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutputs": [
+        {
+          "outputName": "Selected proposed input power per fixture",
+          "formulaTerm": "proposed_kW",
+          "unit": "kW/fixture",
+          "scope": "PER_FIXTURE",
+          "value": 0.07936507936507936
+        }
+      ],
+      "formulaMappings": [
+        {
+          "outputName": "Selected proposed input power per fixture",
+          "formulaTerm": "proposed_kW",
+          "unit": "kW/fixture",
+          "scope": "PER_FIXTURE",
+          "testId": "femp-exterior-lighting-requirement-mapping-proof"
+        }
+      ],
+      "formulaTerms": [
+        "proposed_kW"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-02",
+      "processKey": "exact-new-fixture-watts",
+      "proofLevel": "SOURCE_UNSUPPORTED",
+      "artifactIds": [
+        "artifact:femp-exterior-lighting:2026-07-23"
+      ],
+      "testIds": [
+        "femp-exterior-lighting-schema-publication-proof",
+        "femp-exterior-lighting-source-boundary-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "sourceUnsupported": true,
+      "remainingBlocker": "The official FEMP page contains application-level efficacy requirements but no product model, exact input-power, or active product rows."
+    }
+  ],
+  "feasibility": "PARTIALLY_FEASIBLE",
+  "remainingBlockers": [
+    "Exact-product wattage requires a separate qualified-product dataset.",
+    "The requirement mapping is a maximum input-power bound at the minimum efficacy threshold, not observed product wattage."
+  ]
+}

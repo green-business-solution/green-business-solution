@@ -1,0 +1,351 @@
+{
+  "schemaVersion": "operational-savings/real-proof-manifest-v1",
+  "standardId": "STD-ENERGY-STAR-PRODUCT-DATA",
+  "slug": "energy-star",
+  "adapterPath": "scripts/research/operational-savings/adapters/energy-star/run.mjs",
+  "artifacts": [
+    {
+      "artifactId": "artifact:energy-star-commercial-dishwashers:2026-07-24-full",
+      "sourceUrl": "https://data.energystar.gov/resource/pk8q-dim8.json?$limit=50000&$order=pd_id",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/energy-star-commercial-dishwashers-full.json",
+      "release": "full 418-row current-list snapshot; dataset updated 2026-07-24T13:28:47.000Z",
+      "sha256": "a746b679f6ae2a9ce30f1fe115d1e279adccca49e684d3a6a35fc2e76fdb43ba",
+      "sizeBytes": 370605,
+      "acquisitionMode": "PUBLIC_SOCRATA_JSON",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:energy-star-commercial-dishwashers-metadata:2026-07-24",
+      "sourceUrl": "https://data.energystar.gov/api/views/pk8q-dim8",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/energy-star-commercial-dishwashers-metadata.json",
+      "release": "dataset metadata acquired 2026-07-24",
+      "sha256": "9e37aca49d32907b588334205fb1c2293c8419191473f117d0e7a8a6e5061190",
+      "sizeBytes": 54036,
+      "acquisitionMode": "PUBLIC_SOCRATA_METADATA",
+      "official": true
+    }
+  ],
+  "observedSchemas": [
+    {
+      "schemaId": "schema:energy-star-commercial-dishwashers:2026-07-24-full",
+      "artifactId": "artifact:energy-star-commercial-dishwashers:2026-07-24-full",
+      "format": "SOCRATA_JSON_ARRAY",
+      "extractor": "scripts/research/operational-savings/adapters/energy-star/inspect-schema.mjs",
+      "requiredNativeFields": [
+        "pd_id",
+        "energy_star_partner",
+        "brand_name",
+        "model_number",
+        "machine_type",
+        "sanitation_method",
+        "water_use_gallons_per_rack_gpr",
+        "washing_energy_consumption_kwh_rack_for_low_temp_and_dual_sanitizing_machines",
+        "washing_energy_consumption_kwh_rack_for_high_temp_and_dual_sanitizing_machines",
+        "idle_energy_rate_for_low_temp_kw",
+        "idle_energy_rate_for_high_temp_kw",
+        "racks_per_hour",
+        "water_use_gallons_per_hour_gph",
+        "date_qualified",
+        "energy_star_model_identifier"
+      ],
+      "fields": [
+        {
+          "name": "water_use_gallons_per_rack_gpr",
+          "unit": "gallons/rack"
+        },
+        {
+          "name": "washing_energy_consumption_kwh_rack_for_low_temp_and_dual_sanitizing_machines",
+          "unit": "kWh/rack"
+        },
+        {
+          "name": "washing_energy_consumption_kwh_rack_for_high_temp_and_dual_sanitizing_machines",
+          "unit": "kWh/rack"
+        },
+        {
+          "name": "idle_energy_rate_for_low_temp_kw",
+          "unit": "kW"
+        },
+        {
+          "name": "idle_energy_rate_for_high_temp_kw",
+          "unit": "kW"
+        },
+        {
+          "name": "racks_per_hour",
+          "unit": "racks/hour"
+        }
+      ]
+    }
+  ],
+  "normalizedTargets": [
+    "equipment_products",
+    "equipment_certifications",
+    "equipment_performance_fields",
+    "energy_star_commercial_dishwashers",
+    "energy_star_dishwasher_operating_modes",
+    "selected_values",
+    "selected_value_provenance"
+  ],
+  "tests": [
+    {
+      "testId": "energy-star-dishwasher-real-proof",
+      "path": "scripts/research/operational-savings/tests/energy-star-real.test.mjs",
+      "name": "maps only genuine rack-machine fields to ITC-52 and records numeric provenance",
+      "kinds": [
+        "REAL_SOURCE_PARTIAL",
+        "NORMALIZATION",
+        "RESOLVER",
+        "DATABASE_PUBLICATION",
+        "FORMULA_INPUT_MAPPING"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:energy-star-commercial-dishwashers:2026-07-24-full",
+        "artifact:energy-star-commercial-dishwashers-metadata:2026-07-24"
+      ],
+      "sourceNativeFields": [
+        "pd_id",
+        "brand_name",
+        "model_number",
+        "machine_type",
+        "sanitation_method",
+        "water_use_gallons_per_rack_gpr",
+        "washing_energy_consumption_kwh_rack_for_low_temp_and_dual_sanitizing_machines",
+        "washing_energy_consumption_kwh_rack_for_high_temp_and_dual_sanitizing_machines",
+        "idle_energy_rate_for_low_temp_kw",
+        "idle_energy_rate_for_high_temp_kw",
+        "racks_per_hour",
+        "date_qualified"
+      ]
+    },
+    {
+      "testId": "energy-star-requirement-resolution-proof",
+      "path": "scripts/research/operational-savings/tests/energy-star-real.test.mjs",
+      "name": "resolves unique requirements across the complete current snapshot",
+      "kinds": [
+        "REAL_SOURCE_PARTIAL",
+        "NORMALIZATION",
+        "RESOLVER",
+        "DATABASE_PUBLICATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:energy-star-commercial-dishwashers:2026-07-24-full",
+        "artifact:energy-star-commercial-dishwashers-metadata:2026-07-24"
+      ],
+      "sourceNativeFields": [
+        "machine_type",
+        "sanitation_method",
+        "water_use_gallons_per_rack_gpr",
+        "washing_energy_consumption_kwh_rack_for_low_temp_and_dual_sanitizing_machines",
+        "washing_energy_consumption_kwh_rack_for_high_temp_and_dual_sanitizing_machines",
+        "idle_energy_rate_for_low_temp_kw",
+        "idle_energy_rate_for_high_temp_kw"
+      ]
+    },
+    {
+      "testId": "energy-star-schema-mutation-proof",
+      "path": "scripts/research/operational-savings/tests/energy-star-real.test.mjs",
+      "name": "fails schema mutations that remove a required field or pollute a native unit",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:energy-star-commercial-dishwashers:2026-07-24-full"
+      ],
+      "mutationCases": [
+        "missing required JSON field",
+        "unit-polluted numeric field"
+      ]
+    },
+    {
+      "testId": "energy-star-ambiguous-requirement-proof",
+      "path": "scripts/research/operational-savings/tests/energy-star-real.test.mjs",
+      "name": "fails closed when current-snapshot requirements remain ambiguous",
+      "kind": "FAILURE",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:energy-star-commercial-dishwashers:2026-07-24-full"
+      ],
+      "mutationCases": [
+        "ambiguous full-snapshot requirements"
+      ]
+    }
+  ],
+  "processClaims": [
+    {
+      "categoryId": "ITC-52",
+      "processKey": "exact-proposed-dishwasher-record",
+      "proofLevel": "REAL_SOURCE_PARTIAL",
+      "artifactIds": [
+        "artifact:energy-star-commercial-dishwashers:2026-07-24-full",
+        "artifact:energy-star-commercial-dishwashers-metadata:2026-07-24"
+      ],
+      "testIds": [
+        "energy-star-dishwasher-real-proof",
+        "energy-star-schema-mutation-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutputs": [
+        {
+          "outputName": "Proposed dishwasher native-field record",
+          "formulaTerm": "proposed_dishwasher_record",
+          "unit": "record set",
+          "scope": "RECORD_SET",
+          "value": {
+            "pdId": "2383572",
+            "brand": "ADS",
+            "modelNumber": "AF-ES",
+            "operatingMode": "LOW_TEMPERATURE"
+          }
+        },
+        {
+          "outputName": "Proposed rack-machine water use per rack",
+          "formulaTerm": "water_per_rack_proposed",
+          "unit": "gallons/rack",
+          "scope": "PER_EVENT",
+          "value": 0.95
+        },
+        {
+          "outputName": "Proposed rack-machine active electricity per rack",
+          "formulaTerm": "active_kWh_per_rack_proposed",
+          "unit": "kWh/rack",
+          "scope": "PER_EVENT",
+          "value": 0.02
+        },
+        {
+          "outputName": "Proposed idle power",
+          "formulaTerm": "idle_kW_proposed",
+          "unit": "kW",
+          "scope": "PER_EQUIPMENT_UNIT",
+          "value": 0
+        }
+      ],
+      "formulaMappings": [
+        {
+          "outputName": "Proposed rack-machine water use per rack",
+          "formulaTerm": "water_per_rack_proposed",
+          "unit": "gallons/rack",
+          "scope": "PER_EVENT",
+          "testId": "energy-star-dishwasher-real-proof"
+        },
+        {
+          "outputName": "Proposed rack-machine active electricity per rack",
+          "formulaTerm": "active_kWh_per_rack_proposed",
+          "unit": "kWh/rack",
+          "scope": "PER_EVENT",
+          "testId": "energy-star-dishwasher-real-proof"
+        },
+        {
+          "outputName": "Proposed idle power",
+          "formulaTerm": "idle_kW_proposed",
+          "unit": "kW",
+          "scope": "PER_EQUIPMENT_UNIT",
+          "testId": "energy-star-dishwasher-real-proof"
+        }
+      ],
+      "remainingBlocker": "The current certified-list snapshot does not expose flight-machine active electricity per operating hour, rows with a separate booster-heater idle rate require a project scope decision, installed baselines are not represented, and this contribution does not cover the DOE CCMS Standard also bound to the process."
+    },
+    {
+      "categoryId": "ITC-52",
+      "processKey": "requirement-proposed-dishwasher-record",
+      "proofLevel": "REAL_SOURCE_PARTIAL",
+      "artifactIds": [
+        "artifact:energy-star-commercial-dishwashers:2026-07-24-full",
+        "artifact:energy-star-commercial-dishwashers-metadata:2026-07-24"
+      ],
+      "testIds": [
+        "energy-star-requirement-resolution-proof",
+        "energy-star-ambiguous-requirement-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutputs": [
+        {
+          "outputName": "Proposed rack-machine water use per rack",
+          "formulaTerm": "water_per_rack_proposed",
+          "unit": "gallons/rack",
+          "scope": "PER_EVENT",
+          "value": 0.48
+        },
+        {
+          "outputName": "Proposed rack-machine active electricity per rack",
+          "formulaTerm": "active_kWh_per_rack_proposed",
+          "unit": "kWh/rack",
+          "scope": "PER_EVENT",
+          "value": 0.11
+        },
+        {
+          "outputName": "Proposed idle power",
+          "formulaTerm": "idle_kW_proposed",
+          "unit": "kW",
+          "scope": "PER_EQUIPMENT_UNIT",
+          "value": 0.07
+        }
+      ],
+      "formulaMappings": [
+        {
+          "outputName": "Proposed rack-machine water use per rack",
+          "formulaTerm": "water_per_rack_proposed",
+          "unit": "gallons/rack",
+          "scope": "PER_EVENT",
+          "testId": "energy-star-requirement-resolution-proof"
+        },
+        {
+          "outputName": "Proposed rack-machine active electricity per rack",
+          "formulaTerm": "active_kWh_per_rack_proposed",
+          "unit": "kWh/rack",
+          "scope": "PER_EVENT",
+          "testId": "energy-star-requirement-resolution-proof"
+        },
+        {
+          "outputName": "Proposed idle power",
+          "formulaTerm": "idle_kW_proposed",
+          "unit": "kW",
+          "scope": "PER_EQUIPMENT_UNIT",
+          "testId": "energy-star-requirement-resolution-proof"
+        }
+      ],
+      "remainingBlocker": "Requirements resolution now runs across the complete current ENERGY STAR snapshot, but the source does not supply every conditional flight-machine term, installed baselines are not represented, and the DOE CCMS Standard remains uncovered."
+    }
+  ],
+  "feasibility": "PARTIALLY_FEASIBLE",
+  "remainingBlockers": [
+    "The source does not prove flight-machine active electricity per operating hour.",
+    "Current ENERGY STAR records are not an installed-baseline population.",
+    "Rows with separate booster-heater idle rates require an explicit project equipment boundary.",
+    "DOE CCMS coverage is outside this adapter."
+  ]
+}

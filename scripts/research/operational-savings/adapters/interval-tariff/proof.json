@@ -1,0 +1,662 @@
+{
+  "schemaVersion": "operational-savings/real-proof-manifest-v1",
+  "standardId": "STD-INTERVAL-TARIFF",
+  "slug": "interval-tariff",
+  "adapterPath": "scripts/research/operational-savings/adapters/interval-tariff/run.mjs",
+  "artifacts": [
+    {
+      "artifactId": "artifact:usurdb:2026-07-23",
+      "sourceUrl": "https://openei.org/apps/USURDB/download/usurdb.csv.gz",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/usurdb.csv.gz",
+      "release": "bulk snapshot acquired 2026-07-23",
+      "sha256": "89081ef124080ea322516040dc6b2c1945f9f754eced63f3130d4a8f14947032",
+      "sizeBytes": 12218163,
+      "acquisitionMode": "PUBLIC_BULK_DOWNLOAD",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:sdge-small-commercial-rates:2026-06-01",
+      "sourceUrl": "https://www.sdge.com/sites/default/files/regulatory/Summary%20Table%20for%20Small%20Comm%206-1-26.pdf",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/sdge-small-commercial-rates-2026-06-01.pdf",
+      "release": "Effective 2026-06-01",
+      "sha256": "1d2474baa2c253e803c5966fa30a8c58f8ee88e0d338a006df3c8f47a49c0cf9",
+      "sizeBytes": 403420,
+      "acquisitionMode": "PUBLIC_PDF_DOWNLOAD",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:sdge-sdcp-jrc:2026-06-01",
+      "sourceUrl": "https://sdge.com/sites/default/files/SDCP_SDGE_JRC_06.01.2026_Final.pdf",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/sdge-sdcp-joint-rate-comparison-2026-06-01.pdf",
+      "release": "SDG&E rates effective 2026-06-01",
+      "sha256": "bfde9c41b8daed07eeb293a1e5ac6348f2a290ae1de022b34a7c5055a858e89e",
+      "sizeBytes": 543670,
+      "acquisitionMode": "PUBLIC_PDF_DOWNLOAD",
+      "official": true
+    }
+  ],
+  "observedSchemas": [
+    {
+      "schemaId": "schema:usurdb:2026-07-23",
+      "artifactId": "artifact:usurdb:2026-07-23",
+      "format": "GZIP_CSV",
+      "extractor": "scripts/research/operational-savings/adapters/interval-tariff/inspect-schema.mjs",
+      "columnCount": 737,
+      "recordCount": 58920,
+      "fingerprintSha256": "fb43f7b46b13eb497982623d6986706c675810e8e039f699a92e399851d7f761",
+      "requiredNativeFields": [
+        "label",
+        "eiaid",
+        "name",
+        "startdate",
+        "enddate",
+        "latest_update",
+        "utility",
+        "sector",
+        "description",
+        "servicetype",
+        "source",
+        "sourceparent",
+        "dgrules",
+        "peakkwcapacitymin",
+        "peakkwcapacitymax",
+        "voltagecategory",
+        "fixedchargefirstmeter",
+        "fixedchargeunits",
+        "mincharge",
+        "minchargeunits",
+        "demandratestructure",
+        "energyratestructure",
+        "energyweekdayschedule",
+        "energyweekendschedule",
+        "supersedes"
+      ],
+      "fields": [
+        {
+          "name": "fixedchargefirstmeter",
+          "unit": "$/month"
+        },
+        {
+          "name": "energyratestructure/*/rate",
+          "unit": "$/kWh"
+        },
+        {
+          "name": "energyratestructure/*/adj",
+          "unit": "$/kWh"
+        },
+        {
+          "name": "demandratestructure/*/rate",
+          "unit": "$/kW"
+        }
+      ]
+    },
+    {
+      "schemaId": "schema:sdge-small-commercial:2026-06-01",
+      "artifactId": "artifact:sdge-small-commercial-rates:2026-06-01",
+      "format": "PDF_TABLE",
+      "requiredNativeFields": [
+        "Eligibility",
+        "Basic Service Fee",
+        "Total UDC Rate",
+        "WF-NBC + DWR-BC",
+        "EECC",
+        "Total Electric Rate"
+      ],
+      "fields": [
+        {
+          "name": "Basic Service Fee",
+          "unit": "$/month"
+        },
+        {
+          "name": "Total UDC Rate",
+          "unit": "$/kWh"
+        },
+        {
+          "name": "WF-NBC + DWR-BC",
+          "unit": "$/kWh"
+        },
+        {
+          "name": "EECC",
+          "unit": "$/kWh"
+        },
+        {
+          "name": "Total Electric Rate",
+          "unit": "$/kWh"
+        }
+      ]
+    },
+    {
+      "schemaId": "schema:sdge-sdcp-jrc:2026-06-01",
+      "artifactId": "artifact:sdge-sdcp-jrc:2026-06-01",
+      "format": "PDF_WORKED_COMPARISON",
+      "requiredNativeFields": [
+        "Generation Rate",
+        "PCIA",
+        "SDG&E Delivery Rate",
+        "Franchise Fees",
+        "Total Electricity Cost",
+        "Average Monthly Bill",
+        "Average Monthly Usage",
+        "Average Monthly Demand"
+      ],
+      "fields": [
+        {
+          "name": "Total Electricity Cost",
+          "unit": "$/kWh"
+        },
+        {
+          "name": "Average Monthly Bill",
+          "unit": "$/month"
+        },
+        {
+          "name": "Average Monthly Usage",
+          "unit": "kWh/month"
+        },
+        {
+          "name": "Average Monthly Demand",
+          "unit": "kW"
+        }
+      ]
+    }
+  ],
+  "normalizedTargets": [
+    "utility_providers",
+    "utility_tariffs",
+    "tariff_periods",
+    "tariff_energy_charges",
+    "tariff_demand_charges",
+    "tariff_export_rules",
+    "tariff_publication_components",
+    "tariff_reconciliation_cases",
+    "selected_values",
+    "selected_value_provenance"
+  ],
+  "tests": [
+    {
+      "testId": "interval-tariff-real-composite-proof",
+      "path": "scripts/research/operational-savings/tests/interval-tariff-real.test.mjs",
+      "name": "returns the exact tariff_input_set formula term offline",
+      "kind": "END_TO_END_REAL",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:usurdb:2026-07-23",
+        "artifact:sdge-small-commercial-rates:2026-06-01",
+        "artifact:sdge-sdcp-jrc:2026-06-01"
+      ],
+      "sourceNativeFields": [
+        "label",
+        "utility",
+        "name",
+        "sector",
+        "startdate",
+        "peakkwcapacitymin",
+        "peakkwcapacitymax",
+        "fixedchargefirstmeter",
+        "energyratestructure/period0/tier0rate",
+        "energyratestructure/period0/tier0adj",
+        "energyweekdayschedule",
+        "energyweekendschedule",
+        "Total UDC Rate",
+        "WF-NBC + DWR-BC",
+        "EECC",
+        "Total Electric Rate",
+        "Average Monthly Bill",
+        "Average Monthly Usage"
+      ]
+    },
+    {
+      "testId": "interval-tariff-term-schedule-failure-proof",
+      "path": "scripts/research/operational-savings/tests/interval-tariff-real.test.mjs",
+      "name": "fails closed when a required tariff term or schedule is mutated",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:usurdb:2026-07-23"
+      ],
+      "mutationCases": [
+        "missing tariff term",
+        "incompatible schedule"
+      ]
+    }
+  ],
+  "processClaims": [
+    {
+      "categoryId": "ITC-16",
+      "processKey": "interval_tariff",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:usurdb:2026-07-23",
+        "artifact:sdge-small-commercial-rates:2026-06-01",
+        "artifact:sdge-sdcp-jrc:2026-06-01"
+      ],
+      "testIds": [
+        "interval-tariff-real-composite-proof",
+        "interval-tariff-term-schedule-failure-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "tariff_input_set": {
+          "nativeRateId": "6a4584dbab8f09871f06ef7b",
+          "schedule": "TOU-A",
+          "effectiveDate": "2026-06-01",
+          "exportMode": "NO_EXPORT"
+        }
+      },
+      "formulaTerms": [
+        "tariff_input_set"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-17",
+      "processKey": "interval_tariff",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:usurdb:2026-07-23",
+        "artifact:sdge-small-commercial-rates:2026-06-01",
+        "artifact:sdge-sdcp-jrc:2026-06-01"
+      ],
+      "testIds": [
+        "interval-tariff-real-composite-proof",
+        "interval-tariff-term-schedule-failure-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "tariff_input_set": {
+          "nativeRateId": "6a4584dbab8f09871f06ef7b",
+          "schedule": "TOU-A",
+          "effectiveDate": "2026-06-01",
+          "exportMode": "NO_EXPORT"
+        }
+      },
+      "formulaTerms": [
+        "tariff_input_set"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-19",
+      "processKey": "interval_tariff",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:usurdb:2026-07-23",
+        "artifact:sdge-small-commercial-rates:2026-06-01",
+        "artifact:sdge-sdcp-jrc:2026-06-01"
+      ],
+      "testIds": [
+        "interval-tariff-real-composite-proof",
+        "interval-tariff-term-schedule-failure-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "tariff_input_set": {
+          "nativeRateId": "6a4584dbab8f09871f06ef7b",
+          "schedule": "TOU-A",
+          "effectiveDate": "2026-06-01",
+          "exportMode": "NO_EXPORT"
+        }
+      },
+      "formulaTerms": [
+        "tariff_input_set"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-23",
+      "processKey": "interval_tariff",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:usurdb:2026-07-23",
+        "artifact:sdge-small-commercial-rates:2026-06-01",
+        "artifact:sdge-sdcp-jrc:2026-06-01"
+      ],
+      "testIds": [
+        "interval-tariff-real-composite-proof",
+        "interval-tariff-term-schedule-failure-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "tariff_input_set": {
+          "nativeRateId": "6a4584dbab8f09871f06ef7b",
+          "schedule": "TOU-A",
+          "effectiveDate": "2026-06-01",
+          "exportMode": "NO_EXPORT"
+        }
+      },
+      "formulaTerms": [
+        "tariff_input_set"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-24",
+      "processKey": "interval_tariff",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:usurdb:2026-07-23",
+        "artifact:sdge-small-commercial-rates:2026-06-01",
+        "artifact:sdge-sdcp-jrc:2026-06-01"
+      ],
+      "testIds": [
+        "interval-tariff-real-composite-proof",
+        "interval-tariff-term-schedule-failure-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "tariff_input_set": {
+          "nativeRateId": "6a4584dbab8f09871f06ef7b",
+          "schedule": "TOU-A",
+          "effectiveDate": "2026-06-01",
+          "exportMode": "NO_EXPORT"
+        }
+      },
+      "formulaTerms": [
+        "tariff_input_set"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-25",
+      "processKey": "interval_tariff",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:usurdb:2026-07-23",
+        "artifact:sdge-small-commercial-rates:2026-06-01",
+        "artifact:sdge-sdcp-jrc:2026-06-01"
+      ],
+      "testIds": [
+        "interval-tariff-real-composite-proof",
+        "interval-tariff-term-schedule-failure-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "tariff_input_set": {
+          "nativeRateId": "6a4584dbab8f09871f06ef7b",
+          "schedule": "TOU-A",
+          "effectiveDate": "2026-06-01",
+          "exportMode": "NO_EXPORT"
+        }
+      },
+      "formulaTerms": [
+        "tariff_input_set"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-26",
+      "processKey": "interval_tariff",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:usurdb:2026-07-23",
+        "artifact:sdge-small-commercial-rates:2026-06-01",
+        "artifact:sdge-sdcp-jrc:2026-06-01"
+      ],
+      "testIds": [
+        "interval-tariff-real-composite-proof",
+        "interval-tariff-term-schedule-failure-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "tariff_input_set": {
+          "nativeRateId": "6a4584dbab8f09871f06ef7b",
+          "schedule": "TOU-A",
+          "effectiveDate": "2026-06-01",
+          "exportMode": "NO_EXPORT"
+        }
+      },
+      "formulaTerms": [
+        "tariff_input_set"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-27",
+      "processKey": "interval_tariff",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:usurdb:2026-07-23",
+        "artifact:sdge-small-commercial-rates:2026-06-01",
+        "artifact:sdge-sdcp-jrc:2026-06-01"
+      ],
+      "testIds": [
+        "interval-tariff-real-composite-proof",
+        "interval-tariff-term-schedule-failure-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "tariff_input_set": {
+          "nativeRateId": "6a4584dbab8f09871f06ef7b",
+          "schedule": "TOU-A",
+          "effectiveDate": "2026-06-01",
+          "exportMode": "NO_EXPORT"
+        }
+      },
+      "formulaTerms": [
+        "tariff_input_set"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-28",
+      "processKey": "interval_tariff",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:usurdb:2026-07-23",
+        "artifact:sdge-small-commercial-rates:2026-06-01",
+        "artifact:sdge-sdcp-jrc:2026-06-01"
+      ],
+      "testIds": [
+        "interval-tariff-real-composite-proof",
+        "interval-tariff-term-schedule-failure-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "tariff_input_set": {
+          "nativeRateId": "6a4584dbab8f09871f06ef7b",
+          "schedule": "TOU-A",
+          "effectiveDate": "2026-06-01",
+          "exportMode": "NO_EXPORT"
+        }
+      },
+      "formulaTerms": [
+        "tariff_input_set"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-31",
+      "processKey": "interval_tariff",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:usurdb:2026-07-23",
+        "artifact:sdge-small-commercial-rates:2026-06-01",
+        "artifact:sdge-sdcp-jrc:2026-06-01"
+      ],
+      "testIds": [
+        "interval-tariff-real-composite-proof",
+        "interval-tariff-term-schedule-failure-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "tariff_input_set": {
+          "nativeRateId": "6a4584dbab8f09871f06ef7b",
+          "schedule": "TOU-A",
+          "effectiveDate": "2026-06-01",
+          "exportMode": "NO_EXPORT"
+        }
+      },
+      "formulaTerms": [
+        "tariff_input_set"
+      ],
+      "remainingBlocker": null
+    }
+  ],
+  "feasibility": "PARTIALLY_FEASIBLE",
+  "remainingBlockers": [
+    "The retained proof covers one current SDG&E TOU-A secondary tariff and deliberately supports only NO_EXPORT screening.",
+    "Other utilities, schedules, account-specific eligibility, ratchets, taxes, event charges, and current export compensation require their own controlling publications and reconciliation cases."
+  ]
+}

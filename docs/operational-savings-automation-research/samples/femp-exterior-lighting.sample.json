@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "operational-savings/research-sample-v1",
+  "standardId": "STD-FEMP-EXTERIOR-LIGHTING",
+  "source": "Purchasing Energy-Efficient Exterior Lighting",
+  "sourceVersion": "Updated June 2023",
+  "observedArtifact": "FEMP exterior-lighting HTML",
+  "observedArtifactSha256": "cb50171c667e44e0c8fe1681fac57fcfe22d6adffe6ba1229bd9d103b8fc547a",
+  "evidenceBoundary": "Official FEMP wall-mounted comparison and 3,600 hour assumption",
+  "sampleIsFullSourceArtifact": false,
+  "prototype": {
+    "operation": "formula",
+    "sourceEvidence": "Official FEMP wall-mounted comparison and 3,600 hour assumption",
+    "formula": "lightingAnnualSavings",
+    "inputs": {
+      "fixtureCount": 10,
+      "existingWatts": 157,
+      "proposedWatts": 79,
+      "annualHours": 3600
+    },
+    "expected": {
+      "annualKwh": 2808
+    },
+    "unit": "kWh/year"
+  },
+  "offlineResult": {
+    "kind": "model_result_set",
+    "standardId": "STD-FEMP-EXTERIOR-LIGHTING",
+    "value": {
+      "annualKwh": 2808
+    },
+    "unit": "kWh/year",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
+    "source": "Purchasing Energy-Efficient Exterior Lighting",
+    "sourceVersion": "Updated June 2023",
+    "sourceArtifact": "FEMP exterior-lighting HTML",
+    "filters": {
+      "fixtureCount": 10,
+      "existingWatts": 157,
+      "proposedWatts": 79,
+      "annualHours": 3600
+    },
+    "eligiblePopulation": [],
+    "sampleSize": 0,
+    "selectionRule": "PINNED_LOCAL_FORMULA:lightingAnnualSavings",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
+    "warnings": [],
+    "provenance": {
+      "sourceEvidence": "Official FEMP wall-mounted comparison and 3,600 hour assumption",
+      "sha256": "11e9957b96f44a1dde824a9502a634a2c9a74a3b53fe5ba64f86a8f3d4941c13"
+    }
+  }
+}

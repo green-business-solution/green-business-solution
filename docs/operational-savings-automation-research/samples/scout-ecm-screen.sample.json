@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "operational-savings/research-sample-v1",
+  "standardId": "STD-SCOUT-ECM-SCREEN",
+  "source": "Scout",
+  "sourceVersion": "Git commit 72bcf419eb1cb37379f163563344b0ec61507fd3",
+  "observedArtifact": "docs/examples/led_troffers.json",
+  "observedArtifactSha256": null,
+  "evidenceBoundary": "Cloned official Scout repository and inspected a shipped ECM example",
+  "sampleIsFullSourceArtifact": false,
+  "prototype": {
+    "operation": "exactLookup",
+    "sourceEvidence": "Cloned official Scout repository and inspected a shipped ECM example",
+    "query": {
+      "name": "LED Troffers"
+    },
+    "records": [
+      {
+        "name": "LED Troffers",
+        "energyEfficiency": 120,
+        "energyEfficiencyUnits": "lm/W"
+      },
+      {
+        "name": "Whole Building Submetering (Prospective)",
+        "energyEfficiency": 0.02,
+        "energyEfficiencyUnits": "relative savings (constant)"
+      }
+    ],
+    "expected": {
+      "energyEfficiency": 120
+    },
+    "unit": "lm/W"
+  },
+  "offlineResult": {
+    "kind": "product_record",
+    "standardId": "STD-SCOUT-ECM-SCREEN",
+    "value": {
+      "name": "LED Troffers",
+      "energyEfficiency": 120,
+      "energyEfficiencyUnits": "lm/W"
+    },
+    "unit": "lm/W",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
+    "source": "Scout",
+    "sourceVersion": "Git commit 72bcf419eb1cb37379f163563344b0ec61507fd3",
+    "sourceArtifact": "docs/examples/led_troffers.json",
+    "filters": {
+      "name": "LED Troffers"
+    },
+    "eligiblePopulation": [
+      {
+        "name": "LED Troffers",
+        "energyEfficiency": 120,
+        "energyEfficiencyUnits": "lm/W"
+      }
+    ],
+    "sampleSize": 1,
+    "selectionRule": "EXACT_NORMALIZED_IDENTIFIER",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
+    "warnings": [],
+    "provenance": {
+      "sourceEvidence": "Cloned official Scout repository and inspected a shipped ECM example",
+      "sha256": "a279b52540fef99d1f8dbc0a85a113359251a744df6351710392bf1862578030"
+    }
+  }
+}

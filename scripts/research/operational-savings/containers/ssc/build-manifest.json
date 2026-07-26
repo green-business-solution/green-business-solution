@@ -1,0 +1,260 @@
+{
+  "schemaVersion": 1,
+  "buildContextProvenance": {
+    "status": "UNCOMMITTED_HISTORICAL_BUILD_CONTEXT",
+    "historicalRepositoryCommit": null,
+    "contentIdentityStatus": "POST_HOC_EXACT_FILE_HASHES",
+    "recordedImageBuildContextAttested": false,
+    "note": "These hashes identify the present build and verification files exactly. They do not prove that this uncommitted repository context produced the already-recorded image digest. A future commit will bind this content prospectively."
+  },
+  "image": {
+    "repositoryTag": "retrofit-research-ssc:ssc-308-ba7a7968-arm64",
+    "targetPlatform": "linux/arm64",
+    "baseImage": "ubuntu:24.04@sha256:4fbb8e6a8395de5a7550b33509421a2bafbc0aab6c06ba2cef9ebffbc7092d90",
+    "baseImageArm64ManifestDigest": "sha256:7f622ca8766bccb22f04242ecb6f19f770b2f08827dc4b8c707de5e78a6da7ab",
+    "localImageId": "sha256:70eb1f134a8ca9342988c3593d51ce08b1c6042847b23bfb7e8c4e15a8f435cc",
+    "localRepoDigests": [
+      "retrofit-research-ssc@sha256:70eb1f134a8ca9342988c3593d51ce08b1c6042847b23bfb7e8c4e15a8f435cc"
+    ]
+  },
+  "ecr": {
+    "accountId": "945129430686",
+    "region": "us-east-1",
+    "repositoryName": "retrofi-research-ssc",
+    "repositoryUri": "945129430686.dkr.ecr.us-east-1.amazonaws.com/retrofi-research-ssc",
+    "imageTag": "ssc-308-ba7a7968-arm64",
+    "imageDigest": "sha256:70eb1f134a8ca9342988c3593d51ce08b1c6042847b23bfb7e8c4e15a8f435cc",
+    "imageUri": "945129430686.dkr.ecr.us-east-1.amazonaws.com/retrofi-research-ssc@sha256:70eb1f134a8ca9342988c3593d51ce08b1c6042847b23bfb7e8c4e15a8f435cc",
+    "pushedAt": "2026-07-24T19:05:21.417Z",
+    "imageSizeBytes": 71498334,
+    "imageManifestMediaType": "application/vnd.oci.image.index.v1+json",
+    "verificationStatus": "VERIFIED_EXACT_DIGEST",
+    "verifiedAt": "2026-07-24T19:06:13.000Z",
+    "exactDigestPulled": true,
+    "runtimeVerificationStatus": "PASS",
+    "verificationCommand": "SSC_IMAGE='945129430686.dkr.ecr.us-east-1.amazonaws.com/retrofi-research-ssc@sha256:70eb1f134a8ca9342988c3593d51ce08b1c6042847b23bfb7e8c4e15a8f435cc' node scripts/research/operational-savings/containers/ssc/verify.mjs",
+    "scan": {
+      "status": "COMPLETE",
+      "completedAt": "2026-07-24T19:05:30.000Z",
+      "scannedManifestDigest": "sha256:a2e9b3e9aed0fc811b8ee2e1466616b9b3eea85db7216d54639426bbb422d491",
+      "critical": 0,
+      "high": 0,
+      "medium": 9,
+      "low": 0,
+      "disposition": "Research-only image. Execute as non-root with Docker networking disabled. Do not deploy for customer calculations."
+    }
+  },
+  "source": {
+    "repository": "https://github.com/NatLabRockies/ssc.git",
+    "commit": "ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+    "archiveUrl": "https://github.com/NatLabRockies/ssc/archive/ba7a7968a115baa0c250597ce2381c7ffb27fbf2.tar.gz",
+    "cachePath": "scripts/research/operational-savings/.cache/artifacts/ssc-ba7a7968-source.tar.gz",
+    "archiveSha256": "00a3001c529c87b97c271bb75dd809c71003045ecadcedeb7b2b4d9cc9479631",
+    "archiveSizeBytes": 278188118,
+    "acquisitionMode": "PUBLIC_PINNED_GITHUB_COMMIT_ARCHIVE",
+    "acquisitionTimestamp": "2026-07-24T18:30:28.000Z",
+    "sourceOrganization": "National Laboratory of the Rockies",
+    "role": "EXACT_CONTAINER_SOURCE_ARCHIVE",
+    "official": true,
+    "originalLocalPath": "/private/tmp/ssc-container-sources.7J3Lku/ssc.tar.gz",
+    "sscApiVersion": 308,
+    "samPackageVersion": "2026.7.3",
+    "license": {
+      "spdxId": "BSD-3-Clause",
+      "file": "/opt/ssc/LICENSE",
+      "fileSha256": "22b6f0585f60c136d6d3d196acf1cea2e69b9d84ac860125f9401960a7ef5a14",
+      "copyright": "Copyright (c) 2017, 2022 Alliance for Energy Innovation, LLC"
+    }
+  },
+  "dependencies": {
+    "orTools": {
+      "repository": "https://github.com/google/or-tools.git",
+      "version": "9.14.6206",
+      "archiveUrl": "https://github.com/google/or-tools/releases/download/v9.14/or-tools_aarch64_AlmaLinux-8.10_cpp_v9.14.6206.tar.gz",
+      "archiveSha256": "2f731a156cd9e4123d1433dec51a22ba74702d349457fe76c65bba0f1f7958e0",
+      "archiveSizeBytes": 53631276,
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/or-tools_aarch64_AlmaLinux-8.10_cpp_v9.14.6206.tar.gz",
+      "acquiredAt": "2026-07-24T19:06:28.000Z",
+      "license": {
+        "spdxId": "Apache-2.0",
+        "archivePath": "share/doc/ortools/LICENSE",
+        "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      }
+    }
+  },
+  "build": {
+    "status": "COMPLETED_AND_EXACT_IMAGE_VERIFIED",
+    "builtAt": "2026-07-24T18:53:21.863952004Z",
+    "builtAtEvidence": {
+      "kind": "LOCAL_IMAGE_CONFIG_CREATED",
+      "imageId": "sha256:70eb1f134a8ca9342988c3593d51ce08b1c6042847b23bfb7e8c4e15a8f435cc",
+      "inspectionField": ".Created"
+    },
+    "historicalInvocationCaptured": false,
+    "commandSemantics": "This is the exact reproduction command derived from the pinned Dockerfile defaults and recorded image tag. It is not represented as a retained copy of the historical shell invocation.",
+    "environment": {
+      "dockerClientVersion": "29.6.1",
+      "dockerServerVersion": "29.6.1",
+      "dockerBuildxVersion": "v0.35.0-desktop.2",
+      "dockerServerPlatform": "linux/arm64",
+      "dockerServerKernel": "6.12.76-linuxkit",
+      "containerCmakeVersion": "3.28.3",
+      "containerGccVersion": "13.3.0"
+    },
+    "arguments": {
+      "BUILD_JOBS": "4",
+      "ORTOOLS_VERSION": "9.14.6206",
+      "ORTOOLS_ARCHIVE_SHA256": "2f731a156cd9e4123d1433dec51a22ba74702d349457fe76c65bba0f1f7958e0",
+      "SSC_COMMIT": "ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+      "SSC_ARCHIVE_SHA256": "00a3001c529c87b97c271bb75dd809c71003045ecadcedeb7b2b4d9cc9479631",
+      "UBUNTU_IMAGE": "ubuntu:24.04@sha256:4fbb8e6a8395de5a7550b33509421a2bafbc0aab6c06ba2cef9ebffbc7092d90"
+    },
+    "command": "docker buildx build --platform linux/arm64 --load --tag retrofit-research-ssc:ssc-308-ba7a7968-arm64 --build-arg BUILD_JOBS=4 --build-arg ORTOOLS_VERSION=9.14.6206 --build-arg ORTOOLS_ARCHIVE_SHA256=2f731a156cd9e4123d1433dec51a22ba74702d349457fe76c65bba0f1f7958e0 --build-arg SSC_COMMIT=ba7a7968a115baa0c250597ce2381c7ffb27fbf2 --build-arg SSC_ARCHIVE_SHA256=00a3001c529c87b97c271bb75dd809c71003045ecadcedeb7b2b4d9cc9479631 --build-arg UBUNTU_IMAGE=ubuntu:24.04@sha256:4fbb8e6a8395de5a7550b33509421a2bafbc0aab6c06ba2cef9ebffbc7092d90 scripts/research/operational-savings/containers/ssc",
+    "reproductionCommand": "docker buildx build --platform linux/arm64 --load --tag retrofit-research-ssc:ssc-308-ba7a7968-arm64 --build-arg BUILD_JOBS=4 --build-arg ORTOOLS_VERSION=9.14.6206 --build-arg ORTOOLS_ARCHIVE_SHA256=2f731a156cd9e4123d1433dec51a22ba74702d349457fe76c65bba0f1f7958e0 --build-arg SSC_COMMIT=ba7a7968a115baa0c250597ce2381c7ffb27fbf2 --build-arg SSC_ARCHIVE_SHA256=00a3001c529c87b97c271bb75dd809c71003045ecadcedeb7b2b4d9cc9479631 --build-arg UBUNTU_IMAGE=ubuntu:24.04@sha256:4fbb8e6a8395de5a7550b33509421a2bafbc0aab6c06ba2cef9ebffbc7092d90 scripts/research/operational-savings/containers/ssc",
+    "statusEvidence": {
+      "localImageId": "sha256:70eb1f134a8ca9342988c3593d51ce08b1c6042847b23bfb7e8c4e15a8f435cc",
+      "ecrImageDigest": "sha256:70eb1f134a8ca9342988c3593d51ce08b1c6042847b23bfb7e8c4e15a8f435cc",
+      "runtimeVerificationStatus": "PASS"
+    }
+  },
+  "runtime": {
+    "commonDockerArguments": [
+      "--rm",
+      "--network",
+      "none",
+      "--read-only",
+      "--cap-drop",
+      "ALL",
+      "--security-opt",
+      "no-new-privileges",
+      "--pull",
+      "never"
+    ],
+    "verificationCommand": "node scripts/research/operational-savings/containers/ssc/verify.mjs"
+  },
+  "fixtures": [
+    {
+      "path": "test/input_cases/pvsamv1_data/USA AZ Phoenix (TMY2).csv",
+      "sha256": "311b8871e989b40d0016f7019dcabc06ebf38e16509c51842fce4bf1e6f8c591"
+    },
+    {
+      "path": "test/input_cases/swh_residential_data/fargo_nd_46.9_-96.8_mts1_60_tmy.csv",
+      "sha256": "3228bdb487135d66debfd9a4fb215820ae236592e25c508e22e449139e098069"
+    },
+    {
+      "path": "test/input_cases/swh_residential_data/scaled_draw.csv",
+      "sha256": "130b36ba452062931cc26c1b5ea1b6d23c9c12ced926dbb49dad12b16ae3f931"
+    },
+    {
+      "path": "test/input_cases/swh_residential_data/custom_mains.csv",
+      "sha256": "0d7a553d3eeca206aa89e01ddc1e5b9225a217119c550c3184fd46273c9cd938"
+    },
+    {
+      "path": "test/input_cases/swh_residential_data/custom_set.csv",
+      "sha256": "cfc31bfa47a35034c9905e8a9f612396c9ae1840e849942bd20c9cd1ccc06b7f"
+    },
+    {
+      "path": "test/input_cases/swh_residential_data/load.csv",
+      "sha256": "56817eea7f8200e923f08841dd9706d3803e845a586353ceec44b5263d16ac0d"
+    },
+    {
+      "path": "test/input_cases/swh_residential_data/ur_ts_sell_rate.csv",
+      "sha256": "6d73e2359a5c64a0e1e563bbbf8d4221881d23854dd0e73f47345e5ef17a1265"
+    },
+    {
+      "path": "test/input_docs/wind.srw",
+      "sha256": "94ebc09260d80bcc6796d89407248c39d9599aa9a046d01533fb8083737314b2"
+    }
+  ],
+  "models": [
+    {
+      "id": "pvwatts",
+      "sscModule": "pvwattsv8",
+      "cliArgument": "pvwattsv8",
+      "fixture": "test/input_cases/pvsamv1_data/USA AZ Phoenix (TMY2).csv",
+      "command": "docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges --pull never retrofit-research-ssc:ssc-308-ba7a7968-arm64 pvwattsv8",
+      "expectedOutputs": {
+        "annualEnergyKwh": {
+          "value": 7043.1973,
+          "absoluteTolerance": 0.01
+        },
+        "capacityFactorPercent": {
+          "value": 20.1,
+          "absoluteTolerance": 0.01
+        },
+        "energyYieldKwhPerKw": {
+          "value": 1760.799,
+          "absoluteTolerance": 0.01
+        }
+      }
+    },
+    {
+      "id": "solarWaterHeating",
+      "sscModule": "swh",
+      "cliArgument": "swh",
+      "fixture": "test/input_cases/swh_residential_data/fargo_nd_46.9_-96.8_mts1_60_tmy.csv",
+      "command": "docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges --pull never retrofit-research-ssc:ssc-308-ba7a7968-arm64 swh",
+      "expectedOutputs": {
+        "annualEnergyKwh": {
+          "value": 2362.5,
+          "absoluteTolerance": 0.1
+        }
+      }
+    },
+    {
+      "id": "wind",
+      "sscModule": "windpower",
+      "cliArgument": "windpower",
+      "fixture": "test/input_docs/wind.srw",
+      "command": "docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges --pull never retrofit-research-ssc:ssc-308-ba7a7968-arm64 windpower",
+      "expectedOutputs": {
+        "annualEnergyKwh": {
+          "value": 33224154,
+          "absoluteTolerance": 1000
+        },
+        "internalWakeLossPercent": {
+          "value": 1.546,
+          "absoluteTolerance": 0.001
+        }
+      }
+    }
+  ],
+  "verification": {
+    "status": "PASS",
+    "verifiedAt": "2026-07-24T18:53:33Z",
+    "architecture": "linux/arm64",
+    "networkMode": "none",
+    "fixtureHashesVerified": true,
+    "licenseHashVerified": true,
+    "actualOutputs": {
+      "pvwatts": {
+        "annualEnergyKwh": 7043.197333,
+        "capacityFactorPercent": 20.10044901,
+        "energyYieldKwhPerKw": 1760.799333
+      },
+      "solarWaterHeating": {
+        "annualEnergyKwh": 2362.50113
+      },
+      "wind": {
+        "annualEnergyKwh": 33224152.7,
+        "internalWakeLossPercent": 1.546377737
+      }
+    }
+  },
+  "buildInputs": [
+    {
+      "path": "Dockerfile",
+      "sha256": "a7f10485f82cd2e1d73403ede097d131a5f1141493b8d59ad852c5a5c5b12595"
+    },
+    {
+      "path": "runner.cpp",
+      "sha256": "09361a01bd0b7ed01b2b90da8c6856977d7a19e4652f081b18d2d53b8bfaeef7"
+    }
+  ],
+  "verificationInputs": [
+    {
+      "path": "verify.mjs",
+      "sha256": "2f67b8ee34421d9aef3c72483532c40a1cd3f238edfc02bbaffe98cb3cb31b69"
+    }
+  ]
+}

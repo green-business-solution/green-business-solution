@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "operational-savings/research-sample-v1",
+  "standardId": "STD-SAM-SOLAR-THERMAL",
+  "source": "System Advisor Model solar water heating module and SSC",
+  "sourceVersion": "SSC git commit ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+  "observedArtifact": "ssc/cmod_swh.cpp and test/input_cases/swh_common.h",
+  "observedArtifactSha256": null,
+  "evidenceBoundary": "Inspected SSC SWH output contract",
+  "sampleIsFullSourceArtifact": false,
+  "prototype": {
+    "operation": "formula",
+    "sourceEvidence": "Inspected SSC SWH output contract",
+    "formula": "capAndConvertSolarThermal",
+    "inputs": {
+      "annualUsefulThermalKwh": 12000,
+      "annualDeliveredLoadKwh": 10000,
+      "backupEfficiency": 0.8
+    },
+    "expected": {
+      "usefulThermalKwh": 10000,
+      "displacedBackupInputKwh": 12500
+    },
+    "unit": "kWh/year"
+  },
+  "offlineResult": {
+    "kind": "model_result_set",
+    "standardId": "STD-SAM-SOLAR-THERMAL",
+    "value": {
+      "usefulThermalKwh": 10000,
+      "displacedBackupInputKwh": 12500
+    },
+    "unit": "kWh/year",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
+    "source": "System Advisor Model solar water heating module and SSC",
+    "sourceVersion": "SSC git commit ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+    "sourceArtifact": "ssc/cmod_swh.cpp and test/input_cases/swh_common.h",
+    "filters": {
+      "annualUsefulThermalKwh": 12000,
+      "annualDeliveredLoadKwh": 10000,
+      "backupEfficiency": 0.8
+    },
+    "eligiblePopulation": [],
+    "sampleSize": 0,
+    "selectionRule": "PINNED_LOCAL_FORMULA:capAndConvertSolarThermal",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
+    "warnings": [],
+    "provenance": {
+      "sourceEvidence": "Inspected SSC SWH output contract",
+      "sha256": "c62b6c80b85e0cd5eb4171b194d4333352ea306ce5abd81694d7df59070554e3"
+    }
+  }
+}

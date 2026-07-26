@@ -1,0 +1,251 @@
+{
+  "schemaVersion": "operational-savings/real-proof-manifest-v1",
+  "standardId": "STD-WIND-SAM",
+  "slug": "wind-sam",
+  "adapterPath": "scripts/research/operational-savings/adapters/wind-sam/run.mjs",
+  "artifacts": [
+    {
+      "artifactId": "artifact:wind-sam:ssc-303",
+      "sourceUrl": "https://github.com/NatLabRockies/REopt.jl.git",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/reopt/src/sam/libssc.dylib",
+      "version": "SSC 303",
+      "commitSha": "f952cabdf3e60f6e88eef80bb7bc9e7e24bac643",
+      "sha256": "db933646389fa94f41af34066d65034681d5836f1bd29644f9b2a934a01b788f",
+      "sizeBytes": 37852576,
+      "official": true
+    },
+    {
+      "artifactId": "artifact:wind-sam:official-fixture",
+      "sourceUrl": "https://github.com/NatLabRockies/ssc.git",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/ssc/test/input_cases/windpower_cases.h",
+      "version": "official repository fixture",
+      "commitSha": "ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+      "sha256": "99d80bffaa75def04d38cca4cb8f5e1e3befd043ce950513fb116d82cb479cf6",
+      "sizeBytes": 5769,
+      "official": true
+    },
+    {
+      "artifactId": "artifact:wind-sam:wind-resource",
+      "sourceUrl": "https://github.com/NatLabRockies/ssc.git",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/ssc/test/input_docs/wind.srw",
+      "version": "official repository wind resource fixture",
+      "commitSha": "ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+      "sha256": "94ebc09260d80bcc6796d89407248c39d9599aa9a046d01533fb8083737314b2",
+      "sizeBytes": 122828,
+      "official": true
+    }
+  ],
+  "observedSchemas": [
+    {
+      "schemaId": "schema:wind-sam:ssc-303:windpower",
+      "artifactId": "artifact:wind-sam:ssc-303",
+      "format": "SSC_C_API_MODULE_METADATA",
+      "fingerprintSha256": "5658dcf2d10f47589639c749e6120ddbea7b9947151ab0741e6037e1b2d59f05",
+      "requiredNativeFields": [
+        "wind_resource_filename",
+        "wind_turbine_hub_ht",
+        "wind_turbine_powercurve_windspeeds",
+        "wind_turbine_powercurve_powerout",
+        "gen",
+        "annual_energy"
+      ],
+      "fields": [
+        {
+          "name": "wind_turbine_hub_ht",
+          "unit": "m"
+        },
+        {
+          "name": "wind_turbine_powercurve_powerout",
+          "unit": "kW"
+        },
+        {
+          "name": "gen",
+          "unit": "kW"
+        },
+        {
+          "name": "annual_energy",
+          "unit": "kWh"
+        }
+      ]
+    }
+  ],
+  "normalizedTargets": [
+    "source_registry",
+    "source_releases",
+    "source_artifacts",
+    "model_versions",
+    "model_input_schemas",
+    "calculation_runs",
+    "selected_values",
+    "selected_value_provenance",
+    "calculation_warnings"
+  ],
+  "tests": [
+    {
+      "testId": "wind-sam-real-ssc-execution",
+      "path": "scripts/research/operational-savings/tests/ssc-models.test.mjs",
+      "name": "STD-WIND-SAM executes a real pinned local SSC model deterministically",
+      "kind": "LOCAL_MODEL_EXECUTION",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:wind-sam:ssc-303",
+        "artifact:wind-sam:official-fixture",
+        "artifact:wind-sam:wind-resource"
+      ],
+      "sourceNativeFields": [
+        "wind_resource_filename",
+        "wind_turbine_hub_ht",
+        "wind_turbine_powercurve_windspeeds",
+        "wind_turbine_powercurve_powerout",
+        "gen",
+        "annual_energy"
+      ]
+    },
+    {
+      "testId": "wind-sam-ssc-version-failure",
+      "path": "scripts/research/operational-savings/tests/ssc-models.test.mjs",
+      "name": "STD-WIND-SAM rejects a caller model-version mismatch",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:wind-sam:ssc-303"
+      ],
+      "mutationCases": [
+        "model-version mismatch"
+      ]
+    },
+    {
+      "testId": "wind-sam-real-database-publication",
+      "path": "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs",
+      "name": "STD-WIND-SAM publishes its pinned model identity, calculation, provenance, and exact formula selection",
+      "kinds": [
+        "NORMALIZATION",
+        "DATABASE_PUBLICATION",
+        "RESOLVER",
+        "FORMULA_INPUT_MAPPING"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:wind-sam:ssc-303"
+      ],
+      "sourceNativeFields": [
+        "gen",
+        "annual_energy"
+      ]
+    },
+    {
+      "testId": "wind-sam-publication-failure",
+      "path": "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs",
+      "name": "STD-WIND-SAM rejects mixed model identity and offline publication violations",
+      "kinds": [
+        "FAILURE",
+        "MUTATION",
+        "OFFLINE_EXECUTION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:wind-sam:ssc-303"
+      ],
+      "mutationCases": [
+        "mixed model releases",
+        "attempted runtime publication without offline guard"
+      ]
+    }
+  ],
+  "processClaims": [
+    {
+      "categoryId": "ITC-19",
+      "processKey": "wind_sam",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:wind-sam:ssc-303",
+        "artifact:wind-sam:official-fixture",
+        "artifact:wind-sam:wind-resource"
+      ],
+      "testIds": [
+        "wind-sam-real-ssc-execution",
+        "wind-sam-ssc-version-failure",
+        "wind-sam-real-database-publication",
+        "wind-sam-publication-failure"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "wind_kWh_t": {
+          "count": 8760,
+          "sha256": "9810d820d7f091b4d8439f64c0a51d062b58bd6bf153e8801dccc3a0df69012a"
+        }
+      },
+      "formulaTerms": [
+        "wind_kWh_t"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-26",
+      "processKey": "wind_sam",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:wind-sam:ssc-303",
+        "artifact:wind-sam:official-fixture",
+        "artifact:wind-sam:wind-resource"
+      ],
+      "testIds": [
+        "wind-sam-real-ssc-execution",
+        "wind-sam-ssc-version-failure",
+        "wind-sam-real-database-publication",
+        "wind-sam-publication-failure"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "wind_kWh_t": {
+          "count": 8760,
+          "sha256": "9810d820d7f091b4d8439f64c0a51d062b58bd6bf153e8801dccc3a0df69012a"
+        }
+      },
+      "formulaTerms": [
+        "wind_kWh_t"
+      ],
+      "remainingBlocker": null
+    }
+  ],
+  "feasibility": "FEASIBLE_NOW",
+  "remainingBlockers": [
+    "The retained official wind fixture is outside California and proves the model path only.",
+    "A permitted project-compatible California resource, turbine curve, hub height, losses, and siting inputs must still be supplied or resolved."
+  ]
+}

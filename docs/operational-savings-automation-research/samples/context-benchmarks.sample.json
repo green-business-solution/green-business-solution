@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "operational-savings/research-sample-v1",
+  "standardId": "STD-CONTEXT-BENCHMARKS",
+  "source": "Category-specific authoritative context benchmarks",
+  "sourceVersion": "Source-specific versions pinned per benchmark",
+  "observedArtifact": "Multiple reviewed source fixtures already retained in the repository",
+  "observedArtifactSha256": null,
+  "evidenceBoundary": "Reviewed DOE outdoor lighting application fixture",
+  "sampleIsFullSourceArtifact": false,
+  "prototype": {
+    "operation": "requirementsFilter",
+    "sourceEvidence": "Reviewed DOE outdoor lighting application fixture",
+    "query": {
+      "application": "parking"
+    },
+    "records": [
+      {
+        "application": "parking",
+        "averageWatts": 216
+      },
+      {
+        "application": "roadway",
+        "averageWatts": 262
+      },
+      {
+        "application": "commercial_or_industrial_building_exterior",
+        "averageWatts": 97
+      }
+    ],
+    "expected": {
+      "eligibleCount": 1,
+      "selectedValue": 216
+    },
+    "unit": "W/fixture"
+  },
+  "offlineResult": {
+    "kind": "input_set",
+    "standardId": "STD-CONTEXT-BENCHMARKS",
+    "value": {
+      "eligibleCount": 1,
+      "selectedValue": 216
+    },
+    "unit": "W/fixture",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
+    "source": "Category-specific authoritative context benchmarks",
+    "sourceVersion": "Source-specific versions pinned per benchmark",
+    "sourceArtifact": "Multiple reviewed source fixtures already retained in the repository",
+    "filters": {
+      "application": "parking"
+    },
+    "eligiblePopulation": [
+      {
+        "application": "parking",
+        "averageWatts": 216
+      }
+    ],
+    "sampleSize": 1,
+    "selectionRule": "MANDATORY_REQUIREMENTS_FILTER",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
+    "warnings": [],
+    "provenance": {
+      "sourceEvidence": "Reviewed DOE outdoor lighting application fixture",
+      "sha256": "c09db3eda9d78dda7429781f3434ec520b87e8d6e289d4c78fb40a3381aa44b4"
+    }
+  }
+}

@@ -1,0 +1,52 @@
+ARG JULIA_IMAGE=julia:1.10.4-bookworm@sha256:754e3f19a84522e7b890e173d926048a6d08df59e096628a385a719684e9f52f
+
+FROM ${JULIA_IMAGE} AS build
+
+ARG REOPT_ARCHIVE_SHA256=9b0068246fc2ed73c1834302a03f6e8d3ff7003827d9b5032a6a5a5257ceeb70
+ARG REOPT_ENVIRONMENT_SHA256
+
+ENV JULIA_DEPOT_PATH=/opt/julia-depot \
+    JULIA_PKG_OFFLINE=true
+
+COPY inputs/reopt-source.tar.gz /tmp/reopt-source.tar.gz
+COPY inputs/reopt-julia-environment.tar /tmp/reopt-julia-environment.tar
+
+RUN test -n "${REOPT_ENVIRONMENT_SHA256}" \
+    && echo "${REOPT_ARCHIVE_SHA256}  /tmp/reopt-source.tar.gz" | sha256sum --check - \
+    && echo "${REOPT_ENVIRONMENT_SHA256}  /tmp/reopt-julia-environment.tar" | sha256sum --check - \
+    && mkdir -p /opt/reopt /opt/julia-depot /tmp/reopt-environment \
+    && tar --extract --gzip --file /tmp/reopt-source.tar.gz \
+      --strip-components=1 --directory /opt/reopt \
+    && tar --extract --file /tmp/reopt-julia-environment.tar \
+      --directory /tmp/reopt-environment \
+    && test -f /tmp/reopt-environment/reopt-environment/Project.toml \
+    && test -f /tmp/reopt-environment/reopt-environment/Manifest.toml \
+    && test -d /tmp/reopt-environment/julia-depot \
+    && cp /opt/reopt/Project.toml /opt/reopt/Project.upstream.toml \
+    && cp /opt/reopt/Manifest.toml /opt/reopt/Manifest.upstream.toml \
+    && cp /tmp/reopt-environment/reopt-environment/Project.toml /opt/reopt/Project.toml \
+    && cp /tmp/reopt-environment/reopt-environment/Manifest.toml /opt/reopt/Manifest.toml \
+    && cp -a /tmp/reopt-environment/julia-depot/. /opt/julia-depot/ \
+    && rm -rf /tmp/reopt-source.tar.gz \
+      /tmp/reopt-julia-environment.tar \
+      /tmp/reopt-environment \
+    && julia --startup-file=no --history-file=no --project=/opt/reopt \
+      -e "using HiGHS, REopt"
+
+FROM ${JULIA_IMAGE}
+
+ENV JULIA_DEPOT_PATH=/tmp/julia-depot:/opt/julia-depot \
+    JULIA_PKG_OFFLINE=true \
+    JULIA_NUM_THREADS=1 \
+    OPENBLAS_NUM_THREADS=1
+
+COPY --from=build /opt/julia-depot /opt/julia-depot
+COPY --from=build /opt/reopt /opt/reopt
+COPY runner.jl /opt/reopt-proof/runner.jl
+COPY retrofi-storage-spec.json /opt/reopt-proof/retrofi-storage-spec.json
+
+RUN chmod -R a+rX /opt/reopt-proof
+
+USER 65532:65532
+
+ENTRYPOINT ["julia", "--startup-file=no", "--history-file=no", "--project=/opt/reopt", "/opt/reopt-proof/runner.jl"]

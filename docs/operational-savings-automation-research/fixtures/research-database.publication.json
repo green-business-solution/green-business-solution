@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "operational-savings/research-database-publication-v1",
+  "status": "COMMITTED",
+  "generationId": "9c50e041faed8a4cc7b29a2e9cf2def8270d7f4d516cd2769168a3ac0b91958d",
+  "database": {
+    "fileName": "research-database.sqlite",
+    "byteSize": 80715776,
+    "sha256": "4371084101f4bc14172b869ac14db3f5cc8918cc4f33f1ff816e89116df44be3"
+  },
+  "compactExport": {
+    "fileName": "research-database.compact.json",
+    "byteSize": 388837,
+    "sha256": "b131361fe901fb59fed5395a186b6eda267e945d4617d6303bf51f1459d5d575"
+  },
+  "migrationAppliedAt": "2026-07-24T00:00:00.000Z",
+  "publicationRule": "The receipt is renamed last. Consumers must verify both exact hashes against this receipt before using either file."
+}

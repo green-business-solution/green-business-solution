@@ -1,0 +1,798 @@
+{
+  "schemaVersion": "operational-savings/real-proof-manifest-v1",
+  "standardId": "STD-DOE-CCMS-RATINGS",
+  "slug": "doe-ccms",
+  "adapterPath": "scripts/research/operational-savings/adapters/doe-ccms/run.mjs",
+  "artifacts": [
+    {
+      "artifactId": "artifact:doe-ccms-403-headers-2026-07-23",
+      "sourceUrl": "https://www.regulations.doe.gov/certification-data/",
+      "cachePath": "scripts/research/operational-savings/.cache/probes/ccms.headers",
+      "release": "Unauthenticated access probe retained 2026-07-23",
+      "sha256": "126e0d5e2cb4449613f1a274a714076f122f81fd738c0137934803e34f3b6b9a",
+      "sizeBytes": 118,
+      "acquisitionMode": "OFFICIAL_ENDPOINT_ACCESS_PROBE",
+      "official": true,
+      "artifactRole": "ACCESS_BLOCK_EVIDENCE_ONLY"
+    },
+    {
+      "artifactId": "artifact:doe-ccms-403-body-2026-07-23",
+      "sourceUrl": "https://www.regulations.doe.gov/certification-data/",
+      "cachePath": "scripts/research/operational-savings/.cache/probes/ccms.html",
+      "release": "Unauthenticated access probe retained 2026-07-23",
+      "sha256": "58bf2215b395dcac74c009aa98701854e43cbe54a1cd3a95fee6a647ca9910d4",
+      "sizeBytes": 118,
+      "acquisitionMode": "OFFICIAL_ENDPOINT_ACCESS_PROBE",
+      "official": true,
+      "artifactRole": "ACCESS_BLOCK_EVIDENCE_ONLY"
+    }
+  ],
+  "observedSchemas": [],
+  "normalizedTargets": [],
+  "tests": [
+    {
+      "testId": "doe-ccms-real-access-block-proof",
+      "path": "scripts/research/operational-savings/tests/doe-ccms-blocked.test.mjs",
+      "name": "verifies the retained official CCMS 403 access boundary",
+      "kind": "FAILURE",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "sourceNativeFields": []
+    }
+  ],
+  "processClaims": [
+    {
+      "categoryId": "ITC-03",
+      "processKey": "existing-product-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "testIds": [
+        "doe-ccms-real-access-block-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The official certification-data endpoint returned HTTP 403 and no lawful product-family export or official template has been retained."
+    },
+    {
+      "categoryId": "ITC-03",
+      "processKey": "exact-proposed-product-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "testIds": [
+        "doe-ccms-real-access-block-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The official certification-data endpoint returned HTTP 403 and no lawful product-family export or official template has been retained."
+    },
+    {
+      "categoryId": "ITC-03",
+      "processKey": "requirement-proposed-product-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "testIds": [
+        "doe-ccms-real-access-block-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The official certification-data endpoint returned HTTP 403 and no lawful product-family export or official template has been retained."
+    },
+    {
+      "categoryId": "ITC-06",
+      "processKey": "existing-product-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "testIds": [
+        "doe-ccms-real-access-block-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The official certification-data endpoint returned HTTP 403 and no lawful product-family export or official template has been retained."
+    },
+    {
+      "categoryId": "ITC-06",
+      "processKey": "exact-proposed-product-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "testIds": [
+        "doe-ccms-real-access-block-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The official certification-data endpoint returned HTTP 403 and no lawful product-family export or official template has been retained."
+    },
+    {
+      "categoryId": "ITC-06",
+      "processKey": "requirement-proposed-product-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "testIds": [
+        "doe-ccms-real-access-block-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The official certification-data endpoint returned HTTP 403 and no lawful product-family export or official template has been retained."
+    },
+    {
+      "categoryId": "ITC-07",
+      "processKey": "existing-product-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "testIds": [
+        "doe-ccms-real-access-block-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The official certification-data endpoint returned HTTP 403 and no lawful product-family export or official template has been retained."
+    },
+    {
+      "categoryId": "ITC-07",
+      "processKey": "exact-proposed-product-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "testIds": [
+        "doe-ccms-real-access-block-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The official certification-data endpoint returned HTTP 403 and no lawful product-family export or official template has been retained."
+    },
+    {
+      "categoryId": "ITC-07",
+      "processKey": "requirement-proposed-product-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "testIds": [
+        "doe-ccms-real-access-block-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The official certification-data endpoint returned HTTP 403 and no lawful product-family export or official template has been retained."
+    },
+    {
+      "categoryId": "ITC-10",
+      "processKey": "existing-product-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "testIds": [
+        "doe-ccms-real-access-block-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The official certification-data endpoint returned HTTP 403 and no lawful product-family export or official template has been retained."
+    },
+    {
+      "categoryId": "ITC-10",
+      "processKey": "exact-proposed-product-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "testIds": [
+        "doe-ccms-real-access-block-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The official certification-data endpoint returned HTTP 403 and no lawful product-family export or official template has been retained."
+    },
+    {
+      "categoryId": "ITC-10",
+      "processKey": "requirement-proposed-product-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "testIds": [
+        "doe-ccms-real-access-block-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The official certification-data endpoint returned HTTP 403 and no lawful product-family export or official template has been retained."
+    },
+    {
+      "categoryId": "ITC-13",
+      "processKey": "existing-product-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "testIds": [
+        "doe-ccms-real-access-block-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The official certification-data endpoint returned HTTP 403 and no lawful product-family export or official template has been retained."
+    },
+    {
+      "categoryId": "ITC-13",
+      "processKey": "exact-proposed-product-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "testIds": [
+        "doe-ccms-real-access-block-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The official certification-data endpoint returned HTTP 403 and no lawful product-family export or official template has been retained."
+    },
+    {
+      "categoryId": "ITC-13",
+      "processKey": "requirement-proposed-product-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "testIds": [
+        "doe-ccms-real-access-block-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The official certification-data endpoint returned HTTP 403 and no lawful product-family export or official template has been retained."
+    },
+    {
+      "categoryId": "ITC-50",
+      "processKey": "existing-product-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "testIds": [
+        "doe-ccms-real-access-block-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The official certification-data endpoint returned HTTP 403 and no lawful product-family export or official template has been retained."
+    },
+    {
+      "categoryId": "ITC-50",
+      "processKey": "exact-proposed-product-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "testIds": [
+        "doe-ccms-real-access-block-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The official certification-data endpoint returned HTTP 403 and no lawful product-family export or official template has been retained."
+    },
+    {
+      "categoryId": "ITC-50",
+      "processKey": "requirement-proposed-product-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "testIds": [
+        "doe-ccms-real-access-block-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The official certification-data endpoint returned HTTP 403 and no lawful product-family export or official template has been retained."
+    },
+    {
+      "categoryId": "ITC-52",
+      "processKey": "exact-existing-dishwasher-record",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "testIds": [
+        "doe-ccms-real-access-block-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The official certification-data endpoint returned HTTP 403 and no lawful dishwasher export or official template has been retained."
+    },
+    {
+      "categoryId": "ITC-52",
+      "processKey": "exact-proposed-dishwasher-record",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "testIds": [
+        "doe-ccms-real-access-block-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The official certification-data endpoint returned HTTP 403 and no lawful dishwasher export or official template has been retained."
+    },
+    {
+      "categoryId": "ITC-52",
+      "processKey": "requirement-proposed-dishwasher-record",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "testIds": [
+        "doe-ccms-real-access-block-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The official certification-data endpoint returned HTTP 403 and no lawful dishwasher export or official template has been retained."
+    },
+    {
+      "categoryId": "ITC-53",
+      "processKey": "existing-product-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "testIds": [
+        "doe-ccms-real-access-block-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The official certification-data endpoint returned HTTP 403 and no lawful product-family export or official template has been retained."
+    },
+    {
+      "categoryId": "ITC-53",
+      "processKey": "exact-proposed-product-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "testIds": [
+        "doe-ccms-real-access-block-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The official certification-data endpoint returned HTTP 403 and no lawful product-family export or official template has been retained."
+    },
+    {
+      "categoryId": "ITC-53",
+      "processKey": "requirement-proposed-product-rating",
+      "proofLevel": "ACCESS_BLOCKED",
+      "artifactIds": [
+        "artifact:doe-ccms-403-headers-2026-07-23",
+        "artifact:doe-ccms-403-body-2026-07-23"
+      ],
+      "testIds": [
+        "doe-ccms-real-access-block-proof"
+      ],
+      "accessBlocked": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": false,
+        "checksumVerified": false,
+        "schemaExtracted": false,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": false,
+        "normalizedPublished": false,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": false,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The official certification-data endpoint returned HTTP 403 and no lawful product-family export or official template has been retained."
+    }
+  ],
+  "feasibility": "FEASIBLE_AFTER_MANUAL_SEED",
+  "remainingBlockers": [
+    "Acquire one official product-family template and certification export through the lawful manual interface.",
+    "Retain immutable file checksums and exact ordered native headers.",
+    "Implement and test a separate parser, status rule, and field mapping for each product family."
+  ]
+}

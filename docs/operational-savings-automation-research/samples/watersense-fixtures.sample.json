@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "operational-savings/research-sample-v1",
+  "standardId": "STD-WATERSENSE-FIXTURES",
+  "source": "WaterSense Product Search and product specifications",
+  "sourceVersion": "Live labeled-product search",
+  "observedArtifact": "Product Search access probe and public specification pages",
+  "observedArtifactSha256": null,
+  "evidenceBoundary": "Official WaterSense labeled-product rule and product scope",
+  "sampleIsFullSourceArtifact": false,
+  "prototype": {
+    "operation": "requirementsFilter",
+    "sourceEvidence": "Official WaterSense labeled-product rule and product scope",
+    "query": {
+      "productType": "commercial flushometer toilet",
+      "maximumGpf": 1.28
+    },
+    "records": [
+      {
+        "model": "official-export-required",
+        "productType": "commercial flushometer toilet",
+        "gpf": 1.28,
+        "active": true,
+        "sampleKind": "schema-shaped downstream parser proof, not a claimed observed product"
+      }
+    ],
+    "expected": {
+      "eligibleCount": 1
+    },
+    "unit": "product population"
+  },
+  "offlineResult": {
+    "kind": "input_set",
+    "standardId": "STD-WATERSENSE-FIXTURES",
+    "value": {
+      "eligibleCount": 1,
+      "selectedValue": 1.28
+    },
+    "unit": "product population",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
+    "source": "WaterSense Product Search and product specifications",
+    "sourceVersion": "Live labeled-product search",
+    "sourceArtifact": "Product Search access probe and public specification pages",
+    "filters": {
+      "productType": "commercial flushometer toilet",
+      "maximumGpf": 1.28
+    },
+    "eligiblePopulation": [
+      {
+        "model": "official-export-required",
+        "productType": "commercial flushometer toilet",
+        "gpf": 1.28,
+        "active": true,
+        "sampleKind": "schema-shaped downstream parser proof, not a claimed observed product"
+      }
+    ],
+    "sampleSize": 1,
+    "selectionRule": "MANDATORY_REQUIREMENTS_FILTER",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
+    "warnings": [],
+    "provenance": {
+      "sourceEvidence": "Official WaterSense labeled-product rule and product scope",
+      "sha256": "8a13d3d915382c763315f53c1785a258db8a7250fcf4a383ddd261e104b0bc5a"
+    }
+  }
+}

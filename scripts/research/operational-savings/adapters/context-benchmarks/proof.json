@@ -1,0 +1,809 @@
+{
+  "schemaVersion": "operational-savings/real-proof-manifest-v1",
+  "standardId": "STD-CONTEXT-BENCHMARKS",
+  "slug": "context-benchmarks",
+  "adapterPath": "scripts/research/operational-savings/adapters/context-benchmarks/run.mjs",
+  "artifacts": [
+    {
+      "artifactId": "artifact:energy-star-cfs-calculator-context:2024-03",
+      "sourceUrl": "https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/energy-star-cfs-calculator.xlsx",
+      "release": "Workbook published March 2024",
+      "sha256": "3d2abed1938bd1400378a2e0ca2095058fe490b2b599ef15f09056639f06fcd6",
+      "sizeBytes": 403484,
+      "acquisitionMode": "PUBLIC_XLSX_DOWNLOAD",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:doe-lmc-2015-tables:2017-11",
+      "sourceUrl": "https://www.energy.gov/sites/default/files/2017/12/f46/LMC%202015%20Tables_0.XLSX",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/doe-lmc-2015-tables.xlsx",
+      "release": "2015 baseline, November 2017 report tables",
+      "sha256": "97c36f8d92a721dc2e3245215987d90c828314fa478050ea24c90c750c6fe5f1",
+      "sizeBytes": 1112293,
+      "acquisitionMode": "PUBLIC_XLSX_DOWNLOAD",
+      "acquiredAt": "2026-07-24T19:21:55.000Z",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:fema-is-815-generator-fueling:2026-07-24",
+      "sourceUrl": "https://emilms.fema.gov/IS0815/groups/90.html",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/fema-generator-fueling.html",
+      "release": "FEMA IS-815 page acquired 2026-07-24",
+      "sha256": "104fd7d8fe018001753d4700616f4f5a96bb27ae88440ea794e9d03a0bd32a0a",
+      "sizeBytes": 23016,
+      "acquisitionMode": "PUBLIC_HTML_DOWNLOAD",
+      "acquiredAt": "2026-07-24T19:38:11.000Z",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:watersense-at-work-toilets:2023",
+      "sourceUrl": "https://nepis.epa.gov/Exe/ZyPDF.cgi/P1017K41.PDF?Dockey=P1017K41.PDF",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/watersense-at-work-2023.pdf",
+      "release": "WaterSense at Work 2023 Section 3.1",
+      "sha256": "47ef36b3d505ef39be821ea1665b5bab62da961a529488d96d560b04021182b6",
+      "sizeBytes": 467069,
+      "acquisitionMode": "PUBLIC_PDF_DOWNLOAD",
+      "acquiredAt": "2026-07-24T19:38:12.000Z",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:watersense-at-work-urinals:2023",
+      "sourceUrl": "https://nepis.epa.gov/Exe/ZyPDF.cgi/P1017K3R.PDF?Dockey=P1017K3R.PDF",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/watersense-at-work-2023-urinals.pdf",
+      "release": "WaterSense at Work 2023 Section 3.2",
+      "sha256": "527a042f5037f5ff8629655c60d41310ce7404b1a5ca332f738f9e6ed4a2bcd1",
+      "sizeBytes": 2010967,
+      "acquisitionMode": "PUBLIC_PDF_DOWNLOAD",
+      "acquiredAt": "2026-07-24T19:38:24.000Z",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:argonne-forklift-anl-esd-08-3",
+      "sourceUrl": "https://www1.eere.energy.gov/hydrogenandfuelcells/pdfs/forklift_anl_esd.pdf",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/argonne-forklift-anl-esd.pdf",
+      "release": "ANL/ESD/08-3, October 2008",
+      "sha256": "cf26a69395287f5cdadc7125674632501def5033a8b37774c7a006d6ca5b9eed",
+      "sizeBytes": 2114765,
+      "acquisitionMode": "PUBLIC_PDF_DOWNLOAD",
+      "acquiredAt": "2026-07-24T19:38:13.000Z",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:doe-wicf-ecs-nopr:2023-08",
+      "sourceUrl": "https://www.energy.gov/sites/default/files/2023-08/Walk-In%20Coolers%20and%20Freezers%20ECS%20NOPR.pdf",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/doe-wicf-ecs-nopr-2023.pdf",
+      "release": "August 2023 NOPR",
+      "sha256": "d46c285120da35349dfe1017b1d2739cfa20efe62f00261e89c8c225c6fd1bbc",
+      "sizeBytes": 5240469,
+      "acquisitionMode": "PUBLIC_PDF_DOWNLOAD",
+      "acquiredAt": "2026-07-24T19:38:14.000Z",
+      "official": true
+    }
+  ],
+  "observedSchemas": [
+    {
+      "schemaId": "schema:energy-star-cfs-context-benchmarks:2024-03",
+      "artifactId": "artifact:energy-star-cfs-calculator-context:2024-03",
+      "format": "XLSX_EXACT_BENCHMARK_CELLS",
+      "extractor": "scripts/research/operational-savings/adapters/context-benchmarks/inspect-schema.mjs",
+      "requiredNativeFields": [
+        "Dishwasher Calcs!B5:B15 machine classes and sanitation groups",
+        "Dishwasher Calcs!E4 racks-washed-per-day header",
+        "Dishwasher Calcs!E6:E15 class-specific defaults",
+        "Electric Cooktop Calcs!C17:D17 cooking efficiencies",
+        "Electric Cooktop Calcs!C20:D20 boil-cycle energy",
+        "Electric Cooktop Calcs!C34 tested duty definition"
+      ],
+      "fields": [
+        {
+          "name": "Dishwasher Calcs class-specific default",
+          "unit": "racks/operating day"
+        },
+        {
+          "name": "Electric Cooktop Calcs conventional and ENERGY STAR boil-cycle energy",
+          "unit": "kWh/boil cycle"
+        },
+        {
+          "name": "Electric Cooktop Calcs cooking efficiency",
+          "unit": "fraction"
+        }
+      ]
+    },
+    {
+      "schemaId": "schema:fema-is-815-generator-fueling:2026-07-24",
+      "artifactId": "artifact:fema-is-815-generator-fueling:2026-07-24",
+      "format": "HTML_NATIVE_FORMULA_AND_APPLICABILITY",
+      "extractor": "scripts/research/operational-savings/adapters/context-benchmarks/fema-inspect-schema.mjs",
+      "requiredNativeFields": [
+        "Operational generator fueling requirements section title",
+        "0.07 gallons/hour x kW x 24 hours/day native formula",
+        "40 kW and 24 hour worked example",
+        "diesel fuel generators only applicability statement"
+      ],
+      "fields": [
+        {
+          "name": "Full-load diesel fuel coefficient",
+          "unit": "gallon/(hour kW)"
+        },
+        {
+          "name": "Rated generator capacity",
+          "unit": "kW"
+        },
+        {
+          "name": "Operating duration",
+          "unit": "hours",
+          "scope": "project-document input for annual execution"
+        }
+      ]
+    },
+    {
+      "schemaId": "schema:watersense-at-work-flush-activity:2023",
+      "artifactId": "artifact:watersense-at-work-toilets:2023",
+      "additionalArtifactIds": [
+        "artifact:watersense-at-work-urinals:2023"
+      ],
+      "format": "PDF_NATIVE_ACTIVITY_ASSUMPTIONS_AND_EQUATIONS",
+      "extractor": "scripts/research/operational-savings/adapters/context-benchmarks/watersense-flush-inspect-schema.mjs",
+      "requiredNativeFields": [
+        "Section 3.1 female toilet uses per operating day",
+        "Section 3.1 male toilet uses per operating day",
+        "Section 3.1 Equation 2",
+        "Section 3.2 male urinal uses per operating day",
+        "Section 3.2 Equation 2",
+        "days of facility operation per year input"
+      ],
+      "fields": [
+        {
+          "name": "Female toilet activity",
+          "value": 3,
+          "unit": "flushes/(person operating day)"
+        },
+        {
+          "name": "Male toilet activity",
+          "value": 1,
+          "unit": "flushes/(person operating day)"
+        },
+        {
+          "name": "Male urinal activity",
+          "value": 2,
+          "unit": "flushes/(person operating day)"
+        }
+      ]
+    },
+    {
+      "schemaId": "schema:argonne-forklift-anl-esd-08-3",
+      "artifactId": "artifact:argonne-forklift-anl-esd-08-3",
+      "format": "PDF_NATIVE_SIDE_BY_SIDE_COMPARISON",
+      "extractor": "scripts/research/operational-savings/adapters/context-benchmarks/argonne-forklift-inspect-schema.mjs",
+      "requiredNativeFields": [
+        "Section 3.1 EPRI side-by-side comparison",
+        "5,000 lb rated capacity for both forklifts",
+        "7.5 kWh/h wall-electricity intensity",
+        "1.38 gal/h propane intensity"
+      ],
+      "fields": [
+        {
+          "name": "Rated capacity",
+          "value": 5000,
+          "unit": "lb"
+        },
+        {
+          "name": "Existing propane intensity",
+          "value": 1.38,
+          "unit": "gallons/hour"
+        },
+        {
+          "name": "Proposed wall-electricity intensity",
+          "value": 7.5,
+          "unit": "kWh/hour"
+        }
+      ]
+    },
+    {
+      "schemaId": "schema:doe-wicf-ecs-nopr:2023-08",
+      "artifactId": "artifact:doe-wicf-ecs-nopr:2023-08",
+      "format": "PDF_NATIVE_CLASS_AND_ENERGY_TABLES",
+      "extractor": "scripts/research/operational-savings/adapters/context-benchmarks/doe-walkin-inspect-schema.mjs",
+      "requiredNativeFields": [
+        "PDF page 2 source title and docket EERE-2017-BT-STD-0009",
+        "Tables IV.1, IV.2, and IV.3 equipment-class dimensions",
+        "PDF page 164 and document page 163 energy-use heading",
+        "Table IV.31 selected panel baseline and TSL 3 rows",
+        "Table IV.32 selected door baseline and TSL 3 rows",
+        "Table IV.33 selected refrigeration-system baseline and TSL 3 rows"
+      ],
+      "fields": [
+        {
+          "name": "Reviewed DOE equipment class",
+          "enumeration": [
+            "PF.L",
+            "PS.L",
+            "PS.M",
+            "DW.L",
+            "NM.L",
+            "NO.L",
+            "DC.L.I",
+            "DC.M.I",
+            "SP.H.I",
+            "UC.L"
+          ]
+        },
+        {
+          "name": "Efficiency level pair",
+          "enumeration": [
+            "BASELINE",
+            "TSL_3"
+          ]
+        },
+        {
+          "name": "Panel annual energy intensity",
+          "unit": "kWh/(ft2 year)"
+        },
+        {
+          "name": "Door or refrigeration-system annual component energy",
+          "unit": "kWh/year"
+        }
+      ]
+    },
+    {
+      "schemaId": "schema:doe-lmc-2015:table-4-29",
+      "artifactId": "artifact:doe-lmc-2015-tables:2017-11",
+      "format": "XLSX_TABLE_4_29",
+      "extractor": "scripts/research/operational-savings/adapters/context-benchmarks/inspect-schema.mjs",
+      "requiredNativeFields": [
+        "Table 4-29!A2 title",
+        "Table 4-29!B3:L3 technology headers",
+        "Table 4-29!A5:A13 outdoor subsectors",
+        "Table 4-29!L5:L13 average wattage per lamp or luminaire"
+      ],
+      "fields": [
+        {
+          "name": "Outdoor subsector",
+          "enumeration": [
+            "Airfield",
+            "Billboard",
+            "Building Exterior: C&I",
+            "Comm. Tower",
+            "Parking",
+            "Railway",
+            "Roadway",
+            "Sports Field",
+            "Traffic Signal"
+          ]
+        },
+        {
+          "name": "Average wattage per lamp or luminaire",
+          "unit": "watts/lamp-or-luminaire"
+        }
+      ]
+    }
+  ],
+  "normalizedTargets": [
+    "benchmark_populations",
+    "benchmark_values",
+    "calculation_runs",
+    "selected_values",
+    "selected_value_provenance"
+  ],
+  "tests": [
+    {
+      "testId": "context-benchmarks-real-cfs-proof",
+      "path": "scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs",
+      "name": "resolves one exact dishwasher class and reaches annual racks",
+      "kind": "END_TO_END_REAL",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:energy-star-cfs-calculator-context:2024-03"
+      ],
+      "sourceNativeFields": [
+        "Dishwasher Calcs!B5:B15",
+        "Dishwasher Calcs!E4",
+        "Dishwasher Calcs!E6:E15"
+      ]
+    },
+    {
+      "testId": "context-cfs-cooktop-source-proof",
+      "path": "scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs",
+      "name": "publishes exact official dishwasher and cooktop benchmark cells",
+      "kind": "REAL_SOURCE_PARTIAL",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:energy-star-cfs-calculator-context:2024-03"
+      ],
+      "sourceNativeFields": [
+        "Electric Cooktop Calcs!C17:D17",
+        "Electric Cooktop Calcs!C20:D20",
+        "Electric Cooktop Calcs!C34"
+      ]
+    },
+    {
+      "testId": "context-cfs-workbook-mutation-proof",
+      "path": "scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs",
+      "name": "fails changed benchmark cells and worksheet shapes",
+      "kind": "FAILURE",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:energy-star-cfs-calculator-context:2024-03"
+      ],
+      "mutationCases": [
+        "changed workbook benchmark cell",
+        "missing worksheet"
+      ]
+    },
+    {
+      "testId": "context-argonne-forklift-real-proof",
+      "path": "scripts/research/operational-savings/tests/context-argonne-forklift-real.test.mjs",
+      "name": "maps both exact ITC-30 hourly intensity terms",
+      "kind": "END_TO_END_REAL",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:argonne-forklift-anl-esd-08-3"
+      ],
+      "sourceNativeFields": [
+        "Section 3.1 paired capacity",
+        "Section 3.1 7.5 kWh/h electric record",
+        "Section 3.1 1.38 gal/h propane record"
+      ]
+    },
+    {
+      "testId": "context-argonne-scope-failure-proof",
+      "path": "scripts/research/operational-savings/tests/context-argonne-forklift-real.test.mjs",
+      "name": "fails closed for every incompatible class or duty dimension",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:argonne-forklift-anl-esd-08-3"
+      ],
+      "mutationCases": [
+        "different rated capacity",
+        "different existing propulsion",
+        "different proposed propulsion",
+        "unproved duty relationship"
+      ]
+    },
+    {
+      "testId": "context-doe-walkin-real-proof",
+      "path": "scripts/research/operational-savings/tests/context-doe-walkin-real.test.mjs",
+      "name": "publishes both exact ITC-49 formula terms with canonical units and scope",
+      "kind": "END_TO_END_REAL",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:doe-wicf-ecs-nopr:2023-08"
+      ],
+      "sourceNativeFields": [
+        "PDF page 2 source title and docket",
+        "Tables IV.1, IV.2, and IV.3 equipment-class dimensions",
+        "PDF page 164 and document page 163",
+        "Tables IV.31, IV.32, and IV.33 baseline and TSL 3 values"
+      ]
+    },
+    {
+      "testId": "context-doe-walkin-scope-failure-proof",
+      "path": "scripts/research/operational-savings/tests/context-doe-walkin-real.test.mjs",
+      "name": "fails closed outside the reviewed row and exact class dimensions",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:doe-wicf-ecs-nopr:2023-08"
+      ],
+      "mutationCases": [
+        "unsupported equipment-class row",
+        "mismatched component, temperature, or location",
+        "mismatched efficiency level",
+        "missing panel area",
+        "panel area applied to a non-panel row"
+      ]
+    },
+    {
+      "testId": "context-doe-walkin-source-mutation-proof",
+      "path": "scripts/research/operational-savings/tests/context-doe-walkin-real.test.mjs",
+      "name": "fails source-title, table-row, and fixture-value mutations",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:doe-wicf-ecs-nopr:2023-08"
+      ],
+      "mutationCases": [
+        "changed source title",
+        "changed native table value",
+        "changed reviewed-fixture value"
+      ]
+    },
+    {
+      "testId": "context-watersense-flush-activity-real-proof",
+      "path": "scripts/research/operational-savings/tests/context-watersense-flush-real.test.mjs",
+      "name": "reaches the exact ITC-33 group annual flush term without fixture-count multiplication",
+      "kind": "END_TO_END_REAL",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:watersense-at-work-toilets:2023",
+        "artifact:watersense-at-work-urinals:2023"
+      ],
+      "sourceNativeFields": [
+        "Section 3.1 female and male toilet daily activity assumptions",
+        "Section 3.1 Equation 2",
+        "Section 3.2 male urinal daily activity assumption",
+        "Section 3.2 Equation 2"
+      ]
+    },
+    {
+      "testId": "context-watersense-flush-scope-failure-proof",
+      "path": "scripts/research/operational-savings/tests/context-watersense-flush-real.test.mjs",
+      "name": "fails closed for unproved visitors, subset allocation, and incompatible populations",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:watersense-at-work-toilets:2023",
+        "artifact:watersense-at-work-urinals:2023"
+      ],
+      "mutationCases": [
+        "visitor population without a sex-specific split",
+        "subset allocation without an allocation share",
+        "female population applied to the urinal method"
+      ]
+    },
+    {
+      "testId": "context-doe-lighting-market-real-proof",
+      "path": "scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs",
+      "name": "resolves an exact outdoor subsector and reaches ITC-02 existing_kW",
+      "kind": "END_TO_END_REAL",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:doe-lmc-2015-tables:2017-11"
+      ],
+      "sourceNativeFields": [
+        "Table 4-29!A2",
+        "Table 4-29!B3:L3",
+        "Table 4-29!A5:A13",
+        "Table 4-29!L5:L13"
+      ]
+    },
+    {
+      "testId": "context-doe-lighting-schema-failure-proof",
+      "path": "scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs",
+      "name": "fails Table 4-29 header, application, and value mutations",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:doe-lmc-2015-tables:2017-11"
+      ],
+      "mutationCases": [
+        "changed technology header",
+        "non-numeric application average"
+      ]
+    },
+    {
+      "testId": "context-fema-full-load-diesel-real-proof",
+      "path": "scripts/research/operational-savings/tests/context-fema-real.test.mjs",
+      "name": "maps the narrow FEMA calculation to the exact ITC-54 term",
+      "kind": "END_TO_END_REAL",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:fema-is-815-generator-fueling:2026-07-24"
+      ],
+      "sourceNativeFields": [
+        "Operational generator fueling requirements formula",
+        "40 kW and 24 hour worked example",
+        "diesel-only applicability statement"
+      ]
+    },
+    {
+      "testId": "context-fema-scope-failure-proof",
+      "path": "scripts/research/operational-savings/tests/context-fema-real.test.mjs",
+      "name": "fails closed outside the diesel full-load boundary",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:fema-is-815-generator-fueling:2026-07-24"
+      ],
+      "mutationCases": [
+        "non-diesel fuel",
+        "non-generator technology",
+        "part-load request",
+        "missing annual project hours"
+      ]
+    },
+    {
+      "testId": "context-fema-source-mutation-proof",
+      "path": "scripts/research/operational-savings/tests/context-fema-real.test.mjs",
+      "name": "fails native-formula and applicability mutations",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:fema-is-815-generator-fueling:2026-07-24"
+      ],
+      "mutationCases": [
+        "changed native coefficient",
+        "removed diesel-only applicability"
+      ]
+    }
+  ],
+  "processClaims": [
+    {
+      "categoryId": "ITC-02",
+      "processKey": "context_benchmarks",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:doe-lmc-2015-tables:2017-11"
+      ],
+      "testIds": [
+        "context-doe-lighting-market-real-proof",
+        "context-doe-lighting-schema-failure-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "existing_kW": 0.097
+      },
+      "formulaTerms": [
+        "existing_kW"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-52",
+      "processKey": "rack-dishwasher-activity",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:energy-star-cfs-calculator-context:2024-03"
+      ],
+      "testIds": [
+        "context-benchmarks-real-cfs-proof",
+        "context-cfs-workbook-mutation-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "annual_racks_per_unit": 19500
+      },
+      "formulaTerms": [
+        "annual_racks_per_unit"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-30",
+      "processKey": "context_benchmarks",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:argonne-forklift-anl-esd-08-3"
+      ],
+      "testIds": [
+        "context-argonne-forklift-real-proof",
+        "context-argonne-scope-failure-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "existing_fuel_per_hour": 1.38,
+        "proposed_kWh_per_hour": 7.5
+      },
+      "formulaTerms": [
+        "existing_fuel_per_hour",
+        "proposed_kWh_per_hour"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-33",
+      "processKey": "flush_activity",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:watersense-at-work-toilets:2023",
+        "artifact:watersense-at-work-urinals:2023"
+      ],
+      "testIds": [
+        "context-watersense-flush-activity-real-proof",
+        "context-watersense-flush-scope-failure-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "total_annual_flushes_group": 10400
+      },
+      "formulaTerms": [
+        "total_annual_flushes_group"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-54",
+      "processKey": "fema-full-load-diesel-test-fuel",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:fema-is-815-generator-fueling:2026-07-24"
+      ],
+      "testIds": [
+        "context-fema-full-load-diesel-real-proof",
+        "context-fema-scope-failure-proof",
+        "context-fema-source-mutation-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "benchmark_annual_test_fuel_per_unit": 67.2
+      },
+      "formulaTerms": [
+        "benchmark_annual_test_fuel_per_unit"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-49",
+      "processKey": "context_benchmarks",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:doe-wicf-ecs-nopr:2023-08"
+      ],
+      "testIds": [
+        "context-doe-walkin-real-proof",
+        "context-doe-walkin-scope-failure-proof",
+        "context-doe-walkin-source-mutation-proof"
+      ],
+      "adapterPath": "scripts/research/operational-savings/adapters/context-benchmarks/doe-walkin.mjs",
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "current_annual_refrigeration_kWh": 950,
+        "proposed_annual_refrigeration_kWh": 520
+      },
+      "formulaTerms": [
+        "current_annual_refrigeration_kWh",
+        "proposed_annual_refrigeration_kWh"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-48",
+      "processKey": "context_benchmarks",
+      "proofLevel": "REAL_SOURCE_PARTIAL",
+      "artifactIds": [
+        "artifact:energy-star-cfs-calculator-context:2024-03"
+      ],
+      "testIds": [
+        "context-cfs-cooktop-source-proof",
+        "context-cfs-workbook-mutation-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": false,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "remainingBlocker": "The workbook proves only the electric conventional and ENERGY STAR 20-pound water-boil duty. It does not identify the proposed row as every induction configuration and does not prove a gas-to-induction comparison."
+    }
+  ],
+  "feasibility": "PARTIALLY_FEASIBLE",
+  "remainingBlockers": [
+    "ITC-02 exterior lighting, the narrow ITC-30 paired forklift case, ITC-33 complete-group flush activity, the narrow ITC-49 walk-in component comparison, ITC-52 rack-dishwasher activity, and the narrow ITC-54 full-load diesel test-fuel process reach their category formulas.",
+    "ITC-30 does not support a different forklift capacity, propulsion pair, or operating duty without another compatible authoritative population.",
+    "ITC-33 visitor populations still require a male/female eligibility split, and subset fixture groups require an explicit allocation share or observed study.",
+    "ITC-54 still has no source-derived annual test-hour schedule, standby-electricity benchmark, part-load curve, or non-diesel benchmark.",
+    "ITC-49 supports only the ten reviewed DOE component rows, requires baseline and TSL 3 values from the same row, and cannot infer whole-box project energy.",
+    "Every other context process still requires its own source-specific population and compatibility proof.",
+    "No universal context fallback is permitted."
+  ]
+}

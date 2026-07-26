@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "operational-savings/project-schedule-fixtures-v1",
+  "inputOwnership": "PROJECT_OR_PROFILE",
+  "cases": {
+    "itc02FixedLighting": {
+      "year": 2026,
+      "timeZone": "America/Los_Angeles",
+      "weekly": {
+        "monday": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ]
+      },
+      "categoryId": "ITC-02",
+      "processKey": "fixed-lighting-hours",
+      "formulaTerm": "annual_on_hours",
+      "expectedValue": 416
+    },
+    "itc02DaylightLighting": {
+      "year": 2026,
+      "timeZone": "America/Los_Angeles",
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "switchOnOffsetMinutes": 0,
+      "switchOffOffsetMinutes": 0,
+      "categoryId": "ITC-02",
+      "processKey": "daylight-lighting-hours",
+      "formulaTerm": "annual_on_hours",
+      "expectedValue": 4309.045630604579
+    },
+    "itc09RecirculationReduction": {
+      "year": 2026,
+      "timeZone": "America/Los_Angeles",
+      "existingWeekly": {
+        "monday": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ]
+      },
+      "proposedWeekly": {
+        "monday": [
+          [
+            "09:00",
+            "13:00"
+          ]
+        ]
+      },
+      "categoryId": "ITC-09",
+      "processKey": "operating_schedule",
+      "formulaTerm": "avoided_run_hours",
+      "expectedValue": 208
+    },
+    "itc12AnnualHours": {
+      "year": 2026,
+      "timeZone": "America/Los_Angeles",
+      "weekly": {
+        "monday": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ]
+      },
+      "categoryId": "ITC-12",
+      "processKey": "operating_schedule",
+      "formulaTerm": "annual_hours",
+      "expectedValue": 416
+    }
+  }
+}

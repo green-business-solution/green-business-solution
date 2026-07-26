@@ -1,0 +1,273 @@
+{
+  "schemaVersion": "operational-savings/real-proof-manifest-v1",
+  "standardId": "STD-COMSTOCK-ANNUAL-DELTA",
+  "slug": "comstock",
+  "adapterPath": "scripts/research/operational-savings/adapters/comstock/run.mjs",
+  "artifacts": [
+    {
+      "artifactId": "artifact:comstock-2025-release-3-data-dictionary",
+      "sourceUrl": "https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/comstock_amy2018_release_3/data_dictionary.tsv",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/comstock-data-dictionary.tsv",
+      "release": "2025 ComStock Release 3",
+      "sha256": "11c03e4794ed12c5d8fc81c1253d97c033f217c79cc217e00110052b2d23ea4b",
+      "sizeBytes": 250000,
+      "acquisitionMode": "PUBLIC_OEDI_DOWNLOAD",
+      "sourceOrganization": "National Renewable Energy Laboratory",
+      "acquisitionTimestamp": "2026-07-24T00:00:00.000Z",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:comstock-2025-release-3-enumeration-dictionary",
+      "sourceUrl": "https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/comstock_amy2018_release_3/enumeration_dictionary.tsv",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/comstock-enumeration-dictionary.tsv",
+      "release": "2025 ComStock Release 3",
+      "sha256": "0d721355dc3f1cee2f42e6db750c0de2daef1773404bab3125d1bda1960e007e",
+      "sizeBytes": 30953,
+      "acquisitionMode": "PUBLIC_OEDI_DOWNLOAD",
+      "sourceOrganization": "National Renewable Energy Laboratory",
+      "acquisitionTimestamp": "2026-07-24T00:00:00.000Z",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:comstock-2025-release-3-measure-crosswalk",
+      "sourceUrl": "https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/comstock_amy2018_release_3/measure_name_crosswalk.csv",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/comstock-measure-name-crosswalk.csv",
+      "release": "2025 ComStock Release 3",
+      "sha256": "cf87e5905df7291b4d2bbbd9491ad3f0cde55b3e5e43298308c429c9454b4462",
+      "sizeBytes": 20900,
+      "acquisitionMode": "PUBLIC_OEDI_DOWNLOAD",
+      "sourceOrganization": "National Renewable Energy Laboratory",
+      "acquisitionTimestamp": "2026-07-24T00:00:00.000Z",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:comstock-2025-release-3-upgrades",
+      "sourceUrl": "https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/comstock_amy2018_release_3/upgrades_lookup.json",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/comstock-upgrades.json",
+      "release": "2025 ComStock Release 3",
+      "sha256": "c3ba607e650d3b78cd86f08ef3cd6e632b7e622797a970cd8f16812e41a1ce5a",
+      "sizeBytes": 3752,
+      "acquisitionMode": "PUBLIC_OEDI_DOWNLOAD",
+      "sourceOrganization": "National Renewable Energy Laboratory",
+      "acquisitionTimestamp": "2026-07-24T00:00:00.000Z",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:comstock-2025-release-3-ca-g0600750-upgrade-0",
+      "sourceUrl": "https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/comstock_amy2018_release_3/metadata_and_annual_results/by_state_and_county/full/parquet/state=CA/county=G0600750/CA_G0600750_upgrade0.parquet",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/comstock-ca-g0600750-upgrade0.parquet",
+      "release": "2025 ComStock Release 3",
+      "sha256": "df4d4e40099a4c73f128fcc621cfc5b7facc6eb621e13eddf21a43bc87afdc40",
+      "sizeBytes": 16866929,
+      "acquisitionMode": "PUBLIC_OEDI_DOWNLOAD",
+      "sourceOrganization": "National Renewable Energy Laboratory",
+      "acquisitionTimestamp": "2026-07-24T00:00:00.000Z",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:comstock-2025-release-3-ca-g0600750-upgrade-43",
+      "sourceUrl": "https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/comstock_amy2018_release_3/metadata_and_annual_results/by_state_and_county/full/parquet/state=CA/county=G0600750/CA_G0600750_upgrade43.parquet",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/comstock-ca-g0600750-upgrade43.parquet",
+      "release": "2025 ComStock Release 3",
+      "sha256": "1c658e2a59a83f24f55fab04187cd0cde6546c6bf5e43dc8beb456479403dbde",
+      "sizeBytes": 19572532,
+      "acquisitionMode": "PUBLIC_OEDI_DOWNLOAD",
+      "sourceOrganization": "National Renewable Energy Laboratory",
+      "acquisitionTimestamp": "2026-07-24T00:00:00.000Z",
+      "official": true
+    }
+  ],
+  "observedSchemas": [
+    {
+      "schemaId": "schema:comstock-2025-release-3-bundle",
+      "format": "COMSTOCK_RELEASE_BUNDLE",
+      "extractor": "scripts/research/operational-savings/adapters/comstock/inspect-schema.mjs",
+      "requiredNativeFields": [
+        "bldg_id",
+        "weight",
+        "upgrade",
+        "applicability",
+        "completed_status",
+        "dataset",
+        "in.comstock_building_type",
+        "in.county_name",
+        "in.state",
+        "in.sqft..ft2",
+        "out.electricity.total.energy_consumption..kwh",
+        "measure_id",
+        "2025_comstock_amy2018_release_3_upgrade_id",
+        "2025_comstock_amy2018_release_3_upgrade_name"
+      ],
+      "fields": [
+        {
+          "name": "weight",
+          "unit": "represented buildings"
+        },
+        {
+          "name": "in.sqft..ft2",
+          "unit": "ft2"
+        },
+        {
+          "name": "out.electricity.total.energy_consumption..kwh",
+          "unit": "kWh/year"
+        },
+        {
+          "name": "upgrade",
+          "enumeration": [
+            0,
+            43
+          ]
+        }
+      ]
+    }
+  ],
+  "normalizedTargets": [
+    "building_upgrade_measures",
+    "retrofit_measure_crosswalks",
+    "comstock_building_results",
+    "comstock_paired_resource_deltas",
+    "benchmark_populations",
+    "benchmark_values",
+    "building_archetype_benchmarks",
+    "calculation_runs",
+    "selected_values",
+    "selected_value_provenance"
+  ],
+  "tests": [
+    {
+      "testId": "comstock-real-release-3-annual-delta-proof",
+      "path": "scripts/research/operational-savings/tests/comstock-real.test.mjs",
+      "name": "joins real baseline and LED rows, applies release weights, and publishes the ITC-01 output offline",
+      "kind": "END_TO_END_REAL",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:comstock-2025-release-3-data-dictionary",
+        "artifact:comstock-2025-release-3-enumeration-dictionary",
+        "artifact:comstock-2025-release-3-measure-crosswalk",
+        "artifact:comstock-2025-release-3-upgrades",
+        "artifact:comstock-2025-release-3-ca-g0600750-upgrade-0",
+        "artifact:comstock-2025-release-3-ca-g0600750-upgrade-43"
+      ],
+      "sourceNativeFields": [
+        "bldg_id",
+        "weight",
+        "upgrade",
+        "applicability",
+        "completed_status",
+        "dataset",
+        "in.comstock_building_type",
+        "in.county_name",
+        "in.state",
+        "in.sqft..ft2",
+        "out.electricity.total.energy_consumption..kwh",
+        "measure_id",
+        "2025_comstock_amy2018_release_3_upgrade_id",
+        "2025_comstock_amy2018_release_3_upgrade_name"
+      ]
+    },
+    {
+      "testId": "comstock-schema-failure-proof",
+      "path": "scripts/research/operational-savings/tests/comstock-real.test.mjs",
+      "name": "fails closed on schema drift, missing columns, and incompatible units",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:comstock-2025-release-3-data-dictionary",
+        "artifact:comstock-2025-release-3-ca-g0600750-upgrade-0",
+        "artifact:comstock-2025-release-3-ca-g0600750-upgrade-43"
+      ],
+      "mutationCases": [
+        "missing required Parquet column",
+        "incompatible Parquet physical type"
+      ]
+    },
+    {
+      "testId": "comstock-resolution-failure-proof",
+      "path": "scripts/research/operational-savings/tests/comstock-real.test.mjs",
+      "name": "rejects mixed releases, insufficient populations, duplicates, and ambiguous resolution",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:comstock-2025-release-3-ca-g0600750-upgrade-0",
+        "artifact:comstock-2025-release-3-ca-g0600750-upgrade-43"
+      ],
+      "mutationCases": [
+        "mixed release dataset label",
+        "insufficient benchmark population",
+        "duplicate paired identifier and source weight",
+        "ambiguous normalized benchmark"
+      ]
+    },
+    {
+      "testId": "comstock-artifact-network-failure-proof",
+      "path": "scripts/research/operational-savings/tests/comstock-real.test.mjs",
+      "name": "rejects changed artifacts and attempted runtime network access",
+      "kinds": [
+        "FAILURE",
+        "MUTATION",
+        "OFFLINE_EXECUTION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:comstock-2025-release-3-data-dictionary"
+      ],
+      "mutationCases": [
+        "changed data dictionary checksum",
+        "attempted runtime network access"
+      ]
+    }
+  ],
+  "processClaims": [
+    {
+      "categoryId": "ITC-01",
+      "processKey": "comstock_annual_delta",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:comstock-2025-release-3-data-dictionary",
+        "artifact:comstock-2025-release-3-enumeration-dictionary",
+        "artifact:comstock-2025-release-3-measure-crosswalk",
+        "artifact:comstock-2025-release-3-upgrades",
+        "artifact:comstock-2025-release-3-ca-g0600750-upgrade-0",
+        "artifact:comstock-2025-release-3-ca-g0600750-upgrade-43"
+      ],
+      "testIds": [
+        "comstock-real-release-3-annual-delta-proof",
+        "comstock-schema-failure-proof",
+        "comstock-resolution-failure-proof",
+        "comstock-artifact-network-failure-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "median_ComStock_delta_r_per_ft²": 0.27474747474747446
+      },
+      "formulaTerms": [
+        "median_ComStock_delta_r_per_ft²"
+      ],
+      "remainingBlocker": null
+    }
+  ],
+  "feasibility": "FEASIBLE_NOW",
+  "remainingBlockers": []
+}

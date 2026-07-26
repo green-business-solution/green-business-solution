@@ -1,0 +1,200 @@
+{
+  "schemaVersion": "operational-savings/real-proof-manifest-v1",
+  "standardId": "STD-SAM-SOLAR-THERMAL",
+  "slug": "sam-solar-thermal",
+  "adapterPath": "scripts/research/operational-savings/adapters/sam-solar-thermal/run.mjs",
+  "artifacts": [
+    {
+      "artifactId": "artifact:sam-solar-thermal:ssc-303",
+      "sourceUrl": "https://github.com/NatLabRockies/REopt.jl.git",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/reopt/src/sam/libssc.dylib",
+      "version": "SSC 303",
+      "commitSha": "f952cabdf3e60f6e88eef80bb7bc9e7e24bac643",
+      "sha256": "db933646389fa94f41af34066d65034681d5836f1bd29644f9b2a934a01b788f",
+      "sizeBytes": 37852576,
+      "official": true
+    },
+    {
+      "artifactId": "artifact:sam-solar-thermal:official-fixture",
+      "sourceUrl": "https://github.com/NatLabRockies/ssc.git",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/ssc/test/input_cases/swh_common.h",
+      "version": "official repository fixture",
+      "commitSha": "ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+      "sha256": "5bc2ecd5a6e241a4f653dfda60d5c02b502ec7700358392ad923e7207f5b119d",
+      "sizeBytes": 22073,
+      "official": true
+    },
+    {
+      "artifactId": "artifact:sam-solar-thermal:fargo-weather",
+      "sourceUrl": "https://github.com/NatLabRockies/ssc.git",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/ssc/test/input_cases/swh_residential_data/fargo_nd_46.9_-96.8_mts1_60_tmy.csv",
+      "version": "official repository weather fixture",
+      "commitSha": "ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+      "sha256": "3228bdb487135d66debfd9a4fb215820ae236592e25c508e22e449139e098069",
+      "sizeBytes": 414632,
+      "official": true
+    }
+  ],
+  "observedSchemas": [
+    {
+      "schemaId": "schema:sam-solar-thermal:ssc-303:swh",
+      "artifactId": "artifact:sam-solar-thermal:ssc-303",
+      "format": "SSC_C_API_MODULE_METADATA",
+      "fingerprintSha256": "16f98cd68e4734bd38aa0c0717ed11feafeb0a95ab66643d73bc6462d9e91a6a",
+      "requiredNativeFields": [
+        "solar_resource_file",
+        "scaled_draw",
+        "custom_mains",
+        "custom_set",
+        "gen",
+        "annual_energy"
+      ],
+      "fields": [
+        {
+          "name": "annual_energy",
+          "unit": "kWh"
+        },
+        {
+          "name": "gen",
+          "unit": "kW"
+        },
+        {
+          "name": "scaled_draw",
+          "unit": "kg/hour"
+        }
+      ]
+    }
+  ],
+  "normalizedTargets": [
+    "source_registry",
+    "source_releases",
+    "source_artifacts",
+    "model_versions",
+    "model_input_schemas",
+    "calculation_runs",
+    "selected_values",
+    "selected_value_provenance",
+    "calculation_warnings"
+  ],
+  "tests": [
+    {
+      "testId": "sam-solar-thermal-real-ssc-execution",
+      "path": "scripts/research/operational-savings/tests/ssc-models.test.mjs",
+      "name": "STD-SAM-SOLAR-THERMAL executes a real pinned local SSC model deterministically",
+      "kind": "LOCAL_MODEL_EXECUTION",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:sam-solar-thermal:ssc-303",
+        "artifact:sam-solar-thermal:official-fixture",
+        "artifact:sam-solar-thermal:fargo-weather"
+      ],
+      "sourceNativeFields": [
+        "solar_resource_file",
+        "scaled_draw",
+        "custom_mains",
+        "custom_set",
+        "gen",
+        "annual_energy"
+      ]
+    },
+    {
+      "testId": "sam-solar-thermal-ssc-version-failure",
+      "path": "scripts/research/operational-savings/tests/ssc-models.test.mjs",
+      "name": "STD-SAM-SOLAR-THERMAL rejects a caller model-version mismatch",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:sam-solar-thermal:ssc-303"
+      ],
+      "mutationCases": [
+        "model-version mismatch"
+      ]
+    },
+    {
+      "testId": "sam-solar-thermal-real-database-publication",
+      "path": "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs",
+      "name": "STD-SAM-SOLAR-THERMAL publishes its pinned model identity, calculation, provenance, and exact formula selection",
+      "kinds": [
+        "NORMALIZATION",
+        "DATABASE_PUBLICATION",
+        "RESOLVER",
+        "FORMULA_INPUT_MAPPING"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:sam-solar-thermal:ssc-303"
+      ],
+      "sourceNativeFields": [
+        "annual_energy"
+      ]
+    },
+    {
+      "testId": "sam-solar-thermal-publication-failure",
+      "path": "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs",
+      "name": "STD-SAM-SOLAR-THERMAL rejects mixed model identity and offline publication violations",
+      "kinds": [
+        "FAILURE",
+        "MUTATION",
+        "OFFLINE_EXECUTION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:sam-solar-thermal:ssc-303"
+      ],
+      "mutationCases": [
+        "mixed model releases",
+        "attempted runtime publication without offline guard"
+      ]
+    }
+  ],
+  "processClaims": [
+    {
+      "categoryId": "ITC-08",
+      "processKey": "sam_solar_thermal",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:sam-solar-thermal:ssc-303",
+        "artifact:sam-solar-thermal:official-fixture",
+        "artifact:sam-solar-thermal:fargo-weather"
+      ],
+      "testIds": [
+        "sam-solar-thermal-real-ssc-execution",
+        "sam-solar-thermal-ssc-version-failure",
+        "sam-solar-thermal-real-database-publication",
+        "sam-solar-thermal-publication-failure"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "SAM_output": 2362.5011296263892
+      },
+      "formulaTerms": [
+        "SAM_output"
+      ],
+      "remainingBlocker": null
+    }
+  ],
+  "feasibility": "FEASIBLE_NOW",
+  "remainingBlockers": [
+    "The retained Fargo residential fixture proves the local model path but is not a commercial California project design.",
+    "Project collector design, storage, draw profile, set point, mains temperatures, and permitted local weather must still be supplied or resolved."
+  ]
+}

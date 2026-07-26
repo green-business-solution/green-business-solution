@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "retrofi/reopt-solar-storage-proof-v1",
+  "year": 2023,
+  "timeBasis": {
+    "intervalHours": 1,
+    "intervalCount": 8760,
+    "timeZone": "America/Phoenix",
+    "utcOffsetHours": -7,
+    "observesDaylightSavingTime": false
+  },
+  "site": {
+    "latitude": 33.433333,
+    "longitude": -112.016667
+  },
+  "loadProfile": {
+    "construction": "repeat-hour-of-day-for-365-days",
+    "hourlyKw": [
+      30,
+      28,
+      27,
+      27,
+      28,
+      32,
+      38,
+      44,
+      50,
+      53,
+      55,
+      56,
+      57,
+      57,
+      58,
+      65,
+      80,
+      85,
+      82,
+      72,
+      58,
+      48,
+      40,
+      34
+    ]
+  },
+  "tariff": {
+    "construction": "repeat-hour-of-day-for-365-days",
+    "hourlyEnergyRateUsdPerKwh": [
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.3,
+      0.3,
+      0.3,
+      0.3,
+      0.3,
+      0.1,
+      0.1,
+      0.1
+    ],
+    "monthlyDemandRateUsdPerKw": [
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18
+    ]
+  },
+  "pv": {
+    "sourceStandardId": "STD-PVWATTS-V8",
+    "sourceFormulaTerm": "PV_AC_kWh_t",
+    "intervalSeriesPath": "pvwatts-interval-series.json",
+    "intervalSeriesSha256": "a842a7a51583fca8b7c559a1ed12b16aa9d396ec7c6b92dbfabfc282dbaf0f1c",
+    "systemCapacityDcKw": 4
+  },
+  "storage": {
+    "powerKw": 4,
+    "usableEnergyKwh": 8,
+    "reserveFraction": 0.2,
+    "initialSocFraction": 0.5,
+    "chargeEfficiency": 0.95,
+    "dischargeEfficiency": 0.95,
+    "canGridCharge": false
+  }
+}

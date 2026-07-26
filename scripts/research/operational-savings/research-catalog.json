@@ -1,0 +1,1531 @@
+{
+  "schemaVersion": "operational-savings-automation-research-v1",
+  "reviewedOn": "2026-07-23",
+  "sourceCommit": "5ebdf470fdff8b04d38a2ab362b85f40ebd1f0d0",
+  "runtimeExternalCalls": 0,
+  "feasibilitySource": "Derived from buildProofLedger process evidence during generation",
+  "classifications": [
+    "DIRECTLY_AVAILABLE",
+    "DERIVABLE_FROM_SOURCE",
+    "REQUIRES_PROFILE",
+    "REQUIRES_USER",
+    "REQUIRES_BILL",
+    "REQUIRES_LINKED_OPPORTUNITY",
+    "REQUIRES_PROJECT_DOCUMENT",
+    "REQUIRES_RETROFI_ASSUMPTION",
+    "NOT_AVAILABLE",
+    "SOURCE_INCOMPATIBLE"
+  ],
+  "feasibilityVerdicts": [
+    "FEASIBLE_NOW",
+    "FEASIBLE_AFTER_MANUAL_SEED",
+    "FEASIBLE_AFTER_ADAPTER_WORK",
+    "PARTIALLY_FEASIBLE",
+    "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES"
+  ],
+  "standards": [
+    {
+      "id": "STD-COMSTOCK-ANNUAL-DELTA",
+      "slug": "comstock-annual-delta",
+      "organization": "National Laboratory of the Rockies",
+      "officialSource": "ComStock 2025 Release 3",
+      "officialUrls": [
+        "https://natlabrockies.github.io/ComStock.github.io/docs/data.html",
+        "https://natlabrockies.github.io/ComStock.github.io/docs/upgrade_measures/upgrade_measures.html",
+        "https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/comstock_amy2018_release_3/upgrades_lookup.json"
+      ],
+      "version": "2025 Release 3",
+      "releaseDate": "2025-11",
+      "updateCadence": "Release based, historically several releases per year",
+      "license": "OEDI data is published for public access; retain release-specific license and attribution metadata",
+      "legalReview": "Confirm the license metadata attached to every OEDI release before production publication",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public OEDI S3 Parquet partitions",
+        "Public data and enumeration dictionaries",
+        "Public upgrades_lookup.json",
+        "Public measure_name_crosswalk.csv"
+      ],
+      "testedAccess": "HTTP 200 for the Release 3 upgrades lookup; full annual Parquet acquisition was not attempted because of size",
+      "observedArtifact": "upgrades_lookup.json",
+      "observedFormat": "JSON",
+      "observedSizeBytes": 3752,
+      "observedSha256": "c3ba607e650d3b78cd86f08ef3cd6e632b7e622797a970cd8f16812e41a1ce5a",
+      "nativeFields": [
+        "upgrade_id",
+        "upgrade_name",
+        "building_id",
+        "weight",
+        "floor_area",
+        "baseline annual resource fields",
+        "upgrade annual resource fields"
+      ],
+      "derivation": "delta_per_ft2 = (baseline_annual_resource - upgrade_annual_resource) / floor_area; population summaries use the release weight after identical eligibility filters",
+      "runtimeDesign": "Build-time Parquet aggregation published as a compact versioned lookup artifact",
+      "internalTargets": [
+        "building_upgrade_measures",
+        "building_archetype_benchmarks",
+        "retrofit_measure_crosswalks",
+        "benchmark_populations",
+        "benchmark_values"
+      ],
+      "supportedBoundary": "Archetype screening for an approved one-to-one measure and eligible building segment",
+      "unsupportedBoundary": "Project-specific equipment performance, combined upgrade arithmetic, and any percentile without retained population size and weights",
+      "recommendedStrategy": "Acquire the pinned Release 3 dictionaries and annual-result partitions once, aggregate paired baseline and upgrade rows in DuckDB, review the retrofit crosswalk, and publish only the approved California and national segment summaries.",
+      "rejectedAlternative": "Runtime OEDI queries are rejected because they add a network dependency and expose a very large analytical dataset to customer-request latency.",
+      "prototype": {
+        "operation": "exactLookup",
+        "sourceEvidence": "Downloaded official Release 3 upgrades_lookup.json",
+        "query": {
+          "upgradeId": "1"
+        },
+        "records": [
+          {
+            "upgradeId": "0",
+            "name": "Baseline"
+          },
+          {
+            "upgradeId": "1",
+            "name": "Variable Speed HP RTU, Electric Backup"
+          },
+          {
+            "upgradeId": "2",
+            "name": "Variable Speed HP RTU, Original Heating Fuel Backup"
+          }
+        ],
+        "expected": {
+          "name": "Variable Speed HP RTU, Electric Backup"
+        },
+        "unit": "record"
+      },
+      "cost": {
+        "engineeringHours": "100-160",
+        "rawStorageGb": 60,
+        "publishedStorageGb": 3,
+        "refreshHours": "12-24 per release",
+        "maintenance": "Medium",
+        "externalMonthlyUsd": 0,
+        "monthly100Usd": 2.5,
+        "monthly1000Usd": 3,
+        "monthly10000Usd": 6
+      }
+    },
+    {
+      "id": "STD-SCOUT-ECM-SCREEN",
+      "slug": "scout-ecm-screen",
+      "organization": "U.S. Department of Energy and National Laboratory of the Rockies",
+      "officialSource": "Scout",
+      "officialUrls": [
+        "https://github.com/trynthink/scout",
+        "https://scout-bto.readthedocs.io/"
+      ],
+      "version": "Git commit 72bcf419eb1cb37379f163563344b0ec61507fd3",
+      "releaseDate": "2026-07-23",
+      "updateCadence": "Continuous source repository with release tags",
+      "license": "Apache-2.0, with a conditional BSD alternative",
+      "legalReview": "Retain the selected license text and source commit; do not imply DOE endorsement",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public Git repository",
+        "ECM JSON definitions",
+        "Baseline stock and technology data files",
+        "Local Python execution"
+      ],
+      "testedAccess": "Repository cloned and the ECM definitions, schemas, examples, and processing code were inspected",
+      "observedArtifact": "docs/examples/led_troffers.json",
+      "observedFormat": "JSON",
+      "observedSizeBytes": null,
+      "observedSha256": null,
+      "nativeFields": [
+        "name",
+        "climate_zone",
+        "bldg_type",
+        "structure_type",
+        "end_use",
+        "energy_efficiency",
+        "energy_efficiency_units",
+        "energy_efficiency_source"
+      ],
+      "derivation": "When the ECM supplies relative savings, reduction_fraction = energy_efficiency; when it supplies baseline and efficient performance, reduction_fraction = 1 - efficient_performance / baseline_performance",
+      "runtimeDesign": "Pinned build-time Scout preparation followed by compact approved ECM lookup artifacts",
+      "internalTargets": [
+        "building_upgrade_measures",
+        "retrofit_measure_crosswalks",
+        "benchmark_populations",
+        "benchmark_values",
+        "model_versions"
+      ],
+      "supportedBoundary": "Explicit Scout ECM definitions whose markets and efficiency units match a reviewed RetroFi retrofit",
+      "unsupportedBoundary": "Keyword-selected measures, prospective assumptions without review, and generic savings factors applied outside the source market",
+      "recommendedStrategy": "Pin one Scout release, validate each approved ECM JSON against its source schema, execute preparation offline, and publish only reviewed reduction factors with the complete market selector.",
+      "rejectedAlternative": "A generic Scout median is rejected because ECM results are structured scenarios and not an interchangeable benchmark population.",
+      "prototype": {
+        "operation": "exactLookup",
+        "sourceEvidence": "Cloned official Scout repository and inspected a shipped ECM example",
+        "query": {
+          "name": "LED Troffers"
+        },
+        "records": [
+          {
+            "name": "LED Troffers",
+            "energyEfficiency": 120,
+            "energyEfficiencyUnits": "lm/W"
+          },
+          {
+            "name": "Whole Building Submetering (Prospective)",
+            "energyEfficiency": 0.02,
+            "energyEfficiencyUnits": "relative savings (constant)"
+          }
+        ],
+        "expected": {
+          "energyEfficiency": 120
+        },
+        "unit": "lm/W"
+      },
+      "cost": {
+        "engineeringHours": "80-130",
+        "rawStorageGb": 3,
+        "publishedStorageGb": 0.1,
+        "refreshHours": "8-16 per release",
+        "maintenance": "Medium",
+        "externalMonthlyUsd": 0,
+        "monthly100Usd": 0.15,
+        "monthly1000Usd": 0.2,
+        "monthly10000Usd": 0.5
+      }
+    },
+    {
+      "id": "STD-DOE-CCMS-RATINGS",
+      "slug": "doe-ccms-ratings",
+      "organization": "U.S. Department of Energy",
+      "officialSource": "Compliance Certification Management System certification database",
+      "officialUrls": [
+        "https://www.regulations.doe.gov/certification-data/",
+        "https://www.regulations.doe.gov/ccms/templates"
+      ],
+      "version": "Current product-specific certification exports",
+      "releaseDate": "Continuously updated",
+      "updateCadence": "Certification event based",
+      "license": "Federal certification records; access terms and product-export reuse should receive legal review",
+      "legalReview": "Required before redistributing bulk normalized certification records",
+      "accessClass": "free with manual export",
+      "accessRoutes": [
+        "Interactive certification database",
+        "Product-specific analyst export",
+        "Product-specific certification templates",
+        "Authenticated CCMS portal for submitters"
+      ],
+      "testedAccess": "Unauthenticated direct certification-data probe returned HTTP 403 with a 118-byte response",
+      "observedArtifact": "HTTP 403 response from certification-data root",
+      "observedFormat": "HTML error",
+      "observedSizeBytes": 118,
+      "observedSha256": null,
+      "nativeFields": [
+        "product or equipment type",
+        "manufacturer",
+        "brand",
+        "basic model number",
+        "certification status",
+        "certified performance fields",
+        "test procedure",
+        "submission date"
+      ],
+      "derivation": "normalized_rating = source_native_rating * exact unit conversion factor; no representative installed baseline is derived from current certification rows",
+      "runtimeDesign": "Operator-exported manual seed with automated validation, normalization, and immutable publication",
+      "internalTargets": [
+        "equipment_products",
+        "equipment_certifications",
+        "equipment_performance_fields",
+        "source_releases",
+        "source_artifacts"
+      ],
+      "supportedBoundary": "Exact active compatible basic-model records from a retained product export",
+      "unsupportedBoundary": "Unknown existing equipment, historical status without retained exports, and requirement-based baselines inferred from current certified products",
+      "recommendedStrategy": "Create one operator runbook per product family, export the official certification table, validate its template fingerprint, normalize exact basic models, and publish an approved immutable release.",
+      "rejectedAlternative": "Browser scraping is rejected because the source blocks direct unauthenticated acquisition and official export paths exist.",
+      "prototype": {
+        "operation": "unavailable",
+        "sourceEvidence": "Direct official database probe",
+        "reasonCode": "HTTP_403_MANUAL_EXPORT_REQUIRED",
+        "expected": {
+          "available": false,
+          "reasonCode": "HTTP_403_MANUAL_EXPORT_REQUIRED"
+        },
+        "unit": "unavailable"
+      },
+      "cost": {
+        "engineeringHours": "100-170",
+        "rawStorageGb": 2,
+        "publishedStorageGb": 1,
+        "refreshHours": "6-12 monthly plus operator time",
+        "maintenance": "High",
+        "externalMonthlyUsd": 0,
+        "monthly100Usd": 0.2,
+        "monthly1000Usd": 0.3,
+        "monthly10000Usd": 0.8
+      }
+    },
+    {
+      "id": "STD-ENERGY-STAR-PRODUCT-DATA",
+      "slug": "energy-star-product-data",
+      "organization": "U.S. Environmental Protection Agency",
+      "officialSource": "ENERGY STAR certified product datasets",
+      "officialUrls": [
+        "https://www.energystar.gov/productfinder/advanced",
+        "https://data.energystar.gov/resource/pk8q-dim8.json",
+        "https://www.energystar.gov/products/productstr"
+      ],
+      "version": "Active product-family specifications; full dishwasher dataset revision 2026-07-24T13:28:47.000Z",
+      "releaseDate": "Continuously updated",
+      "updateCadence": "Daily for product data",
+      "license": "EPA data access is public; ENERGY STAR marks and partner association have separate trademark rules",
+      "legalReview": "Review dataset-specific Socrata license metadata and trademark presentation",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public CSV, XML, and Excel family downloads",
+        "Public Socrata SODA API",
+        "Product Finder exports",
+        "Specification PDFs"
+      ],
+      "testedAccess": "Socrata dishwasher bulk query returned HTTP 200 and the complete 418-row current certified-product snapshot without credentials",
+      "observedArtifact": "pk8q-dim8.json?$limit=50000&$order=pd_id",
+      "observedFormat": "JSON",
+      "observedSizeBytes": 370605,
+      "observedSha256": "a746b679f6ae2a9ce30f1fe115d1e279adccca49e684d3a6a35fc2e76fdb43ba",
+      "nativeFields": [
+        "pd_id",
+        "brand_name",
+        "model_number",
+        "machine_type",
+        "sanitation_method",
+        "water_use_gallons_per_rack_gpr",
+        "water_use_gallons_per_hour_gph",
+        "washing_energy_consumption_kwh_rack_for_low_temp_and_dual_sanitizing_machines",
+        "washing_energy_consumption_kwh_rack_for_high_temp_and_dual_sanitizing_machines",
+        "idle_energy_rate_for_low_temp_kw",
+        "idle_energy_rate_for_high_temp_kw",
+        "booster_heater_idle_energy_rate_for_high_temp_and_dual_sanitizing_machines_kw",
+        "racks_per_hour",
+        "date_available_on_market",
+        "date_qualified"
+      ],
+      "derivation": "AC charger input_W = output_W + mode_specific_total_loss_W; DC charger input_W = output_W / loading_adjusted_efficiency_fraction; other product fields use exact family-specific unit conversions",
+      "runtimeDesign": "Scheduled family-specific bulk ingestion into normalized product and performance tables",
+      "internalTargets": [
+        "equipment_products",
+        "equipment_certifications",
+        "equipment_performance_fields",
+        "energy_star_commercial_dishwashers",
+        "energy_star_dishwasher_operating_modes",
+        "product_taxonomy_crosswalks"
+      ],
+      "supportedBoundary": "Exact active product and requirements-based proposed-product resolution within each product-family schema",
+      "unsupportedBoundary": "Unknown installed-equipment baselines and cross-family field assumptions",
+      "recommendedStrategy": "Ingest each required family independently, pin its active specification, preserve native fields, normalize identifiers conservatively, and reject ambiguous exact-model matches.",
+      "rejectedAlternative": "One universal product schema is rejected because performance fields, units, status semantics, and specification versions differ by family.",
+      "prototype": {
+        "operation": "exactLookup",
+        "sourceEvidence": "Live official Socrata dishwasher response",
+        "query": {
+          "modelNumber": "AF-ES"
+        },
+        "records": [
+          {
+            "pdId": "2383572",
+            "modelNumber": "AF-ES",
+            "machineType": "Stationary Single Tank Door - Dump and Fill",
+            "sanitationMethod": "Chemical Sanitizing (Low Temp) Machine",
+            "waterGallonsPerRack": 0.95,
+            "washingKwhPerRack": 0.02
+          }
+        ],
+        "expected": {
+          "pdId": "2383572",
+          "waterGallonsPerRack": 0.95
+        },
+        "unit": "product record"
+      },
+      "cost": {
+        "engineeringHours": "80-140",
+        "rawStorageGb": 2,
+        "publishedStorageGb": 1,
+        "refreshHours": "2-4 weekly",
+        "maintenance": "Medium",
+        "externalMonthlyUsd": 0,
+        "monthly100Usd": 0.15,
+        "monthly1000Usd": 0.25,
+        "monthly10000Usd": 0.8
+      }
+    },
+    {
+      "id": "STD-DOE-MEASUR",
+      "slug": "doe-measur",
+      "organization": "U.S. Department of Energy and Oak Ridge National Laboratory",
+      "officialSource": "MEASUR AMO Tools Suite",
+      "officialUrls": [
+        "https://www.energy.gov/cmei/ito/measur",
+        "https://www.energy.gov/cmei/amo/measur-calculator-list-and-descriptions",
+        "https://github.com/ORNL-AMO/AMO-Tools-Suite"
+      ],
+      "version": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "releaseDate": "2025-01-27",
+      "updateCadence": "Source releases and continuous repository updates",
+      "license": "UT-Battelle permissive AMO Tools Suite license",
+      "legalReview": "Retain license and modification notices; do not use DOE or licensor names for endorsement",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public Git repository",
+        "C++ static library",
+        "WebAssembly bindings",
+        "Desktop application",
+        "Local assessment modules and calculators"
+      ],
+      "testedAccess": "Repository cloned and calculator headers, bindings, and C++ golden tests inspected; local build attempt failed because cmake is not installed",
+      "observedArtifact": "tests/cpp/ElectricityReduction.unit.cpp and CompressedAirLeakSurvey.unit.cpp",
+      "observedFormat": "C++ source",
+      "observedSizeBytes": null,
+      "observedSha256": null,
+      "nativeFields": [
+        "module-specific engineering inputs",
+        "energyUse",
+        "energyCost",
+        "power",
+        "annualTotalElectricity",
+        "totalFlowRate",
+        "module warnings"
+      ],
+      "derivation": "For the inspected three-phase electricity method, power_kW = sqrt(3) * volts * amps * power_factor / 1000 and energy_kWh = power_kW * operating_hours; each production category must call its exact MEASUR module rather than this generic equation",
+      "runtimeDesign": "Pinned local library or WebAssembly package execution with category-specific adapters",
+      "internalTargets": [
+        "model_versions",
+        "model_input_schemas",
+        "calculation_assumptions",
+        "calculation_runs",
+        "calculation_warnings"
+      ],
+      "supportedBoundary": "Exact project inputs mapped to one named MEASUR module with source-native units",
+      "unsupportedBoundary": "Generic MEASUR calls, inferred equipment design inputs, or reuse of one module's output contract for another module",
+      "recommendedStrategy": "Compile and package the pinned calculator library in a controlled build image, create one typed adapter per category and module, and port the upstream golden cases into RetroFi offline acceptance tests.",
+      "rejectedAlternative": "Reimplementing dozens of engineering equations is rejected because it duplicates the maintained federal implementation and increases validation risk.",
+      "prototype": {
+        "operation": "formula",
+        "sourceEvidence": "Official ElectricityReduction C++ golden test",
+        "formula": "threePhasePowerAndEnergy",
+        "inputs": {
+          "phases": 3,
+          "volts": 800,
+          "amps": 40,
+          "powerFactor": 0.85,
+          "operatingHours": 8640
+        },
+        "expected": {
+          "powerKw": 47.111781,
+          "energyKwh": 407045.796185
+        },
+        "unit": "kW and kWh/year"
+      },
+      "cost": {
+        "engineeringHours": "220-360",
+        "rawStorageGb": 1,
+        "publishedStorageGb": 0.5,
+        "refreshHours": "16-32 per release",
+        "maintenance": "High",
+        "externalMonthlyUsd": 0,
+        "monthly100Usd": 0.2,
+        "monthly1000Usd": 0.6,
+        "monthly10000Usd": 3
+      }
+    },
+    {
+      "id": "STD-SAM-SOLAR-THERMAL",
+      "slug": "sam-solar-thermal",
+      "organization": "National Laboratory of the Rockies",
+      "officialSource": "System Advisor Model solar water heating module and SSC",
+      "officialUrls": [
+        "https://sam.nlr.gov/solar-water-heating.html",
+        "https://github.com/NatLabRockies/ssc"
+      ],
+      "version": "SSC git commit ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+      "releaseDate": "2026-07-17",
+      "updateCadence": "SAM and SSC release based",
+      "license": "BSD-3-Clause",
+      "legalReview": "Retain license and source attribution",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public SSC source repository",
+        "Local SSC shared library",
+        "PySAM bindings",
+        "SAM desktop application"
+      ],
+      "testedAccess": "SSC repository cloned; swh compute-module input and output declarations and upstream test input were inspected",
+      "observedArtifact": "ssc/cmod_swh.cpp and test/input_cases/swh_common.h",
+      "observedFormat": "C++ source",
+      "observedSizeBytes": null,
+      "observedSha256": null,
+      "nativeFields": [
+        "weather resource",
+        "collector area and properties",
+        "tank volume",
+        "pump power",
+        "draw profile",
+        "mains and set temperatures",
+        "annual_energy",
+        "monthly_energy",
+        "warnings"
+      ],
+      "derivation": "displaced_backup_resource = min(annual_useful_solar_thermal, annual_delivered_hot_water_load) / backup_efficiency",
+      "runtimeDesign": "Pinned local SSC execution with weather files and all project design inputs stored internally",
+      "internalTargets": [
+        "model_versions",
+        "model_input_schemas",
+        "climate_crosswalks",
+        "calculation_runs",
+        "calculation_warnings"
+      ],
+      "supportedBoundary": "One-tank solar water-heating configurations with explicit design, weather, draw, and backup inputs",
+      "unsupportedBoundary": "Automatic system sizing, missing draw profiles, and pool-specific or otherwise incompatible thermal systems",
+      "recommendedStrategy": "Package SSC or PySAM locally, pin a weather snapshot, validate the complete SWH input schema, and retain both native thermal output and the capped displaced backup-resource derivation.",
+      "rejectedAlternative": "A generic solar fraction is rejected because production depends materially on collector, storage, draw, weather, and backup configuration.",
+      "prototype": {
+        "operation": "formula",
+        "sourceEvidence": "Inspected SSC SWH output contract",
+        "formula": "capAndConvertSolarThermal",
+        "inputs": {
+          "annualUsefulThermalKwh": 12000,
+          "annualDeliveredLoadKwh": 10000,
+          "backupEfficiency": 0.8
+        },
+        "expected": {
+          "usefulThermalKwh": 10000,
+          "displacedBackupInputKwh": 12500
+        },
+        "unit": "kWh/year"
+      },
+      "cost": {
+        "engineeringHours": "100-170",
+        "rawStorageGb": 15,
+        "publishedStorageGb": 2,
+        "refreshHours": "12-24 per model release",
+        "maintenance": "Medium",
+        "externalMonthlyUsd": 0,
+        "monthly100Usd": 0.8,
+        "monthly1000Usd": 1.2,
+        "monthly10000Usd": 4
+      }
+    },
+    {
+      "id": "STD-PVWATTS-V8",
+      "slug": "pvwatts-v8",
+      "organization": "National Laboratory of the Rockies",
+      "officialSource": "PVWatts V8 and SSC pvwattsv8 module",
+      "officialUrls": [
+        "https://developer.nlr.gov/docs/solar/pvwatts/v8/",
+        "https://github.com/NatLabRockies/ssc"
+      ],
+      "version": "API 8.5.0, SSC 280; source repository commit ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+      "releaseDate": "API response inspected 2026-07-23",
+      "updateCadence": "Model and weather-dataset release based",
+      "license": "SSC is BSD-3-Clause; weather-source terms must be retained",
+      "legalReview": "Review NSRDB weather-data attribution and redistribution terms",
+      "accessClass": "free with account or API key",
+      "accessRoutes": [
+        "Public hosted ingestion API",
+        "Local SSC module",
+        "PySAM",
+        "Local weather files"
+      ],
+      "testedAccess": "A DEMO_KEY request to developer.nlr.gov returned HTTP 200; the legacy developer.nrel.gov hostname failed DNS resolution",
+      "observedArtifact": "PVWatts V8 Los Angeles response",
+      "observedFormat": "JSON",
+      "observedSizeBytes": 1680,
+      "observedSha256": "88e37dd4aa5fb6ac1a633989f8f5eb6015691e08ae326d4ad61d60fb83ff671b",
+      "nativeFields": [
+        "system_capacity",
+        "module_type",
+        "losses",
+        "array_type",
+        "tilt",
+        "azimuth",
+        "station_info",
+        "outputs.ac",
+        "outputs.ac_monthly",
+        "outputs.ac_annual",
+        "outputs.capacity_factor",
+        "warnings"
+      ],
+      "derivation": "annual_ac_kwh = sum(ac_monthly_kwh); interval output uses the native outputs.ac series without a tariff transformation",
+      "runtimeDesign": "Pinned local SSC execution using internally retained weather files; hosted API is ingestion and regression evidence only",
+      "internalTargets": [
+        "model_versions",
+        "model_input_schemas",
+        "climate_crosswalks",
+        "calculation_runs"
+      ],
+      "supportedBoundary": "PV production after all required project design and location inputs are supplied",
+      "unsupportedBoundary": "System sizing, tariff value, missing geometry, and assumed losses presented as source outputs",
+      "recommendedStrategy": "Use the real API response as a regression oracle, then execute the same pinned pvwattsv8 module locally with retained weather files and reject any input set that depends on an unstated design assumption.",
+      "rejectedAlternative": "Calling the hosted API during a customer estimate is rejected because zero-network runtime is required.",
+      "prototype": {
+        "operation": "sum",
+        "sourceEvidence": "Live official PVWatts V8 response for Los Angeles",
+        "values": [
+          378.1541943183282,
+          395.6903922286779,
+          533.0772865750997,
+          611.0987806952955,
+          626.4405929412366,
+          673.2776144361642,
+          703.535415609679,
+          690.3866825491569,
+          578.9729892644743,
+          487.9386109973863,
+          401.0139497529628,
+          340.2164037899981
+        ],
+        "expected": {
+          "sum": 6419.80291315847
+        },
+        "unit": "kWh/year"
+      },
+      "cost": {
+        "engineeringHours": "80-130",
+        "rawStorageGb": 25,
+        "publishedStorageGb": 3,
+        "refreshHours": "8-16 per model or weather release",
+        "maintenance": "Medium",
+        "externalMonthlyUsd": 0,
+        "monthly100Usd": 1,
+        "monthly1000Usd": 1.5,
+        "monthly10000Usd": 5
+      }
+    },
+    {
+      "id": "STD-WIND-SAM",
+      "slug": "wind-sam",
+      "organization": "National Laboratory of the Rockies",
+      "officialSource": "SAM wind power module, SSC, and Wind Toolkit resources",
+      "officialUrls": [
+        "https://sam.nlr.gov/wind.html",
+        "https://github.com/NatLabRockies/ssc",
+        "https://www.nlr.gov/Wind/Data-Tools"
+      ],
+      "version": "SSC git commit ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+      "releaseDate": "2026-07-17",
+      "updateCadence": "Model and wind-resource release based",
+      "license": "SSC is BSD-3-Clause; wind-resource terms vary by artifact",
+      "legalReview": "Retain resource-specific license and attribution",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public SSC repository",
+        "Local SSC shared library",
+        "PySAM",
+        "Public Wind Toolkit data acquisition"
+      ],
+      "testedAccess": "SSC repository cloned and wind compute-module fields inspected; no full Wind Toolkit file was downloaded",
+      "observedArtifact": "ssc/cmod_windpower.cpp",
+      "observedFormat": "C++ source",
+      "observedSizeBytes": null,
+      "observedSha256": null,
+      "nativeFields": [
+        "wind_resource_filename or wind_resource_data",
+        "wind_turbine_powercurve_windspeeds",
+        "wind_turbine_powercurve_powerout",
+        "wind_turbine_hub_ht",
+        "system_capacity",
+        "losses",
+        "gen",
+        "annual_energy"
+      ],
+      "derivation": "annual_ac_kwh = sum(interval_generation_kw * interval_hours); no wind speed to power conversion may occur outside the pinned turbine curve and SSC execution",
+      "runtimeDesign": "Pinned local SSC execution with a bounded internally retained California wind-resource cache",
+      "internalTargets": [
+        "model_versions",
+        "model_input_schemas",
+        "climate_crosswalks",
+        "calculation_runs"
+      ],
+      "supportedBoundary": "Specified turbine, hub height, losses, and compatible wind resource",
+      "unsupportedBoundary": "Turbine selection, hub-height inference, and generic statewide wind production",
+      "recommendedStrategy": "Cache only the California resource cells required by active projects, execute SSC locally, and retain the exact resource cell, turbine curve, hub height, loss inputs, and warnings.",
+      "rejectedAlternative": "A statewide capacity-factor lookup is rejected because small-wind production is highly site and turbine specific.",
+      "prototype": {
+        "operation": "formula",
+        "sourceEvidence": "Inspected SSC wind interval and annual output contract",
+        "formula": "intervalEnergy",
+        "inputs": {
+          "generationKw": [
+            0,
+            1.2,
+            2.4,
+            1.4
+          ],
+          "intervalHours": 1
+        },
+        "expected": {
+          "annualizedSampleKwh": 5
+        },
+        "unit": "kWh"
+      },
+      "cost": {
+        "engineeringHours": "130-220",
+        "rawStorageGb": 80,
+        "publishedStorageGb": 8,
+        "refreshHours": "16-32 per resource or model release",
+        "maintenance": "High",
+        "externalMonthlyUsd": 0,
+        "monthly100Usd": 2.5,
+        "monthly1000Usd": 4,
+        "monthly10000Usd": 10
+      }
+    },
+    {
+      "id": "STD-INTERVAL-TARIFF",
+      "slug": "interval-tariff",
+      "organization": "National Laboratory of the Rockies, OpenEI, and controlling utilities",
+      "officialSource": "OpenEI Utility Rate Database plus controlling utility tariff sheets",
+      "officialUrls": [
+        "https://data.openei.org/submissions/5",
+        "https://openei.org/apps/USURDB/download/usurdb.csv.gz",
+        "https://apps.openei.org/services/doc/rest/util_rates/?version=4"
+      ],
+      "version": "URDB bulk snapshot downloaded 2026-07-23; OEDI page last updated 2025-10-07",
+      "releaseDate": "Bulk file timestamp 2026-07-23",
+      "updateCadence": "URDB records checked annually; controlling tariffs change on utility schedules",
+      "license": "OEDI page states CC BY 4.0 unless noted; API documentation states CC0 unless noted",
+      "legalReview": "Retain the license attached to the specific bulk artifact and the controlling utility document",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public approved-rates CSV gzip bulk download",
+        "Public approved-rates JSON gzip bulk download",
+        "Free-key API with 500-record pagination",
+        "Utility tariff PDFs and tariff books",
+        "Operator-assisted structured import"
+      ],
+      "testedAccess": "Bulk CSV downloaded without a key; API without a key returned HTTP 403 and API_KEY_MISSING despite older prose suggesting otherwise",
+      "observedArtifact": "usurdb.csv.gz",
+      "observedFormat": "Gzip CSV",
+      "observedSizeBytes": 12218163,
+      "observedSha256": "89081ef124080ea322516040dc6b2c1945f9f754eced63f3130d4a8f14947032",
+      "nativeFields": [
+        "label",
+        "eiaid",
+        "utility",
+        "name",
+        "sector",
+        "startdate",
+        "enddate",
+        "latest_update",
+        "approved",
+        "source",
+        "energy and demand structures",
+        "weekday and weekend schedules",
+        "fixed and minimum charges",
+        "supercedes"
+      ],
+      "derivation": "interval_energy_charge = sum_t imported_kwh_t * energy_rate(period_t, tier_t); interval_demand_charge = sum_billing_periods demand_rate(period, tier) * billed_demand_kw after ratchet rules; fixed, minimum, export, and non-bypassable components remain separate",
+      "runtimeDesign": "Scheduled bulk ingestion followed by California operator approval and publication to an internal effective-dated tariff database",
+      "internalTargets": [
+        "utility_providers",
+        "utility_tariffs",
+        "tariff_periods",
+        "tariff_energy_charges",
+        "tariff_demand_charges",
+        "tariff_export_rules"
+      ],
+      "supportedBoundary": "Complete, approved, effective, account-matched tariffs reconciled to a bill or controlling tariff sheet",
+      "unsupportedBoundary": "Raw historical URDB records treated as current, missing ratchets or non-bypassable charges, and tariff selection based only on geography",
+      "recommendedStrategy": "Ingest the full bulk snapshot, normalize the nested schedules, then operate a California publication queue that requires utility, schedule, sector, eligibility, effective date, source-document evidence, and bill reconciliation before a tariff can be used.",
+      "rejectedAlternative": "Runtime API lookup is rejected because the API requires a key, limits results, and cannot prove account eligibility or current controlling terms.",
+      "prototype": {
+        "operation": "effectiveDateGate",
+        "sourceEvidence": "Downloaded official URDB approved-rates CSV and inspected a historical SCE commercial row",
+        "record": {
+          "label": "539f6a0bec4f024411ec8b47",
+          "utility": "Southern California Edison Co",
+          "name": "Time-of-use - General Service - Demand Metered: TOU-GS-3, Option R (2kV to 50kV)",
+          "sector": "Commercial",
+          "startDate": "2014-01-01",
+          "endDate": "2015-12-31"
+        },
+        "asOf": "2026-07-23",
+        "expected": {
+          "eligible": false,
+          "reasonCode": "OUTSIDE_EFFECTIVE_DATE"
+        },
+        "unit": "tariff record"
+      },
+      "cost": {
+        "engineeringHours": "280-460",
+        "rawStorageGb": 4,
+        "publishedStorageGb": 2,
+        "refreshHours": "20-40 monthly including approval",
+        "maintenance": "High",
+        "externalMonthlyUsd": 0,
+        "monthly100Usd": 0.5,
+        "monthly1000Usd": 1,
+        "monthly10000Usd": 4
+      }
+    },
+    {
+      "id": "STD-REOPT-LOCAL-DISPATCH",
+      "slug": "reopt-local-dispatch",
+      "organization": "National Laboratory of the Rockies",
+      "officialSource": "REopt.jl",
+      "officialUrls": [
+        "https://github.com/NatLabRockies/REopt.jl",
+        "https://natlabrockies.github.io/REopt.jl/stable/"
+      ],
+      "version": "0.59.2, git commit f952cabdf3e60f6e88eef80bb7bc9e7e24bac643",
+      "releaseDate": "2026-05-14",
+      "updateCadence": "Package release based",
+      "license": "Apache-2.0 with NOTICE requirements",
+      "legalReview": "Retain LICENSE and NOTICE in any distributed local package",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public Julia package repository",
+        "Local Julia package execution",
+        "Bundled SSC shared libraries",
+        "JSON scenario inputs"
+      ],
+      "testedAccess": "Repository cloned and input structs, tariff implementation, scenario fixtures, and result fields inspected; Julia is not installed in the research environment",
+      "observedArtifact": "test/scenarios and src/core/electric_tariff.jl",
+      "observedFormat": "Julia and JSON",
+      "observedSizeBytes": null,
+      "observedSha256": null,
+      "nativeFields": [
+        "ElectricLoad.loads_kw",
+        "ElectricTariff",
+        "ElectricStorage",
+        "PV",
+        "Wind",
+        "CHP",
+        "year_one_energy_cost_before_tax",
+        "year_one_demand_cost_before_tax",
+        "dispatch series",
+        "warnings"
+      ],
+      "derivation": "annual_savings_usd = baseline_annual_bill_usd - proposed_annual_bill_usd; all bill components must come from the same pinned tariff and time basis",
+      "runtimeDesign": "Pinned local Julia service or compiled worker with no hosted REopt API dependency",
+      "internalTargets": [
+        "model_versions",
+        "model_input_schemas",
+        "calculation_runs",
+        "calculation_warnings",
+        "selected_value_provenance"
+      ],
+      "supportedBoundary": "Complete interval load, complete internal tariff, explicit technology inputs, and a pinned solver configuration",
+      "unsupportedBoundary": "Incomplete tariff screens represented as detailed optimization and inferred charging or storage constraints",
+      "recommendedStrategy": "Package REopt.jl 0.59.2 with HiGHS in a reproducible local worker, strip all API-era dependencies, validate exact interval lengths, and store the complete input, solver version, status, and result hashes.",
+      "rejectedAlternative": "The retired hosted API path is rejected because it is unavailable and violates zero-network runtime.",
+      "prototype": {
+        "operation": "formula",
+        "sourceEvidence": "Inspected REopt tariff tests and result contract",
+        "formula": "annualBillDelta",
+        "inputs": {
+          "baselineAnnualBillUsd": 12500,
+          "proposedAnnualBillUsd": 9700
+        },
+        "expected": {
+          "annualSavingsUsd": 2800
+        },
+        "unit": "USD/year"
+      },
+      "cost": {
+        "engineeringHours": "220-360",
+        "rawStorageGb": 3,
+        "publishedStorageGb": 1,
+        "refreshHours": "20-40 per release",
+        "maintenance": "High",
+        "externalMonthlyUsd": 0,
+        "monthly100Usd": 1,
+        "monthly1000Usd": 6,
+        "monthly10000Usd": 45
+      }
+    },
+    {
+      "id": "STD-EPA-CHP-PERFORMANCE",
+      "slug": "epa-chp-performance",
+      "organization": "U.S. Environmental Protection Agency",
+      "officialSource": "CHP technology catalog and screening methods",
+      "officialUrls": [
+        "https://www.epa.gov/chp/chp-technologies",
+        "https://www.epa.gov/chp/chp-energy-and-emissions-savings-calculator"
+      ],
+      "version": "Catalog artifact downloaded 2026-07-23; technology page current February 2026",
+      "releaseDate": "Catalog editions vary by technology",
+      "updateCadence": "Irregular catalog and tool updates",
+      "license": "Federal EPA publications are generally public domain; retain source attribution",
+      "legalReview": "Confirm terms of linked non-EPA supporting datasets if incorporated",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public technology catalog PDFs",
+        "Public calculator workbook",
+        "Public method pages"
+      ],
+      "testedAccess": "A 4.1 MB official CHP technology catalog PDF was downloaded and its tables and method sections were inspected",
+      "observedArtifact": "EPA CHP catalog PDF",
+      "observedFormat": "PDF",
+      "observedSizeBytes": 4135792,
+      "observedSha256": "eccea396f5bcc5c86c16a75b8d41b1a4a7b43df064b7363ee7054d53063f0d09",
+      "nativeFields": [
+        "prime mover",
+        "size class",
+        "electric efficiency",
+        "total CHP efficiency",
+        "power-to-heat ratio",
+        "fuel input",
+        "electric output",
+        "useful thermal output"
+      ],
+      "derivation": "input_fuel_mmbtu = electric_generation_kwh * 0.003412 / electric_efficiency; useful_heat_mmbtu = input_fuel_mmbtu * (total_efficiency - electric_efficiency)",
+      "runtimeDesign": "Versioned locally transcribed catalog tables with deterministic CHP equations",
+      "internalTargets": [
+        "equipment_performance_fields",
+        "benchmark_populations",
+        "benchmark_values",
+        "calculation_assumptions"
+      ],
+      "supportedBoundary": "Screening estimates for a matched prime mover and size class with explicit operating schedule",
+      "unsupportedBoundary": "Manufacturer guarantees, project-specific part-load curves, interconnection, outage performance, and fuel availability",
+      "recommendedStrategy": "Transcribe the current catalog tables with dual review, retain table and page citations, map only compatible prime mover and size classes, and execute the documented fuel and useful-heat equations locally.",
+      "rejectedAlternative": "PDF parsing at customer runtime is rejected because table interpretation and version control require review.",
+      "prototype": {
+        "operation": "formula",
+        "sourceEvidence": "Official EPA CHP method equation",
+        "formula": "chpFuelAndUsefulHeat",
+        "inputs": {
+          "electricGenerationKwh": 100000,
+          "electricEfficiency": 0.35,
+          "totalEfficiency": 0.75
+        },
+        "expected": {
+          "inputFuelMmbtu": 974.8571428571429,
+          "usefulHeatMmbtu": 389.9428571428572
+        },
+        "unit": "MMBtu/year"
+      },
+      "cost": {
+        "engineeringHours": "90-150",
+        "rawStorageGb": 0.2,
+        "publishedStorageGb": 0.02,
+        "refreshHours": "8-16 per catalog update",
+        "maintenance": "Medium",
+        "externalMonthlyUsd": 0,
+        "monthly100Usd": 0.05,
+        "monthly1000Usd": 0.1,
+        "monthly10000Usd": 0.4
+      }
+    },
+    {
+      "id": "STD-FUELECONOMY-VEHICLES",
+      "slug": "fueleconomy-vehicles",
+      "organization": "U.S. Department of Energy and U.S. Environmental Protection Agency",
+      "officialSource": "FuelEconomy.gov vehicle data",
+      "officialUrls": [
+        "https://www.fueleconomy.gov/feg/epadata/vehicles.csv.zip",
+        "https://www.fueleconomy.gov/feg/ws/index.shtml"
+      ],
+      "version": "1984-current bulk vehicle table downloaded 2026-07-23",
+      "releaseDate": "Continuously updated by model year and corrections",
+      "updateCadence": "Frequent during model-year certification cycles",
+      "license": "U.S. government data; retain agency attribution and inspect any linked third-party content separately",
+      "legalReview": "Low, subject to confirmation of bulk-download terms",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public vehicles.csv.zip bulk download",
+        "Public XML web services",
+        "Public downloadable data files"
+      ],
+      "testedAccess": "The official 2.19 MB ZIP was downloaded and its CSV header and exact vehicle fields were inspected",
+      "observedArtifact": "vehicles.csv.zip",
+      "observedFormat": "ZIP CSV",
+      "observedSizeBytes": 2185627,
+      "observedSha256": "83ee4bf48e65e8e962e55952e0bfbdc6ab94d4bf63f42e2d38aa39143d6f1ecc",
+      "nativeFields": [
+        "id",
+        "year",
+        "make",
+        "model",
+        "VClass",
+        "drive",
+        "fuelType",
+        "comb08",
+        "combE",
+        "modifiedOn"
+      ],
+      "derivation": "existing_gallons_per_mile = 1 / comb08_mpg; proposed_wall_kwh_per_mile = combE_kwh_per_100_miles / 100",
+      "runtimeDesign": "Scheduled bulk CSV ingestion into versioned vehicle records and exact-pair resolution",
+      "internalTargets": [
+        "equipment_products",
+        "equipment_performance_fields",
+        "product_taxonomy_crosswalks"
+      ],
+      "supportedBoundary": "Exact vehicle records and explicit compatible vehicle pairs",
+      "unsupportedBoundary": "Arbitrary class medians without population review and commercial fleet duty not represented by light-duty labels",
+      "recommendedStrategy": "Ingest the bulk file, normalize exact IDs and conservative make-model aliases, retain model year and modification date, and require either exact records or a separately approved compatible pair.",
+      "rejectedAlternative": "Live per-vehicle web-service calls are rejected because the bulk file is smaller, cheaper, versionable, and offline.",
+      "prototype": {
+        "operation": "formula",
+        "sourceEvidence": "Reviewed exact FuelEconomy.gov fields",
+        "formula": "vehicleIntensity",
+        "inputs": {
+          "combinedMpg": 30,
+          "combinedElectricKwhPer100Miles": 28
+        },
+        "expected": {
+          "gallonsPerMile": 0.03333333333333333,
+          "wallKwhPerMile": 0.28
+        },
+        "unit": "gallon/mile and kWh/mile"
+      },
+      "cost": {
+        "engineeringHours": "40-70",
+        "rawStorageGb": 0.1,
+        "publishedStorageGb": 0.1,
+        "refreshHours": "1-2 monthly",
+        "maintenance": "Low",
+        "externalMonthlyUsd": 0,
+        "monthly100Usd": 0.03,
+        "monthly1000Usd": 0.05,
+        "monthly10000Usd": 0.2
+      }
+    },
+    {
+      "id": "STD-WATERSENSE-FIXTURES",
+      "slug": "watersense-fixtures",
+      "organization": "U.S. Environmental Protection Agency",
+      "officialSource": "WaterSense Product Search and product specifications",
+      "officialUrls": [
+        "https://www.epa.gov/watersense/product-search",
+        "https://www.epa.gov/watersense/watersense-label",
+        "https://www.epa.gov/watersense/watersense-frequently-asked-questions"
+      ],
+      "version": "Live labeled-product search",
+      "releaseDate": "Continuously updated",
+      "updateCadence": "Certification event based",
+      "license": "EPA states WaterSense-published documents are public domain and asks for EPA WaterSense attribution",
+      "legalReview": "Review the Product Search data-service terms and WaterSense mark usage",
+      "accessClass": "free with manual export",
+      "accessRoutes": [
+        "Product Search web application",
+        "Download full product list from the web application",
+        "Product specification documents",
+        "Operator export"
+      ],
+      "testedAccess": "The public page loaded, but the guessed full-list URL returned HTTP 404 and the application obtains an environment API key dynamically; no secret or environment endpoint was accessed",
+      "observedArtifact": "Product Search access probe and public specification pages",
+      "observedFormat": "HTML and manual export",
+      "observedSizeBytes": null,
+      "observedSha256": null,
+      "nativeFields": [
+        "product type",
+        "brand",
+        "model number",
+        "certification status",
+        "rated flow or flush volume",
+        "specification version",
+        "certification date"
+      ],
+      "derivation": "normalized_flow_gpm = native_flow_gpm; normalized_flush_gallons = native_gpf; no installed baseline or usage frequency is derived from labeled-product records",
+      "runtimeDesign": "Operator-assisted full-list export with automated schema validation and product normalization",
+      "internalTargets": [
+        "equipment_products",
+        "equipment_certifications",
+        "equipment_performance_fields"
+      ],
+      "supportedBoundary": "Exact or requirements-filtered proposed labeled fixtures after a retained official export",
+      "unsupportedBoundary": "Existing fixture performance, public lavatory products outside the specification scope, and commercial usage frequency",
+      "recommendedStrategy": "Use the official full-list export through an operator workflow, validate the product-family schema, and publish only active compatible products and their native rated values.",
+      "rejectedAlternative": "Reverse engineering the application's API key is rejected because the official export route is available and secrets are outside scope.",
+      "prototype": {
+        "operation": "requirementsFilter",
+        "sourceEvidence": "Official WaterSense labeled-product rule and product scope",
+        "query": {
+          "productType": "commercial flushometer toilet",
+          "maximumGpf": 1.28
+        },
+        "records": [
+          {
+            "model": "official-export-required",
+            "productType": "commercial flushometer toilet",
+            "gpf": 1.28,
+            "active": true,
+            "sampleKind": "schema-shaped downstream parser proof, not a claimed observed product"
+          }
+        ],
+        "expected": {
+          "eligibleCount": 1
+        },
+        "unit": "product population"
+      },
+      "cost": {
+        "engineeringHours": "70-120",
+        "rawStorageGb": 0.5,
+        "publishedStorageGb": 0.3,
+        "refreshHours": "3-6 monthly plus operator time",
+        "maintenance": "Medium",
+        "externalMonthlyUsd": 0,
+        "monthly100Usd": 0.08,
+        "monthly1000Usd": 0.12,
+        "monthly10000Usd": 0.4
+      }
+    },
+    {
+      "id": "STD-WATERSENSE-LANDSCAPE",
+      "slug": "watersense-landscape",
+      "organization": "U.S. Environmental Protection Agency",
+      "officialSource": "WaterSense Water Budget Tool Version 2.0",
+      "officialUrls": [
+        "https://www.epa.gov/watersense/water-budget-tool",
+        "https://www.epa.gov/sites/production/files/2020-10/ws-data-information-et-rainfall.xlsx"
+      ],
+      "version": "Water Budget Tool Version 2.0",
+      "releaseDate": "Page updated 2026-03-10; climate workbook path dated 2020-10",
+      "updateCadence": "Irregular tool and climate-data updates",
+      "license": "EPA-published WaterSense content is public domain with requested attribution",
+      "legalReview": "Confirm any source datasets embedded in the climate workbook",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public web calculator",
+        "Public full climate-data XLSX",
+        "Water Budget data finder"
+      ],
+      "testedAccess": "The official 10.08 MB workbook downloaded; artifact-tool import exhausted the available inspection process twice, so bounded XLSX extraction is required",
+      "observedArtifact": "ws-data-information-et-rainfall.xlsx",
+      "observedFormat": "XLSX",
+      "observedSizeBytes": 10078683,
+      "observedSha256": "77afb36cff3dcb77eacad4db34a8dba44bd48eb24485c886958afd58e1846273",
+      "nativeFields": [
+        "ZIP code",
+        "reference evapotranspiration",
+        "rainfall",
+        "peak watering month",
+        "landscape area by hydrozone",
+        "plant factor",
+        "irrigation efficiency",
+        "baseline and proposed allowances"
+      ],
+      "derivation": "landscape_water_allowance_gallons = eto_inches * landscape_area_ft2 * 0.623 * landscape_coefficient / irrigation_efficiency, with the exact Version 2.0 monthly and effective-rainfall method preserved",
+      "runtimeDesign": "Bounded build-time workbook extraction to a compact ZIP-climate lookup plus local Water Budget equations",
+      "internalTargets": [
+        "climate_crosswalks",
+        "geographic_crosswalks",
+        "benchmark_values",
+        "calculation_assumptions"
+      ],
+      "supportedBoundary": "U.S. ZIP-based design comparison for explicit hydrozones, plant factors, areas, and irrigation methods",
+      "unsupportedBoundary": "Real-time irrigation scheduling, actual measured water use, and missing landscape design inputs",
+      "recommendedStrategy": "Extract only required climate columns in a streaming XLSX reader, recreate the documented Version 2.0 water-budget method locally, and retain the source ZIP and every user-supplied design input.",
+      "rejectedAlternative": "The web tool is rejected for runtime use because it is external and the official page explicitly says the tool is not irrigation scheduling.",
+      "prototype": {
+        "operation": "formula",
+        "sourceEvidence": "Official Version 2.0 method scope and downloaded climate workbook",
+        "formula": "landscapeAllowance",
+        "inputs": {
+          "etoInches": 50,
+          "landscapeAreaFt2": 1000,
+          "landscapeCoefficient": 0.5,
+          "irrigationEfficiency": 0.75
+        },
+        "expected": {
+          "gallons": 20766.666666666668
+        },
+        "unit": "gallons"
+      },
+      "cost": {
+        "engineeringHours": "100-170",
+        "rawStorageGb": 0.1,
+        "publishedStorageGb": 0.03,
+        "refreshHours": "6-12 per workbook update",
+        "maintenance": "Medium",
+        "externalMonthlyUsd": 0,
+        "monthly100Usd": 0.04,
+        "monthly1000Usd": 0.08,
+        "monthly10000Usd": 0.3
+      }
+    },
+    {
+      "id": "STD-WATERSENSE-CI-OPERATIONS",
+      "slug": "watersense-ci-operations",
+      "organization": "U.S. Environmental Protection Agency",
+      "officialSource": "WaterSense at Work commercial and institutional best-management practices",
+      "officialUrls": [
+        "https://www.epa.gov/watersense/best-management-practices",
+        "https://www.epa.gov/sites/default/files/2017-02/ws-commercial-excel-writeable-tables.xlsx"
+      ],
+      "version": "WaterSense at Work workbook published 2017-02; current guidance page",
+      "releaseDate": "2017-02 workbook",
+      "updateCadence": "Irregular guidance updates",
+      "license": "EPA-published WaterSense content is public domain with requested attribution",
+      "legalReview": "Low",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public best-management-practice pages and PDFs",
+        "Public commercial assessment XLSX",
+        "Manual measurements and project records"
+      ],
+      "testedAccess": "The official 89.8 KB workbook was downloaded and all seven sheet names and relevant input columns were inspected",
+      "observedArtifact": "ws-commercial-excel-writeable-tables.xlsx",
+      "observedFormat": "XLSX",
+      "observedSizeBytes": 89786,
+      "observedSha256": "f69facc89beb2073fdaba88206d20e32151b2f30c53a7f21f7981eeab8c0ab52",
+      "nativeFields": [
+        "meter history",
+        "equipment inventory",
+        "flow or consumption",
+        "operating time",
+        "measured leak flow",
+        "cooling-tower makeup and blowdown records"
+      ],
+      "derivation": "avoided_leak_gallons = measured_leak_gpm * confirmed_leak_minutes_per_year; avoided_makeup_gallons = baseline_makeup_gallons - proposed_makeup_gallons after consistent cycles-of-concentration accounting",
+      "runtimeDesign": "Local measured-input calculator using project documents and meter records; guidance remains a method source rather than a benchmark database",
+      "internalTargets": [
+        "calculation_assumptions",
+        "calculation_runs",
+        "selected_value_provenance"
+      ],
+      "supportedBoundary": "Exact measured leak and cooling-tower operational calculations",
+      "unsupportedBoundary": "Default leak rates, default duration, and automatic savings from a checklist item alone",
+      "recommendedStrategy": "Use the workbook to define structured intake fields, require measurements or reconciled meter records, and calculate only after the project evidence establishes flow, duration, and system boundary.",
+      "rejectedAlternative": "Treating checklist recommendations as numeric savings is rejected because the workbook is an inventory and assessment instrument, not a universal performance dataset.",
+      "prototype": {
+        "operation": "formula",
+        "sourceEvidence": "Inspected Water Use Inventory columns in official workbook",
+        "formula": "leakWater",
+        "inputs": {
+          "measuredLeakGpm": 0.5,
+          "confirmedMinutesPerYear": 525600
+        },
+        "expected": {
+          "avoidedGallons": 262800
+        },
+        "unit": "gallons/year"
+      },
+      "cost": {
+        "engineeringHours": "90-150",
+        "rawStorageGb": 0.1,
+        "publishedStorageGb": 0.02,
+        "refreshHours": "4-8 per guidance update",
+        "maintenance": "Low",
+        "externalMonthlyUsd": 0,
+        "monthly100Usd": 0.03,
+        "monthly1000Usd": 0.05,
+        "monthly10000Usd": 0.2
+      }
+    },
+    {
+      "id": "STD-FEMP-EXTERIOR-LIGHTING",
+      "slug": "femp-exterior-lighting",
+      "organization": "U.S. Department of Energy Federal Energy Management Program",
+      "officialSource": "Purchasing Energy-Efficient Exterior Lighting",
+      "officialUrls": [
+        "https://www.energy.gov/cmei/femp/purchasing-energy-efficient-exterior-lighting"
+      ],
+      "version": "Updated June 2023",
+      "releaseDate": "2023-06",
+      "updateCadence": "Irregular procurement-guidance updates",
+      "license": "Federal guidance; retain DOE FEMP attribution",
+      "legalReview": "Low",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public HTML tables",
+        "Printable federal procurement guidance"
+      ],
+      "testedAccess": "The official page downloaded and Table 1 LER requirements and Table 2 wall-mounted example were inspected",
+      "observedArtifact": "FEMP exterior-lighting HTML",
+      "observedFormat": "HTML",
+      "observedSizeBytes": 148626,
+      "observedSha256": "cb50171c667e44e0c8fe1681fac57fcfe22d6adffe6ba1229bd9d103b8fc547a",
+      "nativeFields": [
+        "application category",
+        "required luminaire efficacy rating",
+        "covered lumen range",
+        "example luminaire power",
+        "annual operating hours",
+        "annual energy"
+      ],
+      "derivation": "proposed_fixture_watts = required_lumens / qualifying_ler_lm_per_w; annual_kwh_reduction = fixture_count * (existing_watts - proposed_watts) * annual_hours / 1000",
+      "runtimeDesign": "Small reviewed JSON lookup artifact plus deterministic lighting equation",
+      "internalTargets": [
+        "benchmark_values",
+        "equipment_performance_fields",
+        "calculation_assumptions"
+      ],
+      "supportedBoundary": "FEMP application categories and exact or requirements-matched proposed luminaires",
+      "unsupportedBoundary": "Existing fixture wattage inferred from FEMP proposed-efficiency requirements",
+      "recommendedStrategy": "Transcribe the seven application rows with page checksum and dual review, then resolve exact proposed power or a requirements-filtered qualifying product before applying the local hours equation.",
+      "rejectedAlternative": "Using the FEMP less-efficient example as every site's existing fixture is rejected because it is an example, not an installed baseline.",
+      "prototype": {
+        "operation": "formula",
+        "sourceEvidence": "Official FEMP wall-mounted comparison and 3,600 hour assumption",
+        "formula": "lightingAnnualSavings",
+        "inputs": {
+          "fixtureCount": 10,
+          "existingWatts": 157,
+          "proposedWatts": 79,
+          "annualHours": 3600
+        },
+        "expected": {
+          "annualKwh": 2808
+        },
+        "unit": "kWh/year"
+      },
+      "cost": {
+        "engineeringHours": "30-50",
+        "rawStorageGb": 0.01,
+        "publishedStorageGb": 0.001,
+        "refreshHours": "2-4 per update",
+        "maintenance": "Low",
+        "externalMonthlyUsd": 0,
+        "monthly100Usd": 0.01,
+        "monthly1000Usd": 0.02,
+        "monthly10000Usd": 0.08
+      }
+    },
+    {
+      "id": "STD-OPERATING-SCHEDULE",
+      "slug": "operating-schedule",
+      "organization": "RetroFi project or profile owner, with U.S. Naval Observatory astronomy validation",
+      "officialSource": "Caller-owned explicit calendar and site inputs; a pinned USNO one-day response validates only the astronomy-model boundary",
+      "officialUrls": [
+        "https://aa.usno.navy.mil/faq/RST_defs",
+        "https://aa.usno.navy.mil/api/rstt/oneday?date=2026-06-21&coords=37.7749,-122.4194&tz=-8&dst=true"
+      ],
+      "version": "project-owned operating-schedule input contract v1; USNO API 4.0.1 response acquired 2026-07-24",
+      "releaseDate": "Project inputs are versioned per calculation; retained USNO response date 2026-06-21",
+      "updateCadence": "Hash every project input per calculation and revalidate astronomy behavior when the local algorithm or USNO API changes",
+      "license": "Project inputs require project-authorized use; USNO astronomical data is U.S. government data",
+      "legalReview": "Low",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Content-addressed explicit project or profile schedule",
+        "Local deterministic calendar and solar-event arithmetic",
+        "Pinned USNO one-day API response for astronomy validation only"
+      ],
+      "testedAccess": "A pinned USNO GeoJSON response was acquired and compared with the local solar-event algorithm; separate source-controlled project-input fixtures exercise weekly, difference, and daylight branches",
+      "observedArtifact": "USNO one-day GeoJSON astronomy-validation response for San Francisco on 2026-06-21",
+      "observedFormat": "GeoJSON",
+      "observedSizeBytes": 1271,
+      "observedSha256": "e096159b03d9fe91f287898142a567809a83d794f6c8aaad6b8809bb2378f812",
+      "nativeFields": [
+        "projectInput.year",
+        "projectInput.timeZone",
+        "projectInput.weekly",
+        "projectInput.exceptions",
+        "projectInput.holidays",
+        "projectInput.activeWeeks",
+        "projectInput.latitude",
+        "projectInput.longitude",
+        "projectInput.switchOnOffsetMinutes",
+        "projectInput.switchOffOffsetMinutes",
+        "astronomyValidation.properties.data.sundata[].phen",
+        "astronomyValidation.properties.data.sundata[].time",
+        "astronomyValidation.properties.data.tz",
+        "astronomyValidation.properties.data.isdst"
+      ],
+      "derivation": "Weekly annual hours are the sum of actual elapsed durations across enumerated local-date intervals after explicit exceptions, holidays, and active-week rules; schedule savings are existing hours minus proposed hours; daylight hours come from a local solar-event model using project site inputs, while USNO validates the astronomy boundary only",
+      "runtimeDesign": "Run the deterministic calendar or solar model offline, persist a SHA-256 hash of the exact project input on the calculation run, leave primary source artifact and release null for project-owned values, and attach USNO only as an astronomy_model_validation dependency for daylight calculations",
+      "internalTargets": [
+        "operating_schedule_references",
+        "calculation_runs",
+        "selected_values",
+        "selected_value_provenance",
+        "calculation_source_dependencies"
+      ],
+      "supportedBoundary": "Explicit project or profile schedules with a calendar year and IANA time zone, plus non-polar daylight controls with explicit site coordinates and offsets",
+      "unsupportedBoundary": "A generic building-type schedule presented as actual operation, USNO presented as the source of project annual hours, or polar daylight cases without a supported event model",
+      "recommendedStrategy": "Require explicit project or profile inputs, hash the exact normalized input for each calculation, compute hours locally, and keep external astronomy validation separate from value provenance.",
+      "rejectedAlternative": "A single fixed 8,760-hour fraction and USNO-attributed project schedule are rejected because neither represents the caller's actual calendar, exceptions, or controls.",
+      "prototype": {
+        "operation": "formula",
+        "sourceEvidence": "Explicit calendar schedule method",
+        "formula": "weeklyScheduleHours",
+        "inputs": {
+          "weekdayHours": 10,
+          "weekdaysPerWeek": 5,
+          "weekendHours": 4,
+          "weekendDaysPerWeek": 1,
+          "weeks": 52
+        },
+        "expected": {
+          "annualHours": 2808
+        },
+        "unit": "hours/year"
+      },
+      "cost": {
+        "engineeringHours": "60-100",
+        "rawStorageGb": 0.2,
+        "publishedStorageGb": 0.05,
+        "refreshHours": "4-8 annually",
+        "maintenance": "Medium",
+        "externalMonthlyUsd": 0,
+        "monthly100Usd": 0.04,
+        "monthly1000Usd": 0.08,
+        "monthly10000Usd": 0.3
+      }
+    },
+    {
+      "id": "STD-DISHWASHER-WATER-HEATING",
+      "slug": "dishwasher-water-heating",
+      "organization": "U.S. Environmental Protection Agency",
+      "officialSource": "ENERGY STAR Commercial Food Service Equipment Calculator, Dishwasher Calcs",
+      "officialUrls": [
+        "https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx"
+      ],
+      "version": "Workbook published March 2024",
+      "releaseDate": "2024-03",
+      "updateCadence": "Calculator and specification release based",
+      "license": "EPA calculator; retain source attribution and review workbook notices",
+      "legalReview": "Low",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Public XLSX calculator",
+        "Locally inspected formulas and assumptions"
+      ],
+      "testedAccess": "The official 403 KB workbook downloaded; all 15 sheets, Dishwasher Calcs inputs, formulas, and water-heating factors were inspected",
+      "observedArtifact": "CFS Equipment Calculator.xlsx",
+      "observedFormat": "XLSX",
+      "observedSizeBytes": 403484,
+      "observedSha256": "3d2abed1938bd1400378a2e0ca2095058fe490b2b599ef15f09056639f06fcd6",
+      "nativeFields": [
+        "machine type",
+        "sanitation method",
+        "water gallons per rack or square foot",
+        "temperature rise",
+        "water-heater efficiency",
+        "specific heat",
+        "water density",
+        "resource conversion",
+        "kWh or therm per gallon"
+      ],
+      "derivation": "water_heating_input_per_gallon = temperature_rise_F * water_density_lb_per_gallon * specific_heat_Btu_per_lb_F / heater_efficiency / resource_Btu_per_unit",
+      "runtimeDesign": "Small immutable calculator-assumption artifact plus deterministic local equation",
+      "internalTargets": [
+        "calculation_assumptions",
+        "model_versions",
+        "calculation_runs"
+      ],
+      "supportedBoundary": "Matched rack or flight machine, explicit hot-water boundary, temperature rise, heater fuel, and heater efficiency",
+      "unsupportedBoundary": "Treating all machine water as hot water without the building and booster boundary or converting flight gallons per hour to racks",
+      "recommendedStrategy": "Retain the workbook checksum and exact formula cells, normalize rack and flight activity separately, and execute the specific-heat conversion locally with explicit building and booster stages.",
+      "rejectedAlternative": "A universal kWh per gallon is rejected because temperature rise, heater fuel, and efficiency differ by stage.",
+      "prototype": {
+        "operation": "formula",
+        "sourceEvidence": "Inspected Dishwasher Calcs formulas and assumptions",
+        "formula": "waterHeatingPerGallon",
+        "inputs": {
+          "temperatureRiseF": 70,
+          "waterDensityLbPerGallon": 8.208556149732619,
+          "specificHeatBtuPerLbF": 1,
+          "heaterEfficiency": 0.98,
+          "resourceBtuPerUnit": 3413
+        },
+        "expected": {
+          "resourcePerGallon": 0.17179180757885015
+        },
+        "unit": "kWh/gallon"
+      },
+      "cost": {
+        "engineeringHours": "40-70",
+        "rawStorageGb": 0.01,
+        "publishedStorageGb": 0.001,
+        "refreshHours": "4-8 per calculator release",
+        "maintenance": "Low",
+        "externalMonthlyUsd": 0,
+        "monthly100Usd": 0.01,
+        "monthly1000Usd": 0.02,
+        "monthly10000Usd": 0.08
+      }
+    },
+    {
+      "id": "STD-CONTEXT-BENCHMARKS",
+      "slug": "context-benchmarks",
+      "organization": "Multiple U.S. federal agencies and national laboratories",
+      "officialSource": "Category-specific authoritative context benchmarks",
+      "officialUrls": [
+        "https://www.energy.gov/cmei/buildings/commercial-reference-buildings",
+        "https://www.energy.gov/sites/prod/files/2014/03/f11/forklift_anl_esd.pdf",
+        "https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx",
+        "https://emilms.fema.gov/IS0815/groups/90.html"
+      ],
+      "version": "Source-specific versions pinned per benchmark",
+      "releaseDate": "Varies",
+      "updateCadence": "Source-specific",
+      "license": "Source-specific federal publication and dataset terms",
+      "legalReview": "Required for every added benchmark source",
+      "accessClass": "completely free",
+      "accessRoutes": [
+        "Federal PDFs",
+        "Official XLSX calculators",
+        "Official HTML methods",
+        "National-laboratory reports",
+        "Approved local artifacts"
+      ],
+      "testedAccess": "Existing reviewed fixtures cover lighting, flush activity, forklift intensity, cooktop duty, walk-in components, dishwasher activity, and generator test fuel; several context processes remain unsupported",
+      "observedArtifact": "Multiple reviewed source fixtures already retained in the repository",
+      "observedFormat": "JSON fixtures derived from PDF, XLSX, and HTML",
+      "observedSizeBytes": null,
+      "observedSha256": null,
+      "nativeFields": [
+        "context classification",
+        "eligibility dimensions",
+        "official typical value",
+        "weight",
+        "sample count",
+        "unit",
+        "source version",
+        "unsupported uses"
+      ],
+      "derivation": "selection order = official recommended or typical value, else weighted median of the eligible authoritative population, else ordinary median; this rule is never applied to simulations, structured profiles, or result sets",
+      "runtimeDesign": "Registry of small source-specific immutable benchmark artifacts with one adapter per benchmark family",
+      "internalTargets": [
+        "benchmark_populations",
+        "benchmark_values",
+        "calculation_assumptions",
+        "selected_values",
+        "selected_value_provenance"
+      ],
+      "supportedBoundary": "Only the reviewed category and context combinations represented by retained authoritative fixtures",
+      "unsupportedBoundary": "A universal fallback, a cross-category median, or any context process without a pinned population and exact selection rule",
+      "recommendedStrategy": "Keep the shared selection contract but require every category benchmark to register its own source, filters, unit, population, minimum sample size, selected-value rule, and unsupported boundary.",
+      "rejectedAlternative": "One broad benchmark table is rejected because source authority, population meaning, units, and compatibility filters differ across categories.",
+      "prototype": {
+        "operation": "requirementsFilter",
+        "sourceEvidence": "Reviewed DOE outdoor lighting application fixture",
+        "query": {
+          "application": "parking"
+        },
+        "records": [
+          {
+            "application": "parking",
+            "averageWatts": 216
+          },
+          {
+            "application": "roadway",
+            "averageWatts": 262
+          },
+          {
+            "application": "commercial_or_industrial_building_exterior",
+            "averageWatts": 97
+          }
+        ],
+        "expected": {
+          "eligibleCount": 1,
+          "selectedValue": 216
+        },
+        "unit": "W/fixture"
+      },
+      "cost": {
+        "engineeringHours": "240-400",
+        "rawStorageGb": 5,
+        "publishedStorageGb": 0.5,
+        "refreshHours": "24-48 quarterly across sources",
+        "maintenance": "High",
+        "externalMonthlyUsd": 0,
+        "monthly100Usd": 0.25,
+        "monthly1000Usd": 0.5,
+        "monthly10000Usd": 2
+      }
+    }
+  ]
+}

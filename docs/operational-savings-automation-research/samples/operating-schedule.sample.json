@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "operational-savings/research-sample-v1",
+  "standardId": "STD-OPERATING-SCHEDULE",
+  "source": "Caller-owned explicit calendar and site inputs; a pinned USNO one-day response validates only the astronomy-model boundary",
+  "sourceVersion": "project-owned operating-schedule input contract v1; USNO API 4.0.1 response acquired 2026-07-24",
+  "observedArtifact": "USNO one-day GeoJSON astronomy-validation response for San Francisco on 2026-06-21",
+  "observedArtifactSha256": "e096159b03d9fe91f287898142a567809a83d794f6c8aaad6b8809bb2378f812",
+  "evidenceBoundary": "Explicit calendar schedule method",
+  "sampleIsFullSourceArtifact": false,
+  "prototype": {
+    "operation": "formula",
+    "sourceEvidence": "Explicit calendar schedule method",
+    "formula": "weeklyScheduleHours",
+    "inputs": {
+      "weekdayHours": 10,
+      "weekdaysPerWeek": 5,
+      "weekendHours": 4,
+      "weekendDaysPerWeek": 1,
+      "weeks": 52
+    },
+    "expected": {
+      "annualHours": 2808
+    },
+    "unit": "hours/year"
+  },
+  "offlineResult": {
+    "kind": "model_result_set",
+    "standardId": "STD-OPERATING-SCHEDULE",
+    "value": {
+      "annualHours": 2808
+    },
+    "unit": "hours/year",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
+    "source": "Caller-owned explicit calendar and site inputs; a pinned USNO one-day response validates only the astronomy-model boundary",
+    "sourceVersion": "project-owned operating-schedule input contract v1; USNO API 4.0.1 response acquired 2026-07-24",
+    "sourceArtifact": "USNO one-day GeoJSON astronomy-validation response for San Francisco on 2026-06-21",
+    "filters": {
+      "weekdayHours": 10,
+      "weekdaysPerWeek": 5,
+      "weekendHours": 4,
+      "weekendDaysPerWeek": 1,
+      "weeks": 52
+    },
+    "eligiblePopulation": [],
+    "sampleSize": 0,
+    "selectionRule": "PINNED_LOCAL_FORMULA:weeklyScheduleHours",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
+    "warnings": [],
+    "provenance": {
+      "sourceEvidence": "Explicit calendar schedule method",
+      "sha256": "3d2e042df876582562fe369ebf0cd1c07da30005a9216f80149bf89e1926db2f"
+    }
+  }
+}

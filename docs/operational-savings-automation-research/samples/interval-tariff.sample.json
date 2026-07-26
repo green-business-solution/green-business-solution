@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "operational-savings/research-sample-v1",
+  "standardId": "STD-INTERVAL-TARIFF",
+  "source": "OpenEI Utility Rate Database plus controlling utility tariff sheets",
+  "sourceVersion": "URDB bulk snapshot downloaded 2026-07-23; OEDI page last updated 2025-10-07",
+  "observedArtifact": "usurdb.csv.gz",
+  "observedArtifactSha256": "89081ef124080ea322516040dc6b2c1945f9f754eced63f3130d4a8f14947032",
+  "evidenceBoundary": "Downloaded official URDB approved-rates CSV and inspected a historical SCE commercial row",
+  "sampleIsFullSourceArtifact": false,
+  "prototype": {
+    "operation": "effectiveDateGate",
+    "sourceEvidence": "Downloaded official URDB approved-rates CSV and inspected a historical SCE commercial row",
+    "record": {
+      "label": "539f6a0bec4f024411ec8b47",
+      "utility": "Southern California Edison Co",
+      "name": "Time-of-use - General Service - Demand Metered: TOU-GS-3, Option R (2kV to 50kV)",
+      "sector": "Commercial",
+      "startDate": "2014-01-01",
+      "endDate": "2015-12-31"
+    },
+    "asOf": "2026-07-23",
+    "expected": {
+      "eligible": false,
+      "reasonCode": "OUTSIDE_EFFECTIVE_DATE"
+    },
+    "unit": "tariff record"
+  },
+  "offlineResult": {
+    "kind": "unavailable",
+    "standardId": "STD-INTERVAL-TARIFF",
+    "value": {
+      "eligible": false,
+      "reasonCode": "OUTSIDE_EFFECTIVE_DATE"
+    },
+    "unit": "tariff record",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
+    "source": "OpenEI Utility Rate Database plus controlling utility tariff sheets",
+    "sourceVersion": "URDB bulk snapshot downloaded 2026-07-23; OEDI page last updated 2025-10-07",
+    "sourceArtifact": "usurdb.csv.gz",
+    "filters": {
+      "asOf": "2026-07-23"
+    },
+    "eligiblePopulation": [],
+    "sampleSize": 0,
+    "selectionRule": "EFFECTIVE_DATE_AND_STATUS_GATE",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
+    "warnings": [
+      "Tariff record is outside its effective period."
+    ],
+    "provenance": {
+      "sourceEvidence": "Downloaded official URDB approved-rates CSV and inspected a historical SCE commercial row",
+      "sha256": "3fc17e8027a9e218728f0345cff290747a19f25009d12d9a50d863e4367f5cbd"
+    }
+  }
+}

@@ -1,0 +1,3986 @@
+{
+  "schemaVersion": "operational-savings/proof-execution-run-record-v2",
+  "recordType": "LOCAL_CONTENT_BOUND_RUN_RECORD",
+  "trust": {
+    "runnerIdentityAuthenticated": false,
+    "signer": {
+      "status": "UNSIGNED",
+      "provider": null,
+      "keyId": null,
+      "signature": null
+    },
+    "threatModel": "HONEST_LOCAL_OPERATOR_WITH_MANDATORY_REPOSITORY_REVIEW",
+    "forgeryResistance": "NONE_REPOSITORY_WRITER_CAN_FABRICATE_A_SELF_CONSISTENT_RECORD",
+    "contentDigestPurpose": "STALE_CONTENT_AND_ACCIDENTAL_CORRUPTION_DETECTION_ONLY",
+    "limitation": "This local record binds exact named Vitest results to exact hashed content only under an honest-local-operator assumption. A repository writer can fabricate the unsigned record, so it is not authenticated execution provenance."
+  },
+  "sourceEvidenceFingerprint": {
+    "schemaVersion": "operational-savings/proof-source-evidence-fingerprint-v2",
+    "algorithm": "SHA-256",
+    "files": [
+      {
+        "path": "apps/api/server/matching/normalizeUserProfile.mjs",
+        "sizeBytes": 6636,
+        "executable": false,
+        "sha256": "532c15f0dafaf6eb593d761bd6cf78848a45baaa0992eb2e533d8e83a1a3a485"
+      },
+      {
+        "path": "apps/api/server/matching/ontologies.mjs",
+        "sizeBytes": 17183,
+        "executable": false,
+        "sha256": "0fe85cadb1555938642377bed5570da47df22d1a178eb385f2f1289a3fb6317a"
+      },
+      {
+        "path": "apps/api/server/matching/retrofitTaxonomy.mjs",
+        "sizeBytes": 31880,
+        "executable": false,
+        "sha256": "3c632f805b648d49ddf9d35f5fde6a28a86a97bd4858a9ba4f7f90b104d4032f"
+      },
+      {
+        "path": "data/bill_field_dictionary.json",
+        "sizeBytes": 34638,
+        "executable": false,
+        "sha256": "6d64a42992603f0a0cf89431de7019dd5ff9bde4c7fe9c05a154f50b72a325ae"
+      },
+      {
+        "path": "docs/operational-savings-automation-research/fixtures/research-database.compact.json",
+        "sizeBytes": 388837,
+        "executable": false,
+        "sha256": "b131361fe901fb59fed5395a186b6eda267e945d4617d6303bf51f1459d5d575"
+      },
+      {
+        "path": "docs/operational-savings-automation-research/fixtures/research-database.publication.json",
+        "sizeBytes": 734,
+        "executable": false,
+        "sha256": "3e8af5e6d5d86146235863b30b670d5afca9d92325b23e4813e473ea08704b0a"
+      },
+      {
+        "path": "docs/operational-savings-category-contracts.json",
+        "sizeBytes": 557764,
+        "executable": false,
+        "sha256": "73e36c4aef3ece25a62d2ec5b17c58fa4ed2e60b7ec375b52ecbee2829ab81a7"
+      },
+      {
+        "path": "docs/operational-savings-fixtures/categories/ITC-15.golden.json",
+        "sizeBytes": 989,
+        "executable": false,
+        "sha256": "328c4f079d0772d1e8613eb5d6700b023fd8914b270d5029aa0f749465424be1"
+      },
+      {
+        "path": "docs/operational-savings-fixtures/categories/ITC-29.golden.json",
+        "sizeBytes": 3281,
+        "executable": false,
+        "sha256": "6ab5e68d028c3ab4dacf959644a57ceb22a85267a701111422224c23c0436571"
+      },
+      {
+        "path": "docs/operational-savings-fixtures/profile/normalized-profile-paths.json",
+        "sizeBytes": 6763,
+        "executable": false,
+        "sha256": "6554e090fc62f05ee42a7734dfc5cbe285f1c18fb0aa08369577f35bd7553b8b"
+      },
+      {
+        "path": "docs/operational-savings-fixtures/source-fixture.schema.json",
+        "sizeBytes": 4601,
+        "executable": false,
+        "sha256": "11e9b645698c2fdc0e5c1b85e1a52f58677680de1b9558c646f225db96db6cc8"
+      },
+      {
+        "path": "docs/operational-savings-fixtures/sources/argonne-forklift-energy-intensity.json",
+        "sizeBytes": 3810,
+        "executable": false,
+        "sha256": "b5e4b2b7d7c59f5159688cefad0b876379f8d926e0c69e84e7393b57526573a6"
+      },
+      {
+        "path": "docs/operational-savings-fixtures/sources/doe-outdoor-lighting-application-wattage.json",
+        "sizeBytes": 3250,
+        "executable": false,
+        "sha256": "e6bc47db1bc71fe7be7d3e9e6ef08311ad685f7c3349b732c1871515af9ba575"
+      },
+      {
+        "path": "docs/operational-savings-fixtures/sources/doe-walk-in-energy-benchmarks.json",
+        "sizeBytes": 6655,
+        "executable": false,
+        "sha256": "f478c75ebcac1128849561f6eee03fdc7fbbeec606fe65ddf4a7b2081df11e2f"
+      },
+      {
+        "path": "docs/operational-savings-fixtures/sources/energy-star-commercial-cooktop-calculator.json",
+        "sizeBytes": 4298,
+        "executable": false,
+        "sha256": "cc6435774adc960b4888e9820239d7557bef9e2dee8483b3d25c2d9b4c99f9ad"
+      },
+      {
+        "path": "docs/operational-savings-fixtures/sources/energy-star-commercial-dishwasher-calculator.json",
+        "sizeBytes": 5523,
+        "executable": false,
+        "sha256": "d1f4dc49b25db3e15588081a3f478f5f73facfb92eb7cbbef9caf51b777d515d"
+      },
+      {
+        "path": "docs/operational-savings-fixtures/sources/energy-star-commercial-dishwasher-schema.json",
+        "sizeBytes": 4772,
+        "executable": false,
+        "sha256": "61644c16790403d64041d135b0f624778f5057f1da3658b28b7d16e8119af132"
+      },
+      {
+        "path": "docs/operational-savings-fixtures/sources/energy-star-evse-native-fields.json",
+        "sizeBytes": 6727,
+        "executable": false,
+        "sha256": "c6259f22d7423892b948ac4a707ab6610a37fc68b5818a070ef1d20014704b2e"
+      },
+      {
+        "path": "docs/operational-savings-fixtures/sources/fema-diesel-generator-full-load-fuel.json",
+        "sizeBytes": 2758,
+        "executable": false,
+        "sha256": "5364b332f85fdc1bae5ccc9b0d103bef471387f0cbd3411c6da0c470facff45e"
+      },
+      {
+        "path": "docs/operational-savings-fixtures/sources/femp-exterior-lighting-tables.json",
+        "sizeBytes": 4914,
+        "executable": false,
+        "sha256": "04bce72adeb95032ceb1093de87d66c4690502116b58348a8f22df1410f06cdb"
+      },
+      {
+        "path": "docs/operational-savings-fixtures/sources/fueleconomy-vehicle-schema.json",
+        "sizeBytes": 8294,
+        "executable": false,
+        "sha256": "67aeb1bafa3c7985d691ba7bdd79d881abaf5ba17b826f81187ed2879a3eb1d6"
+      },
+      {
+        "path": "docs/operational-savings-fixtures/sources/pvwatts-v8-schema.json",
+        "sizeBytes": 4246,
+        "executable": false,
+        "sha256": "79c1cdf76dfa6f1be1c00f2a56abe3f5cde9b2d937b1a8ce911eb25b7cb0ebca"
+      },
+      {
+        "path": "docs/operational-savings-fixtures/sources/watersense-commercial-flush-activity.json",
+        "sizeBytes": 4295,
+        "executable": false,
+        "sha256": "7a4d21704e4277a865d51326ef2e2ce01d6b9dfeface262f930803f80352d741"
+      },
+      {
+        "path": "docs/operational-savings-fixtures/sources/watersense-landscape-scope.json",
+        "sizeBytes": 3084,
+        "executable": false,
+        "sha256": "6fef812c07c2eb983597ce20a6998fca570917b7d32e9fd8fb513428a48be9a8"
+      },
+      {
+        "path": "docs/operational-savings-information-card-bindings.json",
+        "sizeBytes": 480640,
+        "executable": false,
+        "sha256": "b02a74f1c373ee3f504c9a8394c3ca4369fc057672afe35e6f0b251dead8391b"
+      },
+      {
+        "path": "docs/operational-savings-information-card.schema.json",
+        "sizeBytes": 9304,
+        "executable": false,
+        "sha256": "2bc6b387d280e791ae565a01e46ef2c7535935275c9a5bf9b7782c829583d19b"
+      },
+      {
+        "path": "docs/operational-savings-information-tree-audit.md",
+        "sizeBytes": 41787,
+        "executable": false,
+        "sha256": "3a84d5cf6f1011ba86d94ab93b0310433f36f2caba15a1f718b00dd2de9ceea9"
+      },
+      {
+        "path": "docs/operational-savings-information-trees.md",
+        "sizeBytes": 124335,
+        "executable": false,
+        "sha256": "8af6219958ba8062dcb4a24011335c80bd11cb47e08dc9e0cf873da91baba442"
+      },
+      {
+        "path": "docs/operational-savings-source-evidence.json",
+        "sizeBytes": 152660,
+        "executable": false,
+        "sha256": "19767073775a0da023051a91811c0ffdc2abef521d57bcbb8eb5ff10ce71bf3b"
+      },
+      {
+        "path": "docs/operational-savings-standard-registry.md",
+        "sizeBytes": 98542,
+        "executable": false,
+        "sha256": "985551839ed206356bb82a7e974d275281e5a2da76e738191c4e9188b29c4d60"
+      },
+      {
+        "path": "docs/operational-savings-unit-registry.json",
+        "sizeBytes": 28504,
+        "executable": false,
+        "sha256": "d72308b3178ac7c0dbce7c63fdddcaae05c186129801f67f8cf2a65ea896f015"
+      },
+      {
+        "path": "docs/operational-savings-user-input-decisions.json",
+        "sizeBytes": 186030,
+        "executable": false,
+        "sha256": "6d01e9a885df72db07f05e70191eba0360e49f3cb364fea26bcd4da3e5bafd6b"
+      },
+      {
+        "path": "docs/operational-savings-user-input-realism.schema.json",
+        "sizeBytes": 2316,
+        "executable": false,
+        "sha256": "4eed0caa8dcf7c7f2848f4f3de706cd58ed05334cfb5945c7f824383e502e524"
+      },
+      {
+        "path": "package-lock.json",
+        "sizeBytes": 158838,
+        "executable": false,
+        "sha256": "107f738b2ebe688647543c1e57aebd481653553f857bf5db9e4d89070ba42eb1"
+      },
+      {
+        "path": "package.json",
+        "sizeBytes": 10281,
+        "executable": false,
+        "sha256": "9dfc016bb5c5d93f7777950c94324bceadb34ee81fd3f8c9493f7e5a2232adee"
+      },
+      {
+        "path": "scripts/generate-operational-savings-review-pages.mjs",
+        "sizeBytes": 158734,
+        "executable": false,
+        "sha256": "793120fc8dcc67045bf491e1bff006a0e1a68c4651528533fec338b61f482733"
+      },
+      {
+        "path": "scripts/operational-savings-information-card-registry.mjs",
+        "sizeBytes": 217369,
+        "executable": false,
+        "sha256": "84b7fe782a774912d0a67930a02f0cdf2074c3e1e44fd98dee29a9936e333db8"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/comstock/inspect-schema.mjs",
+        "sizeBytes": 16405,
+        "executable": false,
+        "sha256": "985bab2df0de55e41dd1c2299a3dd769b8b8a3360c9bc564a804ec9d2a2ac527"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/comstock/proof.json",
+        "sizeBytes": 11117,
+        "executable": false,
+        "sha256": "2b10aeb0566f5ac8af48b86ef4ae006a2784b3060549b383d16ccbc827aa980e"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/comstock/README.md",
+        "sizeBytes": 1761,
+        "executable": false,
+        "sha256": "ec9581b5c487a6e5d3b0204d9a66f34aef4ac6f56d6aacc5edfe6c029a6bc8e0"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/comstock/run.mjs",
+        "sizeBytes": 28578,
+        "executable": false,
+        "sha256": "be35dad6d8a510dda6f0bfc140c055594a001509aaa5052efd5907ad6f818bec"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/context-benchmarks/argonne-forklift-inspect-schema.mjs",
+        "sizeBytes": 2345,
+        "executable": false,
+        "sha256": "b50f05401a901d3af857c51203afe79c2f0b44ac5cf3cbf7a401fd37f9bf8da4"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/context-benchmarks/argonne-forklift.mjs",
+        "sizeBytes": 10595,
+        "executable": false,
+        "sha256": "6dd322a72f44392dbbf8d5822e6473588b2b38c9ac25337713069578e8a4c42f"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/context-benchmarks/doe-walkin-inspect-schema.mjs",
+        "sizeBytes": 14126,
+        "executable": false,
+        "sha256": "736113e24b4d1ece2077365e557fe714549c3440c693b4e9540757c5af56c3ee"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/context-benchmarks/doe-walkin.mjs",
+        "sizeBytes": 13515,
+        "executable": false,
+        "sha256": "94e79a49840b2396303df362c3a70d320f0ef87bb5ed2ba43514003b07f1c65e"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/context-benchmarks/fema-inspect-schema.mjs",
+        "sizeBytes": 3995,
+        "executable": false,
+        "sha256": "c303af730d66d4a35676cf74231bbf65d9f192fe4e15ec4087c593140a0edb0f"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/context-benchmarks/fema.mjs",
+        "sizeBytes": 9927,
+        "executable": false,
+        "sha256": "7c3d825d20ac973167e46dc69365859e9c56244df6cdaaec7d4cb19f724f38ec"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/context-benchmarks/inspect-schema.mjs",
+        "sizeBytes": 8304,
+        "executable": false,
+        "sha256": "3456f123139c2172b607049b1dabb8f5e487996c1556d612890e70eb0a8b574e"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
+        "sizeBytes": 29064,
+        "executable": false,
+        "sha256": "36651bf50a82cd1d092c99a571578afcb91562dbb361d8e96445b5c6c5f16bdc"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/context-benchmarks/README.md",
+        "sizeBytes": 4165,
+        "executable": false,
+        "sha256": "cd9615fc40836a5adb743c1a5e208f9592d25f82e58ef76de8a62b80478d166a"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/context-benchmarks/run.mjs",
+        "sizeBytes": 19372,
+        "executable": false,
+        "sha256": "6c6bfb09072056b7476a6850be5ec5d536b418d89f7bfb4f8e5eba1936fb7e70"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/context-benchmarks/watersense-flush-inspect-schema.mjs",
+        "sizeBytes": 3815,
+        "executable": false,
+        "sha256": "16454ea44f6c42e25f738046d76be985b0826314e3168fb8a1607b5dcb351dc8"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/context-benchmarks/watersense-flush.mjs",
+        "sizeBytes": 14256,
+        "executable": false,
+        "sha256": "d28ae4705c3746a57fc85e41ad5042a298efe527a465bb1cbe6582645bd89f49"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/dishwasher-water-heating/inspect-schema.mjs",
+        "sizeBytes": 5086,
+        "executable": false,
+        "sha256": "65e7bcd49067b688699b0f39cb99ac8e2be629c2fb27ecbcf310dbc784a9009b"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/dishwasher-water-heating/proof.json",
+        "sizeBytes": 8322,
+        "executable": false,
+        "sha256": "6677de828cf946c15b67b29eba2127bf01a25d39187a4defc51a11322c1b7999"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/dishwasher-water-heating/README.md",
+        "sizeBytes": 1311,
+        "executable": false,
+        "sha256": "57fa5029f80fad8b6843ceaef08924143a44d7a8f2b5a07ef117e985b4cb52fb"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/dishwasher-water-heating/run.mjs",
+        "sizeBytes": 14970,
+        "executable": false,
+        "sha256": "82f28e28d57555668cf4c5c00aa7a36bd196edb394b6d1ab869c53923a75042c"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/doe-ccms/proof.json",
+        "sizeBytes": 28870,
+        "executable": false,
+        "sha256": "52518d2e9355a1c4236e249fd60a5bbdcdb8019a06e5f7620d8720ae23d54a43"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/doe-ccms/README.md",
+        "sizeBytes": 1038,
+        "executable": false,
+        "sha256": "5b1524208a8ef16deb17273290765c52cb74c6d21c27b115168b59f892652c4c"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/doe-ccms/run.mjs",
+        "sizeBytes": 7662,
+        "executable": false,
+        "sha256": "4aa4a7699a0ac000b175f2a6de80c6d1900cd7f0fcc775c409d4b141a3f9cc84"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/doe-measur/equipment.mjs",
+        "sizeBytes": 47649,
+        "executable": false,
+        "sha256": "a2122dda6c25d65ed894501bc7b1fd3716767cce5c19fb5f7f4cdd761d6608fc"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/doe-measur/inspect-equipment-schema.mjs",
+        "sizeBytes": 15347,
+        "executable": false,
+        "sha256": "a177184e4726585635b7dced1e2507626c0127682a6ef41a00b1cfd190aef066"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/doe-measur/inspect-schema.mjs",
+        "sizeBytes": 7598,
+        "executable": false,
+        "sha256": "0cc23e39811ecd4035af05c62e74f807852598c9474fb1f8b1d3c6cdf1a48084"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/doe-measur/native-harness.mjs",
+        "sizeBytes": 2718,
+        "executable": false,
+        "sha256": "59ebbd8f1cd45e856260145dbb7af35cf77e3a1eb51e3afa1758e6404c2d8e4e"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/doe-measur/proof.json",
+        "sizeBytes": 31638,
+        "executable": false,
+        "sha256": "1ffe31339e4f7ef9c482fc9da9aceb2232aba43aaacf5c5349a552cf9c9919b7"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/doe-measur/README.md",
+        "sizeBytes": 5060,
+        "executable": false,
+        "sha256": "b353f68f9c9ccf119fc3145d68b9300692dc806dea71680f08c0ecb82d212662"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/doe-measur/run.mjs",
+        "sizeBytes": 18388,
+        "executable": false,
+        "sha256": "00e1a5631460c5609ee6f9b8234e8e0d278d98250d44a0558e5340dd07ddfd9e"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/energy-star/acquire.mjs",
+        "sizeBytes": 4419,
+        "executable": false,
+        "sha256": "3cc9a5513f158fd91276395c05ecacd6442269533c1717dde1c11e7eabe51adf"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/energy-star/inspect-schema.mjs",
+        "sizeBytes": 7648,
+        "executable": false,
+        "sha256": "cbb10c65ec32b7696283100c860f4bcce5d261f6214bbcc877462221ad72c49e"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/energy-star/proof.json",
+        "sizeBytes": 12984,
+        "executable": false,
+        "sha256": "b129df06078c9aaca2a37157ddf0570ebd8e293c5c3b09787f5fffd30fe5edc5"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/energy-star/README.md",
+        "sizeBytes": 2782,
+        "executable": false,
+        "sha256": "b953189f9d824232f69510b0f2bd0d6eea02caf4db624157b8ab66ca812cefdd"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/energy-star/run.mjs",
+        "sizeBytes": 28063,
+        "executable": false,
+        "sha256": "5ebe44ebf407854b49c45d7e00fdb6aa32b86a7254a4d78b4e5a0aef790a470e"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/epa-chp/acquire.mjs",
+        "sizeBytes": 2935,
+        "executable": false,
+        "sha256": "525fc149932b38fbd2090bc28a12e114ccd3449ec93adab37300deb283ad6972"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/epa-chp/proof.json",
+        "sizeBytes": 13089,
+        "executable": false,
+        "sha256": "d0d454f740168edec5fb0128a953c416bdadb07e2738d3a41db7adcd32d45294"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/epa-chp/README.md",
+        "sizeBytes": 2040,
+        "executable": false,
+        "sha256": "57efb7cc42804661c6e5bbad648a1c050e6be8bb67b63ef5247ec9efddfd9852"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/epa-chp/run.mjs",
+        "sizeBytes": 32192,
+        "executable": false,
+        "sha256": "faf975984da0b7f7a8efc371da59e3ac160b3f972e84cdc1472089a56265deab"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/femp-lighting/inspect-schema.mjs",
+        "sizeBytes": 4641,
+        "executable": false,
+        "sha256": "9eb3b7a9637b128938b9b6b601617d6cfb8844d38d847a69256cba5ef6d2748f"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/femp-lighting/proof.json",
+        "sizeBytes": 12516,
+        "executable": false,
+        "sha256": "d659f7c03ab0d0ebc95a335c8ebae0bfeb83657fef99944905a92cd6797ab913"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/femp-lighting/README.md",
+        "sizeBytes": 2576,
+        "executable": false,
+        "sha256": "1b61bbd8f533deeb2a07b229900c8d3d5b40c9a42fab9c67792fdcd238da2647"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/femp-lighting/run.mjs",
+        "sizeBytes": 23073,
+        "executable": false,
+        "sha256": "001d9d9e09fefe987e4b09150fc5ed5d6065a61d97cc6b36810e06b39910bb62"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/fueleconomy/acquire.mjs",
+        "sizeBytes": 1135,
+        "executable": false,
+        "sha256": "71646fdd016ffbf8d33d47babe1c301273f9780a809896c523f0d29b6c605fc6"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/fueleconomy/inspect-schema.mjs",
+        "sizeBytes": 2819,
+        "executable": false,
+        "sha256": "c3dcbf9420dbef028494d57d90edba001cf4f520ed95714c19c6cce313fe88e2"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/fueleconomy/proof.json",
+        "sizeBytes": 6203,
+        "executable": false,
+        "sha256": "5cd390832c3a1636dead712ef67aec300dd64fb5ad3498e1f9025a384e763640"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/fueleconomy/README.md",
+        "sizeBytes": 999,
+        "executable": false,
+        "sha256": "0cfa6cfe3bbc25f3aff7913a0cebe7658c7b766104b83b133814e6b328b1892a"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/fueleconomy/run.mjs",
+        "sizeBytes": 14971,
+        "executable": false,
+        "sha256": "e9e5834587984f5059a32bf5b03f5d417f09f58e0f0553bbdf7cd04937eb074c"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/interval-tariff/acquire.mjs",
+        "sizeBytes": 2034,
+        "executable": false,
+        "sha256": "a9faab694a42bba8e3966acc1be2c082e333ad2fe37e6baba56de1f6bd00c389"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/interval-tariff/inspect-schema.mjs",
+        "sizeBytes": 8955,
+        "executable": false,
+        "sha256": "98936200a52fb00384ab57eddd973404f2c85e51f90d97ab25af7dbd51e1e808"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/interval-tariff/proof.json",
+        "sizeBytes": 20341,
+        "executable": false,
+        "sha256": "9a87487e6901d7833aeab2d60a678cc6c63f7d62ffcb73513bac47d16170a3ab"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/interval-tariff/README.md",
+        "sizeBytes": 2130,
+        "executable": false,
+        "sha256": "0cfc5c425f719582dd3d50cd1f37a1c6cb3454a6d97513ce37218f2b6687b496"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/interval-tariff/run.mjs",
+        "sizeBytes": 40625,
+        "executable": false,
+        "sha256": "bc656938b3ce3d6f889dedf8b65218374826cf651847cca47191eb6e876e8a31"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/operating-schedule/acquire.mjs",
+        "sizeBytes": 1250,
+        "executable": false,
+        "sha256": "4287195c19ab9db18d4a9d39ca43e338cd9ef67755111cbf4cb495f9bd80798c"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/operating-schedule/astronomy.mjs",
+        "sizeBytes": 2220,
+        "executable": false,
+        "sha256": "b4434ca3749c91fa02b838d7bd1429122d0bee2947ac558d0eebbbafb17b65df"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/operating-schedule/calendar.mjs",
+        "sizeBytes": 4540,
+        "executable": false,
+        "sha256": "8c58fea680121504eefb41090cde5c9f8fbfa7f9f7d16d7c3b9e8123d9f26a75"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/operating-schedule/project-schedule-fixtures.v1.json",
+        "sizeBytes": 1733,
+        "executable": false,
+        "sha256": "6f04cc946059db68af035991cfa40a30652ced58b24ec0800173ee8f1bb268aa"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/operating-schedule/proof.json",
+        "sizeBytes": 18244,
+        "executable": false,
+        "sha256": "f0c3f01b00b7089250b9000660e969eb0284aee311157706d149c28bded01e43"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/operating-schedule/README.md",
+        "sizeBytes": 1981,
+        "executable": false,
+        "sha256": "4b559c8a40c0cc57f60a221b80c9864ccb7c05131b74914fea9e8a2430c7e07c"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/operating-schedule/run.mjs",
+        "sizeBytes": 23137,
+        "executable": false,
+        "sha256": "baa82adb1d7a0ce8119d03a2d643aacf876b116433c7f80e4ec20861be378b16"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/pvwatts/process-proof.json",
+        "sizeBytes": 9250,
+        "executable": false,
+        "sha256": "d3cb424c4f5867556ee773f44a4a1afd4f88d9755ccf0b6ae613c9408d9b267a"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/pvwatts/proof.json",
+        "sizeBytes": 83006,
+        "executable": false,
+        "sha256": "53a52b88c38ed185962e4b07d91388c9ecbabce11f49f4bcc5a2959c3049ba23"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/pvwatts/README.md",
+        "sizeBytes": 1331,
+        "executable": false,
+        "sha256": "23a3919febd0b9301a557e622328e46bf71370b699d82b341bebce9d1ef02e9f"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/pvwatts/run.mjs",
+        "sizeBytes": 976,
+        "executable": false,
+        "sha256": "79cbd95be59b6df8d46e35f6ae4ea310a2753fb1b8c4193a35efbf0c91b738af"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/reopt/inspect-schema.mjs",
+        "sizeBytes": 9390,
+        "executable": false,
+        "sha256": "e897cb09660005d4bb9372f486be0e67c67c8a5bd9b17fd56c872a33fa3ef605"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/reopt/proof.json",
+        "sizeBytes": 19804,
+        "executable": false,
+        "sha256": "262ffad26b774a6235ddbacbb7a8c76c4ed8dbdee840c5050a7be42ae99e8ff4"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/reopt/README.md",
+        "sizeBytes": 3870,
+        "executable": false,
+        "sha256": "39b5c2082d759295fad5b31a293b20801debe328bf22b1ab090267a15b180f44"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/reopt/run.mjs",
+        "sizeBytes": 54826,
+        "executable": false,
+        "sha256": "1107af1219029b547a1fdc4a073ff4c4fe2a25e333cf76234e8241d4a3086055"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/sam-solar-thermal/process-proof.json",
+        "sizeBytes": 6735,
+        "executable": false,
+        "sha256": "f9016fec8cfe142c97e460573d4fa41308e60deaa2f12882563ca55cd257acea"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/sam-solar-thermal/proof.json",
+        "sizeBytes": 72997,
+        "executable": false,
+        "sha256": "b0251c12d8cc364b563a4cf068f09af13d1df6ccae683a0923f8b6b05f9098b3"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/sam-solar-thermal/README.md",
+        "sizeBytes": 1407,
+        "executable": false,
+        "sha256": "5619da49c5540c061c6391593b9868a1966fed80a23589aadc27801fdc6fc991"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/sam-solar-thermal/run.mjs",
+        "sizeBytes": 986,
+        "executable": false,
+        "sha256": "2943048bc10db535560b588ecdf07f42e21295115dd98bad06b5f12bdec1aba2"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/scout/inspect-schema.mjs",
+        "sizeBytes": 19574,
+        "executable": false,
+        "sha256": "3ba5d8ff804b76ab81f29488304ee6b6c5bc4a5c16eddc41f73482b9ca5e56c1"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/scout/prepared-result.v1.json",
+        "sizeBytes": 4309,
+        "executable": false,
+        "sha256": "9e1a8df3f7d498b6bf7651af191b165afb0551f41d84e4d04d17f050f76fe38c"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/scout/proof.json",
+        "sizeBytes": 20833,
+        "executable": false,
+        "sha256": "3f4e12627f7c6653ad00929019348bc795230d0b6c30e75782206ca2f01b8f8a"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/scout/README.md",
+        "sizeBytes": 3850,
+        "executable": false,
+        "sha256": "2f547dba69329b2d4cf2fd2d81eef67d78774725cee62fcdcb2b678d8e5c852f"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/scout/run.mjs",
+        "sizeBytes": 20302,
+        "executable": false,
+        "sha256": "e26ca6dff4173dcf982fe3d8e2aa3b5d656e50dd7119c2345362e21d8f7f2290"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/watersense-ci/inspect-schema.mjs",
+        "sizeBytes": 8358,
+        "executable": false,
+        "sha256": "659c70a827d9b305e67a5ab55fa8600bc08e41d3843fcc747d69e0fd343fec02"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/watersense-ci/proof.json",
+        "sizeBytes": 6468,
+        "executable": false,
+        "sha256": "4275fe8487132ece3d343f4ba1dba6f010c2b0765b8f0de8668632f2d3b0ad8c"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/watersense-ci/README.md",
+        "sizeBytes": 1886,
+        "executable": false,
+        "sha256": "8d2b09ddd9359841f46f8df964d7cd48b59b3b8eeac3a75918288b63892a7240"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/watersense-ci/run.mjs",
+        "sizeBytes": 14877,
+        "executable": false,
+        "sha256": "26d0dbe4c70f9658e25688355e1dddeb66785d72aed1bc5acd0da9bddf2f9af1"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/watersense-fixtures/operator-import.mjs",
+        "sizeBytes": 8436,
+        "executable": false,
+        "sha256": "eaac9af19b9feb7bd6ae7605223392f96fb056d0890834670a1097a68133c5ed"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/watersense-fixtures/proof.json",
+        "sizeBytes": 7838,
+        "executable": false,
+        "sha256": "c2fe77a76d5027e0b476f323dc3ed90c35729bf5e7e37324db7fa6cd9fbda4b8"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/watersense-fixtures/README.md",
+        "sizeBytes": 2007,
+        "executable": false,
+        "sha256": "42eef3b9cd1611a87ba94470b5090978e9862674bf9b0450db439f6ceb70789a"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/watersense-landscape/inspect-schema.mjs",
+        "sizeBytes": 8860,
+        "executable": false,
+        "sha256": "5466f72950e3c25102c3272a900cbb2b47b4edfa3d0c3cd12260e0910b55f71e"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/watersense-landscape/proof.json",
+        "sizeBytes": 6493,
+        "executable": false,
+        "sha256": "d358ee604476b65b8515710ec45fc8ba508d1e9c51743a123381b2ad35f60f57"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/watersense-landscape/README.md",
+        "sizeBytes": 2581,
+        "executable": false,
+        "sha256": "167fc4cd5d51367952c625475340877b938525af817dd2fa98227e4128ad1ba9"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/watersense-landscape/run.mjs",
+        "sizeBytes": 27774,
+        "executable": false,
+        "sha256": "a2713388c9ff0fd3f1552edc17e3e17ad12d6bbc985db12fd1f98201968b8f7e"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/wind-sam/process-proof.json",
+        "sizeBytes": 8026,
+        "executable": false,
+        "sha256": "a6e80c1eeb8b5f9149831bc2b33ea85b3aa11c1d4de8c3df866f540eb2b36a9f"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/wind-sam/proof.json",
+        "sizeBytes": 77494,
+        "executable": false,
+        "sha256": "07e80e15c60f99de0273e078f3bb0dab026e5cff91c9562c0d46182616dcc83f"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/wind-sam/README.md",
+        "sizeBytes": 1357,
+        "executable": false,
+        "sha256": "f540b2178867d04908bfa8709eae8d32ae16f7f2d2038e0d802fa7b31e24bf06"
+      },
+      {
+        "path": "scripts/research/operational-savings/adapters/wind-sam/run.mjs",
+        "sizeBytes": 977,
+        "executable": false,
+        "sha256": "8de2ed0e19a78cd63930dc11b7d65037f17838851133aaebf0473e6fe790ee12"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/archive-safety.mjs",
+        "sizeBytes": 10400,
+        "executable": false,
+        "sha256": "2bd7458a2aa8bacba51d2adecf358863d9b0ce9d8e821cb8f0d3f4fad497061a"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/measur/.dockerignore",
+        "sizeBytes": 115,
+        "executable": false,
+        "sha256": "949420a4b0ab2cbb46f0b2752fed07e6cbd5e9bfdf6f348003b2f5fb90cd3f7b"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/measur/.gitignore",
+        "sizeBytes": 9,
+        "executable": false,
+        "sha256": "d2bda521cf60646ba2455a369a4553d62db5ffb9e86b50a47bf3a9b6eef514c1"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/measur/build-manifest.json",
+        "sizeBytes": 10822,
+        "executable": false,
+        "sha256": "530f80f968e126baa00b1e27a1f1a301c02eed885dd9f4ec30f75914799c7d6e"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/measur/build.mjs",
+        "sizeBytes": 5372,
+        "executable": false,
+        "sha256": "2c0e7b56925aa053415b8fa9c8b18c258ab34771267e29bd0d91bd99aaaf518d"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/measur/Dockerfile",
+        "sizeBytes": 4924,
+        "executable": false,
+        "sha256": "8db16ff3d6f5535865ed0af670c918e568e38aa5d60e0b11365d08a0872c53f6"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/measur/entrypoint.sh",
+        "sizeBytes": 737,
+        "executable": false,
+        "sha256": "584fa52a249eaccfd41f26d5c130dad36c034b22a4f90f29d73221a12b40f0e2"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/measur/fixtures.json",
+        "sizeBytes": 2954,
+        "executable": false,
+        "sha256": "224c0be5d06a2e9215ee27475f3826bb69ab4739f4ef003fca977589fab182a5"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/measur/README.md",
+        "sizeBytes": 2580,
+        "executable": false,
+        "sha256": "c31ce05f35fbe3a80b8dbe34bce797416d271c8952f96e6199cee913bf7d350a"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/measur/verify.mjs",
+        "sizeBytes": 5174,
+        "executable": false,
+        "sha256": "df3fb224946a838eb18693e86f02b9293c5994cad187a90b44b67fb947f7369c"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/OFFLINE_REBUILDS.md",
+        "sizeBytes": 7547,
+        "executable": false,
+        "sha256": "fc77f9e2a9cbededae2f0e35c1d1016fc02fc5ac5ca0a15c7b4d514a3ed62fa4"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/offline-candidate-verifier.mjs",
+        "sizeBytes": 15299,
+        "executable": false,
+        "sha256": "303d03e7d67e3334a4cc4cbb9d0cf140d2fca433138631b01230a19a62a3e9a1"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/offline-rebuild-plan.v1.json",
+        "sizeBytes": 15659,
+        "executable": false,
+        "sha256": "9c4d55aa6989ec635ca0dae292e5b196d599870ee2b697dbca18fa86e063cfe7"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/offline-rebuild.mjs",
+        "sizeBytes": 68009,
+        "executable": false,
+        "sha256": "2b6b801d4e80ac0b85994ca853e179360204919e5a5d78debe54d4098aab0ed5"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/reopt/build-manifest.json",
+        "sizeBytes": 9921,
+        "executable": false,
+        "sha256": "919505d5684c853bf332cf6a73fefce9ddd88d8f518810aed729c565b21b3c8f"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/reopt/Dockerfile",
+        "sizeBytes": 1767,
+        "executable": false,
+        "sha256": "ceec6cad242f2845a8bdbb89c51ff6bcc72661b6d3a1591f043aeddb5d7da3a5"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/reopt/Dockerfile.offline",
+        "sizeBytes": 2325,
+        "executable": false,
+        "sha256": "7d5263dfb43d1af1fa6ce188438f3590298192ffc595823a507431d42bb68217"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/reopt/official-proof.json",
+        "sizeBytes": 795,
+        "executable": false,
+        "sha256": "11fdb7626d56c84a1275e02b77b79a2126be0747e01fedef02a3b722446cbfe4"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/reopt/pvwatts-interval-series.json",
+        "sizeBytes": 96046,
+        "executable": false,
+        "sha256": "d57fd0f03e904bebe7b6056c9e41385fd081eb313b165681c5ca2533bc9c65f0"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/reopt/README.md",
+        "sizeBytes": 4519,
+        "executable": false,
+        "sha256": "9bdaa46ef53e84f350876680a4aea491b5740cb17cbe1956b3918f3c2fc25d89"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/reopt/retrofi-proof.json",
+        "sizeBytes": 2058,
+        "executable": false,
+        "sha256": "28828d9f83e5527292fcb07107c375ec9e5efbb2b0d6112d95a03ec46cc2f99c"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/reopt/retrofi-solar-storage-spec.json",
+        "sizeBytes": 1698,
+        "executable": false,
+        "sha256": "39c97cf3b30265d68ddfc910b51e6e7dadc4b5a86f9e10447ac1d018ff197a2c"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/reopt/retrofi-storage-spec.json",
+        "sizeBytes": 1142,
+        "executable": false,
+        "sha256": "ee968d5fd50e1c5afbe401aace33b35bf78601cc67313a888b4ec981d88f8fd9"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/reopt/runner.jl",
+        "sizeBytes": 7748,
+        "executable": false,
+        "sha256": "2cc0d5ab263e6621be11c3461c4a62932a806d3c91e9b5fa287a48eed2d0e229"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/reopt/solar-storage-proof.json",
+        "sizeBytes": 3273,
+        "executable": false,
+        "sha256": "d47b6ad66e555d0676ebde6e975f08b78c7ab13c123849a3cebaac805f2ae801"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/reopt/solar-storage-runner.jl",
+        "sizeBytes": 17182,
+        "executable": false,
+        "sha256": "c17055e0e1af460be64c0c1c5abac406bb51a11867ea2d31f50e66db9c7f6eef"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/reopt/verify-solar-storage.mjs",
+        "sizeBytes": 8839,
+        "executable": false,
+        "sha256": "97a914e5322ce7c2988ea5c60beaa4f0a804ce2c30ccf487caca4a98b0e9cf11"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/reopt/verify.mjs",
+        "sizeBytes": 3713,
+        "executable": false,
+        "sha256": "1a1c6103f1975c2318c5732639baf5a46cf6c204cbbbb85012c6d5d42aac8142"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/scout/build-manifest.json",
+        "sizeBytes": 10652,
+        "executable": false,
+        "sha256": "ee320e253d9accc86e369e3069f356ff4cd57fee2d3fb14453c8a05fbd85d64f"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/scout/Dockerfile",
+        "sizeBytes": 3041,
+        "executable": false,
+        "sha256": "c787457968a00993e8589a00500e5f8b5c6159e4d5bcf62170f7a489698667da"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/scout/Dockerfile.offline",
+        "sizeBytes": 2802,
+        "executable": false,
+        "sha256": "cc32d02ec5dc421577fe547a0287017d727f9e12e22bfb42d03307d42747afef"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/scout/README.md",
+        "sizeBytes": 2818,
+        "executable": false,
+        "sha256": "bf43eba96762e03d70c620016378249932c476e4aa5ec380729ae6d40450398c"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/scout/requirements.lock",
+        "sizeBytes": 3293,
+        "executable": false,
+        "sha256": "ac4072b2b2e2069a7dbed51a7f1127a11e762165ca4f6890a2b461a19544ef83"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/scout/runner.py",
+        "sizeBytes": 9709,
+        "executable": false,
+        "sha256": "d62f7cd2d4e55c4e4ae51fc0f7765cc38f1c77cf6f7335db93ea33eddd099a48"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/scout/verify.mjs",
+        "sizeBytes": 3204,
+        "executable": false,
+        "sha256": "33f6af2b32042b04b0ff804cab0335968704ff6bbcd31597e96888410047e878"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/ssc/build-manifest.json",
+        "sizeBytes": 11823,
+        "executable": false,
+        "sha256": "17d0b52c1010817df7fcfdac43b0cd4d3bd77e83978f7300b6623da3b0450f36"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/ssc/Dockerfile",
+        "sizeBytes": 4328,
+        "executable": false,
+        "sha256": "a7f10485f82cd2e1d73403ede097d131a5f1141493b8d59ad852c5a5c5b12595"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/ssc/Dockerfile.offline",
+        "sizeBytes": 4548,
+        "executable": false,
+        "sha256": "d1c96d71f2bba11516582640aba20e0534f6e9190134edc5370b93f55f54d39d"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/ssc/README.md",
+        "sizeBytes": 2153,
+        "executable": false,
+        "sha256": "cc4b59d02a0d8e0e39ed9f1886c8c060f66eba42c3f40759e65834d652cda203"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/ssc/runner.cpp",
+        "sizeBytes": 6874,
+        "executable": false,
+        "sha256": "09361a01bd0b7ed01b2b90da8c6856977d7a19e4652f081b18d2d53b8bfaeef7"
+      },
+      {
+        "path": "scripts/research/operational-savings/containers/ssc/verify.mjs",
+        "sizeBytes": 4557,
+        "executable": false,
+        "sha256": "2f67b8ee34421d9aef3c72483532c40a1cd3f238edfc02bbaffe98cb3cb31b69"
+      },
+      {
+        "path": "scripts/research/operational-savings/db/migrations/001_research_database.sql",
+        "sizeBytes": 13948,
+        "executable": false,
+        "sha256": "6e4fdffdd0bf206b794387a8cb67359e4bfd9cc2ef21c9e28e67427be2b3cbda"
+      },
+      {
+        "path": "scripts/research/operational-savings/db/migrations/002_comstock_paired_results.sql",
+        "sizeBytes": 1664,
+        "executable": false,
+        "sha256": "778057fe11b875f7c825860272b9d06a17e43dadcd0a792684232461cfabfa86"
+      },
+      {
+        "path": "scripts/research/operational-savings/db/migrations/003_energy_star_dishwasher_modes.sql",
+        "sizeBytes": 1173,
+        "executable": false,
+        "sha256": "8e060f78a6b97dc762c552e2624d4f057a59f52b8be7dca503f62e35cf9f1934"
+      },
+      {
+        "path": "scripts/research/operational-savings/db/migrations/004_scout_prepared_ecm.sql",
+        "sizeBytes": 2667,
+        "executable": false,
+        "sha256": "783530e2b15857868f1e6c5c7fe01d52b431323055d5fd98e0038f3c68ca85e1"
+      },
+      {
+        "path": "scripts/research/operational-savings/db/migrations/006_reopt_real_runs.sql",
+        "sizeBytes": 1842,
+        "executable": false,
+        "sha256": "10d20e53bc082bb7c4e3996d4d40e810f1645f685daf4207ce92e89abb514723"
+      },
+      {
+        "path": "scripts/research/operational-savings/db/migrations/007_epa_biomass_chp.sql",
+        "sizeBytes": 1280,
+        "executable": false,
+        "sha256": "aaf82f9126634f01ad5e9bda41827f876623f4f096845b056b0b38d5025e5c88"
+      },
+      {
+        "path": "scripts/research/operational-savings/db/migrations/009_calculation_source_dependencies.sql",
+        "sizeBytes": 548,
+        "executable": false,
+        "sha256": "e8627c964c5c893f0b42940a6f9f02da0559a45ebc8dfbc1ec566891a527c26a"
+      },
+      {
+        "path": "scripts/research/operational-savings/db/migrations/010_nullable_calculation_source_dependencies.sql",
+        "sizeBytes": 1226,
+        "executable": false,
+        "sha256": "db72a2cc24e4fe4442d60ff4e6f557e7156341230ad26a5b97d4a26edbe7ede6"
+      },
+      {
+        "path": "scripts/research/operational-savings/db/migrations/011_immutable_published_identities.sql",
+        "sizeBytes": 38472,
+        "executable": false,
+        "sha256": "ef6f43fb710561fdea4ef60e5be4940740ae529d54c8bd41153b8526a1fdfac0"
+      },
+      {
+        "path": "scripts/research/operational-savings/db/migrations/012_seal_published_release_appends.sql",
+        "sizeBytes": 25561,
+        "executable": false,
+        "sha256": "313bca0beee995810f4cab790ceead64729b22ceac4ffe37fe6e46c6e8a89043"
+      },
+      {
+        "path": "scripts/research/operational-savings/generate-research.mjs",
+        "sizeBytes": 94070,
+        "executable": false,
+        "sha256": "b5d5db3d3f2fcf43db7e4c245e105238addf17a06ab4e58c3cc4cadc6c8d1bed"
+      },
+      {
+        "path": "scripts/research/operational-savings/lib/artifact.mjs",
+        "sizeBytes": 1864,
+        "executable": false,
+        "sha256": "5ad235c2becbe7fa872790a9da0e12eea775ab48fd991842033b279e5e3e76e8"
+      },
+      {
+        "path": "scripts/research/operational-savings/lib/csv.mjs",
+        "sizeBytes": 3189,
+        "executable": false,
+        "sha256": "bc5c309b9592e39d5a69d078226095500ffe95cc77609e0493c4a4123ca5ce0b"
+      },
+      {
+        "path": "scripts/research/operational-savings/lib/network-isolation.mjs",
+        "sizeBytes": 2652,
+        "executable": false,
+        "sha256": "de4c8c402cad96917e782d71020868d64a041f3e4a64eeca75df4ba9544d2ad6"
+      },
+      {
+        "path": "scripts/research/operational-savings/lib/publication-lock.mjs",
+        "sizeBytes": 4684,
+        "executable": false,
+        "sha256": "bedd09a1e984cb650fb2bf3c2379f7c98ad262d1a08e5c4f98d245faace9d167"
+      },
+      {
+        "path": "scripts/research/operational-savings/lib/sqlite.mjs",
+        "sizeBytes": 15713,
+        "executable": false,
+        "sha256": "f5091f208237ee332f157da8c438cd6b468a14858f93e4516c7a002a845b4d3a"
+      },
+      {
+        "path": "scripts/research/operational-savings/lib/ssc_bridge.py",
+        "sizeBytes": 48675,
+        "executable": false,
+        "sha256": "06611cdb3bcae0e2b3b973d9c1c1a8ac248e785cb118ada7b00e926f138795dd"
+      },
+      {
+        "path": "scripts/research/operational-savings/lib/ssc-publication.mjs",
+        "sizeBytes": 10404,
+        "executable": false,
+        "sha256": "52c6a2659c3dc78a0a39430e81321bcf7f982c4abdf7c7f830206aa8f9386774"
+      },
+      {
+        "path": "scripts/research/operational-savings/lib/subprocess-environment.mjs",
+        "sizeBytes": 4601,
+        "executable": false,
+        "sha256": "dcbd1880ea552ae5711dd9b9866412143bc977e451c939db9b94a9d596622f9e"
+      },
+      {
+        "path": "scripts/research/operational-savings/lib/xlsx.mjs",
+        "sizeBytes": 5231,
+        "executable": false,
+        "sha256": "c36cea0c6c313d45c336102c8b7e8f70155c31f22cb434652bfd1270a2426913"
+      },
+      {
+        "path": "scripts/research/operational-savings/lib/zip.mjs",
+        "sizeBytes": 1280,
+        "executable": false,
+        "sha256": "55d1f9607484fffb77e26cdd3da59b4736e1f828858f8e29692820d111d96304"
+      },
+      {
+        "path": "scripts/research/operational-savings/proof-attestation.mjs",
+        "sizeBytes": 28480,
+        "executable": false,
+        "sha256": "7707683b0d601382a4a1ca06cfe52f110f5ba865ee121bd1632f1a240f370729"
+      },
+      {
+        "path": "scripts/research/operational-savings/proof-execution-run-record.mjs",
+        "sizeBytes": 88286,
+        "executable": false,
+        "sha256": "2f19ffc82446ba32c12e96b8291fa6013c59c0eb1f55a81c25018fcbc19560ed"
+      },
+      {
+        "path": "scripts/research/operational-savings/proof-ledger.mjs",
+        "sizeBytes": 71111,
+        "executable": false,
+        "sha256": "566e543b4cc510f55b5373bf4efa2b422c16477a31d6ed89df2bf6a336fae89a"
+      },
+      {
+        "path": "scripts/research/operational-savings/README.md",
+        "sizeBytes": 12437,
+        "executable": false,
+        "sha256": "e6a4989c0d7a602755495ab28df310e974879af275cd72779ece9f3175bd585b"
+      },
+      {
+        "path": "scripts/research/operational-savings/research-catalog.json",
+        "sizeBytes": 71392,
+        "executable": false,
+        "sha256": "1b7ae8db27c85c03e5f11f5a29fb3c163777c5d064739b5c72566f054267bf95"
+      },
+      {
+        "path": "scripts/research/operational-savings/run-real-database.mjs",
+        "sizeBytes": 1473,
+        "executable": false,
+        "sha256": "a215b2329065642296879bdddf04cbb59f88d0e1fbeff6668c282176824e510d"
+      },
+      {
+        "path": "scripts/research/operational-savings/run-real-proofs.mjs",
+        "sizeBytes": 37553,
+        "executable": false,
+        "sha256": "29c8a146760cda0e0696cb566c1eb77d17c545ad6f85a124dcf826b04385bece"
+      },
+      {
+        "path": "scripts/research/operational-savings/run-real-test-suite.mjs",
+        "sizeBytes": 2476,
+        "executable": false,
+        "sha256": "375ad3f341dfb4186f9f0898c6a5c78b80298d7464034066fc452e0be6521292"
+      },
+      {
+        "path": "scripts/research/operational-savings/run-synthetic-prototypes.mjs",
+        "sizeBytes": 666,
+        "executable": false,
+        "sha256": "c1efe0c5dfdfeea53d6e56931c0451e200380db4115c4bc8bdef9d5a7a338aa6"
+      },
+      {
+        "path": "scripts/research/operational-savings/storage/aws-guard.mjs",
+        "sizeBytes": 234180,
+        "executable": false,
+        "sha256": "11e4545d4b1132a729de82fb9967f429e5048dec365f356fe223c43992534d36"
+      },
+      {
+        "path": "scripts/research/operational-savings/storage/ecr-evidence.mjs",
+        "sizeBytes": 46258,
+        "executable": false,
+        "sha256": "79181504d2f48e6d0c6225684dc09ddd29c2d25a35154c5702d9ff681d921227"
+      },
+      {
+        "path": "scripts/research/operational-savings/storage/inventory.mjs",
+        "sizeBytes": 218964,
+        "executable": false,
+        "sha256": "b526037f1b64ef31286d5e988db3f435da64deeb243eb54548e07d6b13333bd1"
+      },
+      {
+        "path": "scripts/research/operational-savings/storage/local-audit-freshness.mjs",
+        "sizeBytes": 17421,
+        "executable": false,
+        "sha256": "6d11401e09e0413139a291535e098ff8576e251eaaa5e098af05be5d183f7c1d"
+      },
+      {
+        "path": "scripts/research/operational-savings/storage/post-hoc-replay.mjs",
+        "sizeBytes": 18432,
+        "executable": false,
+        "sha256": "f0b46e3a6312f23a7c57fde00ded6c7d6e0c7fb4d717541d59759dc2775a46bd"
+      },
+      {
+        "path": "scripts/research/operational-savings/storage/research-storage.mjs",
+        "sizeBytes": 36201,
+        "executable": false,
+        "sha256": "f30f9529b9a0cdee318dba3f5c585ce98425c06ac315a147d7993fc6503423f6"
+      },
+      {
+        "path": "scripts/research/operational-savings/storage/restore-all.mjs",
+        "sizeBytes": 48013,
+        "executable": false,
+        "sha256": "634cf706b1247597053cd209943307b444cd612e1deab8d923e5d7b47a24c05f"
+      },
+      {
+        "path": "scripts/research/operational-savings/storage/validation-commands.mjs",
+        "sizeBytes": 3074,
+        "executable": false,
+        "sha256": "350dbd768d01a6bf57d59f1252113779f5a882ed547078a7ce4042a38dee6ddd"
+      },
+      {
+        "path": "scripts/research/operational-savings/synthetic-prototype.mjs",
+        "sizeBytes": 8958,
+        "executable": false,
+        "sha256": "de4883c759c6ce1e4bb90725442ece626c5a22de6e96ba31f96744ef50f8e016"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/comstock-real.test.mjs",
+        "sizeBytes": 17410,
+        "executable": false,
+        "sha256": "139f522d0e627f8d1653527c17ac19eb68e8c3c400086d9980981e4d83ae62ac"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/container-archive-safety.test.mjs",
+        "sizeBytes": 4014,
+        "executable": false,
+        "sha256": "7fabda60b3d652e81782a7498be66bc3e0b026f877495ac185eb844e5eb5a42c"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/container-offline-rebuild-real.test.mjs",
+        "sizeBytes": 2544,
+        "executable": false,
+        "sha256": "5e35650fabda31231c4e0f0a10120ccfa1a07cf45827632c726ea4e67f4f439a"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/container-offline-rebuild.test.mjs",
+        "sizeBytes": 22998,
+        "executable": false,
+        "sha256": "f4325164e7a6974a99635799ab4e8f4046f2b76ff7f30fda7601ba4748d3b7e2"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/context-argonne-forklift-real.test.mjs",
+        "sizeBytes": 4285,
+        "executable": false,
+        "sha256": "d8943fd43c988b68e0c8a378875ab899a29644cd515b96df28a8894df4f5d94c"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs",
+        "sizeBytes": 11143,
+        "executable": false,
+        "sha256": "a988247a1ce594c594dc5262bf7eb7c67d083319ee02caa53d0df479ecebcd91"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/context-doe-walkin-real.test.mjs",
+        "sizeBytes": 11422,
+        "executable": false,
+        "sha256": "356808f30a2561fe6344aec529dd0065a3b974aca65df9f7799d77f4f646a4b3"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/context-fema-real.test.mjs",
+        "sizeBytes": 5197,
+        "executable": false,
+        "sha256": "273cd8de2fb9cb58d66af2ae168b39282477b10a6ae672228958638c8c6bab27"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/context-watersense-flush-real.test.mjs",
+        "sizeBytes": 5200,
+        "executable": false,
+        "sha256": "0c9fd2bbb236c02df16acf82f3c88968664a08f179c6e5824683a26da6a4a669"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/coverage-feasibility.test.mjs",
+        "sizeBytes": 4345,
+        "executable": false,
+        "sha256": "8f24af0d4dbee8c68a52e436e177bcdaa347166e230efbfe68f7ba3870243be1"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/csv.test.mjs",
+        "sizeBytes": 1248,
+        "executable": false,
+        "sha256": "5c4a6c42d56df5e3bc1d56840dcfaab2efbdf82b0e9a2420a28d2bae46e7cbd1"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/dishwasher-water-heating-real.test.mjs",
+        "sizeBytes": 9579,
+        "executable": false,
+        "sha256": "965c37dfe7069ab60b5a1ea615da20f8f5cd7093d3e0719e1ffd15475dbcd3bd"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/doe-ccms-blocked.test.mjs",
+        "sizeBytes": 5050,
+        "executable": false,
+        "sha256": "37ecdab66aeebf17359350d7facbf71e401ca65d53c2d3d25327220c198c1b94"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/doe-measur-real.test.mjs",
+        "sizeBytes": 23895,
+        "executable": false,
+        "sha256": "d37f9c554a003f719147851b6ad04a86d49ac5a310146026284080d35102b818"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/energy-star-real.test.mjs",
+        "sizeBytes": 10622,
+        "executable": false,
+        "sha256": "bb1b76879f2165fb9c7b19e9fcd7be439da6106136363fb3a34b50fea25fb6e9"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/epa-chp-real.test.mjs",
+        "sizeBytes": 16078,
+        "executable": false,
+        "sha256": "5eade8f2c41ea8bd83e6ed950bc5b5cd8ee8d7a9c712fd15c125dd4cc69d1cb0"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs",
+        "sizeBytes": 14629,
+        "executable": false,
+        "sha256": "651d8f9ad957e553fd0a8244d540e1d8122b4d4c8603d8c7ae4dfb5f37420781"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/fueleconomy-real.test.mjs",
+        "sizeBytes": 6849,
+        "executable": false,
+        "sha256": "4350c1abd5959cb51b48413b42d481dbffb664928b0ca913f970b02d0da8d003"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/generated-research-view.test.mjs",
+        "sizeBytes": 9575,
+        "executable": false,
+        "sha256": "4c7612fdc7e11d305319e03a8a823db22f98a671e9521ab69772abfe264a68cc"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/interval-tariff-real.test.mjs",
+        "sizeBytes": 18770,
+        "executable": false,
+        "sha256": "ffdd1d159443705c561a3192191863e40c17194edc43c877c20ee922302c03c1"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/local-audit-freshness.test.mjs",
+        "sizeBytes": 10652,
+        "executable": false,
+        "sha256": "857e72c92dce5254f6c77a6ca99b5762e86427ee9b4fe4b55150cacfb3bc28ae"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/network-sandbox-real.test.mjs",
+        "sizeBytes": 1183,
+        "executable": false,
+        "sha256": "98011ec27db1d1a8f1022747002595b9d4895f1171d192aaa6521185e16b6f78"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs",
+        "sizeBytes": 19374,
+        "executable": false,
+        "sha256": "dfa73cc465f6c03df20a4b44371b33502bbbb12c73c3e63c298a534121dec8fe"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/post-hoc-replay-orchestrator.test.mjs",
+        "sizeBytes": 18025,
+        "executable": false,
+        "sha256": "53a91bc294118c8a79399f1e26a8012ca71db9e08d95513d981e631d92b5c481"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/post-hoc-replay.test.mjs",
+        "sizeBytes": 13202,
+        "executable": false,
+        "sha256": "756a787c03f7d7a709505a587883b3e1ad5802ad32935b56b3c4f6739d648bf7"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/proof-attestation.test.mjs",
+        "sizeBytes": 28660,
+        "executable": false,
+        "sha256": "6cc1a80cbc300a6bc052857bec3372b7cef7d7facc6d867f913234877d856acb"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/proof-ledger.test.mjs",
+        "sizeBytes": 55601,
+        "executable": false,
+        "sha256": "cc704ba24cce72e83a8d0f1f3cebc2e7e43828b48fb53f7a972486a4472eee1c"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/publication-lock.test.mjs",
+        "sizeBytes": 2006,
+        "executable": false,
+        "sha256": "48541a50283b7b0d70985f5cfab834bbf7ad20e93f194db13e5cddedc32cf50e"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/real-database-runner.test.mjs",
+        "sizeBytes": 14697,
+        "executable": false,
+        "sha256": "6bef9629c51ff58413d21bf84abc2733f66d80196ffe746f882bb1820fcfa93d"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/reopt-source-real.test.mjs",
+        "sizeBytes": 26355,
+        "executable": false,
+        "sha256": "f2ff6b46fd9e66309da5b85e1ba27225fddc904680a9429cc7220c410cb637d5"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/research-ecr-inventory.test.mjs",
+        "sizeBytes": 33939,
+        "executable": false,
+        "sha256": "1f88b008d3ffc6ca60508ee74f691357e4aba37d3c5088401f806ce9caded5fb"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/research-ecr-restore.test.mjs",
+        "sizeBytes": 81501,
+        "executable": false,
+        "sha256": "26e3550053df92e28617d2c7b72b3e08a0c77933506daba91b5e1cab072c3379"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/research-infrastructure.test.mjs",
+        "sizeBytes": 16153,
+        "executable": false,
+        "sha256": "5d3489c7cb650fb2bc18bcdeedd499a411b3b53f625a274f7fcf28466fc5591f"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/research-storage-restore-all.test.mjs",
+        "sizeBytes": 41309,
+        "executable": false,
+        "sha256": "5b3c58e65273e9cf6d6f690a51bf681a1417ce45840d2f9feedc50a5f8b630a3"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/research-storage.test.mjs",
+        "sizeBytes": 212873,
+        "executable": false,
+        "sha256": "8752a41ec4e636cd03c63af2c071730c086ffbfcf60134e7bbc29d54ab67e768"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/research-validation.test.mjs",
+        "sizeBytes": 608,
+        "executable": false,
+        "sha256": "996562145649fed9b411383abcec8a778ccc08e0e5b53e681fb03a3ae8043215"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/scout-real.test.mjs",
+        "sizeBytes": 18313,
+        "executable": false,
+        "sha256": "cf2c8e137fa6e2f7c9be9745d8d795ea0d583c9c59525b3947f038c87adb3c25"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/sqlite-immutability.test.mjs",
+        "sizeBytes": 39010,
+        "executable": false,
+        "sha256": "02a4352db6698c8e7bf3bc67b0a20b8a6230e45be436d146321fb3251365cc9a"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/sqlite.test.mjs",
+        "sizeBytes": 14633,
+        "executable": false,
+        "sha256": "663b3000df3004ce42ccca07da01181ce95875836eb0814edeae93267d35288e"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs",
+        "sizeBytes": 14460,
+        "executable": false,
+        "sha256": "d1eb9584bdccdcbdcb71b6026b280975d61a96427ce25f6675e8c778db9a3bdf"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/ssc-models.test.mjs",
+        "sizeBytes": 8322,
+        "executable": false,
+        "sha256": "b1b080609d874dca5d37817f8e0206366a5fc0dadbcceb4b80f919f31c89350f"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/synthetic-prototypes.test.mjs",
+        "sizeBytes": 3010,
+        "executable": false,
+        "sha256": "745613febc737e3ebaf28f101529821fadd4500254cfda2acb8bb50b3522b935"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/watersense-ci-real.test.mjs",
+        "sizeBytes": 7945,
+        "executable": false,
+        "sha256": "eb270381c3031fb5c09cb0c2c5c2c9ca312f499c256a9fef4bf76610e2ab5a2e"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/watersense-fixtures-operator.test.mjs",
+        "sizeBytes": 5614,
+        "executable": false,
+        "sha256": "3e72f04e7f760e3f31ec8802fbd3cb5415d9b9427b67378de6f5509c8cf7b2cf"
+      },
+      {
+        "path": "scripts/research/operational-savings/tests/watersense-landscape-real.test.mjs",
+        "sizeBytes": 8337,
+        "executable": false,
+        "sha256": "fd28ecbdd342423fd9f9659f2f7edcc1d925ca027aed85871a1b3249072a7142"
+      },
+      {
+        "path": "scripts/research/operational-savings/validate-research.mjs",
+        "sizeBytes": 32756,
+        "executable": false,
+        "sha256": "2a5a98ff7a69e3c341855cc77c8c4462022788f051a3870b43582fa19f5caddf"
+      },
+      {
+        "path": "scripts/research/operational-savings/verify-model-containers.mjs",
+        "sizeBytes": 26891,
+        "executable": false,
+        "sha256": "623933450aa0d3b808b56391508f57192bdc37e12679dcba23f591fd01e26115"
+      },
+      {
+        "path": "tsconfig.json",
+        "sizeBytes": 570,
+        "executable": false,
+        "sha256": "d55de34aaf6957ccbe5f60763d790569b6f98305b3fc3fe47e79518864de720e"
+      },
+      {
+        "path": "tsconfig.node.json",
+        "sizeBytes": 233,
+        "executable": false,
+        "sha256": "b5805e4738367879e03012a1807daba34fc4dfbfab445472529f2611d4d41fb0"
+      },
+      {
+        "path": "vite.config.ts",
+        "sizeBytes": 2813,
+        "executable": false,
+        "sha256": "f6fbb2610bd9c672f4b6ff326c50f212bb8ca0b6a24a650e6f91d16067c279ea"
+      }
+    ],
+    "digest": "4f774fb2252cdcfd7112c80f8876ae007a17dae4c9f238f632c8664e3e759b40",
+    "fileCount": 259,
+    "testCatalogFingerprint": "275b0efb6d6f8c7b59ae9c9842e92761aeb194534f6e3f2d612e2f916a7e7355"
+  },
+  "repositoryState": {
+    "observation": "PRE_RUN_AND_POST_RUN_BEFORE_RECORD_WRITE",
+    "gitHeadCommit": "72254afd52b5b0ed513f578d885215009c85281a",
+    "dirtyTreeStatus": "CLEAN",
+    "dirtyEntryCount": 0,
+    "porcelainV1Sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "porcelainV1Entries": [],
+    "relevantContentDigest": "4f774fb2252cdcfd7112c80f8876ae007a17dae4c9f238f632c8664e3e759b40",
+    "relevantContentFileCount": 259
+  },
+  "artifactIdentityCatalog": {
+    "schemaVersion": "operational-savings/proof-artifact-identity-catalog-v1",
+    "artifacts": [
+      {
+        "artifactId": "artifact:argonne-forklift-anl-esd-08-3",
+        "sha256": "cf26a69395287f5cdadc7125674632501def5033a8b37774c7a006d6ca5b9eed",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/context-benchmarks/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:comstock-2025-release-3-ca-g0600750-upgrade-0",
+        "sha256": "df4d4e40099a4c73f128fcc621cfc5b7facc6eb621e13eddf21a43bc87afdc40",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/comstock/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:comstock-2025-release-3-ca-g0600750-upgrade-43",
+        "sha256": "1c658e2a59a83f24f55fab04187cd0cde6546c6bf5e43dc8beb456479403dbde",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/comstock/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:comstock-2025-release-3-data-dictionary",
+        "sha256": "11c03e4794ed12c5d8fc81c1253d97c033f217c79cc217e00110052b2d23ea4b",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/comstock/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:comstock-2025-release-3-enumeration-dictionary",
+        "sha256": "0d721355dc3f1cee2f42e6db750c0de2daef1773404bab3125d1bda1960e007e",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/comstock/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:comstock-2025-release-3-measure-crosswalk",
+        "sha256": "cf87e5905df7291b4d2bbbd9491ad3f0cde55b3e5e43298308c429c9454b4462",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/comstock/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:comstock-2025-release-3-upgrades",
+        "sha256": "c3ba607e650d3b78cd86f08ef3cd6e632b7e622797a970cd8f16812e41a1ce5a",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/comstock/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-ccms-403-body-2026-07-23",
+        "sha256": "58bf2215b395dcac74c009aa98701854e43cbe54a1cd3a95fee6a647ca9910d4",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/doe-ccms/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-ccms-403-headers-2026-07-23",
+        "sha256": "126e0d5e2cb4449613f1a274a714076f122f81fd738c0137934803e34f3b6b9a",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/doe-ccms/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-lmc-2015-tables:2017-11",
+        "sha256": "97c36f8d92a721dc2e3245215987d90c828314fa478050ea24c90c750c6fe5f1",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
+          "scripts/research/operational-savings/adapters/femp-lighting/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-measur-compressed-air-golden-bdc33b83",
+        "sha256": "4c3de4eca1270d47eb2e9b2384efcc26fd6f22ad70501a46fad313a042616d61",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/doe-measur/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-measur-compressed-air-header-bdc33b83",
+        "sha256": "6e8fd190d67677f94e9c4f1020cd7ddc46414a2a149c432ab8ad3577bdbb1319",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/doe-measur/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-measur-compressed-air-source-bdc33b83",
+        "sha256": "e149207339296c4ccff80d7ffef88ab24efa67acbd08830c82fca2de7329af18",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/doe-measur/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-measur-cooling-tower-golden-bdc33b83",
+        "sha256": "7d12e9af8c96b841ab11ed9b41826fbe49e1285584f6ea1f5a7624f10df3e69e",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/doe-measur/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-measur-cooling-tower-header-bdc33b83",
+        "sha256": "706a4cc50d735d800a166763ec385c0af58b077861ee792eefee84d023d4741a",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/doe-measur/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-measur-cooling-tower-wasm-binding-bdc33b83",
+        "sha256": "62fb82f924b545eefa5782cae3d0e44b2b71ab3134bec792e4babddcd2650505",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/doe-measur/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-measur-equipment-input-header-bdc33b83",
+        "sha256": "65cebff9a506cafdaf315ab54329aa3f154eec89d98bd27534e6970faa4201f4",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/doe-measur/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-measur-equipment-results-golden-bdc33b83",
+        "sha256": "8fab9f550d9f326e2bca8f427c9a5e6359aa9252f08cddaf7464313ff6d75721",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/doe-measur/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-measur-equipment-results-header-bdc33b83",
+        "sha256": "9ef8f23670b0992397870794d3dc81cd591ef040f1e9edb981849782ecdf5707",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/doe-measur/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-measur-equipment-results-source-bdc33b83",
+        "sha256": "1e03e970a91cb8e8a614c687723f4e2171d6eb8a1c1695da6bed225ef870ab66",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/doe-measur/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-measur-fan-wasm-binding-bdc33b83",
+        "sha256": "042939184ae2150f3abc6332dbee4129e1061d782a311221fdb08cec7ad12735",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/doe-measur/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-measur-license-bdc33b83",
+        "sha256": "7372b9cff1cab763899bf6c4516b44163f8442fd38d0a3786e3ceafc0e81df62",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/doe-measur/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-measur-motor-efficiency-golden-bdc33b83",
+        "sha256": "138755fe18e80171a4d55bf395c66dc90c08a9b9a507b9a70d9da47e9e9c61de",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/doe-measur/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-measur-motor-efficiency-header-bdc33b83",
+        "sha256": "b8358ae3de587612b9201b0a76a404713ab674b929c03b48c05f0b5d3cd0ae44",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/doe-measur/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-measur-motor-efficiency-source-bdc33b83",
+        "sha256": "7ed153335acf34bc60d254794c0f6fb1d31b76375332b416dabdefec714d7ca4",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/doe-measur/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-measur-motor-wasm-binding-bdc33b83",
+        "sha256": "462052610fa35c44fef637f39860c1f08507d62e12073e076f6731502c2a96a7",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/doe-measur/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-measur-psat-wasm-binding-bdc33b83",
+        "sha256": "3238cdfb3cbe5c6f11127a0a55423ad28d3d171b17fbc337187e39ec1f4409d3",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/doe-measur/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-measur-reduction-header-bdc33b83",
+        "sha256": "07376dbb3346d1103d672a182dd32968aa7e19c7222d08dbbbd845790890d4ef",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/doe-measur/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-measur-reduction-source-bdc33b83",
+        "sha256": "009ee7129e7235467052459cf83cfd725ba0093d7e984dee572ad8d910c54e36",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/doe-measur/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-measur-repository-bdc33b83",
+        "sha256": null,
+        "commitSha": "bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/doe-measur/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-measur-wasm-binding-bdc33b83",
+        "sha256": "5bad679bac1bef93727365874324836fd3ae9a81ab8bbd2638920720e197a3e5",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/doe-measur/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:doe-wicf-ecs-nopr:2023-08",
+        "sha256": "d46c285120da35349dfe1017b1d2739cfa20efe62f00261e89c8c225c6fd1bbc",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/context-benchmarks/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:energy-star-cfs-calculator-context:2024-03",
+        "sha256": "3d2abed1938bd1400378a2e0ca2095058fe490b2b599ef15f09056639f06fcd6",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/context-benchmarks/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:energy-star-cfs-calculator:2024-03",
+        "sha256": "3d2abed1938bd1400378a2e0ca2095058fe490b2b599ef15f09056639f06fcd6",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/dishwasher-water-heating/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:energy-star-commercial-dishwashers-metadata:2026-07-24",
+        "sha256": "9e37aca49d32907b588334205fb1c2293c8419191473f117d0e7a8a6e5061190",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/energy-star/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:energy-star-commercial-dishwashers:2026-07-24-full",
+        "sha256": "a746b679f6ae2a9ce30f1fe115d1e279adccca49e684d3a6a35fc2e76fdb43ba",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/energy-star/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:epa-biomass-chp-catalog:v1.1",
+        "sha256": "fbb7af3824eaf83a01ecb97aa070cc250fcdc3cb9702cc25f72061720ce5c959",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/epa-chp/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:epa-chp-catalog:2017-09",
+        "sha256": "eccea396f5bcc5c86c16a75b8d41b1a4a7b43df064b7363ee7054d53063f0d09",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/epa-chp/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:fema-is-815-generator-fueling:2026-07-24",
+        "sha256": "104fd7d8fe018001753d4700616f4f5a96bb27ae88440ea794e9d03a0bd32a0a",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/context-benchmarks/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:femp-exterior-lighting:2026-07-23",
+        "sha256": "cb50171c667e44e0c8fe1681fac57fcfe22d6adffe6ba1229bd9d103b8fc547a",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/femp-lighting/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:fueleconomy-vehicles:2026-07-23",
+        "sha256": "83ee4bf48e65e8e962e55952e0bfbdc6ab94d4bf63f42e2d38aa39143d6f1ecc",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/fueleconomy/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:project-operating-schedule-fixtures:v1",
+        "sha256": "6f04cc946059db68af035991cfa40a30652ced58b24ec0800173ee8f1bb268aa",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/operating-schedule/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:pvwatts:official-fixture",
+        "sha256": "b806b704a8542aa22ab2ad9c06ece19dcd766eee75777b426039b73f23dfaa61",
+        "commitSha": "ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/pvwatts/process-proof.json",
+          "scripts/research/operational-savings/adapters/reopt/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:pvwatts:phoenix-tmy2",
+        "sha256": "311b8871e989b40d0016f7019dcabc06ebf38e16509c51842fce4bf1e6f8c591",
+        "commitSha": "ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/pvwatts/process-proof.json",
+          "scripts/research/operational-savings/adapters/reopt/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:pvwatts:ssc-303",
+        "sha256": "db933646389fa94f41af34066d65034681d5836f1bd29644f9b2a934a01b788f",
+        "commitSha": "f952cabdf3e60f6e88eef80bb7bc9e7e24bac643",
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/pvwatts/process-proof.json",
+          "scripts/research/operational-savings/adapters/reopt/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:reopt-jl-project-toml:0.59.2",
+        "sha256": "f67d05bba64f2d17f3bdb8944e1b17b3713e1de8b87ba8e52a5c742c3737a0c6",
+        "commitSha": "f952cabdf3e60f6e88eef80bb7bc9e7e24bac643",
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/reopt/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:retrofi:pvwatts-interval-series:d57fd0f03e904bebe7b6056c9e41385fd081eb313b165681c5ca2533bc9c65f0",
+        "sha256": "d57fd0f03e904bebe7b6056c9e41385fd081eb313b165681c5ca2533bc9c65f0",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/reopt/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:retrofi:reopt-build-manifest:919505d5684c853bf332cf6a73fefce9ddd88d8f518810aed729c565b21b3c8f",
+        "sha256": "919505d5684c853bf332cf6a73fefce9ddd88d8f518810aed729c565b21b3c8f",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/reopt/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:retrofi:reopt-container:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717",
+        "sha256": "3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/reopt/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:retrofi:reopt-solar-storage-proof:d47b6ad66e555d0676ebde6e975f08b78c7ab13c123849a3cebaac805f2ae801",
+        "sha256": "d47b6ad66e555d0676ebde6e975f08b78c7ab13c123849a3cebaac805f2ae801",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/reopt/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:retrofi:reopt-solar-storage-spec:39c97cf3b30265d68ddfc910b51e6e7dadc4b5a86f9e10447ac1d018ff197a2c",
+        "sha256": "39c97cf3b30265d68ddfc910b51e6e7dadc4b5a86f9e10447ac1d018ff197a2c",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/reopt/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:sam-solar-thermal:fargo-weather",
+        "sha256": "3228bdb487135d66debfd9a4fb215820ae236592e25c508e22e449139e098069",
+        "commitSha": "ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/sam-solar-thermal/process-proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:sam-solar-thermal:official-fixture",
+        "sha256": "5bc2ecd5a6e241a4f653dfda60d5c02b502ec7700358392ad923e7207f5b119d",
+        "commitSha": "ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/sam-solar-thermal/process-proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:sam-solar-thermal:ssc-303",
+        "sha256": "db933646389fa94f41af34066d65034681d5836f1bd29644f9b2a934a01b788f",
+        "commitSha": "f952cabdf3e60f6e88eef80bb7bc9e7e24bac643",
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/sam-solar-thermal/process-proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:scout-commercial-901-lighting-72bcf419",
+        "sha256": "f58f1dec2e3b4693339eae59a73cf018b637a5c34400ff6c62dae189cfe18baa",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/scout/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:scout-commercial-air-sealing-72bcf419",
+        "sha256": "71b615e0995af9e258edb234feadbc311aeea0f7aaf9b87127d35a2ca9fb6714",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/scout/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:scout-commercial-best-refrigeration-72bcf419",
+        "sha256": "3833cf6f406dec2ea5b72c507aefd3f1fd4312c4c7491405d83a7c4835b907de",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/scout/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:scout-config-schema-72bcf419",
+        "sha256": "1e6eff0552e7f88ed276950eb77551089c283734bb45caf00174c8be1e9405c8",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/scout/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:scout-ecm-prep-entrypoint-72bcf419",
+        "sha256": "639134208b7368e7a9cafe9975b8205ed8fe4b864cce10368167557cd5831848",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/scout/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:scout-ecm-prep-output-72bcf419",
+        "sha256": "f7b428a2e66d90b4bfc4cf6272d85f52b1aea88229ff3c3fb53e33f536eccf50",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/scout/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:scout-ecm-schema-72bcf419",
+        "sha256": "d28cdc4fd33c65a03a05c0c08e5e222b1eaf26bb081670c5e081e78f7d1b07ed",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/scout/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:scout-preparation-result-72bcf419",
+        "sha256": "9e1a8df3f7d498b6bf7651af191b165afb0551f41d84e4d04d17f050f76fe38c",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/scout/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:scout-python-build-standalone-3.12.13-20260718-arm64-macos",
+        "sha256": "62aeee6161d57303a71a138b75fd5cc6fb8c89c4b1d9c7f0a052d89fa0b6652b",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/scout/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:scout-python-runtime-3.12.13-arm64-macos-pinned",
+        "sha256": "118227f48be2857299f3b409e23ddf00210fa407c76856c0bd9beebf4d102a25",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/scout/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:scout-repository-72bcf419",
+        "sha256": null,
+        "commitSha": "72bcf419eb1cb37379f163563344b0ec61507fd3",
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/scout/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:sdge-sdcp-jrc:2026-06-01",
+        "sha256": "bfde9c41b8daed07eeb293a1e5ac6348f2a290ae1de022b34a7c5055a858e89e",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/interval-tariff/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:sdge-small-commercial-rates:2026-06-01",
+        "sha256": "1d2474baa2c253e803c5966fa30a8c58f8ee88e0d338a006df3c8f47a49c0cf9",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/interval-tariff/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:usno-rise-set:sf-2026-06-21",
+        "sha256": "e096159b03d9fe91f287898142a567809a83d794f6c8aaad6b8809bb2378f812",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/operating-schedule/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:usurdb:2026-07-23",
+        "sha256": "89081ef124080ea322516040dc6b2c1945f9f754eced63f3130d4a8f14947032",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/interval-tariff/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:watersense-at-work-toilets:2023",
+        "sha256": "47ef36b3d505ef39be821ea1665b5bab62da961a529488d96d560b04021182b6",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/context-benchmarks/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:watersense-at-work-urinals:2023",
+        "sha256": "527a042f5037f5ff8629655c60d41310ce7404b1a5ca332f738f9e6ed4a2bcd1",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/context-benchmarks/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:watersense-ci-operations:2012-10",
+        "sha256": "f69facc89beb2073fdaba88206d20e32151b2f30c53a7f21f7981eeab8c0ab52",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/watersense-ci/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:watersense-landscape:2020-10",
+        "sha256": "77afb36cff3dcb77eacad4db34a8dba44bd48eb24485c886958afd58e1846273",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/watersense-landscape/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:watersense-product-search-access-probe:2026-07-23",
+        "sha256": "25b7f23f3a094c0eb81bc52510977672da547984709ec85be55c64c20db72ce4",
+        "commitSha": null,
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/watersense-fixtures/proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:wind-sam:official-fixture",
+        "sha256": "99d80bffaa75def04d38cca4cb8f5e1e3befd043ce950513fb116d82cb479cf6",
+        "commitSha": "ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/wind-sam/process-proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:wind-sam:ssc-303",
+        "sha256": "db933646389fa94f41af34066d65034681d5836f1bd29644f9b2a934a01b788f",
+        "commitSha": "f952cabdf3e60f6e88eef80bb7bc9e7e24bac643",
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/wind-sam/process-proof.json"
+        ]
+      },
+      {
+        "artifactId": "artifact:wind-sam:wind-resource",
+        "sha256": "94ebc09260d80bcc6796d89407248c39d9599aa9a046d01533fb8083737314b2",
+        "commitSha": "ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+        "byteSize": null,
+        "declaredIn": [
+          "scripts/research/operational-savings/adapters/wind-sam/process-proof.json"
+        ]
+      }
+    ],
+    "artifactCount": 77,
+    "digest": "5690b78424cfe1ff3b259f28d70e85d3cd0cb226d0e2a1c121fcfbe632b3aa3b"
+  },
+  "executionToolchainIdentity": {
+    "schemaVersion": "operational-savings/proof-execution-toolchain-v2",
+    "bindingScope": {
+      "boundInputs": [
+        "NAMED_EXECUTABLE_AND_ENTRYPOINT_FILE_BYTES",
+        "LOCKFILE_DECLARATIONS",
+        "INSTALLED_NODE_PACKAGE_FILE_TREES",
+        "INSTALLED_NODE_WORKSPACE_LINK_TARGET_FILE_TREES",
+        "NODE_PACKAGE_BIN_LINK_TARGETS"
+      ],
+      "deliberatelyExcludedMutableNodeRuntimeCaches": [
+        "node_modules/.vite",
+        "node_modules/.vite-temp"
+      ],
+      "unboundInputs": [
+        "OPERATING_SYSTEM_RUNTIME",
+        "DYNAMIC_LIBRARIES_LOADED_BY_BOUND_EXECUTABLES",
+        "PYTHON_STANDARD_LIBRARY_AND_SITE_PACKAGES_OUTSIDE_NODE_MODULES",
+        "COMPILER_SDK_HEADERS_LIBRARIES_AND_DRIVER_DISCOVERY"
+      ],
+      "claim": "The identity content-binds only the listed executable, entrypoint, installed Node package, workspace-link target, and bin-link inputs. It does not content-bind the operating system, dynamically loaded libraries, Python runtime libraries outside node_modules, or compiler SDK inputs."
+    },
+    "tools": [
+      {
+        "toolId": "archive-extractor",
+        "requestedPath": "/usr/bin/bsdtar",
+        "resolvedPath": "/usr/bin/bsdtar",
+        "requestedPathType": "REGULAR_FILE",
+        "symlinkTarget": null,
+        "sizeBytes": 195760,
+        "executable": true,
+        "sha256": "8b420ebd507a3308ff318c9c5c23ce28969c22b919789cd525e4067094864eeb"
+      },
+      {
+        "toolId": "developer-tool-resolver",
+        "requestedPath": "/usr/bin/xcrun",
+        "resolvedPath": "/usr/bin/xcrun",
+        "requestedPathType": "REGULAR_FILE",
+        "symlinkTarget": null,
+        "sizeBytes": 117392,
+        "executable": true,
+        "sha256": "485f0709d14dc0eac48f68862e57bdc5b39b3ad007f98720d74d9f406cd244e0"
+      },
+      {
+        "toolId": "fifo-test-helper",
+        "requestedPath": "/usr/bin/mkfifo",
+        "resolvedPath": "/usr/bin/mkfifo",
+        "requestedPathType": "REGULAR_FILE",
+        "symlinkTarget": null,
+        "sizeBytes": 101360,
+        "executable": true,
+        "sha256": "c3b6d5533536f5a8a46e641a291eaf0e3707770ad488eaddce21206160403313"
+      },
+      {
+        "toolId": "git",
+        "requestedPath": "/usr/bin/git",
+        "resolvedPath": "/usr/bin/git",
+        "requestedPathType": "REGULAR_FILE",
+        "symlinkTarget": null,
+        "sizeBytes": 118848,
+        "executable": true,
+        "sha256": "6beef02785bc2271b5fdba55f19df5756c9f6ea408ee481739741699a05580cf"
+      },
+      {
+        "toolId": "measur-cxx",
+        "requestedPath": "/usr/bin/clang++",
+        "resolvedPath": "/usr/bin/clang++",
+        "requestedPathType": "REGULAR_FILE",
+        "symlinkTarget": null,
+        "sizeBytes": 118848,
+        "executable": true,
+        "sha256": "6beef02785bc2271b5fdba55f19df5756c9f6ea408ee481739741699a05580cf"
+      },
+      {
+        "toolId": "network-sandbox",
+        "requestedPath": "/usr/bin/sandbox-exec",
+        "resolvedPath": "/usr/bin/sandbox-exec",
+        "requestedPathType": "REGULAR_FILE",
+        "symlinkTarget": null,
+        "sizeBytes": 102560,
+        "executable": true,
+        "sha256": "923e196018d69109dbc10820a8bc3d68aee45efae5fae05c3f1bc161cd992744"
+      },
+      {
+        "toolId": "node-runtime",
+        "requestedPath": "/opt/homebrew/Cellar/node/26.3.1/bin/node",
+        "resolvedPath": "/opt/homebrew/Cellar/node/26.3.1/bin/node",
+        "requestedPathType": "REGULAR_FILE",
+        "symlinkTarget": null,
+        "sizeBytes": 68672,
+        "executable": true,
+        "sha256": "cdf556966c52b321abb07cd565edb5fb2ca61c467f84a434bb28e0d33a3c9580"
+      },
+      {
+        "toolId": "ssc-python",
+        "requestedPath": "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "resolvedPath": "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9",
+        "requestedPathType": "SYMLINK_TO_BOUND_REGULAR_FILE",
+        "symlinkTarget": "../../Library/Frameworks/Python3.framework/Versions/3.9/bin/python3",
+        "sizeBytes": 102352,
+        "executable": true,
+        "sha256": "d23458804881b5c23d3aacae44311b9c43f961c4eba3a23163572aaebf58f44f"
+      },
+      {
+        "toolId": "tar-reader",
+        "requestedPath": "/usr/bin/tar",
+        "resolvedPath": "/usr/bin/bsdtar",
+        "requestedPathType": "SYMLINK_TO_BOUND_REGULAR_FILE",
+        "symlinkTarget": "bsdtar",
+        "sizeBytes": 195760,
+        "executable": true,
+        "sha256": "8b420ebd507a3308ff318c9c5c23ce28969c22b919789cd525e4067094864eeb"
+      },
+      {
+        "toolId": "vitest-entrypoint",
+        "requestedPath": "/Users/vikas/Documents/Codex/2026-07-22/do-u/work/operational-savings-automation-research/node_modules/vitest/vitest.mjs",
+        "resolvedPath": "/Users/vikas/Documents/Codex/2026-07-22/do-u/work/operational-savings-automation-research/node_modules/vitest/vitest.mjs",
+        "requestedPathType": "REGULAR_FILE",
+        "symlinkTarget": null,
+        "sizeBytes": 43,
+        "executable": true,
+        "sha256": "39db22f579acf5639bbb17a261408debbde03f4692c0c439e77e7f13aeba74d6"
+      },
+      {
+        "toolId": "zip-reader",
+        "requestedPath": "/usr/bin/unzip",
+        "resolvedPath": "/usr/bin/unzip",
+        "requestedPathType": "REGULAR_FILE",
+        "symlinkTarget": null,
+        "sizeBytes": 436976,
+        "executable": true,
+        "sha256": "4883bb14f9216df0b53b216c4636522e4d951a008cbc74430169173d62088d68"
+      }
+    ],
+    "installedDependencies": {
+      "lockfileSha256": "107f738b2ebe688647543c1e57aebd481653553f857bf5db9e4d89070ba42eb1",
+      "hiddenLockfileSha256": "ca1fc7f29cf1bbdd14d5086bdc39d3974c8b19fb0308a9c569ba1e05e0ce00b0",
+      "declaredPackageCount": 311,
+      "installedPackageCount": 255,
+      "fileCount": 11795,
+      "workspaceLinkCount": 2,
+      "binLinkCount": 20,
+      "installedPackageRootCount": 257,
+      "totalSizeBytes": 250181724,
+      "packageCatalogSha256": "ffa3f488c68706b34f00c5be5c256e992e3690f7bbcdb2665eb6aa4639826305",
+      "fileTreeSha256": "b8c33b876114e4494f24df8670b8f6ffeca6cc460a808b74dbe50455cf7d22ef",
+      "workspaceLinkCatalogSha256": "76cb28a9d3c331729e9ff660255389a8dd412c244bbf91a5e635b223a5f9d24b",
+      "binLinkCatalogSha256": "422b651054803ba5f1520c020421d3a56d828ee169821c5233f1249d88556c0f",
+      "installedPackageRootsSha256": "31288a714046b9a3933edc7ffbc8a88e20ed8895a6936a924ce3fdd299dabe4c",
+      "excludedRuntimeCacheDirectories": [
+        "node_modules/.vite",
+        "node_modules/.vite-temp"
+      ],
+      "digest": "9b7b27581356650dfe0a28e1468f7586f785339f783f6cbe53d5ed4fadeec7a2"
+    },
+    "digest": "f992bd93f23fd2f2b8040c9c77477738f6f090f052bf2826ca2a92936a2f9261"
+  },
+  "testCatalogFingerprint": "275b0efb6d6f8c7b59ae9c9842e92761aeb194534f6e3f2d612e2f916a7e7355",
+  "execution": {
+    "status": "PASSED",
+    "command": "[\"/opt/homebrew/Cellar/node/26.3.1/bin/node\",\"/var/folders/n4/40s981js053d_qhy4jq0zcj00000gn/T/vitest-proof-attested-run-2W1J7W/repository/node_modules/vitest/vitest.mjs\",\"run\",\"scripts/research/operational-savings/tests\",\"--config\",\"vite.config.ts\",\"--reporter=json\",\"--outputFile\",\"/var/folders/n4/40s981js053d_qhy4jq0zcj00000gn/T/vitest-proof-attested-run-2W1J7W/vitest-results.json\",\"--no-file-parallelism\",\"--no-cache\"]",
+    "attestation": {
+      "mode": "PRIVATE_COMMITTED_SNAPSHOT_WITH_PRE_RUN_POST_RUN_EQUALITY",
+      "inputStateUnchanged": true,
+      "inputStateSha256": "3193384b4844aff902f0e992c37eb6d5f3988c5a40a720e0e816d7f9fed05330",
+      "preRunCapturedAt": "2026-07-26T04:45:06.923Z",
+      "runnerStartedAt": "2026-07-26T04:45:14.564Z",
+      "runnerCompletedAt": "2026-07-26T04:47:26.011Z",
+      "postRunCapturedAt": "2026-07-26T04:47:33.321Z",
+      "runnerExitStatus": 0,
+      "executionSnapshot": {
+        "mode": "PRIVATE_DETACHED_COMMITTED_GIT_WORKTREE",
+        "sourceCommit": "72254afd52b5b0ed513f578d885215009c85281a",
+        "sourceEvidenceFingerprintDigest": "4f774fb2252cdcfd7112c80f8876ae007a17dae4c9f238f632c8664e3e759b40",
+        "artifactIdentityCatalogDigest": "5690b78424cfe1ff3b259f28d70e85d3cd0cb226d0e2a1c121fcfbe632b3aa3b",
+        "preRunSnapshotStateSha256": "ba8386fea09ef75d6cf33161020954c981ae2ec77125ef4dd2c3eda994f6aaf5",
+        "postRunSnapshotStateSha256": "ba8386fea09ef75d6cf33161020954c981ae2ec77125ef4dd2c3eda994f6aaf5",
+        "preRunCapturedAt": "2026-07-26T04:45:10.955Z",
+        "postRunCapturedAt": "2026-07-26T04:47:26.091Z",
+        "privatePathRetained": false,
+        "isolatedExecutionInputs": {
+          "mode": "PRIVATE_CONTENT_VERIFIED_DEPENDENCY_AND_CACHE_COPIES",
+          "privateCopyMode": "MACOS_CLONEFILE_OR_PRIVATE_COPY",
+          "originalInputsUnchanged": true,
+          "snapshotInputsUnchanged": true,
+          "originalAndSnapshotContentMatched": true,
+          "installedDependencyIdentityDigest": "9b7b27581356650dfe0a28e1468f7586f785339f783f6cbe53d5ed4fadeec7a2",
+          "researchCacheIdentityDigest": "814262a203f819005ace39ce3abec22147a6ddbc03ea0cab4fd7323443cb081b",
+          "researchCacheFileCount": 4811,
+          "researchCacheSizeBytes": 4796393089,
+          "snapshotVitestEntrypointSha256": "39db22f579acf5639bbb17a261408debbde03f4692c0c439e77e7f13aeba74d6",
+          "vitestExecutedFromPrivateSnapshot": true
+        }
+      }
+    },
+    "platform": {
+      "operatingSystem": "darwin",
+      "architecture": "arm64",
+      "nodeVersion": "v26.3.1"
+    },
+    "runner": {
+      "framework": "Vitest",
+      "version": "3.2.6"
+    },
+    "networkEnforcement": {
+      "status": "VERIFIED_PROCESS_WIDE_DENY_NETWORK",
+      "processWideNetworkIsolationVerified": true,
+      "scope": "ENTIRE_REAL_VITEST_PROCESS_TREE",
+      "mechanism": "macOS sandbox-exec profile (version 1)(allow default)(deny network*)",
+      "claim": "The exact sandbox control assertion passed inside the real Vitest process tree after an outbound socket attempt failed immediately with EPERM.",
+      "evidence": {
+        "testId": "control:process-wide-network-deny",
+        "path": "scripts/research/operational-savings/tests/network-sandbox-real.test.mjs",
+        "name": "enforces deny-network policy across the real Vitest process tree",
+        "manifestPath": "RUN_RECORD_CONTROL",
+        "status": "PASSED",
+        "durationMs": 2.563625000000002,
+        "observedPaths": [
+          "scripts/research/operational-savings/tests/network-sandbox-real.test.mjs"
+        ],
+        "observedNames": [
+          "enforces deny-network policy across the real Vitest process tree"
+        ]
+      }
+    },
+    "startedAt": "2026-07-26T04:45:15.400Z",
+    "completedAt": "2026-07-26T04:47:25.866Z",
+    "durationMs": 130466,
+    "vitestJsonSha256": "aa6f45dfa79f80c8ebebc467c4dcb00a160d40d7f193576f51483e9a9292f196",
+    "vitestSuccess": true,
+    "declaredTestCount": 103,
+    "matchedPassedTestCount": 103,
+    "requiredControlCount": 1,
+    "matchedPassedControlCount": 1,
+    "unmatchedVitestAssertionCount": 394,
+    "resultCounts": {
+      "PASSED": 103,
+      "FAILED": 0,
+      "SKIPPED": 0,
+      "MISSING": 0,
+      "PATH_MISMATCH": 0,
+      "NAME_MISMATCH": 0,
+      "AMBIGUOUS": 0
+    }
+  },
+  "tests": [
+    {
+      "testId": "comstock-artifact-network-failure-proof",
+      "path": "scripts/research/operational-savings/tests/comstock-real.test.mjs",
+      "name": "rejects changed artifacts and attempted runtime network access",
+      "manifestPath": "scripts/research/operational-savings/adapters/comstock/proof.json",
+      "status": "PASSED",
+      "durationMs": 4.316833000000088,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/comstock-real.test.mjs"
+      ],
+      "observedNames": [
+        "rejects changed artifacts and attempted runtime network access"
+      ]
+    },
+    {
+      "testId": "comstock-real-release-3-annual-delta-proof",
+      "path": "scripts/research/operational-savings/tests/comstock-real.test.mjs",
+      "name": "joins real baseline and LED rows, applies release weights, and publishes the ITC-01 output offline",
+      "manifestPath": "scripts/research/operational-savings/adapters/comstock/proof.json",
+      "status": "PASSED",
+      "durationMs": 2.698082999999997,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/comstock-real.test.mjs"
+      ],
+      "observedNames": [
+        "joins real baseline and LED rows, applies release weights, and publishes the ITC-01 output offline"
+      ]
+    },
+    {
+      "testId": "comstock-resolution-failure-proof",
+      "path": "scripts/research/operational-savings/tests/comstock-real.test.mjs",
+      "name": "rejects mixed releases, insufficient populations, duplicates, and ambiguous resolution",
+      "manifestPath": "scripts/research/operational-savings/adapters/comstock/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.37858299999993505,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/comstock-real.test.mjs"
+      ],
+      "observedNames": [
+        "rejects mixed releases, insufficient populations, duplicates, and ambiguous resolution"
+      ]
+    },
+    {
+      "testId": "comstock-schema-failure-proof",
+      "path": "scripts/research/operational-savings/tests/comstock-real.test.mjs",
+      "name": "fails closed on schema drift, missing columns, and incompatible units",
+      "manifestPath": "scripts/research/operational-savings/adapters/comstock/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.3455830000000333,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/comstock-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails closed on schema drift, missing columns, and incompatible units"
+      ]
+    },
+    {
+      "testId": "context-argonne-forklift-real-proof",
+      "path": "scripts/research/operational-savings/tests/context-argonne-forklift-real.test.mjs",
+      "name": "maps both exact ITC-30 hourly intensity terms",
+      "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
+      "status": "PASSED",
+      "durationMs": 1.3262920000000236,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/context-argonne-forklift-real.test.mjs"
+      ],
+      "observedNames": [
+        "maps both exact ITC-30 hourly intensity terms"
+      ]
+    },
+    {
+      "testId": "context-argonne-scope-failure-proof",
+      "path": "scripts/research/operational-savings/tests/context-argonne-forklift-real.test.mjs",
+      "name": "fails closed for every incompatible class or duty dimension",
+      "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.5901670000000081,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/context-argonne-forklift-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails closed for every incompatible class or duty dimension"
+      ]
+    },
+    {
+      "testId": "context-benchmarks-real-cfs-proof",
+      "path": "scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs",
+      "name": "resolves one exact dishwasher class and reaches annual racks",
+      "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
+      "status": "PASSED",
+      "durationMs": 1.0154580000000237,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs"
+      ],
+      "observedNames": [
+        "resolves one exact dishwasher class and reaches annual racks"
+      ]
+    },
+    {
+      "testId": "context-cfs-cooktop-source-proof",
+      "path": "scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs",
+      "name": "publishes exact official dishwasher and cooktop benchmark cells",
+      "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
+      "status": "PASSED",
+      "durationMs": 1.5977919999999983,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs"
+      ],
+      "observedNames": [
+        "publishes exact official dishwasher and cooktop benchmark cells"
+      ]
+    },
+    {
+      "testId": "context-cfs-workbook-mutation-proof",
+      "path": "scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs",
+      "name": "fails changed benchmark cells and worksheet shapes",
+      "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
+      "status": "PASSED",
+      "durationMs": 21.110500000000002,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails changed benchmark cells and worksheet shapes"
+      ]
+    },
+    {
+      "testId": "context-doe-lighting-market-real-proof",
+      "path": "scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs",
+      "name": "resolves an exact outdoor subsector and reaches ITC-02 existing_kW",
+      "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.735416000000015,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs"
+      ],
+      "observedNames": [
+        "resolves an exact outdoor subsector and reaches ITC-02 existing_kW"
+      ]
+    },
+    {
+      "testId": "context-doe-lighting-schema-failure-proof",
+      "path": "scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs",
+      "name": "fails Table 4-29 header, application, and value mutations",
+      "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
+      "status": "PASSED",
+      "durationMs": 9.659333000000004,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails Table 4-29 header, application, and value mutations"
+      ]
+    },
+    {
+      "testId": "context-doe-walkin-real-proof",
+      "path": "scripts/research/operational-savings/tests/context-doe-walkin-real.test.mjs",
+      "name": "publishes both exact ITC-49 formula terms with canonical units and scope",
+      "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
+      "status": "PASSED",
+      "durationMs": 1.1192499999999654,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/context-doe-walkin-real.test.mjs"
+      ],
+      "observedNames": [
+        "publishes both exact ITC-49 formula terms with canonical units and scope"
+      ]
+    },
+    {
+      "testId": "context-doe-walkin-scope-failure-proof",
+      "path": "scripts/research/operational-savings/tests/context-doe-walkin-real.test.mjs",
+      "name": "fails closed outside the reviewed row and exact class dimensions",
+      "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.7203329999999823,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/context-doe-walkin-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails closed outside the reviewed row and exact class dimensions"
+      ]
+    },
+    {
+      "testId": "context-doe-walkin-source-mutation-proof",
+      "path": "scripts/research/operational-savings/tests/context-doe-walkin-real.test.mjs",
+      "name": "fails source-title, table-row, and fixture-value mutations",
+      "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.39854200000013407,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/context-doe-walkin-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails source-title, table-row, and fixture-value mutations"
+      ]
+    },
+    {
+      "testId": "context-fema-full-load-diesel-real-proof",
+      "path": "scripts/research/operational-savings/tests/context-fema-real.test.mjs",
+      "name": "maps the narrow FEMA calculation to the exact ITC-54 term",
+      "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.8576659999999947,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/context-fema-real.test.mjs"
+      ],
+      "observedNames": [
+        "maps the narrow FEMA calculation to the exact ITC-54 term"
+      ]
+    },
+    {
+      "testId": "context-fema-scope-failure-proof",
+      "path": "scripts/research/operational-savings/tests/context-fema-real.test.mjs",
+      "name": "fails closed outside the diesel full-load boundary",
+      "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.4842089999999928,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/context-fema-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails closed outside the diesel full-load boundary"
+      ]
+    },
+    {
+      "testId": "context-fema-source-mutation-proof",
+      "path": "scripts/research/operational-savings/tests/context-fema-real.test.mjs",
+      "name": "fails native-formula and applicability mutations",
+      "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.2550420000000031,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/context-fema-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails native-formula and applicability mutations"
+      ]
+    },
+    {
+      "testId": "context-watersense-flush-activity-real-proof",
+      "path": "scripts/research/operational-savings/tests/context-watersense-flush-real.test.mjs",
+      "name": "reaches the exact ITC-33 group annual flush term without fixture-count multiplication",
+      "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.9125419999999735,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/context-watersense-flush-real.test.mjs"
+      ],
+      "observedNames": [
+        "reaches the exact ITC-33 group annual flush term without fixture-count multiplication"
+      ]
+    },
+    {
+      "testId": "context-watersense-flush-scope-failure-proof",
+      "path": "scripts/research/operational-savings/tests/context-watersense-flush-real.test.mjs",
+      "name": "fails closed for unproved visitors, subset allocation, and incompatible populations",
+      "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.47249999999996817,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/context-watersense-flush-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails closed for unproved visitors, subset allocation, and incompatible populations"
+      ]
+    },
+    {
+      "testId": "dishwasher-water-heating-input-failure-proof",
+      "path": "scripts/research/operational-savings/tests/dishwasher-water-heating-real.test.mjs",
+      "name": "fails unsupported branches and invalid physical inputs",
+      "manifestPath": "scripts/research/operational-savings/adapters/dishwasher-water-heating/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.2950000000000159,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/dishwasher-water-heating-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails unsupported branches and invalid physical inputs"
+      ]
+    },
+    {
+      "testId": "dishwasher-water-heating-real-workbook-proof",
+      "path": "scripts/research/operational-savings/tests/dishwasher-water-heating-real.test.mjs",
+      "name": "reproduces the workbook electric building and booster factors",
+      "manifestPath": "scripts/research/operational-savings/adapters/dishwasher-water-heating/proof.json",
+      "status": "PASSED",
+      "durationMs": 1.6455829999999878,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/dishwasher-water-heating-real.test.mjs"
+      ],
+      "observedNames": [
+        "reproduces the workbook electric building and booster factors"
+      ]
+    },
+    {
+      "testId": "dishwasher-water-heating-workbook-mutation-proof",
+      "path": "scripts/research/operational-savings/tests/dishwasher-water-heating-real.test.mjs",
+      "name": "fails mutations to a required workbook formula or cell",
+      "manifestPath": "scripts/research/operational-savings/adapters/dishwasher-water-heating/proof.json",
+      "status": "PASSED",
+      "durationMs": 22.89220900000001,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/dishwasher-water-heating-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails mutations to a required workbook formula or cell"
+      ]
+    },
+    {
+      "testId": "doe-ccms-real-access-block-proof",
+      "path": "scripts/research/operational-savings/tests/doe-ccms-blocked.test.mjs",
+      "name": "verifies the retained official CCMS 403 access boundary",
+      "manifestPath": "scripts/research/operational-savings/adapters/doe-ccms/proof.json",
+      "status": "PASSED",
+      "durationMs": 3.5084579999999903,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/doe-ccms-blocked.test.mjs"
+      ],
+      "observedNames": [
+        "verifies the retained official CCMS 403 access boundary"
+      ]
+    },
+    {
+      "testId": "doe-measur-compressed-air-drift-failure-proof",
+      "path": "scripts/research/operational-savings/tests/doe-measur-real.test.mjs",
+      "name": "detects native binding or golden-fixture drift",
+      "manifestPath": "scripts/research/operational-savings/adapters/doe-measur/proof.json",
+      "status": "PASSED",
+      "durationMs": 1.1922919999999522,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/doe-measur-real.test.mjs"
+      ],
+      "observedNames": [
+        "detects native binding or golden-fixture drift"
+      ]
+    },
+    {
+      "testId": "doe-measur-compressed-air-input-failure-proof",
+      "path": "scripts/research/operational-savings/tests/doe-measur-real.test.mjs",
+      "name": "requires offline mode and rejects unsupported or invalid project inputs",
+      "manifestPath": "scripts/research/operational-savings/adapters/doe-measur/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.8337500000000091,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/doe-measur-real.test.mjs"
+      ],
+      "observedNames": [
+        "requires offline mode and rejects unsupported or invalid project inputs"
+      ]
+    },
+    {
+      "testId": "doe-measur-equipment-drift-failure-proof",
+      "path": "scripts/research/operational-savings/tests/doe-measur-real.test.mjs",
+      "name": "detects MEASUR equipment binding and golden-fixture drift",
+      "manifestPath": "scripts/research/operational-savings/adapters/doe-measur/proof.json",
+      "status": "PASSED",
+      "durationMs": 1.1997919999994338,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/doe-measur-real.test.mjs"
+      ],
+      "observedNames": [
+        "detects MEASUR equipment binding and golden-fixture drift"
+      ]
+    },
+    {
+      "testId": "doe-measur-equipment-input-failure-proof",
+      "path": "scripts/research/operational-savings/tests/doe-measur-real.test.mjs",
+      "name": "rejects incomplete or incompatible MEASUR equipment inputs before native execution",
+      "manifestPath": "scripts/research/operational-savings/adapters/doe-measur/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.4093329999996058,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/doe-measur-real.test.mjs"
+      ],
+      "observedNames": [
+        "rejects incomplete or incompatible MEASUR equipment inputs before native execution"
+      ]
+    },
+    {
+      "testId": "doe-measur-equipment-publication-proof",
+      "path": "scripts/research/operational-savings/tests/doe-measur-real.test.mjs",
+      "name": "publishes all four native MEASUR equipment calculations with provenance",
+      "manifestPath": "scripts/research/operational-savings/adapters/doe-measur/proof.json",
+      "status": "PASSED",
+      "durationMs": 19.828542000001107,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/doe-measur-real.test.mjs"
+      ],
+      "observedNames": [
+        "publishes all four native MEASUR equipment calculations with provenance"
+      ]
+    },
+    {
+      "testId": "doe-measur-real-compressed-air-native-proof",
+      "path": "scripts/research/operational-savings/tests/doe-measur-real.test.mjs",
+      "name": "publishes native model execution and exact ITC-43 formula inputs to the research database",
+      "manifestPath": "scripts/research/operational-savings/adapters/doe-measur/proof.json",
+      "status": "PASSED",
+      "durationMs": 18.459125000000085,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/doe-measur-real.test.mjs"
+      ],
+      "observedNames": [
+        "publishes native model execution and exact ITC-43 formula inputs to the research database"
+      ]
+    },
+    {
+      "testId": "doe-measur-real-equipment-native-proof",
+      "path": "scripts/research/operational-savings/tests/doe-measur-real.test.mjs",
+      "name": "maps native MEASUR equipment outputs to the exact ITC-36, ITC-38, ITC-40, and ITC-41 terms",
+      "manifestPath": "scripts/research/operational-savings/adapters/doe-measur/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.34887499999967986,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/doe-measur-real.test.mjs"
+      ],
+      "observedNames": [
+        "maps native MEASUR equipment outputs to the exact ITC-36, ITC-38, ITC-40, and ITC-41 terms"
+      ]
+    },
+    {
+      "testId": "energy-star-ambiguous-requirement-proof",
+      "path": "scripts/research/operational-savings/tests/energy-star-real.test.mjs",
+      "name": "fails closed when current-snapshot requirements remain ambiguous",
+      "manifestPath": "scripts/research/operational-savings/adapters/energy-star/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.3515419999999949,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/energy-star-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails closed when current-snapshot requirements remain ambiguous"
+      ]
+    },
+    {
+      "testId": "energy-star-dishwasher-real-proof",
+      "path": "scripts/research/operational-savings/tests/energy-star-real.test.mjs",
+      "name": "maps only genuine rack-machine fields to ITC-52 and records numeric provenance",
+      "manifestPath": "scripts/research/operational-savings/adapters/energy-star/proof.json",
+      "status": "PASSED",
+      "durationMs": 1.5421249999999986,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/energy-star-real.test.mjs"
+      ],
+      "observedNames": [
+        "maps only genuine rack-machine fields to ITC-52 and records numeric provenance"
+      ]
+    },
+    {
+      "testId": "energy-star-requirement-resolution-proof",
+      "path": "scripts/research/operational-savings/tests/energy-star-real.test.mjs",
+      "name": "resolves unique requirements across the complete current snapshot",
+      "manifestPath": "scripts/research/operational-savings/adapters/energy-star/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.617666000000014,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/energy-star-real.test.mjs"
+      ],
+      "observedNames": [
+        "resolves unique requirements across the complete current snapshot"
+      ]
+    },
+    {
+      "testId": "energy-star-schema-mutation-proof",
+      "path": "scripts/research/operational-savings/tests/energy-star-real.test.mjs",
+      "name": "fails schema mutations that remove a required field or pollute a native unit",
+      "manifestPath": "scripts/research/operational-savings/adapters/energy-star/proof.json",
+      "status": "PASSED",
+      "durationMs": 2.781833000000006,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/energy-star-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails schema mutations that remove a required field or pollute a native unit"
+      ]
+    },
+    {
+      "testId": "epa-biomass-chp-real-proof",
+      "path": "scripts/research/operational-savings/tests/epa-chp-real.test.mjs",
+      "name": "reaches every ITC-22 formula term from the official representative system",
+      "manifestPath": "scripts/research/operational-savings/adapters/epa-chp/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.43383399999993344,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/epa-chp-real.test.mjs"
+      ],
+      "observedNames": [
+        "reaches every ITC-22 formula term from the official representative system"
+      ]
+    },
+    {
+      "testId": "epa-biomass-native-evidence-failure-proof",
+      "path": "scripts/research/operational-savings/tests/epa-chp-real.test.mjs",
+      "name": "fails closed when the biomass table loses native evidence",
+      "manifestPath": "scripts/research/operational-savings/adapters/epa-chp/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.10799999999994725,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/epa-chp-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails closed when the biomass table loses native evidence"
+      ]
+    },
+    {
+      "testId": "epa-biomass-publication-proof",
+      "path": "scripts/research/operational-savings/tests/epa-chp-real.test.mjs",
+      "name": "publishes ITC-22 values with biomass-artifact provenance",
+      "manifestPath": "scripts/research/operational-savings/adapters/epa-chp/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.8167920000000777,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/epa-chp-real.test.mjs"
+      ],
+      "observedNames": [
+        "publishes ITC-22 values with biomass-artifact provenance"
+      ]
+    },
+    {
+      "testId": "epa-chp-itc20-formula-proof",
+      "path": "scripts/research/operational-savings/tests/epa-chp-real.test.mjs",
+      "name": "maps an exact fuel-cell table row to every ITC-20 formula term",
+      "manifestPath": "scripts/research/operational-savings/adapters/epa-chp/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.12600000000009004,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/epa-chp-real.test.mjs"
+      ],
+      "observedNames": [
+        "maps an exact fuel-cell table row to every ITC-20 formula term"
+      ]
+    },
+    {
+      "testId": "epa-chp-itc21-formula-proof",
+      "path": "scripts/research/operational-savings/tests/epa-chp-real.test.mjs",
+      "name": "reaches every ITC-21 formula term from one exact real system",
+      "manifestPath": "scripts/research/operational-savings/adapters/epa-chp/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.28395799999998417,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/epa-chp-real.test.mjs"
+      ],
+      "observedNames": [
+        "reaches every ITC-21 formula term from one exact real system"
+      ]
+    },
+    {
+      "testId": "epa-chp-itc26-formula-proof",
+      "path": "scripts/research/operational-savings/tests/epa-chp-real.test.mjs",
+      "name": "maps the same exact real system to the ITC-26 microgrid balance",
+      "manifestPath": "scripts/research/operational-savings/adapters/epa-chp/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.13445899999999256,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/epa-chp-real.test.mjs"
+      ],
+      "observedNames": [
+        "maps the same exact real system to the ITC-26 microgrid balance"
+      ]
+    },
+    {
+      "testId": "epa-chp-offline-proof",
+      "path": "scripts/research/operational-savings/tests/epa-chp-real.test.mjs",
+      "name": "requires the offline guard",
+      "manifestPath": "scripts/research/operational-savings/adapters/epa-chp/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.06200000000001182,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/epa-chp-real.test.mjs"
+      ],
+      "observedNames": [
+        "requires the offline guard"
+      ]
+    },
+    {
+      "testId": "epa-chp-real-catalog-proof",
+      "path": "scripts/research/operational-savings/tests/epa-chp-real.test.mjs",
+      "name": "publishes an exact real CHP output set and provenance",
+      "manifestPath": "scripts/research/operational-savings/adapters/epa-chp/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.5556669999999713,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/epa-chp-real.test.mjs"
+      ],
+      "observedNames": [
+        "publishes an exact real CHP output set and provenance"
+      ]
+    },
+    {
+      "testId": "epa-chp-required-row-failure-proof",
+      "path": "scripts/research/operational-savings/tests/epa-chp-real.test.mjs",
+      "name": "fails closed when an actual required table row is missing",
+      "manifestPath": "scripts/research/operational-savings/adapters/epa-chp/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.20358300000009422,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/epa-chp-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails closed when an actual required table row is missing"
+      ]
+    },
+    {
+      "testId": "femp-exterior-lighting-checksum-mutation-proof",
+      "path": "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs",
+      "name": "fails a corrupt artifact checksum",
+      "manifestPath": "scripts/research/operational-savings/adapters/femp-lighting/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.8833329999999933,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails a corrupt artifact checksum"
+      ]
+    },
+    {
+      "testId": "femp-exterior-lighting-offline-proof",
+      "path": "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs",
+      "name": "requires offline mode and makes no runtime network call",
+      "manifestPath": "scripts/research/operational-savings/adapters/femp-lighting/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.22195899999999824,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs"
+      ],
+      "observedNames": [
+        "requires offline mode and makes no runtime network call"
+      ]
+    },
+    {
+      "testId": "femp-exterior-lighting-requirement-mapping-proof",
+      "path": "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs",
+      "name": "maps an exact application and supplied lumen requirement to the ITC-02 power ceiling",
+      "manifestPath": "scripts/research/operational-savings/adapters/femp-lighting/proof.json",
+      "status": "PASSED",
+      "durationMs": 1.0555000000000234,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs"
+      ],
+      "observedNames": [
+        "maps an exact application and supplied lumen requirement to the ITC-02 power ceiling"
+      ]
+    },
+    {
+      "testId": "femp-exterior-lighting-resolution-failure-proof",
+      "path": "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs",
+      "name": "fails closed on unknown applications and invalid required light output",
+      "manifestPath": "scripts/research/operational-savings/adapters/femp-lighting/proof.json",
+      "status": "PASSED",
+      "durationMs": 7.472207999999995,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails closed on unknown applications and invalid required light output"
+      ]
+    },
+    {
+      "testId": "femp-exterior-lighting-schema-mutation-proof",
+      "path": "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs",
+      "name": "fails header, threshold-unit, and duplicate-application schema mutations",
+      "manifestPath": "scripts/research/operational-savings/adapters/femp-lighting/proof.json",
+      "status": "PASSED",
+      "durationMs": 1.0300829999999905,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails header, threshold-unit, and duplicate-application schema mutations"
+      ]
+    },
+    {
+      "testId": "femp-exterior-lighting-schema-publication-proof",
+      "path": "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs",
+      "name": "parses and publishes the exact seven-row FEMP Table 1 with its pinned checksum",
+      "manifestPath": "scripts/research/operational-savings/adapters/femp-lighting/proof.json",
+      "status": "PASSED",
+      "durationMs": 1.438791999999978,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs"
+      ],
+      "observedNames": [
+        "parses and publishes the exact seven-row FEMP Table 1 with its pinned checksum"
+      ]
+    },
+    {
+      "testId": "femp-exterior-lighting-source-boundary-proof",
+      "path": "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs",
+      "name": "rejects exact-product resolution because the FEMP page has no products",
+      "manifestPath": "scripts/research/operational-savings/adapters/femp-lighting/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.12662500000001842,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs"
+      ],
+      "observedNames": [
+        "rejects exact-product resolution because the FEMP page has no products"
+      ]
+    },
+    {
+      "testId": "fueleconomy-incompatible-pair-failure-proof",
+      "path": "scripts/research/operational-savings/tests/fueleconomy-real.test.mjs",
+      "name": "fails closed on incompatible exact pairs",
+      "manifestPath": "scripts/research/operational-savings/adapters/fueleconomy/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.17725000000018554,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/fueleconomy-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails closed on incompatible exact pairs"
+      ]
+    },
+    {
+      "testId": "fueleconomy-itc28-electric-intensity-proof",
+      "path": "scripts/research/operational-savings/tests/fueleconomy-real.test.mjs",
+      "name": "maps an exact electric vehicle to ITC-28 intensity and publishes provenance",
+      "manifestPath": "scripts/research/operational-savings/adapters/fueleconomy/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.4105829999998605,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/fueleconomy-real.test.mjs"
+      ],
+      "observedNames": [
+        "maps an exact electric vehicle to ITC-28 intensity and publishes provenance"
+      ]
+    },
+    {
+      "testId": "fueleconomy-missing-column-failure-proof",
+      "path": "scripts/research/operational-savings/tests/fueleconomy-real.test.mjs",
+      "name": "fails closed on a missing source column",
+      "manifestPath": "scripts/research/operational-savings/adapters/fueleconomy/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.34808399999974426,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/fueleconomy-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails closed on a missing source column"
+      ]
+    },
+    {
+      "testId": "fueleconomy-offline-proof",
+      "path": "scripts/research/operational-savings/tests/fueleconomy-real.test.mjs",
+      "name": "requires the runtime network guard",
+      "manifestPath": "scripts/research/operational-savings/adapters/fueleconomy/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.08795800000007148,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/fueleconomy-real.test.mjs"
+      ],
+      "observedNames": [
+        "requires the runtime network guard"
+      ]
+    },
+    {
+      "testId": "fueleconomy-real-bulk-proof",
+      "path": "scripts/research/operational-savings/tests/fueleconomy-real.test.mjs",
+      "name": "reaches both exact ITC-29 formula terms offline and publishes provenance",
+      "manifestPath": "scripts/research/operational-savings/adapters/fueleconomy/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.8698749999998654,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/fueleconomy-real.test.mjs"
+      ],
+      "observedNames": [
+        "reaches both exact ITC-29 formula terms offline and publishes provenance"
+      ]
+    },
+    {
+      "testId": "interval-tariff-real-composite-proof",
+      "path": "scripts/research/operational-savings/tests/interval-tariff-real.test.mjs",
+      "name": "returns the exact tariff_input_set formula term offline",
+      "manifestPath": "scripts/research/operational-savings/adapters/interval-tariff/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.5277920000007725,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/interval-tariff-real.test.mjs"
+      ],
+      "observedNames": [
+        "returns the exact tariff_input_set formula term offline"
+      ]
+    },
+    {
+      "testId": "interval-tariff-term-schedule-failure-proof",
+      "path": "scripts/research/operational-savings/tests/interval-tariff-real.test.mjs",
+      "name": "fails closed when a required tariff term or schedule is mutated",
+      "manifestPath": "scripts/research/operational-savings/adapters/interval-tariff/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.27466699999968114,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/interval-tariff-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails closed when a required tariff term or schedule is mutated"
+      ]
+    },
+    {
+      "testId": "itc02-lighting-composition-real-proof",
+      "path": "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs",
+      "name": "composes real benchmark, requirement, and schedule outputs into annual_kWh",
+      "manifestPath": "scripts/research/operational-savings/adapters/femp-lighting/proof.json",
+      "status": "PASSED",
+      "durationMs": 35.37462499999998,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs"
+      ],
+      "observedNames": [
+        "composes real benchmark, requirement, and schedule outputs into annual_kWh"
+      ]
+    },
+    {
+      "testId": "operating-schedule-itc02-daylight-project-input-proof",
+      "path": "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs",
+      "name": "runs a full-year daylight-control model with the USNO-validated solar boundary",
+      "manifestPath": "scripts/research/operational-savings/adapters/operating-schedule/proof.json",
+      "status": "PASSED",
+      "durationMs": 1.0486669999999663,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs"
+      ],
+      "observedNames": [
+        "runs a full-year daylight-control model with the USNO-validated solar boundary"
+      ]
+    },
+    {
+      "testId": "operating-schedule-itc02-daylight-provenance-proof",
+      "path": "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs",
+      "name": "records USNO only as daylight astronomy validation evidence",
+      "manifestPath": "scripts/research/operational-savings/adapters/operating-schedule/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.9499580000000378,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs"
+      ],
+      "observedNames": [
+        "records USNO only as daylight astronomy validation evidence"
+      ]
+    },
+    {
+      "testId": "operating-schedule-itc02-fixed-project-input-proof",
+      "path": "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs",
+      "name": "executes the separate ITC-02 fixed-schedule branch from project inputs",
+      "manifestPath": "scripts/research/operational-savings/adapters/operating-schedule/proof.json",
+      "status": "PASSED",
+      "durationMs": 7.327042000000006,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs"
+      ],
+      "observedNames": [
+        "executes the separate ITC-02 fixed-schedule branch from project inputs"
+      ]
+    },
+    {
+      "testId": "operating-schedule-itc09-project-input-proof",
+      "path": "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs",
+      "name": "maps an explicit schedule reduction to avoided recirculation hours",
+      "manifestPath": "scripts/research/operational-savings/adapters/operating-schedule/proof.json",
+      "status": "PASSED",
+      "durationMs": 27.982833999999997,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs"
+      ],
+      "observedNames": [
+        "maps an explicit schedule reduction to avoided recirculation hours"
+      ]
+    },
+    {
+      "testId": "operating-schedule-itc12-project-input-proof",
+      "path": "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs",
+      "name": "maps the ITC-12 project schedule fixture without USNO value attribution",
+      "manifestPath": "scripts/research/operational-savings/adapters/operating-schedule/proof.json",
+      "status": "PASSED",
+      "durationMs": 7.427750000000003,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs"
+      ],
+      "observedNames": [
+        "maps the ITC-12 project schedule fixture without USNO value attribution"
+      ]
+    },
+    {
+      "testId": "operating-schedule-itc12-publication-proof",
+      "path": "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs",
+      "name": "publishes exact schedule formula values and provenance to the research database",
+      "manifestPath": "scripts/research/operational-savings/adapters/operating-schedule/proof.json",
+      "status": "PASSED",
+      "durationMs": 7.130749999999978,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs"
+      ],
+      "observedNames": [
+        "publishes exact schedule formula values and provenance to the research database"
+      ]
+    },
+    {
+      "testId": "operating-schedule-project-fixture-proof",
+      "path": "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs",
+      "name": "pins the project-owned schedule fixture separately from USNO evidence",
+      "manifestPath": "scripts/research/operational-savings/adapters/operating-schedule/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.2797909999999888,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs"
+      ],
+      "observedNames": [
+        "pins the project-owned schedule fixture separately from USNO evidence"
+      ]
+    },
+    {
+      "testId": "operating-schedule-usno-astronomy-comparison-proof",
+      "path": "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs",
+      "name": "matches the official USNO sunrise and sunset within two minutes",
+      "manifestPath": "scripts/research/operational-savings/adapters/operating-schedule/proof.json",
+      "status": "PASSED",
+      "durationMs": 29.438333,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs"
+      ],
+      "observedNames": [
+        "matches the official USNO sunrise and sunset within two minutes"
+      ]
+    },
+    {
+      "testId": "operating-schedule-usno-checksum-mutation-proof",
+      "path": "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs",
+      "name": "fails closed when the pinned USNO artifact checksum changes",
+      "manifestPath": "scripts/research/operational-savings/adapters/operating-schedule/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.6248340000000212,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails closed when the pinned USNO artifact checksum changes"
+      ]
+    },
+    {
+      "testId": "operating-schedule-usno-schema-mutation-proof",
+      "path": "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs",
+      "name": "fails closed when the USNO schema loses a required phenomenon",
+      "manifestPath": "scripts/research/operational-savings/adapters/operating-schedule/proof.json",
+      "status": "PASSED",
+      "durationMs": 8.160459000000003,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails closed when the USNO schema loses a required phenomenon"
+      ]
+    },
+    {
+      "testId": "operating-schedule-usno-schema-proof",
+      "path": "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs",
+      "name": "pins and publishes the official USNO GeoJSON schema",
+      "manifestPath": "scripts/research/operational-savings/adapters/operating-schedule/proof.json",
+      "status": "PASSED",
+      "durationMs": 1.1695839999999862,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs"
+      ],
+      "observedNames": [
+        "pins and publishes the official USNO GeoJSON schema"
+      ]
+    },
+    {
+      "testId": "pvwatts-publication-failure",
+      "path": "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs",
+      "name": "STD-PVWATTS-V8 rejects mixed model identity and offline publication violations",
+      "manifestPath": "scripts/research/operational-savings/adapters/pvwatts/process-proof.json",
+      "status": "PASSED",
+      "durationMs": 0.7542909999999949,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs"
+      ],
+      "observedNames": [
+        "STD-PVWATTS-V8 rejects mixed model identity and offline publication violations"
+      ]
+    },
+    {
+      "testId": "pvwatts-real-database-publication",
+      "path": "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs",
+      "name": "STD-PVWATTS-V8 publishes its pinned model identity, calculation, provenance, and exact formula selection",
+      "manifestPath": "scripts/research/operational-savings/adapters/pvwatts/process-proof.json",
+      "status": "PASSED",
+      "durationMs": 1.1811659999999904,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs"
+      ],
+      "observedNames": [
+        "STD-PVWATTS-V8 publishes its pinned model identity, calculation, provenance, and exact formula selection"
+      ]
+    },
+    {
+      "testId": "pvwatts-real-ssc-execution",
+      "path": "scripts/research/operational-savings/tests/ssc-models.test.mjs",
+      "name": "STD-PVWATTS-V8 executes a real pinned local SSC model deterministically",
+      "manifestPath": "scripts/research/operational-savings/adapters/pvwatts/process-proof.json",
+      "status": "PASSED",
+      "durationMs": 934.8286249999999,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/ssc-models.test.mjs"
+      ],
+      "observedNames": [
+        "STD-PVWATTS-V8 executes a real pinned local SSC model deterministically"
+      ]
+    },
+    {
+      "testId": "pvwatts-ssc-version-failure",
+      "path": "scripts/research/operational-savings/tests/ssc-models.test.mjs",
+      "name": "STD-PVWATTS-V8 rejects a caller model-version mismatch",
+      "manifestPath": "scripts/research/operational-savings/adapters/pvwatts/process-proof.json",
+      "status": "PASSED",
+      "durationMs": 158.56266700000015,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/ssc-models.test.mjs"
+      ],
+      "observedNames": [
+        "STD-PVWATTS-V8 rejects a caller model-version mismatch"
+      ]
+    },
+    {
+      "testId": "reopt-immutable-identity-failure-proof",
+      "path": "scripts/research/operational-savings/tests/reopt-source-real.test.mjs",
+      "name": "fails closed instead of rewriting immutable artifact or calculation identities",
+      "manifestPath": "scripts/research/operational-savings/adapters/reopt/proof.json",
+      "status": "PASSED",
+      "durationMs": 189.34675000000004,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/reopt-source-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails closed instead of rewriting immutable artifact or calculation identities"
+      ]
+    },
+    {
+      "testId": "reopt-offline-proof",
+      "path": "scripts/research/operational-savings/tests/reopt-source-real.test.mjs",
+      "name": "requires offline mode and never calls fetch",
+      "manifestPath": "scripts/research/operational-savings/adapters/reopt/proof.json",
+      "status": "PASSED",
+      "durationMs": 11.45141700000002,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/reopt-source-real.test.mjs"
+      ],
+      "observedNames": [
+        "requires offline mode and never calls fetch"
+      ]
+    },
+    {
+      "testId": "reopt-real-source-schema-proof",
+      "path": "scripts/research/operational-savings/tests/reopt-source-real.test.mjs",
+      "name": "publishes exact offline official, baseline, and proposed runs",
+      "manifestPath": "scripts/research/operational-savings/adapters/reopt/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.3937919999999906,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/reopt-source-real.test.mjs"
+      ],
+      "observedNames": [
+        "publishes exact offline official, baseline, and proposed runs"
+      ]
+    },
+    {
+      "testId": "reopt-run-evidence-failure-proof",
+      "path": "scripts/research/operational-savings/tests/reopt-source-real.test.mjs",
+      "name": "rejects mutated run evidence before database publication",
+      "manifestPath": "scripts/research/operational-savings/adapters/reopt/proof.json",
+      "status": "PASSED",
+      "durationMs": 17.279624999999953,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/reopt-source-real.test.mjs"
+      ],
+      "observedNames": [
+        "rejects mutated run evidence before database publication"
+      ]
+    },
+    {
+      "testId": "reopt-solar-input-boundary-failure-proof",
+      "path": "scripts/research/operational-savings/tests/reopt-source-real.test.mjs",
+      "name": "fails closed outside the exact solar-plus-storage input boundaries",
+      "manifestPath": "scripts/research/operational-savings/adapters/reopt/proof.json",
+      "status": "PASSED",
+      "durationMs": 2.698332999999991,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/reopt-source-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails closed outside the exact solar-plus-storage input boundaries"
+      ]
+    },
+    {
+      "testId": "reopt-solar-storage-publication-proof",
+      "path": "scripts/research/operational-savings/tests/reopt-source-real.test.mjs",
+      "name": "publishes the exact solar-plus-storage bill pair and provenance",
+      "manifestPath": "scripts/research/operational-savings/adapters/reopt/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.2789590000000146,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/reopt-source-real.test.mjs"
+      ],
+      "observedNames": [
+        "publishes the exact solar-plus-storage bill pair and provenance"
+      ]
+    },
+    {
+      "testId": "reopt-source-schema-failure-proof",
+      "path": "scripts/research/operational-savings/tests/reopt-source-real.test.mjs",
+      "name": "fails missing structs, missing result keys, and changed package identity",
+      "manifestPath": "scripts/research/operational-savings/adapters/reopt/proof.json",
+      "status": "PASSED",
+      "durationMs": 1.1656250000000057,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/reopt-source-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails missing structs, missing result keys, and changed package identity"
+      ]
+    },
+    {
+      "testId": "sam-solar-thermal-publication-failure",
+      "path": "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs",
+      "name": "STD-SAM-SOLAR-THERMAL rejects mixed model identity and offline publication violations",
+      "manifestPath": "scripts/research/operational-savings/adapters/sam-solar-thermal/process-proof.json",
+      "status": "PASSED",
+      "durationMs": 0.31133299999999053,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs"
+      ],
+      "observedNames": [
+        "STD-SAM-SOLAR-THERMAL rejects mixed model identity and offline publication violations"
+      ]
+    },
+    {
+      "testId": "sam-solar-thermal-real-database-publication",
+      "path": "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs",
+      "name": "STD-SAM-SOLAR-THERMAL publishes its pinned model identity, calculation, provenance, and exact formula selection",
+      "manifestPath": "scripts/research/operational-savings/adapters/sam-solar-thermal/process-proof.json",
+      "status": "PASSED",
+      "durationMs": 0.2633750000000248,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs"
+      ],
+      "observedNames": [
+        "STD-SAM-SOLAR-THERMAL publishes its pinned model identity, calculation, provenance, and exact formula selection"
+      ]
+    },
+    {
+      "testId": "sam-solar-thermal-real-ssc-execution",
+      "path": "scripts/research/operational-savings/tests/ssc-models.test.mjs",
+      "name": "STD-SAM-SOLAR-THERMAL executes a real pinned local SSC model deterministically",
+      "manifestPath": "scripts/research/operational-savings/adapters/sam-solar-thermal/process-proof.json",
+      "status": "PASSED",
+      "durationMs": 548.1249579999999,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/ssc-models.test.mjs"
+      ],
+      "observedNames": [
+        "STD-SAM-SOLAR-THERMAL executes a real pinned local SSC model deterministically"
+      ]
+    },
+    {
+      "testId": "sam-solar-thermal-ssc-version-failure",
+      "path": "scripts/research/operational-savings/tests/ssc-models.test.mjs",
+      "name": "STD-SAM-SOLAR-THERMAL rejects a caller model-version mismatch",
+      "manifestPath": "scripts/research/operational-savings/adapters/sam-solar-thermal/process-proof.json",
+      "status": "PASSED",
+      "durationMs": 158.69400000000041,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/ssc-models.test.mjs"
+      ],
+      "observedNames": [
+        "STD-SAM-SOLAR-THERMAL rejects a caller model-version mismatch"
+      ]
+    },
+    {
+      "testId": "scout-market-scope-failure-proof",
+      "path": "scripts/research/operational-savings/tests/scout-real.test.mjs",
+      "name": "rejects incompatible markets, unsupported units, and missing schema fields",
+      "manifestPath": "scripts/research/operational-savings/adapters/scout/proof.json",
+      "status": "PASSED",
+      "durationMs": 10.206708000000049,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/scout-real.test.mjs"
+      ],
+      "observedNames": [
+        "rejects incompatible markets, unsupported units, and missing schema fields"
+      ]
+    },
+    {
+      "testId": "scout-offline-crosswalk-proof",
+      "path": "scripts/research/operational-savings/tests/scout-real.test.mjs",
+      "name": "requires offline mode and an independently reviewed crosswalk",
+      "manifestPath": "scripts/research/operational-savings/adapters/scout/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.38270900000003394,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/scout-real.test.mjs"
+      ],
+      "observedNames": [
+        "requires offline mode and an independently reviewed crosswalk"
+      ]
+    },
+    {
+      "testId": "scout-pinned-source-gap-audit",
+      "path": "scripts/research/operational-savings/tests/scout-real.test.mjs",
+      "name": "proves the pinned source inventory cannot supply ITC-05 or ITC-11",
+      "manifestPath": "scripts/research/operational-savings/adapters/scout/proof.json",
+      "status": "PASSED",
+      "durationMs": 12.615542000000005,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/scout-real.test.mjs"
+      ],
+      "observedNames": [
+        "proves the pinned source inventory cannot supply ITC-05 or ITC-11"
+      ]
+    },
+    {
+      "testId": "scout-prepared-output-mutation-proof",
+      "path": "scripts/research/operational-savings/tests/scout-real.test.mjs",
+      "name": "rejects mixed commits, altered outputs, and prepared-value mutations",
+      "manifestPath": "scripts/research/operational-savings/adapters/scout/proof.json",
+      "status": "PASSED",
+      "durationMs": 14.364708000000007,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/scout-real.test.mjs"
+      ],
+      "observedNames": [
+        "rejects mixed commits, altered outputs, and prepared-value mutations"
+      ]
+    },
+    {
+      "testId": "scout-real-commercial-lighting-preparation-proof",
+      "path": "scripts/research/operational-savings/tests/scout-real.test.mjs",
+      "name": "maps only an exact prepared Scout market to the ITC-14 formula term",
+      "manifestPath": "scripts/research/operational-savings/adapters/scout/proof.json",
+      "status": "PASSED",
+      "durationMs": 1.1188750000000027,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/scout-real.test.mjs"
+      ],
+      "observedNames": [
+        "maps only an exact prepared Scout market to the ITC-14 formula term"
+      ]
+    },
+    {
+      "testId": "watersense-ci-cooling-tower-unsupported-proof",
+      "path": "scripts/research/operational-savings/tests/watersense-ci-real.test.mjs",
+      "name": "retains cooling-tower measurements and the absent numeric equation as blockers",
+      "manifestPath": "scripts/research/operational-savings/adapters/watersense-ci/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.15745799999999122,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/watersense-ci-real.test.mjs"
+      ],
+      "observedNames": [
+        "retains cooling-tower measurements and the absent numeric equation as blockers"
+      ]
+    },
+    {
+      "testId": "watersense-ci-native-unit-failure-proof",
+      "path": "scripts/research/operational-savings/tests/watersense-ci-real.test.mjs",
+      "name": "fails closed on a mutated native unit contract",
+      "manifestPath": "scripts/research/operational-savings/adapters/watersense-ci/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.6224170000000129,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/watersense-ci-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails closed on a mutated native unit contract"
+      ]
+    },
+    {
+      "testId": "watersense-ci-offline-proof",
+      "path": "scripts/research/operational-savings/tests/watersense-ci-real.test.mjs",
+      "name": "requires the offline runtime guard",
+      "manifestPath": "scripts/research/operational-savings/adapters/watersense-ci/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.09437500000001364,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/watersense-ci-real.test.mjs"
+      ],
+      "observedNames": [
+        "requires the offline runtime guard"
+      ]
+    },
+    {
+      "testId": "watersense-ci-real-workbook-proof",
+      "path": "scripts/research/operational-savings/tests/watersense-ci-real.test.mjs",
+      "name": "executes the measured flow-duration method and reaches both ITC-35 terms",
+      "manifestPath": "scripts/research/operational-savings/adapters/watersense-ci/proof.json",
+      "status": "PASSED",
+      "durationMs": 1.063333,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/watersense-ci-real.test.mjs"
+      ],
+      "observedNames": [
+        "executes the measured flow-duration method and reaches both ITC-35 terms"
+      ]
+    },
+    {
+      "testId": "watersense-fixtures-access-boundary-proof",
+      "path": "scripts/research/operational-savings/tests/watersense-fixtures-operator.test.mjs",
+      "name": "pins the repository operator-import contract but not a product schema",
+      "manifestPath": "scripts/research/operational-savings/adapters/watersense-fixtures/proof.json",
+      "status": "PASSED",
+      "durationMs": 1.1847080000000005,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/watersense-fixtures-operator.test.mjs"
+      ],
+      "observedNames": [
+        "pins the repository operator-import contract but not a product schema"
+      ]
+    },
+    {
+      "testId": "watersense-fixtures-acquisition-path-failure-proof",
+      "path": "scripts/research/operational-savings/tests/watersense-fixtures-operator.test.mjs",
+      "name": "rejects secret-derived or guessed acquisition paths",
+      "manifestPath": "scripts/research/operational-savings/adapters/watersense-fixtures/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.5834169999999972,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/watersense-fixtures-operator.test.mjs"
+      ],
+      "observedNames": [
+        "rejects secret-derived or guessed acquisition paths"
+      ]
+    },
+    {
+      "testId": "watersense-fixtures-operator-contract",
+      "path": "scripts/research/operational-savings/tests/watersense-fixtures-operator.test.mjs",
+      "name": "rejects incomplete mappings and unsupported unit claims",
+      "manifestPath": "scripts/research/operational-savings/adapters/watersense-fixtures/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.15183300000001054,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/watersense-fixtures-operator.test.mjs"
+      ],
+      "observedNames": [
+        "rejects incomplete mappings and unsupported unit claims"
+      ]
+    },
+    {
+      "testId": "watersense-landscape-header-failure-proof",
+      "path": "scripts/research/operational-savings/tests/watersense-landscape-real.test.mjs",
+      "name": "fails closed when an observed native header drifts",
+      "manifestPath": "scripts/research/operational-savings/adapters/watersense-landscape/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.5512499999999818,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/watersense-landscape-real.test.mjs"
+      ],
+      "observedNames": [
+        "fails closed when an observed native header drifts"
+      ]
+    },
+    {
+      "testId": "watersense-landscape-input-failure-proof",
+      "path": "scripts/research/operational-savings/tests/watersense-landscape-real.test.mjs",
+      "name": "rejects missing Version 2.0 inputs and incompatible project units",
+      "manifestPath": "scripts/research/operational-savings/adapters/watersense-landscape/proof.json",
+      "status": "PASSED",
+      "durationMs": 0.29624999999987267,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/watersense-landscape-real.test.mjs"
+      ],
+      "observedNames": [
+        "rejects missing Version 2.0 inputs and incompatible project units"
+      ]
+    },
+    {
+      "testId": "watersense-landscape-real-workbook-proof",
+      "path": "scripts/research/operational-savings/tests/watersense-landscape-real.test.mjs",
+      "name": "executes the exact reviewed Version 2.0 method and reaches both ITC-34 terms",
+      "manifestPath": "scripts/research/operational-savings/adapters/watersense-landscape/proof.json",
+      "status": "PASSED",
+      "durationMs": 6.521042000000307,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/watersense-landscape-real.test.mjs"
+      ],
+      "observedNames": [
+        "executes the exact reviewed Version 2.0 method and reaches both ITC-34 terms"
+      ]
+    },
+    {
+      "testId": "wind-sam-publication-failure",
+      "path": "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs",
+      "name": "STD-WIND-SAM rejects mixed model identity and offline publication violations",
+      "manifestPath": "scripts/research/operational-savings/adapters/wind-sam/process-proof.json",
+      "status": "PASSED",
+      "durationMs": 0.3725420000000099,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs"
+      ],
+      "observedNames": [
+        "STD-WIND-SAM rejects mixed model identity and offline publication violations"
+      ]
+    },
+    {
+      "testId": "wind-sam-real-database-publication",
+      "path": "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs",
+      "name": "STD-WIND-SAM publishes its pinned model identity, calculation, provenance, and exact formula selection",
+      "manifestPath": "scripts/research/operational-savings/adapters/wind-sam/process-proof.json",
+      "status": "PASSED",
+      "durationMs": 0.24287499999999795,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs"
+      ],
+      "observedNames": [
+        "STD-WIND-SAM publishes its pinned model identity, calculation, provenance, and exact formula selection"
+      ]
+    },
+    {
+      "testId": "wind-sam-real-ssc-execution",
+      "path": "scripts/research/operational-savings/tests/ssc-models.test.mjs",
+      "name": "STD-WIND-SAM executes a real pinned local SSC model deterministically",
+      "manifestPath": "scripts/research/operational-savings/adapters/wind-sam/process-proof.json",
+      "status": "PASSED",
+      "durationMs": 501.419083,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/ssc-models.test.mjs"
+      ],
+      "observedNames": [
+        "STD-WIND-SAM executes a real pinned local SSC model deterministically"
+      ]
+    },
+    {
+      "testId": "wind-sam-ssc-version-failure",
+      "path": "scripts/research/operational-savings/tests/ssc-models.test.mjs",
+      "name": "STD-WIND-SAM rejects a caller model-version mismatch",
+      "manifestPath": "scripts/research/operational-savings/adapters/wind-sam/process-proof.json",
+      "status": "PASSED",
+      "durationMs": 158.80954199999996,
+      "observedPaths": [
+        "scripts/research/operational-savings/tests/ssc-models.test.mjs"
+      ],
+      "observedNames": [
+        "STD-WIND-SAM rejects a caller model-version mismatch"
+      ]
+    }
+  ],
+  "runId": "local-content-f938a4fb925a69248c15b75710f83fb679001a5acc439be1942e7db96ad86020",
+  "recordedAt": "2026-07-26T04:47:33.321Z",
+  "recordContentSha256": "edcf0ecacbaf8be7bf9b7e0c761ebb165cb0492a58360c3ad7b20101166a81c3"
+}

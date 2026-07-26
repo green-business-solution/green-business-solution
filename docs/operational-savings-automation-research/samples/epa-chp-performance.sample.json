@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "operational-savings/research-sample-v1",
+  "standardId": "STD-EPA-CHP-PERFORMANCE",
+  "source": "CHP technology catalog and screening methods",
+  "sourceVersion": "Catalog artifact downloaded 2026-07-23; technology page current February 2026",
+  "observedArtifact": "EPA CHP catalog PDF",
+  "observedArtifactSha256": "eccea396f5bcc5c86c16a75b8d41b1a4a7b43df064b7363ee7054d53063f0d09",
+  "evidenceBoundary": "Official EPA CHP method equation",
+  "sampleIsFullSourceArtifact": false,
+  "prototype": {
+    "operation": "formula",
+    "sourceEvidence": "Official EPA CHP method equation",
+    "formula": "chpFuelAndUsefulHeat",
+    "inputs": {
+      "electricGenerationKwh": 100000,
+      "electricEfficiency": 0.35,
+      "totalEfficiency": 0.75
+    },
+    "expected": {
+      "inputFuelMmbtu": 974.8571428571429,
+      "usefulHeatMmbtu": 389.9428571428572
+    },
+    "unit": "MMBtu/year"
+  },
+  "offlineResult": {
+    "kind": "model_result_set",
+    "standardId": "STD-EPA-CHP-PERFORMANCE",
+    "value": {
+      "inputFuelMmbtu": 974.8571428571429,
+      "usefulHeatMmbtu": 389.9428571428572
+    },
+    "unit": "MMBtu/year",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
+    "source": "CHP technology catalog and screening methods",
+    "sourceVersion": "Catalog artifact downloaded 2026-07-23; technology page current February 2026",
+    "sourceArtifact": "EPA CHP catalog PDF",
+    "filters": {
+      "electricGenerationKwh": 100000,
+      "electricEfficiency": 0.35,
+      "totalEfficiency": 0.75
+    },
+    "eligiblePopulation": [],
+    "sampleSize": 0,
+    "selectionRule": "PINNED_LOCAL_FORMULA:chpFuelAndUsefulHeat",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
+    "warnings": [],
+    "provenance": {
+      "sourceEvidence": "Official EPA CHP method equation",
+      "sha256": "d041c12a0e214b7e7fc6bf88e458e12980be29472ddf66dd222ba095de63b4d7"
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "operational-savings/research-sample-v1",
+  "standardId": "STD-COMSTOCK-ANNUAL-DELTA",
+  "source": "ComStock 2025 Release 3",
+  "sourceVersion": "2025 Release 3",
+  "observedArtifact": "upgrades_lookup.json",
+  "observedArtifactSha256": "c3ba607e650d3b78cd86f08ef3cd6e632b7e622797a970cd8f16812e41a1ce5a",
+  "evidenceBoundary": "Downloaded official Release 3 upgrades_lookup.json",
+  "sampleIsFullSourceArtifact": false,
+  "prototype": {
+    "operation": "exactLookup",
+    "sourceEvidence": "Downloaded official Release 3 upgrades_lookup.json",
+    "query": {
+      "upgradeId": "1"
+    },
+    "records": [
+      {
+        "upgradeId": "0",
+        "name": "Baseline"
+      },
+      {
+        "upgradeId": "1",
+        "name": "Variable Speed HP RTU, Electric Backup"
+      },
+      {
+        "upgradeId": "2",
+        "name": "Variable Speed HP RTU, Original Heating Fuel Backup"
+      }
+    ],
+    "expected": {
+      "name": "Variable Speed HP RTU, Electric Backup"
+    },
+    "unit": "record"
+  },
+  "offlineResult": {
+    "kind": "product_record",
+    "standardId": "STD-COMSTOCK-ANNUAL-DELTA",
+    "value": {
+      "upgradeId": "1",
+      "name": "Variable Speed HP RTU, Electric Backup"
+    },
+    "unit": "record",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
+    "source": "ComStock 2025 Release 3",
+    "sourceVersion": "2025 Release 3",
+    "sourceArtifact": "upgrades_lookup.json",
+    "filters": {
+      "upgradeId": "1"
+    },
+    "eligiblePopulation": [
+      {
+        "upgradeId": "1",
+        "name": "Variable Speed HP RTU, Electric Backup"
+      }
+    ],
+    "sampleSize": 1,
+    "selectionRule": "EXACT_NORMALIZED_IDENTIFIER",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
+    "warnings": [],
+    "provenance": {
+      "sourceEvidence": "Downloaded official Release 3 upgrades_lookup.json",
+      "sha256": "a029f2cda8ae089a4c8aee5755995e51f463aa026ffabc8e16bd4732e5d0c5f0"
+    }
+  }
+}

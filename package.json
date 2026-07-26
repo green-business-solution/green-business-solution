@@ -55,6 +55,11 @@
     "matching:low-source-confidence-queue": "node scripts/write-low-source-confidence-opportunity-queue.mjs",
     "matching:sample": "node scripts/run-sample-matching.mjs",
     "operational-savings:profile-fixture": "node scripts/write-normalized-profile-path-fixture.mjs",
+    "operational-savings:test:portable": "OS_RESEARCH_REAL_PROOFS=portable vitest run scripts/research/operational-savings/tests --config vite.config.ts",
+    "operational-savings:test:real": "node scripts/research/operational-savings/run-real-test-suite.mjs",
+    "operational-savings:proof:attest": "node scripts/research/operational-savings/run-real-test-suite.mjs --attest",
+    "operational-savings:test:containers": "node scripts/research/operational-savings/verify-model-containers.mjs",
+    "operational-savings:database:real": "node scripts/research/operational-savings/run-real-database.mjs",
     "matching:sample-opportunity-audit": "node scripts/audit-sample-matching-opportunity-data.mjs",
     "application-prep:first10": "node scripts/application-prep-first10.mjs",
     "matching:test-case-utility-prompt": "node scripts/write-sample-test-case-utility-data-prompt.mjs",
@@ -109,6 +114,10 @@
     "@aws-sdk/credential-providers": "^3.1073.0",
     "@aws-sdk/lib-dynamodb": "^3.1073.0",
     "@aws-sdk/s3-request-presigner": "^3.1075.0",
+    "@duckdb/node-api": "^1.5.5-r.1",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^5.0.0",
     "concurrently": "^10.0.3",
     "express": "^5.2.1",
@@ -119,8 +128,6 @@
     "serverless-http": "^4.0.0",
     "typescript": "^5.8.0",
     "vite": "^7.0.0",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
     "vitest": "^3.0.0"
   }
 }

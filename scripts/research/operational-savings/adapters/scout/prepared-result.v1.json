@@ -1,0 +1,140 @@
+{
+  "schemaVersion": "operational-savings/scout-preparation-result-v1",
+  "source": {
+    "repositoryUrl": "https://github.com/trynthink/scout",
+    "commitSha": "72bcf419eb1cb37379f163563344b0ec61507fd3",
+    "ecmRelativePath": "ecm_definitions/(C) 90.1 Lighting.json",
+    "ecmSha256": "f58f1dec2e3b4693339eae59a73cf018b637a5c34400ff6c62dae189cfe18baa",
+    "schemaRelativePath": "ecm_definitions/ecm_schema.json",
+    "schemaSha256": "d28cdc4fd33c65a03a05c0c08e5e222b1eaf26bb081670c5e081e78f7d1b07ed",
+    "entryPointRelativePath": "scout/ecm_prep.py",
+    "entryPointSha256": "639134208b7368e7a9cafe9975b8205ed8fe4b864cce10368167557cd5831848",
+    "configSchemaRelativePath": "scout/supporting_data/config_schema.yml",
+    "configSchemaSha256": "1e6eff0552e7f88ed276950eb77551089c283734bb45caf00174c8be1e9405c8"
+  },
+  "execution": {
+    "entryPoint": "scout/ecm_prep.py",
+    "arguments": [
+      "--ecm_files",
+      "(C) 90.1 Lighting",
+      "--alt_regions",
+      "AIA",
+      "--no_scnd_lgt"
+    ],
+    "workingTreeState": "DETACHED_CLEAN_PINNED_COMMIT",
+    "networkMode": "OS_SANDBOX_DENY_NETWORK",
+    "python": "3.12.13",
+    "dependencies": {
+      "jsonschema": "4.26.0",
+      "numpy": "1.26.4",
+      "orjson": "3.11.9",
+      "pandas": "3.0.5",
+      "pyyaml": "6.0.3",
+      "scipy": "1.17.1"
+    },
+    "outputRelativePath": "generated/ecm_prep.json",
+    "outputByteSize": 599004,
+    "outputSha256": "f7b428a2e66d90b4bfc4cf6272d85f52b1aea88229ff3c3fb53e33f536eccf50",
+    "independentReplayCount": 2,
+    "independentReplayOutputSha256": "f7b428a2e66d90b4bfc4cf6272d85f52b1aea88229ff3c3fb53e33f536eccf50"
+  },
+  "preparedMeasure": {
+    "name": "(C) 90.1 Lighting",
+    "measureType": "add-on",
+    "climateZones": [
+      "AIA_CZ1",
+      "AIA_CZ2",
+      "AIA_CZ3",
+      "AIA_CZ4",
+      "AIA_CZ5"
+    ],
+    "buildingTypes": [
+      "assembly",
+      "education",
+      "food sales",
+      "food service",
+      "health care",
+      "lodging",
+      "large office",
+      "small office",
+      "mercantile/service",
+      "warehouse"
+    ],
+    "structureTypes": [
+      "new",
+      "existing"
+    ],
+    "endUse": "lighting",
+    "fuelType": "electricity",
+    "energyEfficiencyUnit": "relative savings (constant)",
+    "reductionFractions": {
+      "assembly": 0.3,
+      "education": 0.2,
+      "food sales": 0,
+      "food service": 0.2,
+      "health care": 0.1,
+      "lodging": 0.2,
+      "large office": 0.2,
+      "small office": 0.2,
+      "mercantile/service": 0.2,
+      "warehouse": 0.3
+    },
+    "installedCost2020UsdPerFt2": {
+      "assembly": 2,
+      "education": 2,
+      "food sales": 0,
+      "food service": 1.2,
+      "health care": 2,
+      "lodging": 0.7,
+      "large office": 1.8,
+      "small office": 1.8,
+      "mercantile/service": 1.2,
+      "warehouse": 2
+    },
+    "productLifetimeYears": 10
+  },
+  "annualModelResults": [
+    {
+      "adoptionScenario": "Technical potential",
+      "year": 2026,
+      "baselineEnergyMmbtu": 1186769465.363136,
+      "efficientEnergyMmbtu": 934880631.317625,
+      "aggregateReductionFraction": 0.2122474847871455
+    },
+    {
+      "adoptionScenario": "Technical potential",
+      "year": 2030,
+      "baselineEnergyMmbtu": 1047885368.3346288,
+      "efficientEnergyMmbtu": 825149603.0763531,
+      "aggregateReductionFraction": 0.2125573769698328
+    },
+    {
+      "adoptionScenario": "Technical potential",
+      "year": 2050,
+      "baselineEnergyMmbtu": 769096048.4047761,
+      "efficientEnergyMmbtu": 603637695.9110348,
+      "aggregateReductionFraction": 0.21513353609985053
+    },
+    {
+      "adoptionScenario": "Max adoption potential",
+      "year": 2026,
+      "baselineEnergyMmbtu": 1186769465.363136,
+      "efficientEnergyMmbtu": 1155705148.020538,
+      "aggregateReductionFraction": 0.02617552797677747
+    },
+    {
+      "adoptionScenario": "Max adoption potential",
+      "year": 2030,
+      "baselineEnergyMmbtu": 1047885368.3346288,
+      "efficientEnergyMmbtu": 915676794.9491652,
+      "aggregateReductionFraction": 0.1261670191994173
+    },
+    {
+      "adoptionScenario": "Max adoption potential",
+      "year": 2050,
+      "baselineEnergyMmbtu": 769096048.4047761,
+      "efficientEnergyMmbtu": 603637695.9110348,
+      "aggregateReductionFraction": 0.21513353609985053
+    }
+  ]
+}

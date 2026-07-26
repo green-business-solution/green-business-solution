@@ -1,0 +1,397 @@
+{
+  "schemaVersion": "operational-savings/real-proof-manifest-v1",
+  "standardId": "STD-EPA-CHP-PERFORMANCE",
+  "slug": "epa-chp",
+  "adapterPath": "scripts/research/operational-savings/adapters/epa-chp/run.mjs",
+  "artifacts": [
+    {
+      "artifactId": "artifact:epa-chp-catalog:2017-09",
+      "sourceUrl": "https://www.epa.gov/chp/catalog-chp-technologies",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/epa-chp-catalog.pdf",
+      "release": "September 2017",
+      "sha256": "eccea396f5bcc5c86c16a75b8d41b1a4a7b43df064b7363ee7054d53063f0d09",
+      "sizeBytes": 4135792,
+      "acquisitionMode": "PUBLIC_PDF_DOWNLOAD",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:epa-biomass-chp-catalog:v1.1",
+      "sourceUrl": "https://www.epa.gov/sites/default/files/2015-07/documents/biomass_combined_heat_and_power_catalog_of_technologies_v.1.1.pdf",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/epa-biomass-chp-catalog-v1.1.pdf",
+      "release": "Biomass CHP Catalog v1.1",
+      "sha256": "fbb7af3824eaf83a01ecb97aa070cc250fcdc3cb9702cc25f72061720ce5c959",
+      "sizeBytes": 5817000,
+      "acquisitionMode": "PUBLIC_PDF_DOWNLOAD",
+      "acquiredAt": "2026-07-24T19:14:05.000Z",
+      "official": true
+    }
+  ],
+  "observedSchemas": [
+    {
+      "schemaId": "schema:epa-chp-catalog:tables-2-2-5-2-and-6-3",
+      "artifactId": "artifact:epa-chp-catalog:2017-09",
+      "format": "PDF_TABLES",
+      "extractor": "scripts/research/operational-savings/adapters/epa-chp/run.mjs",
+      "requiredNativeFields": [
+        "Baseload Electric Capacity (kW)",
+        "Net Electricity Capacity (kW)",
+        "Electrical Efficiency (%), HHV",
+        "Electric Efficiency (%), HHV",
+        "Total Efficiency [%)",
+        "Total CHP Efficiency (%), HHV [4]",
+        "Power / Heat Ratio",
+        "Power/Heat Ratio [5]",
+        "Fuel Cell Type",
+        "Nominal Electricity Capacity (kW)",
+        "Net Electrical Efficiency (%), HHV)",
+        "Fuel Input (MMBtu/hr), HHV",
+        "Total CHP Efficiency (%), HHV",
+        "Power to Heat Ratio"
+      ]
+    },
+    {
+      "schemaId": "schema:epa-biomass-chp-catalog:table-7-15",
+      "artifactId": "artifact:epa-biomass-chp-catalog:v1.1",
+      "format": "PDF_TABLE",
+      "extractor": "scripts/research/operational-savings/adapters/epa-chp/run.mjs",
+      "requiredNativeFields": [
+        "Equipment type",
+        "Commercialization status",
+        "Equipment size (kW)",
+        "Thermal output (Btu/hr)",
+        "Power to heat ratio",
+        "Biomass fuel use (MMBtu/hr)",
+        "Electric efficiency (est.) (%)",
+        "CHP efficiency (%)",
+        "Plant operating factor"
+      ]
+    }
+  ],
+  "normalizedTargets": [
+    "chp_catalog_performance",
+    "biomass_chp_performance",
+    "calculation_runs",
+    "selected_values",
+    "selected_value_provenance"
+  ],
+  "tests": [
+    {
+      "testId": "epa-chp-itc20-formula-proof",
+      "path": "scripts/research/operational-savings/tests/epa-chp-real.test.mjs",
+      "name": "maps an exact fuel-cell table row to every ITC-20 formula term",
+      "kind": "END_TO_END_REAL",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:epa-chp-catalog:2017-09"
+      ],
+      "sourceNativeFields": [
+        "Fuel Cell Type",
+        "Nominal Electricity Capacity (kW)",
+        "Net Electrical Efficiency (%), HHV)",
+        "Fuel Input (MMBtu/hr), HHV",
+        "Total CHP Efficiency (%), HHV",
+        "Power to Heat Ratio"
+      ]
+    },
+    {
+      "testId": "epa-chp-itc21-formula-proof",
+      "path": "scripts/research/operational-savings/tests/epa-chp-real.test.mjs",
+      "name": "reaches every ITC-21 formula term from one exact real system",
+      "kind": "END_TO_END_REAL",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:epa-chp-catalog:2017-09"
+      ],
+      "sourceNativeFields": [
+        "Baseload Electric Capacity (kW)",
+        "Electrical Efficiency (%), HHV",
+        "Total Efficiency [%)",
+        "Power / Heat Ratio"
+      ]
+    },
+    {
+      "testId": "epa-chp-itc26-formula-proof",
+      "path": "scripts/research/operational-savings/tests/epa-chp-real.test.mjs",
+      "name": "maps the same exact real system to the ITC-26 microgrid balance",
+      "kind": "END_TO_END_REAL",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:epa-chp-catalog:2017-09"
+      ],
+      "sourceNativeFields": [
+        "Baseload Electric Capacity (kW)",
+        "Electrical Efficiency (%), HHV",
+        "Total Efficiency [%)",
+        "Power / Heat Ratio"
+      ]
+    },
+    {
+      "testId": "epa-chp-real-catalog-proof",
+      "path": "scripts/research/operational-savings/tests/epa-chp-real.test.mjs",
+      "name": "publishes an exact real CHP output set and provenance",
+      "kind": "DATABASE_PUBLICATION",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:epa-chp-catalog:2017-09"
+      ],
+      "sourceNativeFields": [
+        "Baseload Electric Capacity (kW)",
+        "Electrical Efficiency (%), HHV",
+        "Total Efficiency [%)",
+        "Power / Heat Ratio",
+        "Fuel Cell Type",
+        "Nominal Electricity Capacity (kW)",
+        "Net Electrical Efficiency (%), HHV)",
+        "Fuel Input (MMBtu/hr), HHV",
+        "Total CHP Efficiency (%), HHV",
+        "Power to Heat Ratio"
+      ]
+    },
+    {
+      "testId": "epa-chp-required-row-failure-proof",
+      "path": "scripts/research/operational-savings/tests/epa-chp-real.test.mjs",
+      "name": "fails closed when an actual required table row is missing",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:epa-chp-catalog:2017-09"
+      ],
+      "mutationCases": [
+        "missing table row"
+      ]
+    },
+    {
+      "testId": "epa-biomass-chp-real-proof",
+      "path": "scripts/research/operational-savings/tests/epa-chp-real.test.mjs",
+      "name": "reaches every ITC-22 formula term from the official representative system",
+      "kind": "END_TO_END_REAL",
+      "networkMode": "DISABLED_AFTER_ACQUISITION",
+      "artifactIds": [
+        "artifact:epa-biomass-chp-catalog:v1.1"
+      ],
+      "sourceNativeFields": [
+        "Equipment type",
+        "Commercialization status",
+        "Equipment size (kW)",
+        "Thermal output (Btu/hr)",
+        "Power to heat ratio",
+        "Biomass fuel use (MMBtu/hr)",
+        "Electric efficiency (est.) (%)",
+        "CHP efficiency (%)",
+        "Plant operating factor"
+      ]
+    },
+    {
+      "testId": "epa-biomass-publication-proof",
+      "path": "scripts/research/operational-savings/tests/epa-chp-real.test.mjs",
+      "name": "publishes ITC-22 values with biomass-artifact provenance",
+      "kind": "DATABASE_PUBLICATION",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:epa-biomass-chp-catalog:v1.1"
+      ]
+    },
+    {
+      "testId": "epa-biomass-native-evidence-failure-proof",
+      "path": "scripts/research/operational-savings/tests/epa-chp-real.test.mjs",
+      "name": "fails closed when the biomass table loses native evidence",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:epa-biomass-chp-catalog:v1.1"
+      ],
+      "mutationCases": [
+        "missing biomass fuel input row"
+      ]
+    },
+    {
+      "testId": "epa-chp-offline-proof",
+      "path": "scripts/research/operational-savings/tests/epa-chp-real.test.mjs",
+      "name": "requires the offline guard",
+      "kind": "OFFLINE_EXECUTION",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:epa-chp-catalog:2017-09",
+        "artifact:epa-biomass-chp-catalog:v1.1"
+      ]
+    }
+  ],
+  "processClaims": [
+    {
+      "categoryId": "ITC-20",
+      "processKey": "epa_chp_performance",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:epa-chp-catalog:2017-09"
+      ],
+      "testIds": [
+        "epa-chp-itc20-formula-proof",
+        "epa-chp-required-row-failure-proof",
+        "epa-chp-offline-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "annual_generation": 1800000,
+        "added_fuel": 13200.000000000002
+      },
+      "formulaTerms": [
+        "annual_generation",
+        "added_fuel"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-21",
+      "processKey": "epa_chp_performance",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:epa-chp-catalog:2017-09"
+      ],
+      "testIds": [
+        "epa-chp-itc21-formula-proof",
+        "epa-chp-real-catalog-proof",
+        "epa-chp-required-row-failure-proof",
+        "epa-chp-offline-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "generation": 600000,
+        "CHP_input_fuel": 7582.222222222223,
+        "useful_heat": 4018.577777777778
+      },
+      "formulaTerms": [
+        "generation",
+        "CHP_input_fuel",
+        "useful_heat"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-22",
+      "processKey": "epa_chp_performance",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:epa-biomass-chp-catalog:v1.1"
+      ],
+      "testIds": [
+        "epa-biomass-chp-real-proof",
+        "epa-biomass-publication-proof",
+        "epa-biomass-native-evidence-failure-proof",
+        "epa-chp-offline-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "generation": 350400,
+        "scheduled_input_fuel": 686.784,
+        "useful_heat": 4204.8
+      },
+      "formulaTerms": [
+        "generation",
+        "scheduled_input_fuel",
+        "useful_heat"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-26",
+      "processKey": "epa_chp_performance",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:epa-chp-catalog:2017-09"
+      ],
+      "testIds": [
+        "epa-chp-itc26-formula-proof",
+        "epa-chp-required-row-failure-proof",
+        "epa-chp-offline-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "generation": 600000,
+        "input_fuel": 7582.222222222223,
+        "useful_heat": 4018.577777777778
+      },
+      "formulaTerms": [
+        "generation",
+        "input_fuel",
+        "useful_heat"
+      ],
+      "remainingBlocker": null
+    }
+  ],
+  "feasibility": "PARTIALLY_FEASIBLE",
+  "remainingBlockers": [
+    "Only exact full-load catalog and representative table systems are proved.",
+    "The Biomass CHP Catalog explicitly labels the proved Table 7-15 system speculative and reports no commercial installations.",
+    "Project fuel availability, site derates, part-load operation, thermal and electric coincidence, and other technology tables remain unresolved."
+  ]
+}

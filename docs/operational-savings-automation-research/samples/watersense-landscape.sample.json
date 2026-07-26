@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "operational-savings/research-sample-v1",
+  "standardId": "STD-WATERSENSE-LANDSCAPE",
+  "source": "WaterSense Water Budget Tool Version 2.0",
+  "sourceVersion": "Water Budget Tool Version 2.0",
+  "observedArtifact": "ws-data-information-et-rainfall.xlsx",
+  "observedArtifactSha256": "77afb36cff3dcb77eacad4db34a8dba44bd48eb24485c886958afd58e1846273",
+  "evidenceBoundary": "Official Version 2.0 method scope and downloaded climate workbook",
+  "sampleIsFullSourceArtifact": false,
+  "prototype": {
+    "operation": "formula",
+    "sourceEvidence": "Official Version 2.0 method scope and downloaded climate workbook",
+    "formula": "landscapeAllowance",
+    "inputs": {
+      "etoInches": 50,
+      "landscapeAreaFt2": 1000,
+      "landscapeCoefficient": 0.5,
+      "irrigationEfficiency": 0.75
+    },
+    "expected": {
+      "gallons": 20766.666666666668
+    },
+    "unit": "gallons"
+  },
+  "offlineResult": {
+    "kind": "model_result_set",
+    "standardId": "STD-WATERSENSE-LANDSCAPE",
+    "value": {
+      "gallons": 20766.666666666668
+    },
+    "unit": "gallons",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
+    "source": "WaterSense Water Budget Tool Version 2.0",
+    "sourceVersion": "Water Budget Tool Version 2.0",
+    "sourceArtifact": "ws-data-information-et-rainfall.xlsx",
+    "filters": {
+      "etoInches": 50,
+      "landscapeAreaFt2": 1000,
+      "landscapeCoefficient": 0.5,
+      "irrigationEfficiency": 0.75
+    },
+    "eligiblePopulation": [],
+    "sampleSize": 0,
+    "selectionRule": "PINNED_LOCAL_FORMULA:landscapeAllowance",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
+    "warnings": [],
+    "provenance": {
+      "sourceEvidence": "Official Version 2.0 method scope and downloaded climate workbook",
+      "sha256": "85df52831f10cb36de9d7d5c59a71ddd82e45a2fe4215b8157772fe54b4317f8"
+    }
+  }
+}

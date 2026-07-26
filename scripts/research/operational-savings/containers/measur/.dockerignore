@@ -1,0 +1,7 @@
+*
+!.build/
+!.build/amo-tools-suite.tar
+!.build/compressed-air.cpp
+!.build/equipment.cpp
+!Dockerfile
+!entrypoint.sh

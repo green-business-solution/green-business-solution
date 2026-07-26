@@ -1,0 +1,86 @@
+{
+  "schemaVersion": "retrofi/reopt-storage-proof-v1",
+  "year": 2023,
+  "site": {
+    "latitude": 41.8781,
+    "longitude": -87.6298
+  },
+  "loadProfile": {
+    "construction": "repeat-hour-of-day-for-365-days",
+    "hourlyKw": [
+      30,
+      28,
+      27,
+      27,
+      28,
+      32,
+      38,
+      44,
+      50,
+      53,
+      55,
+      56,
+      57,
+      57,
+      58,
+      65,
+      80,
+      85,
+      82,
+      72,
+      58,
+      48,
+      40,
+      34
+    ]
+  },
+  "tariff": {
+    "construction": "repeat-hour-of-day-for-365-days",
+    "hourlyEnergyRateUsdPerKwh": [
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.3,
+      0.3,
+      0.3,
+      0.3,
+      0.3,
+      0.1,
+      0.1,
+      0.1
+    ],
+    "monthlyDemandRateUsdPerKw": [
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18,
+      18
+    ]
+  },
+  "storage": {
+    "powerKw": 25,
+    "energyKwh": 50,
+    "socInitialFraction": 0.5,
+    "socMinimumFraction": 0.2
+  }
+}

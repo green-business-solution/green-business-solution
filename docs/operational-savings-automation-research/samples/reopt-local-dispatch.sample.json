@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "operational-savings/research-sample-v1",
+  "standardId": "STD-REOPT-LOCAL-DISPATCH",
+  "source": "REopt.jl",
+  "sourceVersion": "0.59.2, git commit f952cabdf3e60f6e88eef80bb7bc9e7e24bac643",
+  "observedArtifact": "test/scenarios and src/core/electric_tariff.jl",
+  "observedArtifactSha256": null,
+  "evidenceBoundary": "Inspected REopt tariff tests and result contract",
+  "sampleIsFullSourceArtifact": false,
+  "prototype": {
+    "operation": "formula",
+    "sourceEvidence": "Inspected REopt tariff tests and result contract",
+    "formula": "annualBillDelta",
+    "inputs": {
+      "baselineAnnualBillUsd": 12500,
+      "proposedAnnualBillUsd": 9700
+    },
+    "expected": {
+      "annualSavingsUsd": 2800
+    },
+    "unit": "USD/year"
+  },
+  "offlineResult": {
+    "kind": "model_result_set",
+    "standardId": "STD-REOPT-LOCAL-DISPATCH",
+    "value": {
+      "annualSavingsUsd": 2800
+    },
+    "unit": "USD/year",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
+    "source": "REopt.jl",
+    "sourceVersion": "0.59.2, git commit f952cabdf3e60f6e88eef80bb7bc9e7e24bac643",
+    "sourceArtifact": "test/scenarios and src/core/electric_tariff.jl",
+    "filters": {
+      "baselineAnnualBillUsd": 12500,
+      "proposedAnnualBillUsd": 9700
+    },
+    "eligiblePopulation": [],
+    "sampleSize": 0,
+    "selectionRule": "PINNED_LOCAL_FORMULA:annualBillDelta",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
+    "warnings": [],
+    "provenance": {
+      "sourceEvidence": "Inspected REopt tariff tests and result contract",
+      "sha256": "22c4c98ac1135fd0c45653f36cfd34de3150530af2d0de2a2a845bdd367010fb"
+    }
+  }
+}

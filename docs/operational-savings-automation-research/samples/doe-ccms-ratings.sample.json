@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "operational-savings/research-sample-v1",
+  "standardId": "STD-DOE-CCMS-RATINGS",
+  "source": "Compliance Certification Management System certification database",
+  "sourceVersion": "Current product-specific certification exports",
+  "observedArtifact": "HTTP 403 response from certification-data root",
+  "observedArtifactSha256": null,
+  "evidenceBoundary": "Direct official database probe",
+  "sampleIsFullSourceArtifact": false,
+  "prototype": {
+    "operation": "unavailable",
+    "sourceEvidence": "Direct official database probe",
+    "reasonCode": "HTTP_403_MANUAL_EXPORT_REQUIRED",
+    "expected": {
+      "available": false,
+      "reasonCode": "HTTP_403_MANUAL_EXPORT_REQUIRED"
+    },
+    "unit": "unavailable"
+  },
+  "offlineResult": {
+    "kind": "unavailable",
+    "standardId": "STD-DOE-CCMS-RATINGS",
+    "value": {
+      "available": false,
+      "reasonCode": "HTTP_403_MANUAL_EXPORT_REQUIRED"
+    },
+    "unit": "unavailable",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
+    "source": "Compliance Certification Management System certification database",
+    "sourceVersion": "Current product-specific certification exports",
+    "sourceArtifact": "HTTP 403 response from certification-data root",
+    "filters": {},
+    "eligiblePopulation": [],
+    "sampleSize": 0,
+    "selectionRule": "EXPLICIT_UNAVAILABLE_RESULT",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
+    "warnings": [
+      "HTTP_403_MANUAL_EXPORT_REQUIRED"
+    ],
+    "provenance": {
+      "sourceEvidence": "Direct official database probe",
+      "sha256": "e7f335daf58d9de1545f1789437a82c3a46be56779a5121f088cc23ee03ccc37"
+    }
+  }
+}

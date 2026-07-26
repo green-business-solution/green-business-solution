@@ -1,0 +1,181 @@
+{
+  "schemaVersion": "operational-savings/real-proof-manifest-v1",
+  "standardId": "STD-WATERSENSE-CI-OPERATIONS",
+  "slug": "watersense-ci",
+  "adapterPath": "scripts/research/operational-savings/adapters/watersense-ci/run.mjs",
+  "artifacts": [
+    {
+      "artifactId": "artifact:watersense-ci-operations:2012-10",
+      "sourceUrl": "https://www.epa.gov/sites/default/files/2017-02/ws-commercial-excel-writeable-tables.xlsx",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/watersense-ci-worksheets.xlsx",
+      "release": "WaterSense at Work writeable tables, October 2012",
+      "sha256": "f69facc89beb2073fdaba88206d20e32151b2f30c53a7f21f7981eeab8c0ab52",
+      "sizeBytes": 89786,
+      "acquisitionMode": "PUBLIC_XLSX_DOWNLOAD",
+      "official": true
+    }
+  ],
+  "observedSchemas": [
+    {
+      "schemaId": "schema:watersense-ci-operations:2012-10",
+      "artifactId": "artifact:watersense-ci-operations:2012-10",
+      "format": "XLSX",
+      "extractor": "scripts/research/operational-savings/adapters/watersense-ci/inspect-schema.mjs",
+      "requiredNativeFields": [
+        "Title Page!A14",
+        "Title Page!A16",
+        "Action Plan Checklist!A7:B7",
+        "Action Plan Checklist!A43:A44",
+        "Water Consumption History!A20:A21",
+        "Existing Plumbing Equipment!H2:J2",
+        "Water Use Inventory!C2:E2"
+      ]
+    }
+  ],
+  "normalizedTargets": [
+    "watersense_ci_methods",
+    "calculation_runs",
+    "selected_values",
+    "selected_value_provenance"
+  ],
+  "tests": [
+    {
+      "testId": "watersense-ci-real-workbook-proof",
+      "path": "scripts/research/operational-savings/tests/watersense-ci-real.test.mjs",
+      "name": "executes the measured flow-duration method and reaches both ITC-35 terms",
+      "kind": "END_TO_END_REAL",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:watersense-ci-operations:2012-10"
+      ],
+      "sourceNativeFields": [
+        "Flow (gallons per minute)",
+        "Operating Time (minutes per day)",
+        "Flow per Day (gallons per day)",
+        "Comments (leaks, control, etc.)"
+      ]
+    },
+    {
+      "testId": "watersense-ci-cooling-tower-unsupported-proof",
+      "path": "scripts/research/operational-savings/tests/watersense-ci-real.test.mjs",
+      "name": "retains cooling-tower measurements and the absent numeric equation as blockers",
+      "kind": "REAL_SOURCE_PARTIAL",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:watersense-ci-operations:2012-10"
+      ],
+      "sourceNativeFields": [
+        "cycles of concentration",
+        "cooling tower meters",
+        "conductivity-based blowdown"
+      ]
+    },
+    {
+      "testId": "watersense-ci-native-unit-failure-proof",
+      "path": "scripts/research/operational-savings/tests/watersense-ci-real.test.mjs",
+      "name": "fails closed on a mutated native unit contract",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:watersense-ci-operations:2012-10"
+      ],
+      "mutationCases": [
+        "mutated native unit"
+      ]
+    },
+    {
+      "testId": "watersense-ci-offline-proof",
+      "path": "scripts/research/operational-savings/tests/watersense-ci-real.test.mjs",
+      "name": "requires the offline runtime guard",
+      "kind": "OFFLINE_EXECUTION",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:watersense-ci-operations:2012-10"
+      ]
+    }
+  ],
+  "processClaims": [
+    {
+      "categoryId": "ITC-35",
+      "processKey": "watersense_ci_operations",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:watersense-ci-operations:2012-10"
+      ],
+      "testIds": [
+        "watersense-ci-real-workbook-proof",
+        "watersense-ci-native-unit-failure-proof",
+        "watersense-ci-offline-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "measured_leak_gpm": 0.5,
+        "confirmed_leak_minutes_per_year": 525600
+      },
+      "formulaTerms": [
+        "measured_leak_gpm",
+        "confirmed_leak_minutes_per_year"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-36",
+      "processKey": "watersense_ci_operations",
+      "proofLevel": "SOURCE_UNSUPPORTED",
+      "artifactIds": [
+        "artifact:watersense-ci-operations:2012-10"
+      ],
+      "testIds": [
+        "watersense-ci-cooling-tower-unsupported-proof",
+        "watersense-ci-native-unit-failure-proof",
+        "watersense-ci-offline-proof"
+      ],
+      "sourceUnsupported": true,
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": false,
+        "unitsEnumerationsPinned": false,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": false,
+        "unitScopeMatched": false,
+        "formulaTermReached": false,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {},
+      "formulaTerms": [],
+      "remainingBlocker": "The reviewed workbook identifies cooling-tower cycles, meters, controls, and conductivity-based blowdown, but it contains no numeric makeup-water equation or native units for existing cycles, proposed cycles, and annual evaporation."
+    }
+  ],
+  "feasibility": "PARTIALLY_FEASIBLE",
+  "remainingBlockers": [
+    "ITC-35 still requires exact measured leak flow and confirmed annual leak duration from project evidence.",
+    "The writeable tables contain no numeric cooling-tower makeup-water equation, so ITC-36 requires a separately retained authoritative equation source before execution.",
+    "A checklist item alone is not numeric savings evidence."
+  ]
+}

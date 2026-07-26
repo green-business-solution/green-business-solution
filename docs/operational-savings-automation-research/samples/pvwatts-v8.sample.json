@@ -1,0 +1,68 @@
+{
+  "schemaVersion": "operational-savings/research-sample-v1",
+  "standardId": "STD-PVWATTS-V8",
+  "source": "PVWatts V8 and SSC pvwattsv8 module",
+  "sourceVersion": "API 8.5.0, SSC 280; source repository commit ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+  "observedArtifact": "PVWatts V8 Los Angeles response",
+  "observedArtifactSha256": "88e37dd4aa5fb6ac1a633989f8f5eb6015691e08ae326d4ad61d60fb83ff671b",
+  "evidenceBoundary": "Live official PVWatts V8 response for Los Angeles",
+  "sampleIsFullSourceArtifact": false,
+  "prototype": {
+    "operation": "sum",
+    "sourceEvidence": "Live official PVWatts V8 response for Los Angeles",
+    "values": [
+      378.1541943183282,
+      395.6903922286779,
+      533.0772865750997,
+      611.0987806952955,
+      626.4405929412366,
+      673.2776144361642,
+      703.535415609679,
+      690.386682549157,
+      578.9729892644743,
+      487.9386109973863,
+      401.0139497529628,
+      340.2164037899981
+    ],
+    "expected": {
+      "sum": 6419.80291315847
+    },
+    "unit": "kWh/year"
+  },
+  "offlineResult": {
+    "kind": "scalar",
+    "standardId": "STD-PVWATTS-V8",
+    "value": {
+      "sum": 6419.802913158461
+    },
+    "unit": "kWh/year",
+    "scope": "SYNTHETIC_RESEARCH_PROTOTYPE",
+    "source": "PVWatts V8 and SSC pvwattsv8 module",
+    "sourceVersion": "API 8.5.0, SSC 280; source repository commit ba7a7968a115baa0c250597ce2381c7ffb27fbf2",
+    "sourceArtifact": "PVWatts V8 Los Angeles response",
+    "filters": {},
+    "eligiblePopulation": [
+      378.1541943183282,
+      395.6903922286779,
+      533.0772865750997,
+      611.0987806952955,
+      626.4405929412366,
+      673.2776144361642,
+      703.535415609679,
+      690.386682549157,
+      578.9729892644743,
+      487.9386109973863,
+      401.0139497529628,
+      340.2164037899981
+    ],
+    "sampleSize": 12,
+    "selectionRule": "SUM_PINNED_INTERVALS",
+    "fallbackLevel": "SYNTHETIC_SAMPLE",
+    "uncertainty": "NOT_SOURCE_BACKED",
+    "warnings": [],
+    "provenance": {
+      "sourceEvidence": "Live official PVWatts V8 response for Los Angeles",
+      "sha256": "d8d21204d3e1a38b449ed8c9450911a1cfa4a0eb1e032cf6cd712d88cc63d3f9"
+    }
+  }
+}

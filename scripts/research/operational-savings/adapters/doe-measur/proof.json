@@ -1,0 +1,740 @@
+{
+  "schemaVersion": "operational-savings/real-proof-manifest-v1",
+  "standardId": "STD-DOE-MEASUR",
+  "slug": "doe-measur",
+  "adapterPath": "scripts/research/operational-savings/adapters/doe-measur/run.mjs",
+  "artifacts": [
+    {
+      "artifactId": "artifact:doe-measur-repository-bdc33b83",
+      "sourceUrl": "https://github.com/ORNL-AMO/AMO-Tools-Suite",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/amo-tools-suite",
+      "release": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "commitSha": "bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "acquisitionMode": "PUBLIC_GIT_CLONE",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:doe-measur-compressed-air-header-bdc33b83",
+      "sourceUrl": "https://github.com/ORNL-AMO/AMO-Tools-Suite/blob/bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b/include/calculator/util/CompressedAirLeakSurvey.h",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/amo-tools-suite/include/calculator/util/CompressedAirLeakSurvey.h",
+      "release": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "sha256": "6e8fd190d67677f94e9c4f1020cd7ddc46414a2a149c432ab8ad3577bdbb1319",
+      "sizeBytes": 6870,
+      "acquisitionMode": "PINNED_REPOSITORY_FILE",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:doe-measur-compressed-air-source-bdc33b83",
+      "sourceUrl": "https://github.com/ORNL-AMO/AMO-Tools-Suite/blob/bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b/src/calculator/util/CompressedAirLeakSurvey.cpp",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/amo-tools-suite/src/calculator/util/CompressedAirLeakSurvey.cpp",
+      "release": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "sha256": "e149207339296c4ccff80d7ffef88ab24efa67acbd08830c82fca2de7329af18",
+      "sizeBytes": 7163,
+      "acquisitionMode": "PINNED_REPOSITORY_FILE",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:doe-measur-reduction-header-bdc33b83",
+      "sourceUrl": "https://github.com/ORNL-AMO/AMO-Tools-Suite/blob/bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b/include/calculator/util/CompressedAirReduction.h",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/amo-tools-suite/include/calculator/util/CompressedAirReduction.h",
+      "release": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "sha256": "07376dbb3346d1103d672a182dd32968aa7e19c7222d08dbbbd845790890d4ef",
+      "sizeBytes": 5526,
+      "acquisitionMode": "PINNED_REPOSITORY_FILE",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:doe-measur-reduction-source-bdc33b83",
+      "sourceUrl": "https://github.com/ORNL-AMO/AMO-Tools-Suite/blob/bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b/src/calculator/util/CompressedAirReduction.cpp",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/amo-tools-suite/src/calculator/util/CompressedAirReduction.cpp",
+      "release": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "sha256": "009ee7129e7235467052459cf83cfd725ba0093d7e984dee572ad8d910c54e36",
+      "sizeBytes": 5490,
+      "acquisitionMode": "PINNED_REPOSITORY_FILE",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:doe-measur-wasm-binding-bdc33b83",
+      "sourceUrl": "https://github.com/ORNL-AMO/AMO-Tools-Suite/blob/bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b/bindings-wasm/calculator.cpp",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/amo-tools-suite/bindings-wasm/calculator.cpp",
+      "release": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "sha256": "5bad679bac1bef93727365874324836fd3ae9a81ab8bbd2638920720e197a3e5",
+      "sizeBytes": 11216,
+      "acquisitionMode": "PINNED_REPOSITORY_FILE",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:doe-measur-compressed-air-golden-bdc33b83",
+      "sourceUrl": "https://github.com/ORNL-AMO/AMO-Tools-Suite/blob/bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b/tests/cpp/CompressedAirLeakSurvey.unit.cpp",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/amo-tools-suite/tests/cpp/CompressedAirLeakSurvey.unit.cpp",
+      "release": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "sha256": "4c3de4eca1270d47eb2e9b2384efcc26fd6f22ad70501a46fad313a042616d61",
+      "sizeBytes": 6311,
+      "acquisitionMode": "PINNED_REPOSITORY_FILE",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:doe-measur-motor-efficiency-header-bdc33b83",
+      "sourceUrl": "https://github.com/ORNL-AMO/AMO-Tools-Suite/blob/bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b/include/calculator/motor/MotorEfficiency.h",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/amo-tools-suite/include/calculator/motor/MotorEfficiency.h",
+      "release": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "sha256": "b8358ae3de587612b9201b0a76a404713ab674b929c03b48c05f0b5d3cd0ae44",
+      "sizeBytes": 4980,
+      "acquisitionMode": "PINNED_REPOSITORY_FILE",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:doe-measur-motor-efficiency-source-bdc33b83",
+      "sourceUrl": "https://github.com/ORNL-AMO/AMO-Tools-Suite/blob/bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b/src/calculator/motor/MotorEfficiency.cpp",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/amo-tools-suite/src/calculator/motor/MotorEfficiency.cpp",
+      "release": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "sha256": "7ed153335acf34bc60d254794c0f6fb1d31b76375332b416dabdefec714d7ca4",
+      "sizeBytes": 18191,
+      "acquisitionMode": "PINNED_REPOSITORY_FILE",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:doe-measur-motor-wasm-binding-bdc33b83",
+      "sourceUrl": "https://github.com/ORNL-AMO/AMO-Tools-Suite/blob/bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b/bindings-wasm/motor/motor.cpp",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/amo-tools-suite/bindings-wasm/motor/motor.cpp",
+      "release": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "sha256": "462052610fa35c44fef637f39860c1f08507d62e12073e076f6731502c2a96a7",
+      "sizeBytes": 3833,
+      "acquisitionMode": "PINNED_REPOSITORY_FILE",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:doe-measur-motor-efficiency-golden-bdc33b83",
+      "sourceUrl": "https://github.com/ORNL-AMO/AMO-Tools-Suite/blob/bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b/tests/cpp/MotorEfficiency.unit.cpp",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/amo-tools-suite/tests/cpp/MotorEfficiency.unit.cpp",
+      "release": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "sha256": "138755fe18e80171a4d55bf395c66dc90c08a9b9a507b9a70d9da47e9e9c61de",
+      "sizeBytes": 9398,
+      "acquisitionMode": "PINNED_REPOSITORY_FILE",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:doe-measur-equipment-input-header-bdc33b83",
+      "sourceUrl": "https://github.com/ORNL-AMO/AMO-Tools-Suite/blob/bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b/include/results/InputData.h",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/amo-tools-suite/include/results/InputData.h",
+      "release": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "sha256": "65cebff9a506cafdaf315ab54329aa3f154eec89d98bd27534e6970faa4201f4",
+      "sizeBytes": 7237,
+      "acquisitionMode": "PINNED_REPOSITORY_FILE",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:doe-measur-equipment-results-header-bdc33b83",
+      "sourceUrl": "https://github.com/ORNL-AMO/AMO-Tools-Suite/blob/bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b/include/results/Results.h",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/amo-tools-suite/include/results/Results.h",
+      "release": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "sha256": "9ef8f23670b0992397870794d3dc81cd591ef040f1e9edb981849782ecdf5707",
+      "sizeBytes": 10533,
+      "acquisitionMode": "PINNED_REPOSITORY_FILE",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:doe-measur-equipment-results-source-bdc33b83",
+      "sourceUrl": "https://github.com/ORNL-AMO/AMO-Tools-Suite/blob/bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b/src/results/Results.cpp",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/amo-tools-suite/src/results/Results.cpp",
+      "release": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "sha256": "1e03e970a91cb8e8a614c687723f4e2171d6eb8a1c1695da6bed225ef870ab66",
+      "sizeBytes": 11627,
+      "acquisitionMode": "PINNED_REPOSITORY_FILE",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:doe-measur-psat-wasm-binding-bdc33b83",
+      "sourceUrl": "https://github.com/ORNL-AMO/AMO-Tools-Suite/blob/bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b/bindings-wasm/psat/psat.cpp",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/amo-tools-suite/bindings-wasm/psat/psat.cpp",
+      "release": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "sha256": "3238cdfb3cbe5c6f11127a0a55423ad28d3d171b17fbc337187e39ec1f4409d3",
+      "sizeBytes": 12915,
+      "acquisitionMode": "PINNED_REPOSITORY_FILE",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:doe-measur-fan-wasm-binding-bdc33b83",
+      "sourceUrl": "https://github.com/ORNL-AMO/AMO-Tools-Suite/blob/bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b/bindings-wasm/fan/fan.cpp",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/amo-tools-suite/bindings-wasm/fan/fan.cpp",
+      "release": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "sha256": "042939184ae2150f3abc6332dbee4129e1061d782a311221fdb08cec7ad12735",
+      "sizeBytes": 8624,
+      "acquisitionMode": "PINNED_REPOSITORY_FILE",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:doe-measur-equipment-results-golden-bdc33b83",
+      "sourceUrl": "https://github.com/ORNL-AMO/AMO-Tools-Suite/blob/bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b/tests/cpp/Results.unit.cpp",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/amo-tools-suite/tests/cpp/Results.unit.cpp",
+      "release": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "sha256": "8fab9f550d9f326e2bca8f427c9a5e6359aa9252f08cddaf7464313ff6d75721",
+      "sizeBytes": 33662,
+      "acquisitionMode": "PINNED_REPOSITORY_FILE",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:doe-measur-cooling-tower-header-bdc33b83",
+      "sourceUrl": "https://github.com/ORNL-AMO/AMO-Tools-Suite/blob/bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b/include/chillers/CoolingTower.h",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/amo-tools-suite/include/chillers/CoolingTower.h",
+      "release": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "sha256": "706a4cc50d735d800a166763ec385c0af58b077861ee792eefee84d023d4741a",
+      "sizeBytes": 26423,
+      "acquisitionMode": "PINNED_REPOSITORY_FILE",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:doe-measur-cooling-tower-wasm-binding-bdc33b83",
+      "sourceUrl": "https://github.com/ORNL-AMO/AMO-Tools-Suite/blob/bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b/bindings-wasm/chillers.cpp",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/amo-tools-suite/bindings-wasm/chillers.cpp",
+      "release": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "sha256": "62fb82f924b545eefa5782cae3d0e44b2b71ab3134bec792e4babddcd2650505",
+      "sizeBytes": 4905,
+      "acquisitionMode": "PINNED_REPOSITORY_FILE",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:doe-measur-cooling-tower-golden-bdc33b83",
+      "sourceUrl": "https://github.com/ORNL-AMO/AMO-Tools-Suite/blob/bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b/tests/cpp/CoolingTower.unit.cpp",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/amo-tools-suite/tests/cpp/CoolingTower.unit.cpp",
+      "release": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "sha256": "7d12e9af8c96b841ab11ed9b41826fbe49e1285584f6ea1f5a7624f10df3e69e",
+      "sizeBytes": 10999,
+      "acquisitionMode": "PINNED_REPOSITORY_FILE",
+      "official": true
+    },
+    {
+      "artifactId": "artifact:doe-measur-license-bdc33b83",
+      "sourceUrl": "https://github.com/ORNL-AMO/AMO-Tools-Suite/blob/bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b/LICENSE.txt",
+      "cachePath": "scripts/research/operational-savings/.cache/repos/amo-tools-suite/LICENSE.txt",
+      "release": "Git commit bdc33b837d39e3b30d2ad802cde9f49ec5df1e6b",
+      "sha256": "7372b9cff1cab763899bf6c4516b44163f8442fd38d0a3786e3ceafc0e81df62",
+      "sizeBytes": 2227,
+      "acquisitionMode": "PINNED_REPOSITORY_FILE",
+      "official": true
+    }
+  ],
+  "observedSchemas": [
+    {
+      "schemaId": "schema:doe-measur-compressed-air-bdc33b83",
+      "artifactId": "artifact:doe-measur-repository-bdc33b83",
+      "format": "PINNED_CPP_HEADER_SOURCE_BINDING_AND_GOLDEN_TEST",
+      "extractor": "scripts/research/operational-savings/adapters/doe-measur/inspect-schema.mjs",
+      "requiredNativeFields": [
+        "hoursPerYear",
+        "utilityType",
+        "utilityCost",
+        "measurementMethod",
+        "estimateMethodData.leakRateEstimate",
+        "compressorElectricityData.compressorSpecificPower",
+        "units",
+        "annualTotalElectricity",
+        "annualTotalElectricityCost",
+        "totalFlowRate",
+        "annualTotalFlowRate"
+      ],
+      "fields": [
+        {
+          "name": "hoursPerYear",
+          "unit": "hours/year"
+        },
+        {
+          "name": "measurementMethod",
+          "enumeration": "0 estimate, 1 decibels, 2 bag, 3 orifice"
+        },
+        {
+          "name": "estimateMethodData.leakRateEstimate",
+          "unit": "flow/leak"
+        },
+        {
+          "name": "compressorElectricityData.compressorSpecificPower",
+          "unit": "kW/flow-unit"
+        },
+        {
+          "name": "totalFlowRate",
+          "unit": "flow/leak"
+        },
+        {
+          "name": "annualTotalElectricity",
+          "unit": "kWh/year"
+        }
+      ]
+    },
+    {
+      "schemaId": "schema:doe-measur-equipment-bdc33b83",
+      "artifactId": "artifact:doe-measur-repository-bdc33b83",
+      "format": "PINNED_CPP_HEADERS_SOURCES_WASM_BINDINGS_AND_GOLDEN_TESTS",
+      "extractor": "scripts/research/operational-savings/adapters/doe-measur/inspect-equipment-schema.mjs",
+      "requiredNativeFields": [
+        "MotorEfficiency.lineFrequency",
+        "MotorEfficiency.motorRpm",
+        "MotorEfficiency.efficiencyClass",
+        "MotorEfficiency.motorRatedPower",
+        "MotorEfficiency.calculate.loadFactor",
+        "PSATResult.calculateExisting.motorPower",
+        "PSATResult.calculateModified.motorPower",
+        "FanResult.calculateExisting.motorPower",
+        "FanResult.calculateModified.motorPower",
+        "CoolingTower.FanEnergyConsumption.ratedFanPower",
+        "CoolingTower.FanEnergyConsumption.operatingHours",
+        "CoolingTower.FanEnergyConsumption.baselineSpeedType",
+        "CoolingTower.FanEnergyConsumption.modSpeedType",
+        "CoolingTower.PowerEnergyConsumptionOutput.savingsEnergy"
+      ],
+      "fields": [
+        {
+          "name": "MotorEfficiency.motorRatedPower",
+          "unit": "hp"
+        },
+        {
+          "name": "MotorEfficiency.motorRpm",
+          "unit": "rpm"
+        },
+        {
+          "name": "MotorEfficiency.efficiencyClass",
+          "enumeration": "STANDARD, ENERGY_EFFICIENT, PREMIUM, SPECIFIED"
+        },
+        {
+          "name": "MotorEfficiency.calculate.loadFactor",
+          "unit": "fraction"
+        },
+        {
+          "name": "MotorEfficiency.calculate",
+          "unit": "fraction"
+        },
+        {
+          "name": "PSATResult.Output.motorPower",
+          "unit": "kW"
+        },
+        {
+          "name": "FanResult.Output.motorPower",
+          "unit": "kW"
+        },
+        {
+          "name": "CoolingTower.FanEnergyConsumption.controlSpeedType",
+          "enumeration": "One, Two, Variable"
+        },
+        {
+          "name": "CoolingTower.PowerEnergyConsumptionOutput.savingsEnergy",
+          "unit": "kWh/year"
+        }
+      ]
+    }
+  ],
+  "normalizedTargets": [
+    "source_registry",
+    "source_releases",
+    "source_artifacts",
+    "source_checksums",
+    "schema_versions",
+    "ingestion_runs",
+    "model_versions",
+    "model_input_schemas",
+    "calculation_runs",
+    "selected_values",
+    "selected_value_provenance",
+    "calculation_warnings"
+  ],
+  "tests": [
+    {
+      "testId": "doe-measur-real-compressed-air-native-proof",
+      "path": "scripts/research/operational-savings/tests/doe-measur-real.test.mjs",
+      "name": "publishes native model execution and exact ITC-43 formula inputs to the research database",
+      "kinds": [
+        "END_TO_END_REAL",
+        "REAL_SCHEMA",
+        "LOCAL_MODEL_EXECUTION",
+        "NORMALIZATION",
+        "RESOLVER",
+        "DATABASE_PUBLICATION",
+        "FORMULA_INPUT_MAPPING"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:doe-measur-repository-bdc33b83",
+        "artifact:doe-measur-compressed-air-header-bdc33b83",
+        "artifact:doe-measur-compressed-air-source-bdc33b83",
+        "artifact:doe-measur-reduction-header-bdc33b83",
+        "artifact:doe-measur-reduction-source-bdc33b83",
+        "artifact:doe-measur-wasm-binding-bdc33b83",
+        "artifact:doe-measur-compressed-air-golden-bdc33b83",
+        "artifact:doe-measur-license-bdc33b83"
+      ],
+      "sourceNativeFields": [
+        "hoursPerYear",
+        "measurementMethod",
+        "estimateMethodData.leakRateEstimate",
+        "compressorElectricityData.compressorSpecificPower",
+        "units",
+        "annualTotalElectricity",
+        "annualTotalElectricityCost",
+        "totalFlowRate",
+        "annualTotalFlowRate"
+      ]
+    },
+    {
+      "testId": "doe-measur-compressed-air-drift-failure-proof",
+      "path": "scripts/research/operational-savings/tests/doe-measur-real.test.mjs",
+      "name": "detects native binding or golden-fixture drift",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:doe-measur-repository-bdc33b83",
+        "artifact:doe-measur-compressed-air-golden-bdc33b83"
+      ],
+      "mutationCases": [
+        "native binding field renamed",
+        "official golden expectation changed"
+      ]
+    },
+    {
+      "testId": "doe-measur-compressed-air-input-failure-proof",
+      "path": "scripts/research/operational-savings/tests/doe-measur-real.test.mjs",
+      "name": "requires offline mode and rejects unsupported or invalid project inputs",
+      "kinds": [
+        "FAILURE",
+        "OFFLINE_EXECUTION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:doe-measur-repository-bdc33b83"
+      ],
+      "mutationCases": [
+        "runtime network guard absent",
+        "unsupported measurement method",
+        "non-positive compressor specific power"
+      ]
+    },
+    {
+      "testId": "doe-measur-real-equipment-native-proof",
+      "path": "scripts/research/operational-savings/tests/doe-measur-real.test.mjs",
+      "name": "maps native MEASUR equipment outputs to the exact ITC-36, ITC-38, ITC-40, and ITC-41 terms",
+      "kinds": [
+        "END_TO_END_REAL",
+        "REAL_SCHEMA",
+        "LOCAL_MODEL_EXECUTION",
+        "NORMALIZATION",
+        "RESOLVER",
+        "FORMULA_INPUT_MAPPING"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:doe-measur-repository-bdc33b83",
+        "artifact:doe-measur-motor-efficiency-header-bdc33b83",
+        "artifact:doe-measur-motor-efficiency-source-bdc33b83",
+        "artifact:doe-measur-motor-wasm-binding-bdc33b83",
+        "artifact:doe-measur-motor-efficiency-golden-bdc33b83",
+        "artifact:doe-measur-equipment-input-header-bdc33b83",
+        "artifact:doe-measur-equipment-results-header-bdc33b83",
+        "artifact:doe-measur-equipment-results-source-bdc33b83",
+        "artifact:doe-measur-psat-wasm-binding-bdc33b83",
+        "artifact:doe-measur-fan-wasm-binding-bdc33b83",
+        "artifact:doe-measur-equipment-results-golden-bdc33b83",
+        "artifact:doe-measur-cooling-tower-header-bdc33b83",
+        "artifact:doe-measur-cooling-tower-wasm-binding-bdc33b83",
+        "artifact:doe-measur-cooling-tower-golden-bdc33b83",
+        "artifact:doe-measur-license-bdc33b83"
+      ],
+      "sourceNativeFields": [
+        "MotorEfficiency.lineFrequency",
+        "MotorEfficiency.motorRpm",
+        "MotorEfficiency.efficiencyClass",
+        "MotorEfficiency.motorRatedPower",
+        "MotorEfficiency.calculate.loadFactor",
+        "PSATResult.calculateExisting.motorPower",
+        "PSATResult.calculateModified.motorPower",
+        "FanResult.calculateExisting.motorPower",
+        "FanResult.calculateModified.motorPower",
+        "CoolingTower.FanEnergyConsumption.baselineSpeedType",
+        "CoolingTower.FanEnergyConsumption.modSpeedType",
+        "CoolingTower.PowerEnergyConsumptionOutput.savingsEnergy"
+      ]
+    },
+    {
+      "testId": "doe-measur-equipment-publication-proof",
+      "path": "scripts/research/operational-savings/tests/doe-measur-real.test.mjs",
+      "name": "publishes all four native MEASUR equipment calculations with provenance",
+      "kind": "DATABASE_PUBLICATION",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:doe-measur-repository-bdc33b83"
+      ]
+    },
+    {
+      "testId": "doe-measur-equipment-drift-failure-proof",
+      "path": "scripts/research/operational-savings/tests/doe-measur-real.test.mjs",
+      "name": "detects MEASUR equipment binding and golden-fixture drift",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:doe-measur-repository-bdc33b83",
+        "artifact:doe-measur-motor-efficiency-golden-bdc33b83",
+        "artifact:doe-measur-equipment-results-golden-bdc33b83",
+        "artifact:doe-measur-cooling-tower-golden-bdc33b83"
+      ],
+      "mutationCases": [
+        "native binding field renamed",
+        "official motor golden expectation changed",
+        "official PSAT golden expectation changed",
+        "official cooling-tower golden expectation changed"
+      ]
+    },
+    {
+      "testId": "doe-measur-equipment-input-failure-proof",
+      "path": "scripts/research/operational-savings/tests/doe-measur-real.test.mjs",
+      "name": "rejects incomplete or incompatible MEASUR equipment inputs before native execution",
+      "kind": "FAILURE",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:doe-measur-repository-bdc33b83"
+      ],
+      "mutationCases": [
+        "invalid source-native enumeration",
+        "out-of-range efficiency"
+      ]
+    }
+  ],
+  "processClaims": [
+    {
+      "categoryId": "ITC-36",
+      "processKey": "doe_measur",
+      "proofLevel": "END_TO_END_REAL",
+      "adapterPath": "scripts/research/operational-savings/adapters/doe-measur/equipment.mjs",
+      "artifactIds": [
+        "artifact:doe-measur-repository-bdc33b83",
+        "artifact:doe-measur-cooling-tower-header-bdc33b83",
+        "artifact:doe-measur-cooling-tower-wasm-binding-bdc33b83",
+        "artifact:doe-measur-cooling-tower-golden-bdc33b83",
+        "artifact:doe-measur-license-bdc33b83"
+      ],
+      "testIds": [
+        "doe-measur-real-equipment-native-proof",
+        "doe-measur-equipment-publication-proof",
+        "doe-measur-equipment-drift-failure-proof",
+        "doe-measur-equipment-input-failure-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "avoided_fan_kWh": 7.7288189657612065
+      },
+      "formulaTerms": [
+        "avoided_fan_kWh"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-38",
+      "processKey": "doe_measur",
+      "proofLevel": "END_TO_END_REAL",
+      "adapterPath": "scripts/research/operational-savings/adapters/doe-measur/equipment.mjs",
+      "artifactIds": [
+        "artifact:doe-measur-repository-bdc33b83",
+        "artifact:doe-measur-motor-efficiency-header-bdc33b83",
+        "artifact:doe-measur-motor-efficiency-source-bdc33b83",
+        "artifact:doe-measur-motor-wasm-binding-bdc33b83",
+        "artifact:doe-measur-motor-efficiency-golden-bdc33b83",
+        "artifact:doe-measur-equipment-input-header-bdc33b83",
+        "artifact:doe-measur-license-bdc33b83"
+      ],
+      "testIds": [
+        "doe-measur-real-equipment-native-proof",
+        "doe-measur-equipment-publication-proof",
+        "doe-measur-equipment-drift-failure-proof",
+        "doe-measur-equipment-input-failure-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "η_existing": 0.8867837735583464,
+        "η_proposed": 0.9226247725330855
+      },
+      "formulaTerms": [
+        "η_existing",
+        "η_proposed"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-40",
+      "processKey": "doe_measur",
+      "proofLevel": "END_TO_END_REAL",
+      "adapterPath": "scripts/research/operational-savings/adapters/doe-measur/equipment.mjs",
+      "artifactIds": [
+        "artifact:doe-measur-repository-bdc33b83",
+        "artifact:doe-measur-equipment-input-header-bdc33b83",
+        "artifact:doe-measur-equipment-results-header-bdc33b83",
+        "artifact:doe-measur-equipment-results-source-bdc33b83",
+        "artifact:doe-measur-psat-wasm-binding-bdc33b83",
+        "artifact:doe-measur-equipment-results-golden-bdc33b83",
+        "artifact:doe-measur-license-bdc33b83"
+      ],
+      "testIds": [
+        "doe-measur-real-equipment-native-proof",
+        "doe-measur-equipment-publication-proof",
+        "doe-measur-equipment-drift-failure-proof",
+        "doe-measur-equipment-input-failure-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "existing_input_kW": 150,
+        "proposed_input_kW": 149.64012475884022
+      },
+      "formulaTerms": [
+        "existing_input_kW",
+        "proposed_input_kW"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-41",
+      "processKey": "doe_measur",
+      "proofLevel": "END_TO_END_REAL",
+      "adapterPath": "scripts/research/operational-savings/adapters/doe-measur/equipment.mjs",
+      "artifactIds": [
+        "artifact:doe-measur-repository-bdc33b83",
+        "artifact:doe-measur-equipment-input-header-bdc33b83",
+        "artifact:doe-measur-equipment-results-header-bdc33b83",
+        "artifact:doe-measur-equipment-results-source-bdc33b83",
+        "artifact:doe-measur-fan-wasm-binding-bdc33b83",
+        "artifact:doe-measur-equipment-results-golden-bdc33b83",
+        "artifact:doe-measur-license-bdc33b83"
+      ],
+      "testIds": [
+        "doe-measur-real-equipment-native-proof",
+        "doe-measur-equipment-publication-proof",
+        "doe-measur-equipment-drift-failure-proof",
+        "doe-measur-equipment-input-failure-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "existing_input_kW": 460,
+        "proposed_input_kW": 460.00014402241186
+      },
+      "formulaTerms": [
+        "existing_input_kW",
+        "proposed_input_kW"
+      ],
+      "remainingBlocker": null
+    },
+    {
+      "categoryId": "ITC-43",
+      "processKey": "doe_measur",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:doe-measur-repository-bdc33b83",
+        "artifact:doe-measur-compressed-air-header-bdc33b83",
+        "artifact:doe-measur-compressed-air-source-bdc33b83",
+        "artifact:doe-measur-reduction-header-bdc33b83",
+        "artifact:doe-measur-reduction-source-bdc33b83",
+        "artifact:doe-measur-wasm-binding-bdc33b83",
+        "artifact:doe-measur-compressed-air-golden-bdc33b83",
+        "artifact:doe-measur-license-bdc33b83"
+      ],
+      "testIds": [
+        "doe-measur-real-compressed-air-native-proof",
+        "doe-measur-compressed-air-drift-failure-proof",
+        "doe-measur-compressed-air-input-failure-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutput": {
+        "leak_flow": 0.1,
+        "compressor_specific_power": 0.16
+      },
+      "formulaTerms": [
+        "leak_flow",
+        "compressor_specific_power"
+      ],
+      "remainingBlocker": null
+    }
+  ],
+  "feasibility": "FEASIBLE_NOW_FOR_FIVE_EXACT_MODULE_PATHS",
+  "remainingBlockers": [
+    "Validate the decibel, bag, and orifice measurement-method branches independently before accepting those project inputs.",
+    "Implement and test the remaining boiler, recirculation, refrigeration EC motor, kitchen ventilation, variable-speed, compressed-air equipment and controls, waste-heat, process-heating, steam-trap, and filtration paths independently."
+  ]
+}

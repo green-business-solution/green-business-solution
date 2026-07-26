@@ -1,0 +1,229 @@
+{
+  "schemaVersion": "operational-savings/real-proof-manifest-v1",
+  "standardId": "STD-DISHWASHER-WATER-HEATING",
+  "slug": "dishwasher-water-heating",
+  "adapterPath": "scripts/research/operational-savings/adapters/dishwasher-water-heating/run.mjs",
+  "artifacts": [
+    {
+      "artifactId": "artifact:energy-star-cfs-calculator:2024-03",
+      "sourceUrl": "https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx",
+      "cachePath": "scripts/research/operational-savings/.cache/artifacts/energy-star-cfs-calculator.xlsx",
+      "release": "Workbook published March 2024",
+      "sha256": "3d2abed1938bd1400378a2e0ca2095058fe490b2b599ef15f09056639f06fcd6",
+      "sizeBytes": 403484,
+      "acquisitionMode": "PUBLIC_XLSX_DOWNLOAD",
+      "official": true
+    }
+  ],
+  "observedSchemas": [
+    {
+      "schemaId": "schema:energy-star-cfs-dishwasher-water-heating:2024-03",
+      "artifactId": "artifact:energy-star-cfs-calculator:2024-03",
+      "format": "XLSX_EXACT_CELLS_AND_FORMULAS",
+      "extractor": "scripts/research/operational-savings/adapters/dishwasher-water-heating/inspect-schema.mjs",
+      "requiredNativeFields": [
+        "Dishwasher Calcs!I18 specific heat",
+        "Dishwasher Calcs!I19 water density",
+        "Dishwasher Calcs!C20:D21 water-heater efficiencies",
+        "Dishwasher Calcs!E20:E21 temperature rises",
+        "Dishwasher Calcs!C39:D40 resource input per gallon formulas",
+        "General Assumptions!C62:C63 resource conversions"
+      ],
+      "fields": [
+        {
+          "name": "Dishwasher Calcs!C39",
+          "unit": "kWh/gallon"
+        },
+        {
+          "name": "Dishwasher Calcs!D39",
+          "unit": "therm/gallon"
+        },
+        {
+          "name": "Dishwasher Calcs!C40",
+          "unit": "kWh/gallon"
+        },
+        {
+          "name": "Dishwasher Calcs!D40",
+          "unit": "therm/gallon"
+        }
+      ]
+    }
+  ],
+  "normalizedTargets": [
+    "model_versions",
+    "model_input_schemas",
+    "calculation_assumptions",
+    "calculation_runs",
+    "selected_values",
+    "selected_value_provenance"
+  ],
+  "tests": [
+    {
+      "testId": "dishwasher-water-heating-real-workbook-proof",
+      "path": "scripts/research/operational-savings/tests/dishwasher-water-heating-real.test.mjs",
+      "name": "reproduces the workbook electric building and booster factors",
+      "kind": "END_TO_END_REAL",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:energy-star-cfs-calculator:2024-03"
+      ],
+      "sourceNativeFields": [
+        "Dishwasher Calcs!I18",
+        "Dishwasher Calcs!I19",
+        "Dishwasher Calcs!C20:D21",
+        "Dishwasher Calcs!E20:E21",
+        "Dishwasher Calcs!C39:D40",
+        "General Assumptions!C62:C63"
+      ]
+    },
+    {
+      "testId": "dishwasher-water-heating-workbook-mutation-proof",
+      "path": "scripts/research/operational-savings/tests/dishwasher-water-heating-real.test.mjs",
+      "name": "fails mutations to a required workbook formula or cell",
+      "kinds": [
+        "FAILURE",
+        "MUTATION"
+      ],
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:energy-star-cfs-calculator:2024-03"
+      ],
+      "mutationCases": [
+        "changed workbook formula",
+        "missing required workbook cell"
+      ]
+    },
+    {
+      "testId": "dishwasher-water-heating-input-failure-proof",
+      "path": "scripts/research/operational-savings/tests/dishwasher-water-heating-real.test.mjs",
+      "name": "fails unsupported branches and invalid physical inputs",
+      "kind": "FAILURE",
+      "networkMode": "DISABLED",
+      "artifactIds": [
+        "artifact:energy-star-cfs-calculator:2024-03"
+      ],
+      "mutationCases": [
+        "unsupported sanitation method",
+        "unsupported resource",
+        "invalid efficiency"
+      ]
+    }
+  ],
+  "processClaims": [
+    {
+      "categoryId": "ITC-52",
+      "processKey": "dishwasher-water-heating-conversion",
+      "proofLevel": "END_TO_END_REAL",
+      "artifactIds": [
+        "artifact:energy-star-cfs-calculator:2024-03"
+      ],
+      "testIds": [
+        "dishwasher-water-heating-real-workbook-proof",
+        "dishwasher-water-heating-workbook-mutation-proof",
+        "dishwasher-water-heating-input-failure-proof"
+      ],
+      "gates": {
+        "sourcePinned": true,
+        "artifactAcquired": true,
+        "checksumVerified": true,
+        "schemaExtracted": true,
+        "requiredFieldsLocated": true,
+        "unitsEnumerationsPinned": true,
+        "parserOrModelExecuted": true,
+        "normalizedPublished": true,
+        "resolutionExecuted": true,
+        "standardOutputProduced": true,
+        "unitScopeMatched": true,
+        "formulaTermReached": true,
+        "offlinePassed": true,
+        "provenanceComplete": true,
+        "mutationFailureTestsPassed": true
+      },
+      "actualOutputs": [
+        {
+          "outputName": "Dishwasher water-heating result set",
+          "formulaTerm": "dishwasher_water_heating_result",
+          "unit": "record set",
+          "scope": "RECORD_SET",
+          "value": {
+            "resource": "electric",
+            "rackNativeUnit": "kWh/rack",
+            "hourNativeUnit": "kWh/hour"
+          }
+        },
+        {
+          "outputName": "Existing rack-machine water-heating resource per rack",
+          "formulaTerm": "water_heating_R_per_rack_existing",
+          "unit": "resource/certified activity",
+          "scope": "PER_EVENT",
+          "value": 0.3482465356491263
+        },
+        {
+          "outputName": "Proposed rack-machine water-heating resource per rack",
+          "formulaTerm": "water_heating_R_per_rack_proposed",
+          "unit": "resource/certified activity",
+          "scope": "PER_EVENT",
+          "value": 0.24026311374242046
+        },
+        {
+          "outputName": "Existing flight or conveyor water-heating resource per operating hour",
+          "formulaTerm": "water_heating_R_per_hour_existing",
+          "unit": "resource/hour",
+          "scope": "PER_HOUR",
+          "value": 20.24689160750734
+        },
+        {
+          "outputName": "Proposed flight or conveyor water-heating resource per operating hour",
+          "formulaTerm": "water_heating_R_per_hour_proposed",
+          "unit": "resource/hour",
+          "scope": "PER_HOUR",
+          "value": 14.037844847871757
+        }
+      ],
+      "formulaMappings": [
+        {
+          "outputName": "Dishwasher water-heating result set",
+          "formulaTerm": "dishwasher_water_heating_result",
+          "unit": "record set",
+          "scope": "RECORD_SET",
+          "testId": "dishwasher-water-heating-real-workbook-proof"
+        },
+        {
+          "outputName": "Existing rack-machine water-heating resource per rack",
+          "formulaTerm": "water_heating_R_per_rack_existing",
+          "unit": "resource/certified activity",
+          "scope": "PER_EVENT",
+          "testId": "dishwasher-water-heating-real-workbook-proof"
+        },
+        {
+          "outputName": "Proposed rack-machine water-heating resource per rack",
+          "formulaTerm": "water_heating_R_per_rack_proposed",
+          "unit": "resource/certified activity",
+          "scope": "PER_EVENT",
+          "testId": "dishwasher-water-heating-real-workbook-proof"
+        },
+        {
+          "outputName": "Existing flight or conveyor water-heating resource per operating hour",
+          "formulaTerm": "water_heating_R_per_hour_existing",
+          "unit": "resource/hour",
+          "scope": "PER_HOUR",
+          "testId": "dishwasher-water-heating-real-workbook-proof"
+        },
+        {
+          "outputName": "Proposed flight or conveyor water-heating resource per operating hour",
+          "formulaTerm": "water_heating_R_per_hour_proposed",
+          "unit": "resource/hour",
+          "scope": "PER_HOUR",
+          "testId": "dishwasher-water-heating-real-workbook-proof"
+        }
+      ],
+      "remainingBlocker": null
+    }
+  ],
+  "feasibility": "FEASIBLE_NOW",
+  "remainingBlockers": [
+    "The formula requires native water quantities and project water-heater inputs.",
+    "Rack and hourly activity bases remain separate.",
+    "Mixed building and booster resources require resource-specific result terms before they can be combined."
+  ]
+}
