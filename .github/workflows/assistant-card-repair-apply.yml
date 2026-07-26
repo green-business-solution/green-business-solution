@@ -1,0 +1,237 @@
+name: Apply founder-reviewed Information Card repair
+
+on:
+  push:
+    branches:
+      - docs/operational-savings-information-trees
+    paths:
+      - .github/workflows/assistant-card-repair-apply.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Check out repair branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Correct bootstrap parser and make generation deterministic
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('scripts/repair-reviewed-operational-savings-cards.mjs')
+          text = path.read_text()
+          old = '''  const regex = /^\\*\\*■ Standard ([1-9]\\d*\\.[1-9]\\d*) — ([^*\\n]+)\\*\\*\\n\\n([\\s\\S]*?)(?=^\\*\\*■ Standard |\\s*$)/gm;
+          for (const match of markdown.matchAll(regex)) {
+            const body = match[3].trim();'''
+          new = '''  const processChunks = markdown.split(/(?=^\\*\\*■ Standard [1-9]\\d*\\.[1-9]\\d* — )/m);
+          for (const chunk of processChunks) {
+            const match = chunk.match(/^\\*\\*■ Standard ([1-9]\\d*\\.[1-9]\\d*) — ([^*\\n]+)\\*\\*\\n\\n([\\s\\S]*)$/);
+            if (!match) continue;
+            const body = match[3].trim();'''
+          if old not in text:
+              raise SystemExit('Expected parser block was not found')
+          text = text.replace(old, new)
+          text = text.replace('new Date().toISOString()', '"2026-07-25T00:00:00.000Z"')
+          path.write_text(text)
+          PY
+
+      - name: Replace legacy entrypoints with reviewed-card entrypoints
+        run: |
+          cat > scripts/generate-operational-savings-review-pages.mjs <<'EOF'
+          import { fileURLToPath } from "node:url";
+          import { generateReviewedCards } from "./repair-reviewed-operational-savings-cards.mjs";
+
+          export { generateReviewedCards };
+
+          if (process.argv[1] === fileURLToPath(import.meta.url)) {
+            const result = await generateReviewedCards({
+              write: process.argv.includes("--write") || !process.argv.includes("--check"),
+              rebuild: process.argv.includes("--rebuild")
+            });
+            process.stdout.write(`Generated ${result.cards.length} founder-reviewed Information Cards.\n`);
+          }
+          EOF
+
+          cat > scripts/validate-operational-savings-information-trees.mjs <<'EOF'
+          import { fileURLToPath } from "node:url";
+          import { validateReviewedCards } from "./repair-reviewed-operational-savings-cards.mjs";
+
+          export { validateReviewedCards };
+
+          if (process.argv[1] === fileURLToPath(import.meta.url)) {
+            const result = await validateReviewedCards();
+            if (result.errors.length) {
+              process.stderr.write(`${result.errors.join("\n")}\n`);
+              process.exitCode = 1;
+            } else {
+              process.stdout.write(`Operational-savings Information Tree validation passed: ${result.cards} cards, ${result.processes} category-local processes, ${result.standards} canonical Standards.\n`);
+            }
+          }
+          EOF
+
+      - name: Replace legacy tests with founder-review contracts
+        run: |
+          cat > scripts/generate-operational-savings-review-pages.test.mjs <<'EOF'
+          import { describe, expect, it } from "vitest";
+          import { generateReviewedCards } from "./repair-reviewed-operational-savings-cards.mjs";
+
+          const logic = [
+            "[ALL REQUIRED]",
+            "[SELECT ONE — BASED ON CONDITION]",
+            "[TRY IN ORDER — STOP AT FIRST VALID]",
+            "[OPTIONAL OVERRIDE]"
+          ];
+
+          describe("founder-reviewed operational-savings Information Cards", () => {
+            it("contains exactly 54 continuous cards with complete process references", async () => {
+              const { cards } = await generateReviewedCards();
+              expect(cards).toHaveLength(54);
+              expect(new Set(cards.map((card) => card.id)).size).toBe(54);
+              for (const card of cards) {
+                expect(card.tree).toContain("[ALL REQUIRED]");
+                const refs = [...card.tree.matchAll(/Standard ([1-9]\d*\.[1-9]\d*) — ([^\n]+)/g)]
+                  .map((match) => `${match[1]}\u0000${match[2].trim()}`);
+                const sections = card.processes.map((process) => `${process.number}\u0000${process.name}`);
+                expect(new Set(refs)).toEqual(new Set(sections));
+                expect(new Set(sections).size).toBe(sections.length);
+              }
+            });
+
+            it("uses the approved branch grammar and keeps documents optional", async () => {
+              const { cards, artifacts } = await generateReviewedCards();
+              for (const card of cards) {
+                const page = artifacts.get(`docs/operational-savings-review/categories/${card.id}.md`);
+                for (const marker of logic) expect(page).toContain(marker);
+                expect(page).not.toContain("**Input Bindings:**");
+                expect(page).not.toContain("**Output Bindings:**");
+                expect(page).not.toContain("Human Review Snapshot");
+                for (const line of card.tree.split("\n")) {
+                  if (line.includes("(Project Document)")) expect(line).toContain("[OPTIONAL OVERRIDE]");
+                }
+              }
+            });
+
+            it("does not expose technical engineering variables as ordinary User inputs", async () => {
+              const { cards } = await generateReviewedCards();
+              const forbidden = /(efficien|watt|\bkw\b|input power|standby power|pressure rise|total dynamic head|load[- ]bin|load fraction|speed fraction|gallons per|flow rate|thermal energy|temperature rise|water-heating share|tariff|ratchet|database id|fuel economy\.gov id|annual uses per|annual flushes per)/i;
+              for (const card of cards) {
+                for (const line of card.tree.split("\n")) {
+                  if (line.includes("(User)")) expect(line).not.toMatch(forbidden);
+                }
+              }
+            });
+
+            it("uses shared practical hot-water resolution across the water-heating family", async () => {
+              const { cards } = await generateReviewedCards();
+              for (const id of ["ITC-06", "ITC-07", "ITC-08", "ITC-32", "ITC-52", "ITC-53"]) {
+                const card = cards.find((candidate) => candidate.id === id);
+                expect(card.tree).toContain("Commercial Hot-Water Load Resolution");
+                expect(card.processes.some((process) => process.canonicalId === "STD-COMMERCIAL-HOT-WATER-LOAD")).toBe(true);
+              }
+            });
+
+            it("maps every visible process to an existing canonical Standard", async () => {
+              const { cards, artifacts } = await generateReviewedCards();
+              const registry = artifacts.get("docs/operational-savings-standard-registry.md");
+              for (const card of cards) for (const process of card.processes) {
+                expect(process.canonicalId).toMatch(/^STD-/);
+                expect(registry).toContain(`## ${process.canonicalId} —`);
+              }
+            });
+
+            it("preserves the legitimate zero-savings and exact-vehicle boundaries", async () => {
+              const { cards } = await generateReviewedCards();
+              const enabling = cards.find((card) => card.id === "ITC-15");
+              const vehicle = cards.find((card) => card.id === "ITC-29");
+              expect(`${enabling.broaderFormula}\n${enabling.expandedFormula}`).toMatch(/zero|0/i);
+              expect(vehicle.tree).not.toMatch(/FuelEconomy\.gov ID \(User\)/i);
+              expect(vehicle.processes.some((process) => process.canonicalId === "STD-FUELECONOMY-VEHICLES")).toBe(true);
+            });
+          });
+          EOF
+
+          cat > scripts/validate-operational-savings-information-trees.test.mjs <<'EOF'
+          import { describe, expect, it } from "vitest";
+          import { generateReviewedCards, validateReviewedCards } from "./repair-reviewed-operational-savings-cards.mjs";
+
+          describe("reviewed operational-savings validator", () => {
+            it("accepts the committed generated corpus", async () => {
+              const result = await validateReviewedCards();
+              expect(result.errors).toEqual([]);
+              expect(result.cards).toBe(54);
+              expect(result.processes).toBeGreaterThan(124);
+              expect(result.standards).toBeGreaterThanOrEqual(20);
+            });
+
+            it("is deterministic after the canonical reviewed source is written", async () => {
+              const first = await generateReviewedCards();
+              const second = await generateReviewedCards();
+              expect([...first.artifacts]).toEqual([...second.artifacts]);
+            });
+
+            it("keeps every Project Document leaf explicitly optional", async () => {
+              const { cards } = await generateReviewedCards();
+              const offenders = cards.flatMap((card) => card.tree.split("\n")
+                .filter((line) => line.includes("(Project Document)") && !line.includes("[OPTIONAL OVERRIDE]"))
+                .map((line) => `${card.id}: ${line}`));
+              expect(offenders).toEqual([]);
+            });
+          });
+          EOF
+
+      - name: Generate repaired cards and canonical registries
+        run: |
+          node scripts/repair-reviewed-operational-savings-cards.mjs --write --rebuild
+          node scripts/validate-operational-savings-information-trees.mjs
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run focused Information Card tests
+        run: npx vitest run scripts/generate-operational-savings-review-pages.test.mjs scripts/validate-operational-savings-information-trees.test.mjs
+
+      - name: Run full repository tests
+        run: npm test
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      - name: API syntax check
+        run: node --check apps/api/server.mjs
+
+      - name: Remove temporary assistant workflows and test marker
+        run: |
+          rm -f .github/workflows/assistant-card-repair-export.yml
+          rm -f .github/workflows/assistant-card-repair-apply.yml
+          rm -f tmp-test-file.txt
+
+      - name: Commit and push reviewed repair
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --check
+          if git diff --cached --quiet; then
+            echo "No generated changes to commit"
+            exit 0
+          fi
+          git commit -m "docs: manually repair all operational savings information cards"
+          git push origin HEAD:docs/operational-savings-information-trees
