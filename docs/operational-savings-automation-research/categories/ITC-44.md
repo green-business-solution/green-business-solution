@@ -24,7 +24,7 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Feasibility
 
-The category depends on these source-level verdicts: NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES.
+The category depends on these source-level verdicts: PARTIALLY_FEASIBLE.
 The process table reports the final proof level after execution-record verification, not a higher level that a manifest may have declared before the current run.
 An exact path is usable only when every owned input is present and every Standard adapter returns one unambiguous compatible result.
 A benchmark path is usable only where the category has a retained authoritative population and exact selection rule.
