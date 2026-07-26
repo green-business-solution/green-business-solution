@@ -494,6 +494,14 @@ test("rejects local input mutation after the recorded context", async () => {
     ).rejects.toThrow(
       /POST_HOC_REPLAY_COMMIT_FILE_MISMATCH/
     );
+    await expect(
+      validatePostHocReplayReceipt({
+        repoRoot,
+        repositories,
+        receipt,
+        requireCurrentInputFiles: false
+      })
+    ).resolves.toEqual(receipt);
   });
 });
 

@@ -27,6 +27,10 @@ Then add `--run-validation --confirm-no-active-consumers --remove-after-replay` 
 That mode requires every accepted image ID and digest reference to be absent before pulling, keeps all four images present while the fixed full offline validation runs, records the validation and replay receipt in the migration manifest, removes only each exact ECR digest reference, and succeeds only when the corresponding image ID is then absent.
 The no-active-consumers confirmation is an operator coordination assertion that must remain true for the full replay and cleanup window.
 It rejects an unexpected tag, digest, container, Docker-daemon error, or pre-existing accepted image instead of attempting broad cleanup.
+If an implementation change makes the committed post-hoc replay receipt stale, add `--refresh-replay-receipt --confirm-no-active-consumers --remove-after-replay` without `--run-validation`.
+That recovery mode verifies the historical receipt against its recorded commit, verifies the live research ECR controls, pulls the four exact digests, replays the current committed verifiers, atomically rotates only the committed receipt, and removes the exact transient images.
+It refuses a dirty source context, a modified receipt, a pre-existing accepted image, or an unconfirmed cleanup window.
+Commit the rotated receipt and migration manifest before running the full restore proof.
 
 Use `npm run operational-savings:database:real` to rebuild the durable SQLite database, compact Git fixture, and publication receipt under the same process-wide deny-network sandbox.
 The underlying `run-real-proofs.mjs` builder refuses direct execution unless the wrapper markers are present and a live outbound socket control observes `EPERM` from the operating-system sandbox before any output path is created.

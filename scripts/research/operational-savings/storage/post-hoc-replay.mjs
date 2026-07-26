@@ -294,30 +294,35 @@ async function assertCommitFile({
   contextGitCommit,
   repositoryPath,
   expectedSha256,
-  gitRunner
+  gitRunner,
+  requireCurrentInputFile = true
 }) {
   if (!SHA256_PATTERN.test(expectedSha256 ?? "")) {
     throw new Error(
       `POST_HOC_REPLAY_FILE_SHA_INVALID: ${repositoryPath}`
     );
   }
-  const [committedBytes, localBytes] = await Promise.all([
-    gitBlob({
-      gitRunner,
-      repoRoot,
-      revision: contextGitCommit,
-      repositoryPath
-    }),
-    localRegularFileBytes(repoRoot, repositoryPath)
-  ]);
-  if (
-    sha256Bytes(committedBytes) !==
-      expectedSha256 ||
-    sha256Bytes(localBytes) !== expectedSha256
-  ) {
+  const committedBytes = await gitBlob({
+    gitRunner,
+    repoRoot,
+    revision: contextGitCommit,
+    repositoryPath
+  });
+  if (sha256Bytes(committedBytes) !== expectedSha256) {
     throw new Error(
       `POST_HOC_REPLAY_COMMIT_FILE_MISMATCH: ${repositoryPath}`
     );
+  }
+  if (requireCurrentInputFile) {
+    const localBytes = await localRegularFileBytes(
+      repoRoot,
+      repositoryPath
+    );
+    if (sha256Bytes(localBytes) !== expectedSha256) {
+      throw new Error(
+        `POST_HOC_REPLAY_COMMIT_FILE_MISMATCH: ${repositoryPath}`
+      );
+    }
   }
 }
 
@@ -486,7 +491,8 @@ export async function validatePostHocReplayReceipt({
   repositories,
   receiptRelativePath =
     POST_HOC_REPLAY_RECEIPT_RELATIVE_PATH,
-  gitRunner = defaultGitRunner
+  gitRunner = defaultGitRunner,
+  requireCurrentInputFiles = true
 }) {
   const modelBindings =
     assertPostHocReplayReceiptBinding({
@@ -533,7 +539,9 @@ export async function validatePostHocReplayReceipt({
       contextGitCommit: receipt.contextGitCommit,
       repositoryPath: file.path,
       expectedSha256: file.sha256,
-      gitRunner
+      gitRunner,
+      requireCurrentInputFile:
+        requireCurrentInputFiles
     });
   }
 
@@ -553,7 +561,9 @@ export async function validatePostHocReplayReceipt({
         modelReceipt.buildManifestPath,
       expectedSha256:
         modelReceipt.buildManifestSha256,
-      gitRunner
+      gitRunner,
+      requireCurrentInputFile:
+        requireCurrentInputFiles
     });
     for (const input of committedInputs) {
       await assertCommitFile({
@@ -561,7 +571,9 @@ export async function validatePostHocReplayReceipt({
         contextGitCommit: receipt.contextGitCommit,
         repositoryPath: input.repositoryPath,
         expectedSha256: input.sha256,
-        gitRunner
+        gitRunner,
+        requireCurrentInputFile:
+          requireCurrentInputFiles
       });
     }
   }
@@ -635,6 +647,41 @@ export async function assertLivePostHocReplayReceipt({
     repositories,
     receiptRelativePath: replayState.path,
     gitRunner
+  });
+  return replayState;
+}
+
+export async function assertHistoricalPostHocReplayReceipt({
+  repoRoot,
+  manifest,
+  gitRunner = defaultGitRunner
+}) {
+  const replayState =
+    manifest?.destination?.ecr
+      ?.postHocReplayReceipt;
+  const repositories =
+    manifest?.destination?.ecr?.repositories;
+  if (
+    replayState?.path !==
+      POST_HOC_REPLAY_RECEIPT_RELATIVE_PATH ||
+    replayState.status !==
+      "PASS_COMMITTED_POST_HOC_REPLAY" ||
+    replayState.blocker !== null ||
+    !Array.isArray(repositories) ||
+    repositories.length === 0 ||
+    !replayState.receipt
+  ) {
+    throw new Error(
+      "POST_HOC_REPLAY_HISTORICAL_RECEIPT_REQUIRED"
+    );
+  }
+  await validatePostHocReplayReceipt({
+    repoRoot,
+    receipt: replayState.receipt,
+    repositories,
+    receiptRelativePath: replayState.path,
+    gitRunner,
+    requireCurrentInputFiles: false
   });
   return replayState;
 }

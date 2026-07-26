@@ -513,6 +513,50 @@ test("writes one sealed, exact-order replay receipt from a clean committed conte
   expect(secondInventoryCall).toBe(false);
 });
 
+test("atomically rotates only an exact committed replay receipt", async () => {
+  const fixture = await createReplayFixture();
+  const receiptPath = await writeFixtureFile(
+    fixture.repoRoot,
+    POST_HOC_REPLAY_RECEIPT_RELATIVE_PATH,
+    '{"status":"stale"}\n'
+  );
+  await git(fixture.repoRoot, ["add", "--all"]);
+  await git(fixture.repoRoot, [
+    "-c",
+    "commit.gpgsign=false",
+    "commit",
+    "--quiet",
+    "-m",
+    "record stale receipt"
+  ]);
+
+  const result =
+    await runPostHocReplayAndWriteReceipt({
+      repoRoot: fixture.repoRoot,
+      inventoryBuilder: async () =>
+        fixture.inventory,
+      replaceCommittedReceipt: true,
+      clock: deterministicClock(),
+      output: outputCollector().output
+    });
+
+  expect(result.receipt.status).toBe(
+    "PASS_COMMITTED_POST_HOC_REPLAY"
+  );
+  expect(
+    JSON.parse(await readFile(receiptPath, "utf8"))
+  ).toEqual(result.receipt);
+  expect(
+    await git(
+      fixture.repoRoot,
+      ["status", "--porcelain=v1"],
+      "utf8"
+    )
+  ).toContain(
+    ` M ${POST_HOC_REPLAY_RECEIPT_RELATIVE_PATH}`
+  );
+});
+
 test("rejects a dirty source context before inventory or verifier execution", async () => {
   const fixture = await createReplayFixture();
   const inputPath = join(

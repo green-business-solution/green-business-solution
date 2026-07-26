@@ -2166,6 +2166,41 @@ test("pulls exact ECR digests and replays every verifier after all controls pass
       )
     );
   }
+
+  const replayReceiptRefreshAction =
+    vi.fn(async ({ results }) => ({
+      receiptPath:
+        "/repository/post-hoc-replay-receipt.v1.json",
+      receipt: {
+        status:
+          "PASS_COMMITTED_POST_HOC_REPLAY",
+        replayedModelCount: results.length
+      }
+    }));
+  const refreshed =
+    await restoreAndReplayEcrImages({
+      repoRoot: liveReplayRepoRoot,
+      manifest,
+      destination,
+      runner,
+      dockerRunner,
+      verifierRunner,
+      createDockerConfig,
+      removeDockerConfig,
+      replayReceiptRefreshAction
+    });
+  expect(
+    replayReceiptRefreshAction
+  ).toHaveBeenCalledOnce();
+  expect(
+    refreshed.refreshedReplayReceipt
+  ).toMatchObject({
+    receipt: {
+      status:
+        "PASS_COMMITTED_POST_HOC_REPLAY",
+      replayedModelCount: 4
+    }
+  });
 });
 
 test("removes only exact ECR references and requires the image ID to become absent", async () => {

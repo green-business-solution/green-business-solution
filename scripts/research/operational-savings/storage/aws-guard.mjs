@@ -75,6 +75,7 @@ import {
   ecrEvidenceDigest
 } from "./ecr-evidence.mjs";
 import {
+  assertHistoricalPostHocReplayReceipt,
   assertLivePostHocReplayReceipt
 } from "./post-hoc-replay.mjs";
 
@@ -6242,11 +6243,15 @@ export function planEcrImageRestore({
   destination,
   removeAfterReplay = false,
   runFullValidation = false,
-  confirmNoActiveConsumers = false
+  confirmNoActiveConsumers = false,
+  refreshReplayReceipt = false
 }) {
   if (
     removeAfterReplay &&
-    (!runFullValidation || confirmNoActiveConsumers !== true)
+    (
+      (!runFullValidation && !refreshReplayReceipt) ||
+      confirmNoActiveConsumers !== true
+    )
   ) {
     throw new Error(
       "ECR_RESTORE_LOCAL_REMOVAL_REQUIRES_FULL_VALIDATION_AND_CONFIRMATION"
@@ -6274,6 +6279,8 @@ export function planEcrImageRestore({
     wouldPullExactDigests: true,
     wouldReplayOfflineVerifiers: true,
     wouldRunFullOfflineValidation: runFullValidation,
+    wouldRefreshCommittedReplayReceipt:
+      refreshReplayReceipt,
     wouldRequireAcceptedImagesAbsentBeforePull:
       removeAfterReplay,
     wouldRemoveExactEcrReferencesAndRequireImageAbsence:
@@ -6573,6 +6580,7 @@ export async function restoreAndReplayEcrImages({
   destination,
   removeAfterReplay = false,
   postReplayAction = null,
+  replayReceiptRefreshAction = null,
   confirmNoActiveConsumers = false,
   runner = defaultAwsRunner,
   dockerRunner = defaultDockerRunner,
@@ -6581,25 +6589,55 @@ export async function restoreAndReplayEcrImages({
   removeDockerConfig = (path) =>
     rm(path, { recursive: true, force: true })
 }) {
+  const refreshReplayReceipt =
+    replayReceiptRefreshAction !== null;
   if (
     removeAfterReplay &&
-    (postReplayAction === null ||
+    (
+      (
+        postReplayAction === null &&
+        !refreshReplayReceipt
+      ) ||
       confirmNoActiveConsumers !== true)
   ) {
     throw new Error(
       "ECR_RESTORE_LOCAL_REMOVAL_REQUIRES_FULL_VALIDATION_AND_CONFIRMATION"
     );
   }
-  await assertLivePostHocReplayReceipt({
-    repoRoot,
-    manifest
-  });
+  if (
+    refreshReplayReceipt &&
+    postReplayAction !== null
+  ) {
+    throw new Error(
+      "ECR_RESTORE_REPLAY_RECEIPT_REFRESH_CANNOT_RUN_FULL_VALIDATION"
+    );
+  }
+  if (
+    refreshReplayReceipt &&
+    typeof replayReceiptRefreshAction !== "function"
+  ) {
+    throw new Error(
+      "ECR_RESTORE_REPLAY_RECEIPT_REFRESH_ACTION_INVALID"
+    );
+  }
+  if (refreshReplayReceipt) {
+    await assertHistoricalPostHocReplayReceipt({
+      repoRoot,
+      manifest
+    });
+  } else {
+    await assertLivePostHocReplayReceipt({
+      repoRoot,
+      manifest
+    });
+  }
   const plan = planEcrImageRestore({
     manifest,
     destination,
     removeAfterReplay,
     runFullValidation: postReplayAction !== null,
-    confirmNoActiveConsumers
+    confirmNoActiveConsumers,
+    refreshReplayReceipt
   });
   if (
     postReplayAction !== null &&
@@ -6666,6 +6704,7 @@ export async function restoreAndReplayEcrImages({
   const cleanupErrors = [];
   let operationError = null;
   let postReplayResult = null;
+  let refreshedReplayReceipt = null;
   try {
     for (const { spec, repository } of repositories) {
       const imageUri = repository.remoteImage.imageUri;
@@ -6741,6 +6780,14 @@ export async function restoreAndReplayEcrImages({
         localCleanup: null
       });
     }
+    if (replayReceiptRefreshAction) {
+      refreshedReplayReceipt =
+        await replayReceiptRefreshAction({
+          repoRoot,
+          manifest,
+          results
+        });
+    }
     if (postReplayAction) {
       postReplayResult = await postReplayAction({
         repoRoot,
@@ -6806,6 +6853,7 @@ export async function restoreAndReplayEcrImages({
     verifiedResearchIdentity: identity,
     temporaryDockerCredentialRetained: false,
     postReplayResult,
+    refreshedReplayReceipt,
     results
   };
 }

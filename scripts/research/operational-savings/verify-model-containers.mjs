@@ -9,6 +9,7 @@ import {
   open,
   readFile,
   realpath,
+  rename,
   unlink
 } from "node:fs/promises";
 import {
@@ -701,6 +702,92 @@ export async function writeReceiptExclusive({
   return absolutePath;
 }
 
+async function committedReceiptReplacement({
+  repoRoot,
+  receiptRelativePath,
+  gitRunner
+}) {
+  const absolutePath =
+    await assertReceiptParentDirectory({
+      repoRoot,
+      receiptRelativePath
+    });
+  const [localBytes, committedBytes] =
+    await Promise.all([
+      readRepositoryRegularFile(
+        repoRoot,
+        receiptRelativePath
+      ),
+      gitBlob({
+        gitRunner,
+        repoRoot,
+        revision: "HEAD",
+        repositoryPath: receiptRelativePath
+      })
+    ]);
+  if (
+    sha256Bytes(localBytes) !==
+      sha256Bytes(committedBytes)
+  ) {
+    throw new Error(
+      `MODEL_CONTAINER_REPLAY_RECEIPT_REPLACEMENT_NOT_COMMITTED: ${receiptRelativePath}`
+    );
+  }
+  return {
+    absolutePath,
+    expectedSha256: sha256Bytes(localBytes)
+  };
+}
+
+async function writeReceiptReplacement({
+  repoRoot,
+  receiptRelativePath,
+  receipt,
+  expectedSha256
+}) {
+  const absolutePath =
+    await assertReceiptParentDirectory({
+      repoRoot,
+      receiptRelativePath
+    });
+  const currentBytes =
+    await readRepositoryRegularFile(
+      repoRoot,
+      receiptRelativePath
+    );
+  if (sha256Bytes(currentBytes) !== expectedSha256) {
+    throw new Error(
+      `MODEL_CONTAINER_REPLAY_RECEIPT_CHANGED_BEFORE_REPLACEMENT: ${receiptRelativePath}`
+    );
+  }
+  const temporaryPath = join(
+    dirname(absolutePath),
+    `.${randomUUID()}.post-hoc-replay.tmp`
+  );
+  let handle = null;
+  try {
+    handle = await open(temporaryPath, "wx", 0o644);
+    await handle.writeFile(
+      `${JSON.stringify(receipt, null, 2)}\n`,
+      "utf8"
+    );
+    await handle.sync();
+    await handle.close();
+    handle = null;
+    await rename(temporaryPath, absolutePath);
+  } finally {
+    if (handle) {
+      await handle.close().catch(() => {});
+    }
+    await unlink(temporaryPath).catch(
+      (error) => {
+        if (error.code !== "ENOENT") throw error;
+      }
+    );
+  }
+  return absolutePath;
+}
+
 export async function runPostHocReplayAndWriteReceipt({
   repoRoot = DEFAULT_REPO_ROOT,
   receiptRelativePath =
@@ -708,6 +795,7 @@ export async function runPostHocReplayAndWriteReceipt({
   inventoryBuilder = buildResearchEcrInventory,
   verifierRunner = defaultVerifierRunner,
   gitRunner = defaultGitRunner,
+  replaceCommittedReceipt = false,
   clock = () => new Date(),
   output = {
     stdout: process.stdout,
@@ -720,10 +808,19 @@ export async function runPostHocReplayAndWriteReceipt({
     );
   }
   const normalizedRepoRoot = resolve(repoRoot);
-  const receiptPath = await assertReceiptAbsent({
-    repoRoot: normalizedRepoRoot,
-    receiptRelativePath
-  });
+  const replacement = replaceCommittedReceipt
+    ? await committedReceiptReplacement({
+        repoRoot: normalizedRepoRoot,
+        receiptRelativePath,
+        gitRunner
+      })
+    : null;
+  const receiptPath =
+    replacement?.absolutePath ??
+    await assertReceiptAbsent({
+      repoRoot: normalizedRepoRoot,
+      receiptRelativePath
+    });
   const initialContext =
     await captureCleanCommittedSourceContext({
       repoRoot: normalizedRepoRoot,
@@ -839,11 +936,21 @@ export async function runPostHocReplayAndWriteReceipt({
     implementationFiles,
     models: modelReceipts
   });
-  await writeReceiptExclusive({
-    repoRoot: normalizedRepoRoot,
-    receiptRelativePath,
-    receipt
-  });
+  if (replacement) {
+    await writeReceiptReplacement({
+      repoRoot: normalizedRepoRoot,
+      receiptRelativePath,
+      receipt,
+      expectedSha256:
+        replacement.expectedSha256
+    });
+  } else {
+    await writeReceiptExclusive({
+      repoRoot: normalizedRepoRoot,
+      receiptRelativePath,
+      receipt
+    });
+  }
   return {
     receipt,
     receiptPath

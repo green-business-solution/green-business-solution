@@ -50,8 +50,13 @@ import {
   sha256CanonicalJson
 } from "./inventory.mjs";
 import {
+  POST_HOC_REPLAY_RECEIPT_RELATIVE_PATH,
   assertLivePostHocReplayReceipt
 } from "./post-hoc-replay.mjs";
+import {
+  captureCleanCommittedSourceContext,
+  runPostHocReplayAndWriteReceipt
+} from "../verify-model-containers.mjs";
 
 const VALUE_OPTIONS = new Set([
   "--bucket",
@@ -70,6 +75,7 @@ const BOOLEAN_OPTIONS = new Set([
   "--execute",
   "--help",
   "--remove-after-replay",
+  "--refresh-replay-receipt",
   "--run-validation",
   "--write"
 ]);
@@ -161,6 +167,9 @@ Hydrate and replay every runnable model from its exact verified ECR digest:
   Every successful executed replay writes an atomic manifest receipt.
   Local removal is accepted only with --remove-after-replay --run-validation --confirm-no-active-consumers.
   That mode requires every accepted image to be absent before the pull, runs the fixed full offline validation while every restored S3 package and ECR image is present, removes only each exact ECR digest reference, and succeeds only when the corresponding image ID is then absent.
+  If a committed replay receipt is stale after an implementation change, use --refresh-replay-receipt --remove-after-replay --confirm-no-active-consumers.
+  Receipt refresh verifies the historical receipt and exact ECR controls, pulls and replays all four images, atomically rotates the committed receipt, and removes only the exact transient ECR images.
+  Commit the refreshed receipt and manifest before running the full validation mode.
 
 Refresh only the recorded current post-hoc replay evidence after committing a new receipt:
   Use refresh-ecr-evidence and add --execute.
@@ -964,15 +973,37 @@ async function restoreEcrImagesCommand(options) {
       destination: requestedDestination,
       removeAfterReplay: options["remove-after-replay"],
       runFullValidation: options["run-validation"],
+      refreshReplayReceipt:
+        options["refresh-replay-receipt"],
       confirmNoActiveConsumers:
         options["confirm-no-active-consumers"]
     });
   }
   const runFullValidation =
     options["run-validation"] === true;
+  const refreshReplayReceipt =
+    options["refresh-replay-receipt"] === true;
+  if (
+    refreshReplayReceipt &&
+    (
+      runFullValidation ||
+      options["remove-after-replay"] !== true ||
+      options["confirm-no-active-consumers"] !== true
+    )
+  ) {
+    throw new Error(
+      "ECR_RESTORE_REPLAY_RECEIPT_REFRESH_REQUIRES_EXACT_REMOVAL_AND_CONFIRMATION_WITHOUT_FULL_VALIDATION"
+    );
+  }
+  if (refreshReplayReceipt) {
+    await captureCleanCommittedSourceContext({
+      repoRoot
+    });
+  }
   if (
     options["remove-after-replay"] === true &&
-    (!runFullValidation ||
+    (
+      (!runFullValidation && !refreshReplayReceipt) ||
       options["confirm-no-active-consumers"] !== true)
   ) {
     throw new Error(
@@ -987,6 +1018,14 @@ async function restoreEcrImagesCommand(options) {
     removeAfterReplay: options["remove-after-replay"],
     confirmNoActiveConsumers:
       options["confirm-no-active-consumers"] === true,
+    replayReceiptRefreshAction:
+      refreshReplayReceipt
+        ? async () =>
+            runPostHocReplayAndWriteReceipt({
+              repoRoot,
+              replaceCommittedReceipt: true
+            })
+        : null,
     postReplayAction: runFullValidation
       ? async () => {
           const validation =
@@ -1011,6 +1050,32 @@ async function restoreEcrImagesCommand(options) {
         }
       : null
   });
+  if (refreshReplayReceipt) {
+    const refreshed =
+      result.refreshedReplayReceipt;
+    if (
+      refreshed?.receiptPath !==
+        resolve(
+          repoRoot,
+          POST_HOC_REPLAY_RECEIPT_RELATIVE_PATH
+        ) ||
+      refreshed.receipt?.status !==
+        "PASS_COMMITTED_POST_HOC_REPLAY"
+    ) {
+      throw new Error(
+        "ECR_RESTORE_REPLAY_RECEIPT_REFRESH_RESULT_INVALID"
+      );
+    }
+    manifest.destination.ecr.postHocReplayReceipt = {
+      path: POST_HOC_REPLAY_RECEIPT_RELATIVE_PATH,
+      status: "PASS_COMMITTED_POST_HOC_REPLAY",
+      blocker: null,
+      receipt: refreshed.receipt
+    };
+    delete manifest.manifestContentSha256;
+    manifest.manifestContentSha256 =
+      sha256CanonicalJson(manifest);
+  }
   const receipt = recordEcrRestoreReplay({
     manifest,
     result
