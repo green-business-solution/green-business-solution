@@ -6658,6 +6658,118 @@ test("audited cleanup resumes an exact quarantined file without revalidating del
   });
 });
 
+test("audited cleanup revalidates absence and rebinds completed evidence to a newer validation", async () => {
+  await withAuditedCleanupFixture(async (context) => {
+    const audit = JSON.parse(
+      await readFile(context.auditPath, "utf8")
+    );
+    audit.artifactGroups = audit.artifactGroups.filter(
+      (group) => group.groupId === "test-files"
+    );
+    await writeFile(
+      context.auditPath,
+      `${JSON.stringify(audit, null, 2)}\n`,
+      "utf8"
+    );
+    context.manifest.localArtifactAudit =
+      await loadLocalArtifactAudit({
+        repoRoot: context.root,
+        originalLocalArtifacts: []
+      });
+    markCleanupEligible(
+      context.manifest,
+      [context.packageRecord],
+      DEFAULT_MANIFEST_RELATIVE_PATH
+    );
+    const manifestPath = await persistManifest(
+      context.root,
+      context.manifest,
+      DEFAULT_MANIFEST_RELATIVE_PATH
+    );
+    await cleanupAuditedLocalArtifacts({
+      repoRoot: context.root,
+      manifestPath,
+      manifest: context.manifest,
+      destination,
+      confirmDeleteLocal: true,
+      runner: vi.fn(),
+      dockerRunner: vi.fn(),
+      gitRunner: cleanValidationGitRunner(),
+      deleteFile: async (path) => rm(path),
+      permittedTempRoots: [context.externalRoot],
+      now: () => "2026-07-24T21:40:00.000Z"
+    });
+
+    const completed = JSON.parse(
+      await readFile(manifestPath, "utf8")
+    );
+    Object.assign(
+      completed.execution.auditedLocalArtifactCleanup,
+      {
+        validatedSourceCommit: "historical-head",
+        validatedRepositoryTreeDigest: "a".repeat(64)
+      }
+    );
+    resealManifest(completed);
+    await persistManifest(
+      context.root,
+      completed,
+      DEFAULT_MANIFEST_RELATIVE_PATH
+    );
+    const runner = vi.fn();
+    const dockerRunner = vi.fn();
+    const rebound =
+      await cleanupAuditedLocalArtifacts({
+        repoRoot: context.root,
+        manifestPath,
+        manifest: completed,
+        destination,
+        confirmDeleteLocal: true,
+        runner,
+        dockerRunner,
+        gitRunner: cleanValidationGitRunner(),
+        permittedTempRoots: [context.externalRoot],
+        now: () => "2026-07-24T21:41:00.000Z"
+      });
+
+    expect(rebound).toMatchObject({
+      disposition:
+        "AUDITED_LOCAL_ARTIFACT_CLEANUP_ALREADY_RECORDED",
+      validationBindingStatus:
+        "REBOUND_AFTER_ABSENCE_REVALIDATION",
+      pendingRecordCount: 0
+    });
+    expect(rebound.manifestCheckpointSha256).toMatch(
+      /^[a-f0-9]{64}$/
+    );
+    expect(runner).not.toHaveBeenCalled();
+    expect(dockerRunner).not.toHaveBeenCalled();
+    const persisted = JSON.parse(
+      await readFile(manifestPath, "utf8")
+    );
+    expect(
+      persisted.execution.auditedLocalArtifactCleanup
+    ).toMatchObject({
+      validatedSourceCommit: "validated-head",
+      validatedRepositoryTreeDigest:
+        EMPTY_TREE_DIGEST,
+      revalidatedAt: "2026-07-24T21:41:00.000Z",
+      validationHistory: [
+        {
+          validatedSourceCommit: "historical-head",
+          validatedRepositoryTreeDigest:
+            "a".repeat(64),
+          supersededAt:
+            "2026-07-24T21:41:00.000Z"
+        }
+      ]
+    });
+    expect(validateManifestDigest(persisted)).toBe(
+      persisted
+    );
+  });
+});
+
 test("audited cleanup performs no deletion when an exact file checksum changed", async () => {
   await withAuditedCleanupFixture(async (context) => {
     const manifestPath = await persistManifest(

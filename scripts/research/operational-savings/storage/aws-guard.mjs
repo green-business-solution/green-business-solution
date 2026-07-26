@@ -7318,12 +7318,11 @@ function validateExistingAuditedCleanup({
   if (!execution) return new Map();
   if (
     execution.auditSourceSha256 !== audit.sourceSha256 ||
-    execution.validatedSourceCommit !==
-      manifest.execution.finalCleanupValidation
-        .validatedSourceCommit ||
-    execution.validatedRepositoryTreeDigest !==
-      manifest.execution.finalCleanupValidation
-        .validatedRepositoryTreeDigest ||
+    typeof execution.validatedSourceCommit !== "string" ||
+    execution.validatedSourceCommit.length === 0 ||
+    typeof execution.validatedRepositoryTreeDigest !==
+      "string" ||
+    execution.validatedRepositoryTreeDigest.length === 0 ||
     !Array.isArray(execution.results)
   ) {
     throw new Error(
@@ -7475,6 +7474,21 @@ function validateExistingAuditedCleanup({
     results.set(result.originalPath, result);
   }
   return results;
+}
+
+function auditedCleanupValidationBindingIsCurrent(
+  manifest
+) {
+  const execution =
+    manifest.execution?.auditedLocalArtifactCleanup;
+  const validation =
+    manifest.execution?.finalCleanupValidation;
+  return (
+    execution?.validatedSourceCommit ===
+      validation?.validatedSourceCommit &&
+    execution?.validatedRepositoryTreeDigest ===
+      validation?.validatedRepositoryTreeDigest
+  );
 }
 
 async function assertPreviouslyCleanedArtifactStillAbsent({
@@ -7952,6 +7966,70 @@ export async function cleanupAuditedLocalArtifacts({
       });
     }
   }
+  let manifestCheckpointSha256 = null;
+  let validationBindingStatus = "CURRENT";
+  if (
+    manifest.execution.auditedLocalArtifactCleanup &&
+    !auditedCleanupValidationBindingIsCurrent(manifest)
+  ) {
+    const execution =
+      manifest.execution.auditedLocalArtifactCleanup;
+    const validation =
+      manifest.execution.finalCleanupValidation;
+    const revalidatedAt = now();
+    const historicalBinding = {
+      validatedSourceCommit:
+        execution.validatedSourceCommit,
+      validatedRepositoryTreeDigest:
+        execution.validatedRepositoryTreeDigest,
+      supersededAt: revalidatedAt
+    };
+    execution.validationHistory ??= [];
+    if (
+      !execution.validationHistory.some(
+        (candidate) =>
+          candidate.validatedSourceCommit ===
+            historicalBinding.validatedSourceCommit &&
+          candidate.validatedRepositoryTreeDigest ===
+            historicalBinding.validatedRepositoryTreeDigest
+      )
+    ) {
+      execution.validationHistory.push(
+        historicalBinding
+      );
+    }
+    Object.assign(execution, {
+      validatedSourceCommit:
+        validation.validatedSourceCommit,
+      validatedRepositoryTreeDigest:
+        validation.validatedRepositoryTreeDigest,
+      revalidatedAt
+    });
+    const sourceSha256 =
+      await cleanupCheckpointSourceSha256(
+        manifestPath,
+        expectedManifestSourceSha256
+      );
+    manifest.manifestContentSha256 =
+      stableManifestDigest(manifest);
+    const written = await checkpointManifest({
+      manifestPath,
+      manifest,
+      expectedSourceSha256: sourceSha256
+    });
+    if (
+      !written ||
+      typeof written.sourceSha256 !== "string"
+    ) {
+      throw new Error(
+        "AUDITED_LOCAL_CLEANUP_REVALIDATION_CHECKPOINT_RESULT_INVALID"
+      );
+    }
+    manifestCheckpointSha256 =
+      written.sourceSha256;
+    validationBindingStatus =
+      "REBOUND_AFTER_ABSENCE_REVALIDATION";
+  }
   const pendingRecords = nonpackageRecords.filter(
     (record) => !existingResults.has(record.originalPath)
   );
@@ -7960,21 +8038,25 @@ export async function cleanupAuditedLocalArtifacts({
       disposition:
         "AUDITED_LOCAL_ARTIFACT_CLEANUP_ALREADY_RECORDED",
       ...planAuditedLocalArtifactCleanup(manifest),
+      validationBindingStatus,
       summary:
         manifest.execution.auditedLocalArtifactCleanup
           .summary,
       results: [
         ...manifest.execution.auditedLocalArtifactCleanup
           .results
-      ]
+      ],
+      manifestCheckpointSha256
     };
   }
 
   const checkpointState = {
-    sourceSha256: await cleanupCheckpointSourceSha256(
-      manifestPath,
-      expectedManifestSourceSha256
-    )
+    sourceSha256:
+      manifestCheckpointSha256 ??
+      (await cleanupCheckpointSourceSha256(
+        manifestPath,
+        expectedManifestSourceSha256
+      ))
   };
   const hasPendingDockerImages = pendingRecords.some(
     (record) => record.recordKind === "DOCKER_IMAGE"
