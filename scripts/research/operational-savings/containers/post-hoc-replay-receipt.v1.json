@@ -1,9 +1,9 @@
 {
   "schemaVersion": "operational-savings/model-container-post-hoc-replay-v1",
   "status": "PASS_COMMITTED_POST_HOC_REPLAY",
-  "createdAt": "2026-07-26T04:07:32.002Z",
-  "contextGitCommit": "2949fe78a9a039cdcfbbeeb52226a5fad378ecdb",
-  "contextGitTree": "27ef8f96972fd35a5af2e94fbf45ffb8811c6275",
+  "createdAt": "2026-07-26T04:32:53.257Z",
+  "contextGitCommit": "9848650cd2c86992784be735639d1343f5c527f1",
+  "contextGitTree": "899c7343370eff4791ec9406fb3bad5b7a56210a",
   "semantics": {
     "replayKind": "POST_HOC_REPLAY",
     "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT",
@@ -34,11 +34,11 @@
     },
     {
       "path": "scripts/research/operational-savings/storage/inventory.mjs",
-      "sha256": "2b0a32565acb0ea6f2ab4231e7a5c97463f9c34b57b35aec548b877cad162212"
+      "sha256": "b526037f1b64ef31286d5e988db3f435da64deeb243eb54548e07d6b13333bd1"
     },
     {
       "path": "scripts/research/operational-savings/storage/ecr-evidence.mjs",
-      "sha256": "912b64ad44e26c97c5493a0bf8d5a03291277e4bc5bce9ffc70dae796d47830d"
+      "sha256": "79181504d2f48e6d0c6225684dc09ddd29c2d25a35154c5702d9ff681d921227"
     }
   ],
   "models": [
@@ -57,7 +57,7 @@
       "stdoutSizeBytes": 25,
       "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "stderrSizeBytes": 0,
-      "replayedAt": "2026-07-26T04:07:24.879Z",
+      "replayedAt": "2026-07-26T04:32:44.459Z",
       "replayKind": "POST_HOC_REPLAY",
       "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT"
     },
@@ -76,7 +76,7 @@
       "stdoutSizeBytes": 1737,
       "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "stderrSizeBytes": 0,
-      "replayedAt": "2026-07-26T04:07:25.659Z",
+      "replayedAt": "2026-07-26T04:32:45.581Z",
       "replayKind": "POST_HOC_REPLAY",
       "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT"
     },
@@ -95,7 +95,7 @@
       "stdoutSizeBytes": 1297,
       "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "stderrSizeBytes": 0,
-      "replayedAt": "2026-07-26T04:07:26.214Z",
+      "replayedAt": "2026-07-26T04:32:46.301Z",
       "replayKind": "POST_HOC_REPLAY",
       "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT"
     },
@@ -114,10 +114,10 @@
       "stdoutSizeBytes": 1420,
       "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "stderrSizeBytes": 0,
-      "replayedAt": "2026-07-26T04:07:31.913Z",
+      "replayedAt": "2026-07-26T04:32:53.090Z",
       "replayKind": "POST_HOC_REPLAY",
       "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT"
     }
   ],
-  "receiptContentSha256": "49b11d6d44f3668aa3c7ed9b497dfbad9589dd08adc143d5b7de623a6d8271de"
+  "receiptContentSha256": "ec6cc38281823c945edb22a195ce2afd250f5807919fc4d194479f5e6b167cf3"
 }
