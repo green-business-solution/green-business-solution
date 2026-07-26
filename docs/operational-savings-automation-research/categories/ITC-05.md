@@ -16,7 +16,7 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 | Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
 | --- | --- | --- | --- | --- |
-| scout_ecm_screen | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/scout/run.mjs | scout-offline-crosswalk-proof: PASSED; scripts/research/operational-savings/tests/scout-real.test.mjs :: requires offline mode and an independently reviewed crosswalk<br>scout-pinned-source-gap-audit: PASSED; scripts/research/operational-savings/tests/scout-real.test.mjs :: proves the pinned source inventory cannot supply ITC-05 or ITC-11 | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| scout_ecm_screen | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/scout/run.mjs | scout-offline-crosswalk-proof: NOT_COVERED<br>scout-pinned-source-gap-audit: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## End-to-end graph
 

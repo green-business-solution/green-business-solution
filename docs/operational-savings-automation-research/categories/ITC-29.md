@@ -16,7 +16,7 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 | Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
 | --- | --- | --- | --- | --- |
-| fueleconomy_vehicles | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/fueleconomy/run.mjs | fueleconomy-incompatible-pair-failure-proof: PASSED; scripts/research/operational-savings/tests/fueleconomy-real.test.mjs :: fails closed on incompatible exact pairs<br>fueleconomy-offline-proof: PASSED; scripts/research/operational-savings/tests/fueleconomy-real.test.mjs :: requires the runtime network guard<br>fueleconomy-real-bulk-proof: PASSED; scripts/research/operational-savings/tests/fueleconomy-real.test.mjs :: reaches both exact ITC-29 formula terms offline and publishes provenance | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| fueleconomy_vehicles | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/fueleconomy/run.mjs | fueleconomy-incompatible-pair-failure-proof: NOT_COVERED<br>fueleconomy-offline-proof: NOT_COVERED<br>fueleconomy-real-bulk-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## End-to-end graph
 

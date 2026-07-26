@@ -16,7 +16,7 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 | Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
 | --- | --- | --- | --- | --- |
-| context_benchmarks | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/context-benchmarks/doe-walkin.mjs | context-doe-walkin-real-proof: PASSED; scripts/research/operational-savings/tests/context-doe-walkin-real.test.mjs :: publishes both exact ITC-49 formula terms with canonical units and scope<br>context-doe-walkin-scope-failure-proof: PASSED; scripts/research/operational-savings/tests/context-doe-walkin-real.test.mjs :: fails closed outside the reviewed row and exact class dimensions<br>context-doe-walkin-source-mutation-proof: PASSED; scripts/research/operational-savings/tests/context-doe-walkin-real.test.mjs :: fails source-title, table-row, and fixture-value mutations | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| context_benchmarks | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/context-benchmarks/doe-walkin.mjs | context-doe-walkin-real-proof: NOT_COVERED<br>context-doe-walkin-scope-failure-proof: NOT_COVERED<br>context-doe-walkin-source-mutation-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## End-to-end graph
 

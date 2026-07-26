@@ -16,7 +16,7 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 | Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
 | --- | --- | --- | --- | --- |
-| watersense_landscape | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/watersense-landscape/run.mjs | watersense-landscape-header-failure-proof: PASSED; scripts/research/operational-savings/tests/watersense-landscape-real.test.mjs :: fails closed when an observed native header drifts<br>watersense-landscape-input-failure-proof: PASSED; scripts/research/operational-savings/tests/watersense-landscape-real.test.mjs :: rejects missing Version 2.0 inputs and incompatible project units<br>watersense-landscape-real-workbook-proof: PASSED; scripts/research/operational-savings/tests/watersense-landscape-real.test.mjs :: executes the exact reviewed Version 2.0 method and reaches both ITC-34 terms | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| watersense_landscape | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/watersense-landscape/run.mjs | watersense-landscape-header-failure-proof: NOT_COVERED<br>watersense-landscape-input-failure-proof: NOT_COVERED<br>watersense-landscape-real-workbook-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## End-to-end graph
 

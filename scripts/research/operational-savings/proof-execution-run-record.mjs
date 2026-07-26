@@ -2965,9 +2965,46 @@ export function verifyProofExecutionRunRecord({
     };
   }
   if (
-    !currentExecutionToolchainIdentity ||
-    record.executionToolchainIdentity.digest !==
-      currentExecutionToolchainIdentity.digest
+    !currentExecutionToolchainIdentity
+  ) {
+    return {
+      status: "TOOLCHAIN_IDENTITY_MISMATCH",
+      recordType: record.recordType,
+      runId: record.runId,
+      trustLevel: "LOCAL_CONTENT_BOUND",
+      runnerIdentityAuthenticated: false,
+      testResultsById: new Map()
+    };
+  }
+  try {
+    validateProofExecutionToolchainIdentity(
+      currentExecutionToolchainIdentity
+    );
+  } catch {
+    return {
+      status: "TOOLCHAIN_IDENTITY_MISMATCH",
+      recordType: record.recordType,
+      runId: record.runId,
+      trustLevel: "LOCAL_CONTENT_BOUND",
+      runnerIdentityAuthenticated: false,
+      testResultsById: new Map()
+    };
+  }
+  const recordedPortableToolchainDigest =
+    sha256Canonical(
+      portableToolchainContentIdentity(
+        record.executionToolchainIdentity
+      )
+    );
+  const currentPortableToolchainDigest =
+    sha256Canonical(
+      portableToolchainContentIdentity(
+        currentExecutionToolchainIdentity
+      )
+    );
+  if (
+    recordedPortableToolchainDigest !==
+    currentPortableToolchainDigest
   ) {
     return {
       status: "TOOLCHAIN_IDENTITY_MISMATCH",

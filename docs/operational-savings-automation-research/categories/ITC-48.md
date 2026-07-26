@@ -16,7 +16,7 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 | Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
 | --- | --- | --- | --- | --- |
-| context_benchmarks | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/context-benchmarks/run.mjs | context-cfs-cooktop-source-proof: PASSED; scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs :: publishes exact official dishwasher and cooktop benchmark cells<br>context-cfs-workbook-mutation-proof: PASSED; scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs :: fails changed benchmark cells and worksheet shapes | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| context_benchmarks | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/context-benchmarks/run.mjs | context-cfs-cooktop-source-proof: NOT_COVERED<br>context-cfs-workbook-mutation-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## End-to-end graph
 

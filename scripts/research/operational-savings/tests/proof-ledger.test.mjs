@@ -18,7 +18,8 @@ import {
   assertProofExecutionInputStateUnchanged,
   captureProofExecutionInputState,
   generateProofExecutionRunRecord,
-  validateProofExecutionRunRecord
+  validateProofExecutionRunRecord,
+  verifyProofExecutionRunRecord
 } from "../proof-execution-run-record.mjs";
 
 const repoRoot = fileURLToPath(new URL("../../../..", import.meta.url));
@@ -1402,6 +1403,64 @@ test("promotes declared proof only when the exact named test passes against the 
     expect(
       record.executionToolchainIdentity.digest
     ).toMatch(/^[a-f0-9]{64}$/);
+    const relocatedToolchain = structuredClone(
+      record.executionToolchainIdentity
+    );
+    const relocatedVitest =
+      relocatedToolchain.tools.find(
+        (tool) =>
+          tool.toolId === "vitest-entrypoint"
+      );
+    relocatedVitest.requestedPath =
+      "/private/snapshot/node_modules/vitest/vitest.mjs";
+    relocatedVitest.resolvedPath =
+      "/private/snapshot/node_modules/vitest/vitest.mjs";
+    const relocatedToolchainPayload =
+      structuredClone(relocatedToolchain);
+    delete relocatedToolchainPayload.digest;
+    relocatedToolchain.digest = sha256Canonical(
+      relocatedToolchainPayload
+    );
+    const declarations = record.tests.map(
+      ({ testId, path, name, manifestPath }) => ({
+        testId,
+        path,
+        name,
+        manifestPath
+      })
+    );
+    expect(
+      verifyProofExecutionRunRecord({
+        record,
+        currentFingerprint:
+          record.sourceEvidenceFingerprint,
+        declarations,
+        currentArtifactIdentityCatalog:
+          record.artifactIdentityCatalog,
+        currentExecutionToolchainIdentity:
+          relocatedToolchain
+      }).status
+    ).toBe("CURRENT_LOCAL_CONTENT_BOUND_PASS");
+    relocatedVitest.sha256 = "f".repeat(64);
+    relocatedToolchain.digest = sha256Canonical(
+      Object.fromEntries(
+        Object.entries(relocatedToolchain).filter(
+          ([key]) => key !== "digest"
+        )
+      )
+    );
+    expect(
+      verifyProofExecutionRunRecord({
+        record,
+        currentFingerprint:
+          record.sourceEvidenceFingerprint,
+        declarations,
+        currentArtifactIdentityCatalog:
+          record.artifactIdentityCatalog,
+        currentExecutionToolchainIdentity:
+          relocatedToolchain
+      }).status
+    ).toBe("TOOLCHAIN_IDENTITY_MISMATCH");
     expect(
       record.execution.networkEnforcement
         .processWideNetworkIsolationVerified

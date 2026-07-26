@@ -16,7 +16,7 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 | Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
 | --- | --- | --- | --- | --- |
-| epa_chp_performance | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/epa-chp/run.mjs | epa-biomass-chp-real-proof: PASSED; scripts/research/operational-savings/tests/epa-chp-real.test.mjs :: reaches every ITC-22 formula term from the official representative system<br>epa-biomass-native-evidence-failure-proof: PASSED; scripts/research/operational-savings/tests/epa-chp-real.test.mjs :: fails closed when the biomass table loses native evidence<br>epa-biomass-publication-proof: PASSED; scripts/research/operational-savings/tests/epa-chp-real.test.mjs :: publishes ITC-22 values with biomass-artifact provenance<br>epa-chp-offline-proof: PASSED; scripts/research/operational-savings/tests/epa-chp-real.test.mjs :: requires the offline guard | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| epa_chp_performance | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/epa-chp/run.mjs | epa-biomass-chp-real-proof: NOT_COVERED<br>epa-biomass-native-evidence-failure-proof: NOT_COVERED<br>epa-biomass-publication-proof: NOT_COVERED<br>epa-chp-offline-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## End-to-end graph
 

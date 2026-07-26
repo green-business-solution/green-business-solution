@@ -16,7 +16,7 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 | Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
 | --- | --- | --- | --- | --- |
-| epa_chp_performance | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/epa-chp/run.mjs | epa-chp-itc21-formula-proof: PASSED; scripts/research/operational-savings/tests/epa-chp-real.test.mjs :: reaches every ITC-21 formula term from one exact real system<br>epa-chp-offline-proof: PASSED; scripts/research/operational-savings/tests/epa-chp-real.test.mjs :: requires the offline guard<br>epa-chp-real-catalog-proof: PASSED; scripts/research/operational-savings/tests/epa-chp-real.test.mjs :: publishes an exact real CHP output set and provenance<br>epa-chp-required-row-failure-proof: PASSED; scripts/research/operational-savings/tests/epa-chp-real.test.mjs :: fails closed when an actual required table row is missing | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| epa_chp_performance | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/epa-chp/run.mjs | epa-chp-itc21-formula-proof: NOT_COVERED<br>epa-chp-offline-proof: NOT_COVERED<br>epa-chp-real-catalog-proof: NOT_COVERED<br>epa-chp-required-row-failure-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## End-to-end graph
 

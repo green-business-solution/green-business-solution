@@ -16,7 +16,7 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 | Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
 | --- | --- | --- | --- | --- |
-| watersense_ci_operations | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/watersense-ci/run.mjs | watersense-ci-native-unit-failure-proof: PASSED; scripts/research/operational-savings/tests/watersense-ci-real.test.mjs :: fails closed on a mutated native unit contract<br>watersense-ci-offline-proof: PASSED; scripts/research/operational-savings/tests/watersense-ci-real.test.mjs :: requires the offline runtime guard<br>watersense-ci-real-workbook-proof: PASSED; scripts/research/operational-savings/tests/watersense-ci-real.test.mjs :: executes the measured flow-duration method and reaches both ITC-35 terms | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| watersense_ci_operations | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/watersense-ci/run.mjs | watersense-ci-native-unit-failure-proof: NOT_COVERED<br>watersense-ci-offline-proof: NOT_COVERED<br>watersense-ci-real-workbook-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## End-to-end graph
 

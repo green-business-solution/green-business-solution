@@ -16,7 +16,7 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 | Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
 | --- | --- | --- | --- | --- |
-| scout_ecm_screen | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/scout/run.mjs | scout-market-scope-failure-proof: PASSED; scripts/research/operational-savings/tests/scout-real.test.mjs :: rejects incompatible markets, unsupported units, and missing schema fields<br>scout-offline-crosswalk-proof: PASSED; scripts/research/operational-savings/tests/scout-real.test.mjs :: requires offline mode and an independently reviewed crosswalk<br>scout-prepared-output-mutation-proof: PASSED; scripts/research/operational-savings/tests/scout-real.test.mjs :: rejects mixed commits, altered outputs, and prepared-value mutations<br>scout-real-commercial-lighting-preparation-proof: PASSED; scripts/research/operational-savings/tests/scout-real.test.mjs :: maps only an exact prepared Scout market to the ITC-14 formula term | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| scout_ecm_screen | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/scout/run.mjs | scout-market-scope-failure-proof: NOT_COVERED<br>scout-offline-crosswalk-proof: NOT_COVERED<br>scout-prepared-output-mutation-proof: NOT_COVERED<br>scout-real-commercial-lighting-preparation-proof: NOT_COVERED | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## End-to-end graph
 
