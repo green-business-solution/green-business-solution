@@ -922,9 +922,9 @@
         "receipt": {
           "schemaVersion": "operational-savings/model-container-post-hoc-replay-v1",
           "status": "PASS_COMMITTED_POST_HOC_REPLAY",
-          "createdAt": "2026-07-25T08:01:47.369Z",
-          "contextGitCommit": "1012255198d3faa9cf288ca8e69f90095611b2fc",
-          "contextGitTree": "a4dab30404994c27450701b02225066e17f4b058",
+          "createdAt": "2026-07-26T01:05:45.246Z",
+          "contextGitCommit": "da12a2891b2142eb9b86e1bba56819951cffa1be",
+          "contextGitTree": "0b1a22d74a685068d186eb4bde0fb1e145832a93",
           "semantics": {
             "replayKind": "POST_HOC_REPLAY",
             "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT",
@@ -955,7 +955,7 @@
             },
             {
               "path": "scripts/research/operational-savings/storage/inventory.mjs",
-              "sha256": "eda4fd35ff1fe50220320a9796b09f0932e327438d5560b9492595761a7f43c7"
+              "sha256": "dc8a27e1839083503a40bd81ec488fc2cfd25b4bb0b8ed039ecb5964ab8c7178"
             },
             {
               "path": "scripts/research/operational-savings/storage/ecr-evidence.mjs",
@@ -978,7 +978,7 @@
               "stdoutSizeBytes": 25,
               "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
               "stderrSizeBytes": 0,
-              "replayedAt": "2026-07-25T08:01:35.143Z",
+              "replayedAt": "2026-07-26T01:05:36.455Z",
               "replayKind": "POST_HOC_REPLAY",
               "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT"
             },
@@ -997,7 +997,7 @@
               "stdoutSizeBytes": 1737,
               "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
               "stderrSizeBytes": 0,
-              "replayedAt": "2026-07-25T08:01:36.547Z",
+              "replayedAt": "2026-07-26T01:05:37.388Z",
               "replayKind": "POST_HOC_REPLAY",
               "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT"
             },
@@ -1016,7 +1016,7 @@
               "stdoutSizeBytes": 1297,
               "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
               "stderrSizeBytes": 0,
-              "replayedAt": "2026-07-25T08:01:37.845Z",
+              "replayedAt": "2026-07-26T01:05:37.968Z",
               "replayKind": "POST_HOC_REPLAY",
               "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT"
             },
@@ -1035,12 +1035,12 @@
               "stdoutSizeBytes": 1420,
               "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
               "stderrSizeBytes": 0,
-              "replayedAt": "2026-07-25T08:01:47.242Z",
+              "replayedAt": "2026-07-26T01:05:45.088Z",
               "replayKind": "POST_HOC_REPLAY",
               "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT"
             }
           ],
-          "receiptContentSha256": "a7a0f3d9aa797d3ddde5ca973e8452899f39de0d740a78182b6431e8560d2149"
+          "receiptContentSha256": "61928a64bc3ac1288438966909febd564393d98173c1ba5251e1a7ac07858c53"
         }
       },
       "historicalBuildManifestPassCount": 4,
@@ -56002,5 +56002,5 @@
     "packageCount": 210,
     "contentSha256": "f55a398546e214bb9746ffa9a28dac1a95657e11c4caeb2822077c4df20f0a88"
   },
-  "manifestContentSha256": "21525a33fe4fd65e7fa8e53d63009e155cadd754ea13f5d72f4b920a475d2b5c"
+  "manifestContentSha256": "fe18d760ba1ce75a6db21c54a81a428b18416b96f77536988f0e14ea720471c9"
 }
