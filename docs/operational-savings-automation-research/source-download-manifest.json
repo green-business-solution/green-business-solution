@@ -48,22 +48,22 @@
         "sha256": "1d2e583f0942bd937d6dda4b5992704b001a41f1f2b6f85ac977d0658cd1ee6d"
       },
       "runtimeDesign": "Build-time Parquet aggregation published as a compact versioned lookup artifact",
-      "feasibility": "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES",
+      "feasibility": "FEASIBLE_NOW",
       "feasibilityEvidence": {
         "processCount": 1,
-        "endToEndProcessCount": 0,
-        "sourceVerifiedProcessCount": 0,
+        "endToEndProcessCount": 1,
+        "sourceVerifiedProcessCount": 1,
         "manualExportReadyProcessCount": 0,
         "proofLevelCounts": {
-          "END_TO_END_REAL": 0,
+          "END_TO_END_REAL": 1,
           "SOURCE_TO_STANDARD_REAL": 0,
           "REAL_SOURCE_PARTIAL": 0,
-          "DOCUMENTATION_ONLY": 1,
+          "DOCUMENTATION_ONLY": 0,
           "SYNTHETIC_ONLY": 0,
           "ACCESS_BLOCKED": 0,
           "SOURCE_UNSUPPORTED": 0
         },
-        "basis": "No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary."
+        "basis": "Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests."
       }
     },
     {
@@ -100,22 +100,22 @@
         "sha256": "1d72aed5a63f12a6d8baae293de7e24e8c16bcc03df9ff5088272804a8996038"
       },
       "runtimeDesign": "Pinned build-time Scout preparation followed by compact approved ECM lookup artifacts",
-      "feasibility": "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES",
+      "feasibility": "PARTIALLY_FEASIBLE",
       "feasibilityEvidence": {
         "processCount": 3,
-        "endToEndProcessCount": 0,
-        "sourceVerifiedProcessCount": 0,
+        "endToEndProcessCount": 1,
+        "sourceVerifiedProcessCount": 1,
         "manualExportReadyProcessCount": 0,
         "proofLevelCounts": {
-          "END_TO_END_REAL": 0,
+          "END_TO_END_REAL": 1,
           "SOURCE_TO_STANDARD_REAL": 0,
           "REAL_SOURCE_PARTIAL": 0,
-          "DOCUMENTATION_ONLY": 3,
+          "DOCUMENTATION_ONLY": 0,
           "SYNTHETIC_ONLY": 0,
           "ACCESS_BLOCKED": 0,
-          "SOURCE_UNSUPPORTED": 0
+          "SOURCE_UNSUPPORTED": 2
         },
-        "basis": "No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary."
+        "basis": "At least one bound process is proved end to end, but the complete Standard process set is not."
       }
     },
     {
@@ -162,9 +162,9 @@
           "END_TO_END_REAL": 0,
           "SOURCE_TO_STANDARD_REAL": 0,
           "REAL_SOURCE_PARTIAL": 0,
-          "DOCUMENTATION_ONLY": 24,
+          "DOCUMENTATION_ONLY": 0,
           "SYNTHETIC_ONLY": 0,
-          "ACCESS_BLOCKED": 0,
+          "ACCESS_BLOCKED": 24,
           "SOURCE_UNSUPPORTED": 0
         },
         "basis": "No genuine official export reaches the complete source-to-Standard gate set, so an access probe or planned operator workflow is not counted as a manual seed."
@@ -205,22 +205,22 @@
         "sha256": "7e5ccf2536df76231035a01ab9f228e4e721df9d8f2c29a2582a08398def9cca"
       },
       "runtimeDesign": "Scheduled family-specific bulk ingestion into normalized product and performance tables",
-      "feasibility": "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES",
+      "feasibility": "FEASIBLE_AFTER_ADAPTER_WORK",
       "feasibilityEvidence": {
         "processCount": 25,
         "endToEndProcessCount": 0,
-        "sourceVerifiedProcessCount": 0,
+        "sourceVerifiedProcessCount": 2,
         "manualExportReadyProcessCount": 0,
         "proofLevelCounts": {
           "END_TO_END_REAL": 0,
           "SOURCE_TO_STANDARD_REAL": 0,
-          "REAL_SOURCE_PARTIAL": 0,
-          "DOCUMENTATION_ONLY": 25,
+          "REAL_SOURCE_PARTIAL": 2,
+          "DOCUMENTATION_ONLY": 23,
           "SYNTHETIC_ONLY": 0,
           "ACCESS_BLOCKED": 0,
           "SOURCE_UNSUPPORTED": 0
         },
-        "basis": "No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary."
+        "basis": "Real source evidence reaches a source-specific parser or Standard output, but no bound process is proved end to end."
       }
     },
     {
@@ -259,22 +259,22 @@
         "sha256": "27828c9871105d2f8226a3adfbca55acfd452c1976b1c7370457da8281880802"
       },
       "runtimeDesign": "Pinned local library or WebAssembly package execution with category-specific adapters",
-      "feasibility": "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES",
+      "feasibility": "PARTIALLY_FEASIBLE",
       "feasibilityEvidence": {
         "processCount": 17,
-        "endToEndProcessCount": 0,
-        "sourceVerifiedProcessCount": 0,
+        "endToEndProcessCount": 5,
+        "sourceVerifiedProcessCount": 5,
         "manualExportReadyProcessCount": 0,
         "proofLevelCounts": {
-          "END_TO_END_REAL": 0,
+          "END_TO_END_REAL": 5,
           "SOURCE_TO_STANDARD_REAL": 0,
           "REAL_SOURCE_PARTIAL": 0,
-          "DOCUMENTATION_ONLY": 17,
+          "DOCUMENTATION_ONLY": 12,
           "SYNTHETIC_ONLY": 0,
           "ACCESS_BLOCKED": 0,
           "SOURCE_UNSUPPORTED": 0
         },
-        "basis": "No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary."
+        "basis": "At least one bound process is proved end to end, but the complete Standard process set is not."
       }
     },
     {
@@ -311,22 +311,22 @@
         "sha256": "0b0f7c7e33275a87a62242270436683ba2f29a867e9538fbf1caf9919ab10aa5"
       },
       "runtimeDesign": "Pinned local SSC execution with weather files and all project design inputs stored internally",
-      "feasibility": "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES",
+      "feasibility": "FEASIBLE_NOW",
       "feasibilityEvidence": {
         "processCount": 1,
-        "endToEndProcessCount": 0,
-        "sourceVerifiedProcessCount": 0,
+        "endToEndProcessCount": 1,
+        "sourceVerifiedProcessCount": 1,
         "manualExportReadyProcessCount": 0,
         "proofLevelCounts": {
-          "END_TO_END_REAL": 0,
+          "END_TO_END_REAL": 1,
           "SOURCE_TO_STANDARD_REAL": 0,
           "REAL_SOURCE_PARTIAL": 0,
-          "DOCUMENTATION_ONLY": 1,
+          "DOCUMENTATION_ONLY": 0,
           "SYNTHETIC_ONLY": 0,
           "ACCESS_BLOCKED": 0,
           "SOURCE_UNSUPPORTED": 0
         },
-        "basis": "No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary."
+        "basis": "Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests."
       }
     },
     {
@@ -363,22 +363,22 @@
         "sha256": "b5de8f958f2dd5b33dc3f2e5f3fee933f1fb22631d4a649c03b40aec46fe3c30"
       },
       "runtimeDesign": "Pinned local SSC execution using internally retained weather files; hosted API is ingestion and regression evidence only",
-      "feasibility": "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES",
+      "feasibility": "FEASIBLE_NOW",
       "feasibilityEvidence": {
         "processCount": 3,
-        "endToEndProcessCount": 0,
-        "sourceVerifiedProcessCount": 0,
+        "endToEndProcessCount": 3,
+        "sourceVerifiedProcessCount": 3,
         "manualExportReadyProcessCount": 0,
         "proofLevelCounts": {
-          "END_TO_END_REAL": 0,
+          "END_TO_END_REAL": 3,
           "SOURCE_TO_STANDARD_REAL": 0,
           "REAL_SOURCE_PARTIAL": 0,
-          "DOCUMENTATION_ONLY": 3,
+          "DOCUMENTATION_ONLY": 0,
           "SYNTHETIC_ONLY": 0,
           "ACCESS_BLOCKED": 0,
           "SOURCE_UNSUPPORTED": 0
         },
-        "basis": "No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary."
+        "basis": "Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests."
       }
     },
     {
@@ -416,22 +416,22 @@
         "sha256": "977fed0af6690d62406b0ec7be5122d34c37b7b304fbdf2167922174700372b0"
       },
       "runtimeDesign": "Pinned local SSC execution with a bounded internally retained California wind-resource cache",
-      "feasibility": "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES",
+      "feasibility": "FEASIBLE_NOW",
       "feasibilityEvidence": {
         "processCount": 2,
-        "endToEndProcessCount": 0,
-        "sourceVerifiedProcessCount": 0,
+        "endToEndProcessCount": 2,
+        "sourceVerifiedProcessCount": 2,
         "manualExportReadyProcessCount": 0,
         "proofLevelCounts": {
-          "END_TO_END_REAL": 0,
+          "END_TO_END_REAL": 2,
           "SOURCE_TO_STANDARD_REAL": 0,
           "REAL_SOURCE_PARTIAL": 0,
-          "DOCUMENTATION_ONLY": 2,
+          "DOCUMENTATION_ONLY": 0,
           "SYNTHETIC_ONLY": 0,
           "ACCESS_BLOCKED": 0,
           "SOURCE_UNSUPPORTED": 0
         },
-        "basis": "No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary."
+        "basis": "Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests."
       }
     },
     {
@@ -470,22 +470,22 @@
         "sha256": "1a20d5534e6f1a39727a1fe1ff27dc4e2dec04f3984f71d0ad245a98ac231bfe"
       },
       "runtimeDesign": "Scheduled bulk ingestion followed by California operator approval and publication to an internal effective-dated tariff database",
-      "feasibility": "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES",
+      "feasibility": "FEASIBLE_NOW",
       "feasibilityEvidence": {
         "processCount": 10,
-        "endToEndProcessCount": 0,
-        "sourceVerifiedProcessCount": 0,
+        "endToEndProcessCount": 10,
+        "sourceVerifiedProcessCount": 10,
         "manualExportReadyProcessCount": 0,
         "proofLevelCounts": {
-          "END_TO_END_REAL": 0,
+          "END_TO_END_REAL": 10,
           "SOURCE_TO_STANDARD_REAL": 0,
           "REAL_SOURCE_PARTIAL": 0,
-          "DOCUMENTATION_ONLY": 10,
+          "DOCUMENTATION_ONLY": 0,
           "SYNTHETIC_ONLY": 0,
           "ACCESS_BLOCKED": 0,
           "SOURCE_UNSUPPORTED": 0
         },
-        "basis": "No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary."
+        "basis": "Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests."
       }
     },
     {
@@ -522,22 +522,22 @@
         "sha256": "bcecf5ff5b325278ab291b14128528d297749ed24edee9e2a184ce3f38dc5412"
       },
       "runtimeDesign": "Pinned local Julia service or compiled worker with no hosted REopt API dependency",
-      "feasibility": "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES",
+      "feasibility": "PARTIALLY_FEASIBLE",
       "feasibilityEvidence": {
         "processCount": 8,
-        "endToEndProcessCount": 0,
-        "sourceVerifiedProcessCount": 0,
+        "endToEndProcessCount": 2,
+        "sourceVerifiedProcessCount": 2,
         "manualExportReadyProcessCount": 0,
         "proofLevelCounts": {
-          "END_TO_END_REAL": 0,
+          "END_TO_END_REAL": 2,
           "SOURCE_TO_STANDARD_REAL": 0,
           "REAL_SOURCE_PARTIAL": 0,
-          "DOCUMENTATION_ONLY": 8,
+          "DOCUMENTATION_ONLY": 6,
           "SYNTHETIC_ONLY": 0,
           "ACCESS_BLOCKED": 0,
           "SOURCE_UNSUPPORTED": 0
         },
-        "basis": "No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary."
+        "basis": "At least one bound process is proved end to end, but the complete Standard process set is not."
       }
     },
     {
@@ -573,22 +573,22 @@
         "sha256": "1afd0a79e23b517e3c65df01b6e6774844d2f2acb112e9ab2fba5f5b97e8b5ba"
       },
       "runtimeDesign": "Versioned locally transcribed catalog tables with deterministic CHP equations",
-      "feasibility": "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES",
+      "feasibility": "FEASIBLE_NOW",
       "feasibilityEvidence": {
         "processCount": 4,
-        "endToEndProcessCount": 0,
-        "sourceVerifiedProcessCount": 0,
+        "endToEndProcessCount": 4,
+        "sourceVerifiedProcessCount": 4,
         "manualExportReadyProcessCount": 0,
         "proofLevelCounts": {
-          "END_TO_END_REAL": 0,
+          "END_TO_END_REAL": 4,
           "SOURCE_TO_STANDARD_REAL": 0,
           "REAL_SOURCE_PARTIAL": 0,
-          "DOCUMENTATION_ONLY": 4,
+          "DOCUMENTATION_ONLY": 0,
           "SYNTHETIC_ONLY": 0,
           "ACCESS_BLOCKED": 0,
           "SOURCE_UNSUPPORTED": 0
         },
-        "basis": "No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary."
+        "basis": "Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests."
       }
     },
     {
@@ -624,22 +624,22 @@
         "sha256": "6d3d965a92f06db4ee7961b152926b8ccaeae1f1e2b5d68324845290f7604f85"
       },
       "runtimeDesign": "Scheduled bulk CSV ingestion into versioned vehicle records and exact-pair resolution",
-      "feasibility": "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES",
+      "feasibility": "FEASIBLE_NOW",
       "feasibilityEvidence": {
         "processCount": 2,
-        "endToEndProcessCount": 0,
-        "sourceVerifiedProcessCount": 0,
+        "endToEndProcessCount": 2,
+        "sourceVerifiedProcessCount": 2,
         "manualExportReadyProcessCount": 0,
         "proofLevelCounts": {
-          "END_TO_END_REAL": 0,
+          "END_TO_END_REAL": 2,
           "SOURCE_TO_STANDARD_REAL": 0,
           "REAL_SOURCE_PARTIAL": 0,
-          "DOCUMENTATION_ONLY": 2,
+          "DOCUMENTATION_ONLY": 0,
           "SYNTHETIC_ONLY": 0,
           "ACCESS_BLOCKED": 0,
           "SOURCE_UNSUPPORTED": 0
         },
-        "basis": "No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary."
+        "basis": "Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests."
       }
     },
     {
@@ -687,9 +687,9 @@
           "END_TO_END_REAL": 0,
           "SOURCE_TO_STANDARD_REAL": 0,
           "REAL_SOURCE_PARTIAL": 0,
-          "DOCUMENTATION_ONLY": 4,
+          "DOCUMENTATION_ONLY": 0,
           "SYNTHETIC_ONLY": 0,
-          "ACCESS_BLOCKED": 0,
+          "ACCESS_BLOCKED": 4,
           "SOURCE_UNSUPPORTED": 0
         },
         "basis": "No genuine official export reaches the complete source-to-Standard gate set, so an access probe or planned operator workflow is not counted as a manual seed."
@@ -728,22 +728,22 @@
         "sha256": "fc98a1b94e3fbc582e25755f2d5c82560b5268c72bfd1e2899e415fc377ca540"
       },
       "runtimeDesign": "Bounded build-time workbook extraction to a compact ZIP-climate lookup plus local Water Budget equations",
-      "feasibility": "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES",
+      "feasibility": "FEASIBLE_NOW",
       "feasibilityEvidence": {
         "processCount": 1,
-        "endToEndProcessCount": 0,
-        "sourceVerifiedProcessCount": 0,
+        "endToEndProcessCount": 1,
+        "sourceVerifiedProcessCount": 1,
         "manualExportReadyProcessCount": 0,
         "proofLevelCounts": {
-          "END_TO_END_REAL": 0,
+          "END_TO_END_REAL": 1,
           "SOURCE_TO_STANDARD_REAL": 0,
           "REAL_SOURCE_PARTIAL": 0,
-          "DOCUMENTATION_ONLY": 1,
+          "DOCUMENTATION_ONLY": 0,
           "SYNTHETIC_ONLY": 0,
           "ACCESS_BLOCKED": 0,
           "SOURCE_UNSUPPORTED": 0
         },
-        "basis": "No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary."
+        "basis": "Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests."
       }
     },
     {
@@ -779,22 +779,22 @@
         "sha256": "8e5fbcd3a92f3403e61c51bf8f69dca0523fb52f9289cba39496111a38754343"
       },
       "runtimeDesign": "Local measured-input calculator using project documents and meter records; guidance remains a method source rather than a benchmark database",
-      "feasibility": "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES",
+      "feasibility": "PARTIALLY_FEASIBLE",
       "feasibilityEvidence": {
         "processCount": 2,
-        "endToEndProcessCount": 0,
-        "sourceVerifiedProcessCount": 0,
+        "endToEndProcessCount": 1,
+        "sourceVerifiedProcessCount": 1,
         "manualExportReadyProcessCount": 0,
         "proofLevelCounts": {
-          "END_TO_END_REAL": 0,
+          "END_TO_END_REAL": 1,
           "SOURCE_TO_STANDARD_REAL": 0,
           "REAL_SOURCE_PARTIAL": 0,
-          "DOCUMENTATION_ONLY": 2,
+          "DOCUMENTATION_ONLY": 0,
           "SYNTHETIC_ONLY": 0,
           "ACCESS_BLOCKED": 0,
-          "SOURCE_UNSUPPORTED": 0
+          "SOURCE_UNSUPPORTED": 1
         },
-        "basis": "No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary."
+        "basis": "At least one bound process is proved end to end, but the complete Standard process set is not."
       }
     },
     {
@@ -828,22 +828,22 @@
         "sha256": "66dfb67f471d558a0839c2172330f23a8539b41c281f4d695466ff595722d129"
       },
       "runtimeDesign": "Small reviewed JSON lookup artifact plus deterministic lighting equation",
-      "feasibility": "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES",
+      "feasibility": "PARTIALLY_FEASIBLE",
       "feasibilityEvidence": {
         "processCount": 3,
-        "endToEndProcessCount": 0,
-        "sourceVerifiedProcessCount": 0,
+        "endToEndProcessCount": 2,
+        "sourceVerifiedProcessCount": 2,
         "manualExportReadyProcessCount": 0,
         "proofLevelCounts": {
-          "END_TO_END_REAL": 0,
+          "END_TO_END_REAL": 2,
           "SOURCE_TO_STANDARD_REAL": 0,
           "REAL_SOURCE_PARTIAL": 0,
-          "DOCUMENTATION_ONLY": 3,
+          "DOCUMENTATION_ONLY": 0,
           "SYNTHETIC_ONLY": 0,
           "ACCESS_BLOCKED": 0,
-          "SOURCE_UNSUPPORTED": 0
+          "SOURCE_UNSUPPORTED": 1
         },
-        "basis": "No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary."
+        "basis": "At least one bound process is proved end to end, but the complete Standard process set is not."
       }
     },
     {
@@ -879,22 +879,22 @@
         "sha256": "f04aab22da05aa39ce321e135e88db2532283b279a5f8729b58ff36eaefbc391"
       },
       "runtimeDesign": "Run the deterministic calendar or solar model offline, persist a SHA-256 hash of the exact project input on the calculation run, leave primary source artifact and release null for project-owned values, and attach USNO only as an astronomy_model_validation dependency for daylight calculations",
-      "feasibility": "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES",
+      "feasibility": "PARTIALLY_FEASIBLE",
       "feasibilityEvidence": {
         "processCount": 15,
-        "endToEndProcessCount": 0,
-        "sourceVerifiedProcessCount": 0,
+        "endToEndProcessCount": 1,
+        "sourceVerifiedProcessCount": 2,
         "manualExportReadyProcessCount": 0,
         "proofLevelCounts": {
-          "END_TO_END_REAL": 0,
+          "END_TO_END_REAL": 1,
           "SOURCE_TO_STANDARD_REAL": 0,
-          "REAL_SOURCE_PARTIAL": 0,
-          "DOCUMENTATION_ONLY": 15,
-          "SYNTHETIC_ONLY": 0,
+          "REAL_SOURCE_PARTIAL": 1,
+          "DOCUMENTATION_ONLY": 10,
+          "SYNTHETIC_ONLY": 3,
           "ACCESS_BLOCKED": 0,
           "SOURCE_UNSUPPORTED": 0
         },
-        "basis": "No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary."
+        "basis": "At least one bound process is proved end to end, but the complete Standard process set is not."
       }
     },
     {
@@ -928,22 +928,22 @@
         "sha256": "168cf99b000d010646537f4e9c759f6b39210af52f2a3d2ab00c76d52bfe95f4"
       },
       "runtimeDesign": "Small immutable calculator-assumption artifact plus deterministic local equation",
-      "feasibility": "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES",
+      "feasibility": "FEASIBLE_NOW",
       "feasibilityEvidence": {
         "processCount": 1,
-        "endToEndProcessCount": 0,
-        "sourceVerifiedProcessCount": 0,
+        "endToEndProcessCount": 1,
+        "sourceVerifiedProcessCount": 1,
         "manualExportReadyProcessCount": 0,
         "proofLevelCounts": {
-          "END_TO_END_REAL": 0,
+          "END_TO_END_REAL": 1,
           "SOURCE_TO_STANDARD_REAL": 0,
           "REAL_SOURCE_PARTIAL": 0,
-          "DOCUMENTATION_ONLY": 1,
+          "DOCUMENTATION_ONLY": 0,
           "SYNTHETIC_ONLY": 0,
           "ACCESS_BLOCKED": 0,
           "SOURCE_UNSUPPORTED": 0
         },
-        "basis": "No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary."
+        "basis": "Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests."
       }
     },
     {
@@ -983,22 +983,22 @@
         "sha256": "756ce5159867b239da22530fb5745e287f558d5e4dc40f8ab477f6c21cafc4e9"
       },
       "runtimeDesign": "Registry of small source-specific immutable benchmark artifacts with one adapter per benchmark family",
-      "feasibility": "NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES",
+      "feasibility": "PARTIALLY_FEASIBLE",
       "feasibilityEvidence": {
         "processCount": 20,
-        "endToEndProcessCount": 0,
-        "sourceVerifiedProcessCount": 0,
+        "endToEndProcessCount": 6,
+        "sourceVerifiedProcessCount": 7,
         "manualExportReadyProcessCount": 0,
         "proofLevelCounts": {
-          "END_TO_END_REAL": 0,
+          "END_TO_END_REAL": 6,
           "SOURCE_TO_STANDARD_REAL": 0,
-          "REAL_SOURCE_PARTIAL": 0,
-          "DOCUMENTATION_ONLY": 20,
+          "REAL_SOURCE_PARTIAL": 1,
+          "DOCUMENTATION_ONLY": 13,
           "SYNTHETIC_ONLY": 0,
           "ACCESS_BLOCKED": 0,
           "SOURCE_UNSUPPORTED": 0
         },
-        "basis": "No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary."
+        "basis": "At least one bound process is proved end to end, but the complete Standard process set is not."
       }
     }
   ]

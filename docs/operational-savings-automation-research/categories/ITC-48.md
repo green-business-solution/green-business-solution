@@ -16,7 +16,7 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 | Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
 | --- | --- | --- | --- | --- |
-| context_benchmarks | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/context-benchmarks/run.mjs | context-cfs-cooktop-source-proof: PASSED; scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs :: publishes exact official dishwasher and cooktop benchmark cells<br>context-cfs-workbook-mutation-proof: PASSED; scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs :: fails changed benchmark cells and worksheet shapes | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| context_benchmarks | REAL_SOURCE_PARTIAL | scripts/research/operational-savings/adapters/context-benchmarks/run.mjs | context-cfs-cooktop-source-proof: PASSED; scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs :: publishes exact official dishwasher and cooktop benchmark cells<br>context-cfs-workbook-mutation-proof: PASSED; scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs :: fails changed benchmark cells and worksheet shapes | REMAINING_BLOCKER: The workbook proves only the electric conventional and ENERGY STAR 20-pound water-boil duty. It does not identify the proposed row as every induction configuration and does not prove a gas-to-induction comparison. |
 
 ## End-to-end graph
 
@@ -24,7 +24,7 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Feasibility
 
-The category depends on these source-level verdicts: NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES.
+The category depends on these source-level verdicts: PARTIALLY_FEASIBLE.
 The process table reports the final proof level after execution-record verification, not a higher level that a manifest may have declared before the current run.
 An exact path is usable only when every owned input is present and every Standard adapter returns one unambiguous compatible result.
 A benchmark path is usable only where the category has a retained authoritative population and exact selection rule.
@@ -34,4 +34,4 @@ The runtime external-call count remains zero.
 
 | Process key | Current proof level | Next action |
 | --- | --- | --- |
-| context_benchmarks | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| context_benchmarks | REAL_SOURCE_PARTIAL | Complete the missing downstream proof gates recorded by the blocker, then rerun the exact adapter tests. REMAINING_BLOCKER: The workbook proves only the electric conventional and ENERGY STAR 20-pound water-boil duty. It does not identify the proposed row as every induction configuration and does not prove a gas-to-induction comparison. |

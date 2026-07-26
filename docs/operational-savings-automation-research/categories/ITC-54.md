@@ -18,7 +18,7 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 | Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
 | --- | --- | --- | --- | --- |
 | exact-backup-routine-inputs | DOCUMENTATION_ONLY | None implemented | None required or recorded for the current proof state | MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
-| fema-full-load-diesel-test-fuel | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/context-benchmarks/run.mjs | context-fema-full-load-diesel-real-proof: PASSED; scripts/research/operational-savings/tests/context-fema-real.test.mjs :: maps the narrow FEMA calculation to the exact ITC-54 term<br>context-fema-scope-failure-proof: PASSED; scripts/research/operational-savings/tests/context-fema-real.test.mjs :: fails closed outside the diesel full-load boundary<br>context-fema-source-mutation-proof: PASSED; scripts/research/operational-savings/tests/context-fema-real.test.mjs :: fails native-formula and applicability mutations | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| fema-full-load-diesel-test-fuel | END_TO_END_REAL | scripts/research/operational-savings/adapters/context-benchmarks/run.mjs | context-fema-full-load-diesel-real-proof: PASSED; scripts/research/operational-savings/tests/context-fema-real.test.mjs :: maps the narrow FEMA calculation to the exact ITC-54 term<br>context-fema-scope-failure-proof: PASSED; scripts/research/operational-savings/tests/context-fema-real.test.mjs :: fails closed outside the diesel full-load boundary<br>context-fema-source-mutation-proof: PASSED; scripts/research/operational-savings/tests/context-fema-real.test.mjs :: fails native-formula and applicability mutations | None |
 
 ## End-to-end graph
 
@@ -27,7 +27,7 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Feasibility
 
-The category depends on these source-level verdicts: NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES.
+The category depends on these source-level verdicts: PARTIALLY_FEASIBLE.
 The process table reports the final proof level after execution-record verification, not a higher level that a manifest may have declared before the current run.
 An exact path is usable only when every owned input is present and every Standard adapter returns one unambiguous compatible result.
 A benchmark path is usable only where the category has a retained authoritative population and exact selection rule.
@@ -38,4 +38,4 @@ The runtime external-call count remains zero.
 | Process key | Current proof level | Next action |
 | --- | --- | --- |
 | exact-backup-routine-inputs | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. MISSING_PROOF_MANIFEST: No source-specific adapter proof manifest covers this canonical process. Missing gates: sourceIdentityPinned, artifactAcquired, checksumOrCommitRetained, schemaExtracted, requiredFieldsLocated, unitsEnumerationsPinned, parserOrModelExecuted, normalizedPublished, resolutionExecuted, standardOutputProduced, unitScopeMatches, formulaTermReached, offlineRerunPassed, provenanceComplete, mutationFailureTestsPassed. |
-| fema-full-load-diesel-test-fuel | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
+| fema-full-load-diesel-test-fuel | END_TO_END_REAL | Accept or connect the proved path only within its recorded boundary, and keep the exact execution record current when code, fixtures, artifacts, or canonical bindings change. |
