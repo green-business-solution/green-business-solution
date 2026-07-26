@@ -1,9 +1,9 @@
 {
   "schemaVersion": "operational-savings/model-container-post-hoc-replay-v1",
   "status": "PASS_COMMITTED_POST_HOC_REPLAY",
-  "createdAt": "2026-07-26T01:05:45.246Z",
-  "contextGitCommit": "da12a2891b2142eb9b86e1bba56819951cffa1be",
-  "contextGitTree": "0b1a22d74a685068d186eb4bde0fb1e145832a93",
+  "createdAt": "2026-07-26T03:08:14.980Z",
+  "contextGitCommit": "69f7ef3eda3f40a460df148f42f778e088a12be9",
+  "contextGitTree": "5e1fdf4a9f885039af403f9790b1fd18b55e86c2",
   "semantics": {
     "replayKind": "POST_HOC_REPLAY",
     "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT",
@@ -26,15 +26,15 @@
   "implementationFiles": [
     {
       "path": "scripts/research/operational-savings/verify-model-containers.mjs",
-      "sha256": "84a8ed9290ffd5963e7c8db5f1a6fde916e1d03dcdb96df3c0f889768192e6ae"
+      "sha256": "623933450aa0d3b808b56391508f57192bdc37e12679dcba23f591fd01e26115"
     },
     {
       "path": "scripts/research/operational-savings/storage/post-hoc-replay.mjs",
-      "sha256": "38f90f26edeee6407f8d35b12671f5eb5be39be4f917ab0a51e1b7511b2f137d"
+      "sha256": "f0b46e3a6312f23a7c57fde00ded6c7d6e0c7fb4d717541d59759dc2775a46bd"
     },
     {
       "path": "scripts/research/operational-savings/storage/inventory.mjs",
-      "sha256": "dc8a27e1839083503a40bd81ec488fc2cfd25b4bb0b8ed039ecb5964ab8c7178"
+      "sha256": "ef782c4612f7e9f6270a3128586d1e8fc43bf7bd4996b41ed74f74fc01f4b24c"
     },
     {
       "path": "scripts/research/operational-savings/storage/ecr-evidence.mjs",
@@ -57,7 +57,7 @@
       "stdoutSizeBytes": 25,
       "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "stderrSizeBytes": 0,
-      "replayedAt": "2026-07-26T01:05:36.455Z",
+      "replayedAt": "2026-07-26T03:08:08.009Z",
       "replayKind": "POST_HOC_REPLAY",
       "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT"
     },
@@ -76,7 +76,7 @@
       "stdoutSizeBytes": 1737,
       "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "stderrSizeBytes": 0,
-      "replayedAt": "2026-07-26T01:05:37.388Z",
+      "replayedAt": "2026-07-26T03:08:08.746Z",
       "replayKind": "POST_HOC_REPLAY",
       "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT"
     },
@@ -95,7 +95,7 @@
       "stdoutSizeBytes": 1297,
       "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "stderrSizeBytes": 0,
-      "replayedAt": "2026-07-26T01:05:37.968Z",
+      "replayedAt": "2026-07-26T03:08:09.246Z",
       "replayKind": "POST_HOC_REPLAY",
       "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT"
     },
@@ -114,10 +114,10 @@
       "stdoutSizeBytes": 1420,
       "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "stderrSizeBytes": 0,
-      "replayedAt": "2026-07-26T01:05:45.088Z",
+      "replayedAt": "2026-07-26T03:08:14.887Z",
       "replayKind": "POST_HOC_REPLAY",
       "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT"
     }
   ],
-  "receiptContentSha256": "61928a64bc3ac1288438966909febd564393d98173c1ba5251e1a7ac07858c53"
+  "receiptContentSha256": "88785e77d25a364c6e67a7e26015e583098bc23f8b1a349078d85b4cc149acb5"
 }
