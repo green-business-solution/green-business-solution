@@ -922,9 +922,9 @@
         "receipt": {
           "schemaVersion": "operational-savings/model-container-post-hoc-replay-v1",
           "status": "PASS_COMMITTED_POST_HOC_REPLAY",
-          "createdAt": "2026-07-26T03:08:14.980Z",
-          "contextGitCommit": "69f7ef3eda3f40a460df148f42f778e088a12be9",
-          "contextGitTree": "5e1fdf4a9f885039af403f9790b1fd18b55e86c2",
+          "createdAt": "2026-07-26T04:07:32.002Z",
+          "contextGitCommit": "2949fe78a9a039cdcfbbeeb52226a5fad378ecdb",
+          "contextGitTree": "27ef8f96972fd35a5af2e94fbf45ffb8811c6275",
           "semantics": {
             "replayKind": "POST_HOC_REPLAY",
             "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT",
@@ -955,7 +955,7 @@
             },
             {
               "path": "scripts/research/operational-savings/storage/inventory.mjs",
-              "sha256": "ef782c4612f7e9f6270a3128586d1e8fc43bf7bd4996b41ed74f74fc01f4b24c"
+              "sha256": "2b0a32565acb0ea6f2ab4231e7a5c97463f9c34b57b35aec548b877cad162212"
             },
             {
               "path": "scripts/research/operational-savings/storage/ecr-evidence.mjs",
@@ -978,7 +978,7 @@
               "stdoutSizeBytes": 25,
               "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
               "stderrSizeBytes": 0,
-              "replayedAt": "2026-07-26T03:08:08.009Z",
+              "replayedAt": "2026-07-26T04:07:24.879Z",
               "replayKind": "POST_HOC_REPLAY",
               "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT"
             },
@@ -997,7 +997,7 @@
               "stdoutSizeBytes": 1737,
               "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
               "stderrSizeBytes": 0,
-              "replayedAt": "2026-07-26T03:08:08.746Z",
+              "replayedAt": "2026-07-26T04:07:25.659Z",
               "replayKind": "POST_HOC_REPLAY",
               "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT"
             },
@@ -1016,7 +1016,7 @@
               "stdoutSizeBytes": 1297,
               "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
               "stderrSizeBytes": 0,
-              "replayedAt": "2026-07-26T03:08:09.246Z",
+              "replayedAt": "2026-07-26T04:07:26.214Z",
               "replayKind": "POST_HOC_REPLAY",
               "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT"
             },
@@ -1035,12 +1035,12 @@
               "stdoutSizeBytes": 1420,
               "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
               "stderrSizeBytes": 0,
-              "replayedAt": "2026-07-26T03:08:14.887Z",
+              "replayedAt": "2026-07-26T04:07:31.913Z",
               "replayKind": "POST_HOC_REPLAY",
               "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT"
             }
           ],
-          "receiptContentSha256": "88785e77d25a364c6e67a7e26015e583098bc23f8b1a349078d85b4cc149acb5"
+          "receiptContentSha256": "49b11d6d44f3668aa3c7ed9b497dfbad9589dd08adc143d5b7de623a6d8271de"
         }
       },
       "historicalBuildManifestPassCount": 4,
@@ -74130,21 +74130,15 @@
       ]
     },
     "lastEcrRestoreReplay": {
-      "status": "INVALIDATED_BY_HYDRATION",
-      "completedAt": "2026-07-26T03:22:59.459Z",
+      "status": "PASS",
+      "completedAt": "2026-07-26T04:07:32.935Z",
       "accountId": "945129430686",
       "region": "us-east-1",
       "principalArn": "arn:aws:sts::945129430686:assumed-role/RetroFiOperationalSavingsResearchRole/codex-operational-savings-research",
       "exactDigestPullsVerified": true,
       "offlineModelReplayVerified": true,
-      "fullValidationRecorded": true,
-      "finalCleanupValidation": {
-        "sha256": "91bc2f7e7494eab2521fb4978796c94988c4098bf2a8b8062688210f88dcf3a0",
-        "validatedAt": "2026-07-26T03:22:50.942Z",
-        "validatedSourceCommit": "115526a9a81fd94bab3ab4e818e0bfac1b148bca",
-        "validatedRepositoryTreeDigest": "21d5a96be7796a2004a6b9cbe890b5155f8d71c9f68c7a3aad11d64055763eb0",
-        "packageCount": 210
-      },
+      "fullValidationRecorded": false,
+      "finalCleanupValidation": null,
       "allImagesRemovedLocally": true,
       "temporaryDockerCredentialRetained": false,
       "images": [
@@ -74225,7 +74219,7 @@
                 "versionId": "iLxwcccCiOVtVJB3LlMAIHfXjgX5XrlR",
                 "sha256": "530f80f968e126baa00b1e27a1f1a301c02eed885dd9f4ec30f75914799c7d6e",
                 "sizeBytes": 10822,
-                "restoredAt": "2026-07-26T01:59:57.770Z"
+                "restoredAt": "2026-07-26T03:29:48.411Z"
               }
             },
             "sourceArchive": {
@@ -74244,7 +74238,7 @@
                 "versionId": "NpcoT9Kwz35F0b4G8PQa84AHg9QGn1pQ",
                 "sha256": "8d0b14a6d86454b7530b1c94290f0e1dc24b72f8fb8ed9d551c9d525c0fd6fb4",
                 "sizeBytes": 13793280,
-                "restoredAt": "2026-07-26T01:53:02.285Z"
+                "restoredAt": "2026-07-26T03:24:14.913Z"
               }
             },
             "primaryLicense": {
@@ -74263,7 +74257,7 @@
                 "versionId": "S3YEdNN_XcFHCCDaJeqIjkb4yQnbens7",
                 "sha256": "7372b9cff1cab763899bf6c4516b44163f8442fd38d0a3786e3ceafc0e81df62",
                 "sizeBytes": 2227,
-                "restoredAt": "2026-07-26T02:00:13.426Z"
+                "restoredAt": "2026-07-26T03:30:02.838Z"
               }
             },
             "buildContentBinding": {
@@ -74334,9 +74328,9 @@
             "postHocReplayEvidence": {
               "schemaVersion": "operational-savings/ecr-post-hoc-replay-evidence-v1",
               "receiptPath": "scripts/research/operational-savings/containers/post-hoc-replay-receipt.v1.json",
-              "receiptContentSha256": "88785e77d25a364c6e67a7e26015e583098bc23f8b1a349078d85b4cc149acb5",
-              "contextGitCommit": "69f7ef3eda3f40a460df148f42f778e088a12be9",
-              "contextGitTree": "5e1fdf4a9f885039af403f9790b1fd18b55e86c2",
+              "receiptContentSha256": "49b11d6d44f3668aa3c7ed9b497dfbad9589dd08adc143d5b7de623a6d8271de",
+              "contextGitCommit": "2949fe78a9a039cdcfbbeeb52226a5fad378ecdb",
+              "contextGitTree": "27ef8f96972fd35a5af2e94fbf45ffb8811c6275",
               "semantics": {
                 "replayKind": "POST_HOC_REPLAY",
                 "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT",
@@ -74371,7 +74365,7 @@
                 "stdoutSizeBytes": 1297,
                 "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
                 "stderrSizeBytes": 0,
-                "replayedAt": "2026-07-26T03:08:09.246Z",
+                "replayedAt": "2026-07-26T04:07:26.214Z",
                 "replayKind": "POST_HOC_REPLAY",
                 "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT"
               }
@@ -74427,7 +74421,7 @@
                     "versionId": "S3YEdNN_XcFHCCDaJeqIjkb4yQnbens7",
                     "sha256": "7372b9cff1cab763899bf6c4516b44163f8442fd38d0a3786e3ceafc0e81df62",
                     "sizeBytes": 2227,
-                    "restoredAt": "2026-07-26T02:00:13.426Z"
+                    "restoredAt": "2026-07-26T03:30:02.838Z"
                   }
                 },
                 {
@@ -74458,7 +74452,7 @@
                     "versionId": "imnr_FcpvZL8j6b8yEWDRWKBzod62rld",
                     "sha256": "fe4ad3fbfcd3d3620c345b1a83289a064915bdc713240c7239d133b9c527611b",
                     "sizeBytes": 1490,
-                    "restoredAt": "2026-07-26T02:00:12.350Z"
+                    "restoredAt": "2026-07-26T03:30:01.756Z"
                   }
                 }
               ],
@@ -74466,11 +74460,11 @@
               "dependencyLockEvidence": null,
               "entryCount": 2,
               "parentArtifactCount": 0,
-              "evidenceSetSha256": "56c545fc98eb6c838ce28d74dc07451ed3da6c133151c8217b51b0c1e6b2dd3e"
+              "evidenceSetSha256": "243de099b35f34a3224141e45ed99727185804288322fe75aa4dedaa408470ac"
             }
           },
-          "durableArtifactEvidenceSha256": "ce8fb02649c7ce2c3118f9528a3b463829674c9810d201617adbc46b0be17c44",
-          "licenseEvidenceSetSha256": "56c545fc98eb6c838ce28d74dc07451ed3da6c133151c8217b51b0c1e6b2dd3e"
+          "durableArtifactEvidenceSha256": "62b1e2976262e7aec4d69b2e915aec2de567f916e88c2a761d71e5ad60d23197",
+          "licenseEvidenceSetSha256": "243de099b35f34a3224141e45ed99727185804288322fe75aa4dedaa408470ac"
         },
         {
           "modelId": "reopt",
@@ -74553,7 +74547,7 @@
                 "versionId": "D1dyiefXm6FBW15lM_GenDqbVOyJNGKG",
                 "sha256": "919505d5684c853bf332cf6a73fefce9ddd88d8f518810aed729c565b21b3c8f",
                 "sizeBytes": 9921,
-                "restoredAt": "2026-07-26T01:59:59.945Z"
+                "restoredAt": "2026-07-26T03:29:50.395Z"
               }
             },
             "sourceArchive": {
@@ -74572,7 +74566,7 @@
                 "versionId": "x.2va4mTkVpIyjqrTDEbbR9OjXxVHB8w",
                 "sha256": "9b0068246fc2ed73c1834302a03f6e8d3ff7003827d9b5032a6a5a5257ceeb70",
                 "sizeBytes": 222425044,
-                "restoredAt": "2026-07-26T01:53:53.412Z"
+                "restoredAt": "2026-07-26T03:25:04.873Z"
               }
             },
             "primaryLicense": {
@@ -74591,7 +74585,7 @@
                 "versionId": "eryODkdC.OyJ6.hbZbDX7JFeFFor3SxM",
                 "sha256": "0cec06e0e55fbc3dc5cee4fca9b607f66cb8f4e4dbcf3b3c013594dd156732e9",
                 "sizeBytes": 10173,
-                "restoredAt": "2026-07-26T02:00:14.518Z"
+                "restoredAt": "2026-07-26T03:30:03.829Z"
               }
             },
             "buildContentBinding": {
@@ -74686,9 +74680,9 @@
             "postHocReplayEvidence": {
               "schemaVersion": "operational-savings/ecr-post-hoc-replay-evidence-v1",
               "receiptPath": "scripts/research/operational-savings/containers/post-hoc-replay-receipt.v1.json",
-              "receiptContentSha256": "88785e77d25a364c6e67a7e26015e583098bc23f8b1a349078d85b4cc149acb5",
-              "contextGitCommit": "69f7ef3eda3f40a460df148f42f778e088a12be9",
-              "contextGitTree": "5e1fdf4a9f885039af403f9790b1fd18b55e86c2",
+              "receiptContentSha256": "49b11d6d44f3668aa3c7ed9b497dfbad9589dd08adc143d5b7de623a6d8271de",
+              "contextGitCommit": "2949fe78a9a039cdcfbbeeb52226a5fad378ecdb",
+              "contextGitTree": "27ef8f96972fd35a5af2e94fbf45ffb8811c6275",
               "semantics": {
                 "replayKind": "POST_HOC_REPLAY",
                 "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT",
@@ -74723,7 +74717,7 @@
                 "stdoutSizeBytes": 25,
                 "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
                 "stderrSizeBytes": 0,
-                "replayedAt": "2026-07-26T03:08:08.009Z",
+                "replayedAt": "2026-07-26T04:07:24.879Z",
                 "replayKind": "POST_HOC_REPLAY",
                 "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT"
               }
@@ -74779,7 +74773,7 @@
                     "versionId": "eryODkdC.OyJ6.hbZbDX7JFeFFor3SxM",
                     "sha256": "0cec06e0e55fbc3dc5cee4fca9b607f66cb8f4e4dbcf3b3c013594dd156732e9",
                     "sizeBytes": 10173,
-                    "restoredAt": "2026-07-26T02:00:14.518Z"
+                    "restoredAt": "2026-07-26T03:30:03.829Z"
                   }
                 },
                 {
@@ -74810,7 +74804,7 @@
                     "versionId": "WNzuBOIPI1eLopreiBHbMDsOM90Gmq0F",
                     "sha256": "83913e0475d527c1b77e459759d4356bd935f9783cfe0191b392dedbdbebb3f1",
                     "sizeBytes": 577,
-                    "restoredAt": "2026-07-26T02:00:15.633Z"
+                    "restoredAt": "2026-07-26T03:30:04.814Z"
                   }
                 },
                 {
@@ -74841,7 +74835,7 @@
                     "versionId": "wpONPWR3p1K5Ejcdt_7aToOaAX59lWY.",
                     "sha256": "d9a3c782081350ae772d709c5e789c9b9c968bec48a6282f1df69e3b4ff4ac6f",
                     "sizeBytes": 1146,
-                    "restoredAt": "2026-07-26T02:00:16.671Z"
+                    "restoredAt": "2026-07-26T03:30:05.809Z"
                   }
                 }
               ],
@@ -74849,11 +74843,11 @@
               "dependencyLockEvidence": null,
               "entryCount": 3,
               "parentArtifactCount": 0,
-              "evidenceSetSha256": "1de02d209b35a47db535aeee77826c530c25d2d365d93268de1e10c6f642da83"
+              "evidenceSetSha256": "f023555a5e830dc2dfbf789a7a14b548911eb8293ac63354fd46361596aa882f"
             }
           },
-          "durableArtifactEvidenceSha256": "a3dd3d7aa62828425897f80e6782711c37077ad3a1b941a214303b07fa8029d8",
-          "licenseEvidenceSetSha256": "1de02d209b35a47db535aeee77826c530c25d2d365d93268de1e10c6f642da83"
+          "durableArtifactEvidenceSha256": "8c05cfe20d933690a43a80adcff7f42ed292bd9cd25b2c82acc224c9269d158f",
+          "licenseEvidenceSetSha256": "f023555a5e830dc2dfbf789a7a14b548911eb8293ac63354fd46361596aa882f"
         },
         {
           "modelId": "scout",
@@ -74932,7 +74926,7 @@
                 "versionId": "VTxr2XrtjrwFJ8RBCJArXRvoGz6qj_hV",
                 "sha256": "ee320e253d9accc86e369e3069f356ff4cd57fee2d3fb14453c8a05fbd85d64f",
                 "sizeBytes": 10652,
-                "restoredAt": "2026-07-26T02:00:07.593Z"
+                "restoredAt": "2026-07-26T03:29:57.487Z"
               }
             },
             "sourceArchive": {
@@ -74951,7 +74945,7 @@
                 "versionId": "rs9tlMwPNH5RH0MWZEkpsym8tJ.nDGxd",
                 "sha256": "07abd78a5e1c778fa3fa46e45f2b2aaef3c11089c2b2d99bc5ea0db928457822",
                 "sizeBytes": 363816480,
-                "restoredAt": "2026-07-26T01:54:07.708Z"
+                "restoredAt": "2026-07-26T03:25:19.681Z"
               }
             },
             "primaryLicense": {
@@ -74970,7 +74964,7 @@
                 "versionId": "Cx63GyP4exYgIR0vFkIYG4E3TxjtgGTe",
                 "sha256": "8ab3f859bd20bbd4ba4e74902ce7d9af94fb866facf856da4b32ed1a380cd2ef",
                 "sizeBytes": 2659,
-                "restoredAt": "2026-07-26T02:00:17.655Z"
+                "restoredAt": "2026-07-26T03:30:06.841Z"
               }
             },
             "buildContentBinding": {
@@ -75017,9 +75011,9 @@
             "postHocReplayEvidence": {
               "schemaVersion": "operational-savings/ecr-post-hoc-replay-evidence-v1",
               "receiptPath": "scripts/research/operational-savings/containers/post-hoc-replay-receipt.v1.json",
-              "receiptContentSha256": "88785e77d25a364c6e67a7e26015e583098bc23f8b1a349078d85b4cc149acb5",
-              "contextGitCommit": "69f7ef3eda3f40a460df148f42f778e088a12be9",
-              "contextGitTree": "5e1fdf4a9f885039af403f9790b1fd18b55e86c2",
+              "receiptContentSha256": "49b11d6d44f3668aa3c7ed9b497dfbad9589dd08adc143d5b7de623a6d8271de",
+              "contextGitCommit": "2949fe78a9a039cdcfbbeeb52226a5fad378ecdb",
+              "contextGitTree": "27ef8f96972fd35a5af2e94fbf45ffb8811c6275",
               "semantics": {
                 "replayKind": "POST_HOC_REPLAY",
                 "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT",
@@ -75054,7 +75048,7 @@
                 "stdoutSizeBytes": 1420,
                 "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
                 "stderrSizeBytes": 0,
-                "replayedAt": "2026-07-26T03:08:14.887Z",
+                "replayedAt": "2026-07-26T04:07:31.913Z",
                 "replayKind": "POST_HOC_REPLAY",
                 "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT"
               }
@@ -75110,7 +75104,7 @@
                     "versionId": "Cx63GyP4exYgIR0vFkIYG4E3TxjtgGTe",
                     "sha256": "8ab3f859bd20bbd4ba4e74902ce7d9af94fb866facf856da4b32ed1a380cd2ef",
                     "sizeBytes": 2659,
-                    "restoredAt": "2026-07-26T02:00:17.655Z"
+                    "restoredAt": "2026-07-26T03:30:06.841Z"
                   }
                 },
                 {
@@ -75118,7 +75112,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "attrs-26.1.0.dist-info/licenses/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/attrs-26.1.0-py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "15230fda705f4c9602d41d2c47b0c3b816a455d463c74796a5c2b343b9ecc0fd",
+                  "parentArtifactEvidenceSha256": "031d7d705e9b2193ed6990f6fa5f9f4d893377fc010b7ade224b394fb6eaf76a",
                   "repositoryIdentity": null,
                   "sha256": "882115c95dfc2af1eeb6714f8ec6d5cbcabf667caff8729f42420da63f714e9f",
                   "sizeBytes": 1109,
@@ -75134,7 +75128,7 @@
                     "versionId": "Bfyngt32cMvLs8MVMozuhavI0wvEFudj",
                     "sha256": "882115c95dfc2af1eeb6714f8ec6d5cbcabf667caff8729f42420da63f714e9f",
                     "sizeBytes": 1109,
-                    "restoredAt": "2026-07-26T01:57:28.402Z"
+                    "restoredAt": "2026-07-26T03:28:32.024Z"
                   }
                 },
                 {
@@ -75142,7 +75136,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "backoff-2.2.1.dist-info/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/backoff-2.2.1-py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "066843751a5ba91951a8de064f679916133f6aeb71481b26d1292b90ca6bf768",
+                  "parentArtifactEvidenceSha256": "2d0bb4c0bc87f480261786e4bace9012c3395962fb3cb7ded58aa1358444898f",
                   "repositoryIdentity": null,
                   "sha256": "2a6b4d5f884d4d7a1bf04ea7df1944cf12b32e35a79a86d0a075a2d3f40fb9ac",
                   "sizeBytes": 1077,
@@ -75158,7 +75152,7 @@
                     "versionId": "n1fTJNIgZNVI2IJrNaHjdJ2ELIr2eTmH",
                     "sha256": "2a6b4d5f884d4d7a1bf04ea7df1944cf12b32e35a79a86d0a075a2d3f40fb9ac",
                     "sizeBytes": 1077,
-                    "restoredAt": "2026-07-26T01:56:54.558Z"
+                    "restoredAt": "2026-07-26T03:27:59.757Z"
                   }
                 },
                 {
@@ -75166,7 +75160,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "certifi-2026.7.22.dist-info/licenses/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/certifi-2026.7.22-py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "095581008595698e848376dfaf237abc54503da2dce4874fa4f60685969f2658",
+                  "parentArtifactEvidenceSha256": "211add6fa51a7139a5214fcc6b18c56d0c3fbbf03a1dd7e0bd516a0920a04240",
                   "repositoryIdentity": null,
                   "sha256": "e93716da6b9c0d5a4a1df60fe695b370f0695603d21f6f83f053e42cfc10caf7",
                   "sizeBytes": 989,
@@ -75182,7 +75176,7 @@
                     "versionId": "uTcv3T05VzG33FRLlSkBgO0Sojzm_Z5Z",
                     "sha256": "e93716da6b9c0d5a4a1df60fe695b370f0695603d21f6f83f053e42cfc10caf7",
                     "sizeBytes": 989,
-                    "restoredAt": "2026-07-26T01:57:27.308Z"
+                    "restoredAt": "2026-07-26T03:28:31.054Z"
                   }
                 },
                 {
@@ -75190,7 +75184,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "charset_normalizer-3.4.9.dist-info/licenses/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/charset_normalizer-3.4.9-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
-                  "parentArtifactEvidenceSha256": "3ce7a9f4fe69b2af050ff14c9c3bfd8b794a1b8c9978f2962e7214bfb7781bd9",
+                  "parentArtifactEvidenceSha256": "1429d72b3f244ea7044f5cee100b6018ce268744c35ab46fa645a9b5595cb162",
                   "repositoryIdentity": null,
                   "sha256": "6d0d41bfe170ac6c7dc248c9a63e254d0fb45a60d50a8257d0af92c6e249b887",
                   "sizeBytes": 1071,
@@ -75206,7 +75200,7 @@
                     "versionId": "WBoAn6VZMAeE2yMxmsujP2XvCkq4a.Eb",
                     "sha256": "6d0d41bfe170ac6c7dc248c9a63e254d0fb45a60d50a8257d0af92c6e249b887",
                     "sizeBytes": 1071,
-                    "restoredAt": "2026-07-26T01:57:10.707Z"
+                    "restoredAt": "2026-07-26T03:28:15.300Z"
                   }
                 },
                 {
@@ -75214,7 +75208,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "contourpy-1.3.3.dist-info/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/contourpy-1.3.3-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
-                  "parentArtifactEvidenceSha256": "f70cc95b61d4fb881e17d8ce28e2b6c93e703d5024f9daf91e9132a1213d57d1",
+                  "parentArtifactEvidenceSha256": "1704980f3130e3453432a16d417373592974bf9052f87c71dbe5b6efd19051e0",
                   "repositoryIdentity": null,
                   "sha256": "34170979fc64f4f5e6dfa66ef27dec314ffffc5852000c60f4836ec1dfbf156e",
                   "sizeBytes": 1534,
@@ -75230,7 +75224,7 @@
                     "versionId": "zt7t_8dganqpLCBEinfebCjMPvSHdPko",
                     "sha256": "34170979fc64f4f5e6dfa66ef27dec314ffffc5852000c60f4836ec1dfbf156e",
                     "sizeBytes": 1534,
-                    "restoredAt": "2026-07-26T01:57:12.802Z"
+                    "restoredAt": "2026-07-26T03:28:17.265Z"
                   }
                 },
                 {
@@ -75238,7 +75232,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "cycler-0.12.1.dist-info/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/cycler-0.12.1-py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "0f4eb5e716228e73c197abc56dff0573af519653fc7bbeee4b8b9b7aea4765b4",
+                  "parentArtifactEvidenceSha256": "3a9b19b6a1f82701a1c45701aadcc54b3d64c4b9312569bc48f9c56237cac96e",
                   "repositoryIdentity": null,
                   "sha256": "f1218143d766da3fea66f13396b7f15df46a83303f29bf96ba6e98eb4d42f408",
                   "sizeBytes": 1497,
@@ -75254,7 +75248,7 @@
                     "versionId": "3qvoluwWlWc1kmHx6N.YtTF4Ly8qouJy",
                     "sha256": "f1218143d766da3fea66f13396b7f15df46a83303f29bf96ba6e98eb4d42f408",
                     "sizeBytes": 1497,
-                    "restoredAt": "2026-07-26T01:56:57.758Z"
+                    "restoredAt": "2026-07-26T03:28:02.860Z"
                   }
                 },
                 {
@@ -75262,7 +75256,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "fonttools-4.63.0.dist-info/licenses/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/fonttools-4.63.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
-                  "parentArtifactEvidenceSha256": "72d5a0fff943eeaa976bc2ccf7815964144ea3dd754d1e27eb1e27adc5fadc7e",
+                  "parentArtifactEvidenceSha256": "66c8a73ed6d89bf12e56f9e9e373c2c4cb2f0278915c941294945f2231a4aabe",
                   "repositoryIdentity": null,
                   "sha256": "6787208f83f659ccbc2223b2fde952ffa6f7e8aca62f1a8a2bf5bc51bb1b2383",
                   "sizeBytes": 1072,
@@ -75278,7 +75272,7 @@
                     "versionId": "Wygsv2IET9P7b23JKE5SatlqrkOoIDE5",
                     "sha256": "6787208f83f659ccbc2223b2fde952ffa6f7e8aca62f1a8a2bf5bc51bb1b2383",
                     "sizeBytes": 1072,
-                    "restoredAt": "2026-07-26T01:58:40.336Z"
+                    "restoredAt": "2026-07-26T03:28:42.672Z"
                   }
                 },
                 {
@@ -75286,7 +75280,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "fonttools-4.63.0.dist-info/licenses/LICENSE.external",
                   "parentPackageId": "cache-file:model-dependencies/scout/fonttools-4.63.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
-                  "parentArtifactEvidenceSha256": "72d5a0fff943eeaa976bc2ccf7815964144ea3dd754d1e27eb1e27adc5fadc7e",
+                  "parentArtifactEvidenceSha256": "66c8a73ed6d89bf12e56f9e9e373c2c4cb2f0278915c941294945f2231a4aabe",
                   "repositoryIdentity": null,
                   "sha256": "94a83aaee0729a0f302d34acc4acecbd9d58366f262429075fe557e4a54b2e69",
                   "sizeBytes": 20022,
@@ -75302,7 +75296,7 @@
                     "versionId": "MXndt06bArwZzvAIK88ysZBFS5x3chz.",
                     "sha256": "94a83aaee0729a0f302d34acc4acecbd9d58366f262429075fe557e4a54b2e69",
                     "sizeBytes": 20022,
-                    "restoredAt": "2026-07-26T01:57:07.457Z"
+                    "restoredAt": "2026-07-26T03:28:12.194Z"
                   }
                 },
                 {
@@ -75310,7 +75304,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "idna-3.18.dist-info/licenses/LICENSE.md",
                   "parentPackageId": "cache-file:model-dependencies/scout/idna-3.18-py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "18026b4428db55e79e6ad0b5dd95ac4e4803bd254d851170853f09fcf46f4eec",
+                  "parentArtifactEvidenceSha256": "314d4bdaead80f1e9c7a27e2d9a132baaf22754373cf636e2c2dff97e8ca1726",
                   "repositoryIdentity": null,
                   "sha256": "1a9a4f0e3d479a27240ddd59a9137a66ab4a0f9dfdc8ca6188cc0bfd85187f04",
                   "sizeBytes": 1541,
@@ -75326,7 +75320,7 @@
                     "versionId": "WBlgtUilw5xp.MthQ6ksyowH2dBtRR.E",
                     "sha256": "1a9a4f0e3d479a27240ddd59a9137a66ab4a0f9dfdc8ca6188cc0bfd85187f04",
                     "sizeBytes": 1541,
-                    "restoredAt": "2026-07-26T01:57:14.977Z"
+                    "restoredAt": "2026-07-26T03:28:19.368Z"
                   }
                 },
                 {
@@ -75334,7 +75328,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "iniconfig-2.3.0.dist-info/licenses/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/iniconfig-2.3.0-py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "36a784ee00dd107423780949b45bb6c7a05a3d46ab0e5f9463888624883333a6",
+                  "parentArtifactEvidenceSha256": "1870bb6bc9914ce098228222489af9b5883402300dbda534597390a232b96807",
                   "repositoryIdentity": null,
                   "sha256": "3409fa91f7ace557894632676656e32264fe5ef7581535725dc9a23774551bd4",
                   "sizeBytes": 1098,
@@ -75350,7 +75344,7 @@
                     "versionId": "vQD_ItUHSoWJRfENAArQ_SfNwp8FnCF6",
                     "sha256": "3409fa91f7ace557894632676656e32264fe5ef7581535725dc9a23774551bd4",
                     "sizeBytes": 1098,
-                    "restoredAt": "2026-07-26T01:58:39.282Z"
+                    "restoredAt": "2026-07-26T03:28:41.643Z"
                   }
                 },
                 {
@@ -75358,7 +75352,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "jsonschema-4.26.0.dist-info/licenses/COPYING",
                   "parentPackageId": "cache-file:model-dependencies/scout/jsonschema-4.26.0-py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "1881ce7269816dc236b06c2efc83afda26051d60ad43b0e77fca4846164e2bf0",
+                  "parentArtifactEvidenceSha256": "bdcf0be4e6e4632e2ae920a5577eaefe5446e16a78570af86d21b95f494be05d",
                   "repositoryIdentity": null,
                   "sha256": "4f92a015a13c4d1a040bef018aa13430b4f1bc73b41b16bb846c346766de7439",
                   "sizeBytes": 1057,
@@ -75374,7 +75368,7 @@
                     "versionId": "HGo57birzj0UfeaFUtyzCLLBc9KPNaTO",
                     "sha256": "4f92a015a13c4d1a040bef018aa13430b4f1bc73b41b16bb846c346766de7439",
                     "sizeBytes": 1057,
-                    "restoredAt": "2026-07-26T01:57:13.908Z"
+                    "restoredAt": "2026-07-26T03:28:18.333Z"
                   }
                 },
                 {
@@ -75382,7 +75376,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "jsonschema_specifications-2025.9.1.dist-info/licenses/COPYING",
                   "parentPackageId": "cache-file:model-dependencies/scout/jsonschema_specifications-2025.9.1-py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "1ca7da29ee74f24bb0f894cc8920e4ffaaf4ab6f7557ce8fe996903e53bf7774",
+                  "parentArtifactEvidenceSha256": "3b9864a89e2ba01a70d409f079f11773aa2a4a79783e20bb925bbbcafba2c3df",
                   "repositoryIdentity": null,
                   "sha256": "42dcd63495f87b4eb7c7757afa379bb55a53f94afd7a5f657d9adf57236e515c",
                   "sizeBytes": 1057,
@@ -75398,7 +75392,7 @@
                     "versionId": "SGnasSXfNgJV1C3mtO9GVzeyH5pSNyJz",
                     "sha256": "42dcd63495f87b4eb7c7757afa379bb55a53f94afd7a5f657d9adf57236e515c",
                     "sizeBytes": 1057,
-                    "restoredAt": "2026-07-26T01:57:17.096Z"
+                    "restoredAt": "2026-07-26T03:28:21.398Z"
                   }
                 },
                 {
@@ -75406,7 +75400,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "kiwisolver-1.5.0.dist-info/licenses/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/kiwisolver-1.5.0-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
-                  "parentArtifactEvidenceSha256": "f41535e454ec770974b4f11822a3824b6a72b29e1b48c131a72814269b0b440e",
+                  "parentArtifactEvidenceSha256": "5f37eeec510a464a24cfb4b8a26a7be4cb2776854a954a44236e7be23d3bdac4",
                   "repositoryIdentity": null,
                   "sha256": "529c40e5f67f2f88904657a9f7879ae2f8dc76bc9bfef9cb10d988b48804ed61",
                   "sizeBytes": 3289,
@@ -75422,7 +75416,7 @@
                     "versionId": "izrybrCUK6.eLbmW5uwI8N8izz2OutCR",
                     "sha256": "529c40e5f67f2f88904657a9f7879ae2f8dc76bc9bfef9cb10d988b48804ed61",
                     "sizeBytes": 3289,
-                    "restoredAt": "2026-07-26T01:57:26.186Z"
+                    "restoredAt": "2026-07-26T03:28:30.046Z"
                   }
                 },
                 {
@@ -75430,7 +75424,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "matplotlib-3.11.1.dist-info/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
-                  "parentArtifactEvidenceSha256": "5c306ec5332a5fe08af80bbff4fbd7740635803d0979919afcf3516afb9c66e9",
+                  "parentArtifactEvidenceSha256": "c8b104871c1f11392aa827f27a431ef6c893a4149521daef09f7df0d1d25dd9a",
                   "repositoryIdentity": null,
                   "sha256": "822e8e528147569a41975592aee19c11992ab667ba50451cd929031d5fc74491",
                   "sizeBytes": 63442,
@@ -75446,7 +75440,7 @@
                     "versionId": "TjuwFKq6D0TZyezrK4ZWhohGks1EWcFq",
                     "sha256": "822e8e528147569a41975592aee19c11992ab667ba50451cd929031d5fc74491",
                     "sizeBytes": 63442,
-                    "restoredAt": "2026-07-26T01:56:58.923Z"
+                    "restoredAt": "2026-07-26T03:28:03.961Z"
                   }
                 },
                 {
@@ -75454,7 +75448,7 @@
                   "role": "BUNDLED_COMPONENT_LICENSE",
                   "path": "matplotlib/mpl-data/fonts/ttf/LICENSE_DEJAVU",
                   "parentPackageId": "cache-file:model-dependencies/scout/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
-                  "parentArtifactEvidenceSha256": "5c306ec5332a5fe08af80bbff4fbd7740635803d0979919afcf3516afb9c66e9",
+                  "parentArtifactEvidenceSha256": "c8b104871c1f11392aa827f27a431ef6c893a4149521daef09f7df0d1d25dd9a",
                   "repositoryIdentity": null,
                   "sha256": "d75938dec098f06f0ac3c00853065d94f020be1c3c62ef1dc2975ba15b4d9b0e",
                   "sizeBytes": 4816,
@@ -75470,7 +75464,7 @@
                     "versionId": "w9SReTjJBUdelz0R7yhUT00xsOwP4e1d",
                     "sha256": "d75938dec098f06f0ac3c00853065d94f020be1c3c62ef1dc2975ba15b4d9b0e",
                     "sizeBytes": 4816,
-                    "restoredAt": "2026-07-26T01:56:52.385Z"
+                    "restoredAt": "2026-07-26T03:27:57.742Z"
                   }
                 },
                 {
@@ -75478,7 +75472,7 @@
                   "role": "BUNDLED_COMPONENT_LICENSE",
                   "path": "matplotlib/mpl-data/fonts/ttf/LICENSE_STIX",
                   "parentPackageId": "cache-file:model-dependencies/scout/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
-                  "parentArtifactEvidenceSha256": "5c306ec5332a5fe08af80bbff4fbd7740635803d0979919afcf3516afb9c66e9",
+                  "parentArtifactEvidenceSha256": "c8b104871c1f11392aa827f27a431ef6c893a4149521daef09f7df0d1d25dd9a",
                   "repositoryIdentity": null,
                   "sha256": "bab3d31dfef07f483624f2f65f2711e76065b8e7273278b1c071ede1041c9959",
                   "sizeBytes": 5476,
@@ -75494,7 +75488,7 @@
                     "versionId": "o.YkfYKbg5C6SlRNx.FJGWqgILEIDiXf",
                     "sha256": "bab3d31dfef07f483624f2f65f2711e76065b8e7273278b1c071ede1041c9959",
                     "sizeBytes": 5476,
-                    "restoredAt": "2026-07-26T01:57:19.774Z"
+                    "restoredAt": "2026-07-26T03:28:23.930Z"
                   }
                 },
                 {
@@ -75502,7 +75496,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "numpy-1.26.4.dist-info/LICENSE.txt",
                   "parentPackageId": "cache-file:model-dependencies/scout/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
-                  "parentArtifactEvidenceSha256": "20b1a207b604881ee0c82948fbf929715225e0ff188426ac050fa1df4fef2441",
+                  "parentArtifactEvidenceSha256": "13ae6c0cc3d8d348e22898f9b0ddede039de1d1b2d864f9f23865ff04d8d7ab7",
                   "repositoryIdentity": null,
                   "sha256": "b01a781fe2f8b83292cf6ebca087576437fbe514218a0062f841e458bdafe4ba",
                   "sizeBytes": 48680,
@@ -75518,7 +75512,7 @@
                     "versionId": "d0gTEGTJA2HE8KWtOQhSf_aEyyhY9qM9",
                     "sha256": "b01a781fe2f8b83292cf6ebca087576437fbe514218a0062f841e458bdafe4ba",
                     "sizeBytes": 48680,
-                    "restoredAt": "2026-07-26T01:58:34.967Z"
+                    "restoredAt": "2026-07-26T03:28:37.493Z"
                   }
                 },
                 {
@@ -75526,7 +75520,7 @@
                   "role": "BUNDLED_COMPONENT_LICENSE",
                   "path": "numpy/core/include/numpy/random/LICENSE.txt",
                   "parentPackageId": "cache-file:model-dependencies/scout/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
-                  "parentArtifactEvidenceSha256": "20b1a207b604881ee0c82948fbf929715225e0ff188426ac050fa1df4fef2441",
+                  "parentArtifactEvidenceSha256": "13ae6c0cc3d8d348e22898f9b0ddede039de1d1b2d864f9f23865ff04d8d7ab7",
                   "repositoryIdentity": null,
                   "sha256": "fbc539f47d0cf83bc61378080fb873d5c14630126cacbfe754035c3926daa5ec",
                   "sizeBytes": 1018,
@@ -75542,7 +75536,7 @@
                     "versionId": "cmj.8XfuclJMsAwj7fsDuBvu._eCk3Ps",
                     "sha256": "fbc539f47d0cf83bc61378080fb873d5c14630126cacbfe754035c3926daa5ec",
                     "sizeBytes": 1018,
-                    "restoredAt": "2026-07-26T01:58:38.199Z"
+                    "restoredAt": "2026-07-26T03:28:40.604Z"
                   }
                 },
                 {
@@ -75550,7 +75544,7 @@
                   "role": "BUNDLED_COMPONENT_LICENSE",
                   "path": "numpy/ma/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
-                  "parentArtifactEvidenceSha256": "20b1a207b604881ee0c82948fbf929715225e0ff188426ac050fa1df4fef2441",
+                  "parentArtifactEvidenceSha256": "13ae6c0cc3d8d348e22898f9b0ddede039de1d1b2d864f9f23865ff04d8d7ab7",
                   "repositoryIdentity": null,
                   "sha256": "05f3b88351988ecfad10abe92c0c50e5875c6452d5009a0084cc291551ffcca6",
                   "sizeBytes": 1593,
@@ -75566,7 +75560,7 @@
                     "versionId": "T6EgBvBsewFt8ufej1EQW1THp_1QKo6V",
                     "sha256": "05f3b88351988ecfad10abe92c0c50e5875c6452d5009a0084cc291551ffcca6",
                     "sizeBytes": 1593,
-                    "restoredAt": "2026-07-26T01:58:36.052Z"
+                    "restoredAt": "2026-07-26T03:28:38.487Z"
                   }
                 },
                 {
@@ -75574,7 +75568,7 @@
                   "role": "BUNDLED_COMPONENT_LICENSE",
                   "path": "numpy/random/LICENSE.md",
                   "parentPackageId": "cache-file:model-dependencies/scout/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
-                  "parentArtifactEvidenceSha256": "20b1a207b604881ee0c82948fbf929715225e0ff188426ac050fa1df4fef2441",
+                  "parentArtifactEvidenceSha256": "13ae6c0cc3d8d348e22898f9b0ddede039de1d1b2d864f9f23865ff04d8d7ab7",
                   "repositoryIdentity": null,
                   "sha256": "103166b62b80443afb9eb3488e052ea06be0cff566b908f199e561fde49af19f",
                   "sizeBytes": 3511,
@@ -75590,7 +75584,7 @@
                     "versionId": "q.dOxPM7.DkEBaLhBFoa1NX86Fv.AEAJ",
                     "sha256": "103166b62b80443afb9eb3488e052ea06be0cff566b908f199e561fde49af19f",
                     "sizeBytes": 3511,
-                    "restoredAt": "2026-07-26T01:56:49.002Z"
+                    "restoredAt": "2026-07-26T03:27:54.542Z"
                   }
                 },
                 {
@@ -75598,7 +75592,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "numpy_financial-1.0.0.dist-info/LICENSE.txt",
                   "parentPackageId": "cache-file:model-dependencies/scout/numpy_financial-1.0.0-py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "385098bb42c7b5657c65046fe271daa31d65dc6785c9e5a4a50ed9492d9e4c30",
+                  "parentArtifactEvidenceSha256": "4311a3a1e407bd33754a0d0ae788598e585ea10c817583cb1a319d8ed3ef688e",
                   "repositoryIdentity": null,
                   "sha256": "a2755eb34bddfc97dc39cbeebe352744d989c1e0f7fab7baacb9fc9a9ee3e1b4",
                   "sizeBytes": 1543,
@@ -75614,7 +75608,7 @@
                     "versionId": "AGvjiprAsish8f0KqzFHWdDGisOkqlyz",
                     "sha256": "a2755eb34bddfc97dc39cbeebe352744d989c1e0f7fab7baacb9fc9a9ee3e1b4",
                     "sizeBytes": 1543,
-                    "restoredAt": "2026-07-26T01:57:01.049Z"
+                    "restoredAt": "2026-07-26T03:28:06.047Z"
                   }
                 },
                 {
@@ -75622,7 +75616,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "orjson-3.11.9.dist-info/licenses/LICENSE-APACHE",
                   "parentPackageId": "cache-file:model-dependencies/scout/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
-                  "parentArtifactEvidenceSha256": "1bba28828578c1b0df164e701b5521357f69d10d0fc9d069abed4ad5e449ca05",
+                  "parentArtifactEvidenceSha256": "c23b1490a0b8ca34b5b40359fc9e835e7533d6483e7ef0be9caa138073286d8a",
                   "repositoryIdentity": null,
                   "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2",
                   "sizeBytes": 10847,
@@ -75638,7 +75632,7 @@
                     "versionId": "jg92QytI_MuIYpY_75sLwS9cYsO_cL6J",
                     "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2",
                     "sizeBytes": 10847,
-                    "restoredAt": "2026-07-26T01:56:56.684Z"
+                    "restoredAt": "2026-07-26T03:28:01.801Z"
                   }
                 },
                 {
@@ -75646,7 +75640,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "orjson-3.11.9.dist-info/licenses/LICENSE-MIT",
                   "parentPackageId": "cache-file:model-dependencies/scout/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
-                  "parentArtifactEvidenceSha256": "1bba28828578c1b0df164e701b5521357f69d10d0fc9d069abed4ad5e449ca05",
+                  "parentArtifactEvidenceSha256": "c23b1490a0b8ca34b5b40359fc9e835e7533d6483e7ef0be9caa138073286d8a",
                   "repositoryIdentity": null,
                   "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3",
                   "sizeBytes": 1023,
@@ -75662,7 +75656,7 @@
                     "versionId": "5RX6I_WxlXficH84vvsyA5B2.vZnJFZh",
                     "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3",
                     "sizeBytes": 1023,
-                    "restoredAt": "2026-07-26T01:57:09.632Z"
+                    "restoredAt": "2026-07-26T03:28:14.297Z"
                   }
                 },
                 {
@@ -75670,7 +75664,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "orjson-3.11.9.dist-info/licenses/LICENSE-MPL-2.0",
                   "parentPackageId": "cache-file:model-dependencies/scout/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
-                  "parentArtifactEvidenceSha256": "1bba28828578c1b0df164e701b5521357f69d10d0fc9d069abed4ad5e449ca05",
+                  "parentArtifactEvidenceSha256": "c23b1490a0b8ca34b5b40359fc9e835e7533d6483e7ef0be9caa138073286d8a",
                   "repositoryIdentity": null,
                   "sha256": "66a3107d5ad6a058aab753eaac2047ccb2ed0e39465dd0fe5844da3e300d5172",
                   "sizeBytes": 16727,
@@ -75686,7 +75680,7 @@
                     "versionId": "Bk7SroZ7gG8_6CbqMAusctwAvZFyjVmT",
                     "sha256": "66a3107d5ad6a058aab753eaac2047ccb2ed0e39465dd0fe5844da3e300d5172",
                     "sizeBytes": 16727,
-                    "restoredAt": "2026-07-26T01:58:37.149Z"
+                    "restoredAt": "2026-07-26T03:28:39.572Z"
                   }
                 },
                 {
@@ -75694,7 +75688,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "packaging-26.2.dist-info/licenses/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/packaging-26.2-py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "1ae76e94964e4162c2cc4cb9707f9316fa487410df3c99538646a78d6ff4dcda",
+                  "parentArtifactEvidenceSha256": "0a85703cb29c07410b65b618a3fdac56f372f195d0b8f085fa5ab62ca7b56aa2",
                   "repositoryIdentity": null,
                   "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48",
                   "sizeBytes": 197,
@@ -75710,7 +75704,7 @@
                     "versionId": "bFcPauPFxehnmsqTXl0PJeBeoxdFteMA",
                     "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48",
                     "sizeBytes": 197,
-                    "restoredAt": "2026-07-26T01:57:11.753Z"
+                    "restoredAt": "2026-07-26T03:28:16.270Z"
                   }
                 },
                 {
@@ -75718,7 +75712,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "packaging-26.2.dist-info/licenses/LICENSE.APACHE",
                   "parentPackageId": "cache-file:model-dependencies/scout/packaging-26.2-py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "1ae76e94964e4162c2cc4cb9707f9316fa487410df3c99538646a78d6ff4dcda",
+                  "parentArtifactEvidenceSha256": "0a85703cb29c07410b65b618a3fdac56f372f195d0b8f085fa5ab62ca7b56aa2",
                   "repositoryIdentity": null,
                   "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
                   "sizeBytes": 10174,
@@ -75734,7 +75728,7 @@
                     "versionId": "3NouYMkH0uizX0J7TKD4Kd551w8Vnjrz",
                     "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
                     "sizeBytes": 10174,
-                    "restoredAt": "2026-07-26T01:56:53.457Z"
+                    "restoredAt": "2026-07-26T03:27:58.753Z"
                   }
                 },
                 {
@@ -75742,7 +75736,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "packaging-26.2.dist-info/licenses/LICENSE.BSD",
                   "parentPackageId": "cache-file:model-dependencies/scout/packaging-26.2-py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "1ae76e94964e4162c2cc4cb9707f9316fa487410df3c99538646a78d6ff4dcda",
+                  "parentArtifactEvidenceSha256": "0a85703cb29c07410b65b618a3fdac56f372f195d0b8f085fa5ab62ca7b56aa2",
                   "repositoryIdentity": null,
                   "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5",
                   "sizeBytes": 1344,
@@ -75758,7 +75752,7 @@
                     "versionId": "fFE2YFLRn9Jh1YVppR8mk6h7LJG6eVbq",
                     "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5",
                     "sizeBytes": 1344,
-                    "restoredAt": "2026-07-26T01:56:46.826Z"
+                    "restoredAt": "2026-07-26T03:27:52.490Z"
                   }
                 },
                 {
@@ -75766,7 +75760,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "pandas-3.0.5.dist-info/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/pandas-3.0.5-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
-                  "parentArtifactEvidenceSha256": "2f9f34a768ffce39d509207dcd240d6f967fd8e30bff400ecc494f79d684b1db",
+                  "parentArtifactEvidenceSha256": "bfecc219575305739e30ff5cd5288fc83636c99f33e0ef94192fc2b79696bd97",
                   "repositoryIdentity": null,
                   "sha256": "5c1052e921e62d36ccda50a61585e9c0444b80c62f39b57c4f3f0d5fb62f5071",
                   "sizeBytes": 52127,
@@ -75782,7 +75776,7 @@
                     "versionId": "kSc9haOMxVbKvn47TVCRlWGJaO9he3fI",
                     "sha256": "5c1052e921e62d36ccda50a61585e9c0444b80c62f39b57c4f3f0d5fb62f5071",
                     "sizeBytes": 52127,
-                    "restoredAt": "2026-07-26T01:57:08.586Z"
+                    "restoredAt": "2026-07-26T03:28:13.295Z"
                   }
                 },
                 {
@@ -75790,7 +75784,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "pillow-12.3.0.dist-info/licenses/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/pillow-12.3.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
-                  "parentArtifactEvidenceSha256": "46b131e520f998e5494eedd7fdbf3d360368b9847b16e1db24a1904f4a7ae93f",
+                  "parentArtifactEvidenceSha256": "05293ad079749476e2168c6093097bff7a1008f9aad02c20dd59e8262bab3a67",
                   "repositoryIdentity": null,
                   "sha256": "dda12a98c1979cf3d94df1cff45d27a4cb3f04a60c76f76902ac54cac03ec0ce",
                   "sizeBytes": 70307,
@@ -75806,7 +75800,7 @@
                     "versionId": "NILVOZSUzD9wADP.k.DJmftRR5SGi1dG",
                     "sha256": "dda12a98c1979cf3d94df1cff45d27a4cb3f04a60c76f76902ac54cac03ec0ce",
                     "sizeBytes": 70307,
-                    "restoredAt": "2026-07-26T01:58:33.838Z"
+                    "restoredAt": "2026-07-26T03:28:36.382Z"
                   }
                 },
                 {
@@ -75814,7 +75808,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "pluggy-1.6.0.dist-info/licenses/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/pluggy-1.6.0-py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "bc6d1055feecd5c49d2ebc8a65a0e21fc715e50a7c5fd1ee7a37660a4c4580a6",
+                  "parentArtifactEvidenceSha256": "7a0f69958d6253094461bb6aa7c443a00bf76ad755e9004f53b78febb4cd3bd9",
                   "repositoryIdentity": null,
                   "sha256": "d6b65e6c213a5d0b577911d34d6e5949b9f59d76c238c5071a2f3fc16cfb2606",
                   "sizeBytes": 1110,
@@ -75830,7 +75824,7 @@
                     "versionId": "xhUvJPFjOUGYGX0R14HttUjfI4kLfuxJ",
                     "sha256": "d6b65e6c213a5d0b577911d34d6e5949b9f59d76c238c5071a2f3fc16cfb2606",
                     "sizeBytes": 1110,
-                    "restoredAt": "2026-07-26T01:57:20.861Z"
+                    "restoredAt": "2026-07-26T03:28:24.984Z"
                   }
                 },
                 {
@@ -75838,7 +75832,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "pygments-2.20.0.dist-info/licenses/AUTHORS",
                   "parentPackageId": "cache-file:model-dependencies/scout/pygments-2.20.0-py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "7951d83ab9ca55eb05423be0257bfbe675af685ee727851b6b20b01904a7ada7",
+                  "parentArtifactEvidenceSha256": "5e0d43da327c55504c97fbbfa91603e7d33aa712b4cf7f1860b36610ca5c4916",
                   "repositoryIdentity": null,
                   "sha256": "0db603a5f4499f690c4425477ff664c166da325d3acc3b5a8d4de3db072443d0",
                   "sizeBytes": 10873,
@@ -75854,7 +75848,7 @@
                     "versionId": "oC4wusuPGnUWdCFntqrk.tkz.k5NDQ0W",
                     "sha256": "0db603a5f4499f690c4425477ff664c166da325d3acc3b5a8d4de3db072443d0",
                     "sizeBytes": 10873,
-                    "restoredAt": "2026-07-26T01:57:22.999Z"
+                    "restoredAt": "2026-07-26T03:28:27.005Z"
                   }
                 },
                 {
@@ -75862,7 +75856,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "pygments-2.20.0.dist-info/licenses/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/pygments-2.20.0-py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "7951d83ab9ca55eb05423be0257bfbe675af685ee727851b6b20b01904a7ada7",
+                  "parentArtifactEvidenceSha256": "5e0d43da327c55504c97fbbfa91603e7d33aa712b4cf7f1860b36610ca5c4916",
                   "repositoryIdentity": null,
                   "sha256": "a9d66f1d526df02e29dce73436d34e56e8632f46c275bbdffc70569e882f9f17",
                   "sizeBytes": 1331,
@@ -75878,7 +75872,7 @@
                     "versionId": "B.J7HOh5OH0MIh4bOIrUWkqUvsIzZ_WA",
                     "sha256": "a9d66f1d526df02e29dce73436d34e56e8632f46c275bbdffc70569e882f9f17",
                     "sizeBytes": 1331,
-                    "restoredAt": "2026-07-26T01:57:25.150Z"
+                    "restoredAt": "2026-07-26T03:28:29.063Z"
                   }
                 },
                 {
@@ -75886,7 +75880,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "pyparsing-3.3.2.dist-info/licenses/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/pyparsing-3.3.2-py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "ded5f0dbf497bfdf2f54887d48b086465fd99314f3352c049325d6a6b16386e4",
+                  "parentArtifactEvidenceSha256": "631790a1bd997729c187c0d5291d41a5f0ec549d5a203842d0ddb44ead9d1f41",
                   "repositoryIdentity": null,
                   "sha256": "a5425f9dc14ac74d4c5f0b679e941f2442e32cca7452a4418d5b1a49893ebe4e",
                   "sizeBytes": 1062,
@@ -75902,7 +75896,7 @@
                     "versionId": "ofjNVDoMzGkHTj5KydmajNaxZxIhcjem",
                     "sha256": "a5425f9dc14ac74d4c5f0b679e941f2442e32cca7452a4418d5b1a49893ebe4e",
                     "sizeBytes": 1062,
-                    "restoredAt": "2026-07-26T01:57:29.466Z"
+                    "restoredAt": "2026-07-26T03:28:33.112Z"
                   }
                 },
                 {
@@ -75910,7 +75904,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "pytest-9.1.1.dist-info/licenses/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/pytest-9.1.1-py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "a91be0ed021169ccfdc7d658fdee9b53f74e0fe1a556c306ed15f9c142f88852",
+                  "parentArtifactEvidenceSha256": "5b5aee3d602617233f1d0e45043ca5d26c052b17f55d1ed7044a8999005b350c",
                   "repositoryIdentity": null,
                   "sha256": "ca836a5f9ecca3b2f350230faa20a48fb8b145653b5568d784862df864706b9b",
                   "sizeBytes": 1091,
@@ -75926,7 +75920,7 @@
                     "versionId": "pxqmVLU0C4qu9bjxZLF7ucOljOF2eKSv",
                     "sha256": "ca836a5f9ecca3b2f350230faa20a48fb8b145653b5568d784862df864706b9b",
                     "sizeBytes": 1091,
-                    "restoredAt": "2026-07-26T01:56:50.099Z"
+                    "restoredAt": "2026-07-26T03:27:55.564Z"
                   }
                 },
                 {
@@ -75934,7 +75928,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "python_dateutil-2.9.0.post0.dist-info/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "80401359099707da9d46b0db60e442de5d8ed0722ef7215cadd113c316f5ec7f",
+                  "parentArtifactEvidenceSha256": "aa9359855da5ef7ff11e557bf4b9465e69bb40fc0b942628be90eaddf3fa2cf1",
                   "repositoryIdentity": null,
                   "sha256": "ba00f51a0d92823b5a1cde27d8b5b9d2321e67ed8da9bc163eff96d5e17e577e",
                   "sizeBytes": 2889,
@@ -75950,7 +75944,7 @@
                     "versionId": "KIJqfOKYlXzTIWzt1CplmbVlirifpcmp",
                     "sha256": "ba00f51a0d92823b5a1cde27d8b5b9d2321e67ed8da9bc163eff96d5e17e577e",
                     "sizeBytes": 2889,
-                    "restoredAt": "2026-07-26T01:58:42.450Z"
+                    "restoredAt": "2026-07-26T03:28:44.698Z"
                   }
                 },
                 {
@@ -75958,7 +75952,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "python_dotenv-1.2.2.dist-info/licenses/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/python_dotenv-1.2.2-py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "cb57ce4c47c9e07e0e84863f971777a3ca272d0a94208b0e26830294930a2208",
+                  "parentArtifactEvidenceSha256": "9b7e15770af3b1c0852b4a8a572aabecb148d457f949ae8e25fbb223c8d65aba",
                   "repositoryIdentity": null,
                   "sha256": "80619b7049f08c81683ad0e01f08f257a840652dd71ee83146d36658c7d2c2b9",
                   "sizeBytes": 1556,
@@ -75974,7 +75968,7 @@
                     "versionId": "yzxJe0knBTOB37QSqSLlL17Fr87iPLct",
                     "sha256": "80619b7049f08c81683ad0e01f08f257a840652dd71ee83146d36658c7d2c2b9",
                     "sizeBytes": 1556,
-                    "restoredAt": "2026-07-26T01:58:31.434Z"
+                    "restoredAt": "2026-07-26T03:28:34.214Z"
                   }
                 },
                 {
@@ -75982,7 +75976,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "pyyaml-6.0.3.dist-info/licenses/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/pyyaml-6.0.3-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
-                  "parentArtifactEvidenceSha256": "28dd99060d451dfd8dae4624977d3173181b3fbe3218aecddfd5e6292ab875d8",
+                  "parentArtifactEvidenceSha256": "1ac2ae9a6a3112c88dbdb309281111f35f23a4cdf4e88acb575125dea3e17f76",
                   "repositoryIdentity": null,
                   "sha256": "8d3928f9dc4490fd635707cb88eb26bd764102a7282954307d3e5167a577e8a4",
                   "sizeBytes": 1101,
@@ -75998,7 +75992,7 @@
                     "versionId": "nMpW0wMfQUoMSJNwmZebkpwwG2PoCtTd",
                     "sha256": "8d3928f9dc4490fd635707cb88eb26bd764102a7282954307d3e5167a577e8a4",
                     "sizeBytes": 1101,
-                    "restoredAt": "2026-07-26T01:57:21.926Z"
+                    "restoredAt": "2026-07-26T03:28:26.007Z"
                   }
                 },
                 {
@@ -76006,7 +76000,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "referencing-0.37.0.dist-info/licenses/COPYING",
                   "parentPackageId": "cache-file:model-dependencies/scout/referencing-0.37.0-py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "b0f9f8d5a29c6fc85c0b1fcf98780b63b6e73af9ec186a57715a1e0d7bf9ce40",
+                  "parentArtifactEvidenceSha256": "fc2f6378a5bbb44ee721eaa7cf2c3f6345c95ebf07c62260a5b7914c0900e219",
                   "repositoryIdentity": null,
                   "sha256": "42dcd63495f87b4eb7c7757afa379bb55a53f94afd7a5f657d9adf57236e515c",
                   "sizeBytes": 1057,
@@ -76022,7 +76016,7 @@
                     "versionId": "tlmH1aMrE6wClJLhrw9mj1GuXdqvaceU",
                     "sha256": "42dcd63495f87b4eb7c7757afa379bb55a53f94afd7a5f657d9adf57236e515c",
                     "sizeBytes": 1057,
-                    "restoredAt": "2026-07-26T01:57:16.041Z"
+                    "restoredAt": "2026-07-26T03:28:20.383Z"
                   }
                 },
                 {
@@ -76030,7 +76024,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "requests-2.34.2.dist-info/licenses/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/requests-2.34.2-py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "fa71c42341ea00b27eedda27733095793eedc31febc895756322d79a95693928",
+                  "parentArtifactEvidenceSha256": "219af6b0c7628708b145fc7b2b53f80edac4d4a6d175783fdfa2208753cb30b8",
                   "repositoryIdentity": null,
                   "sha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b",
                   "sizeBytes": 10142,
@@ -76046,7 +76040,7 @@
                     "versionId": "Sn6qwIP90SNM7a_.l82K5582R99KlqAQ",
                     "sha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b",
                     "sizeBytes": 10142,
-                    "restoredAt": "2026-07-26T01:57:04.269Z"
+                    "restoredAt": "2026-07-26T03:28:09.137Z"
                   }
                 },
                 {
@@ -76054,7 +76048,7 @@
                   "role": "DISTRIBUTION_NOTICE",
                   "path": "requests-2.34.2.dist-info/licenses/NOTICE",
                   "parentPackageId": "cache-file:model-dependencies/scout/requests-2.34.2-py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "fa71c42341ea00b27eedda27733095793eedc31febc895756322d79a95693928",
+                  "parentArtifactEvidenceSha256": "219af6b0c7628708b145fc7b2b53f80edac4d4a6d175783fdfa2208753cb30b8",
                   "repositoryIdentity": null,
                   "sha256": "f5110972dedad2b4e9d314518daf3b7d72d6e02e499acd802181de6f74571dcc",
                   "sizeBytes": 38,
@@ -76070,7 +76064,7 @@
                     "versionId": "rFxATz1_ckhE1BkGhKUs4NA.3klMKiYH",
                     "sha256": "f5110972dedad2b4e9d314518daf3b7d72d6e02e499acd802181de6f74571dcc",
                     "sizeBytes": 38,
-                    "restoredAt": "2026-07-26T01:57:03.165Z"
+                    "restoredAt": "2026-07-26T03:28:08.092Z"
                   }
                 },
                 {
@@ -76078,7 +76072,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "rpds_py-2026.6.3.dist-info/licenses/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
-                  "parentArtifactEvidenceSha256": "e4f55954c42effdd7d4ee2d0c6eea84ac3a482a88c838f2a04de63331b8933fe",
+                  "parentArtifactEvidenceSha256": "f3801f82075a8f5e012c7d5287ca0681f319d792a9c57884569c1f77697c3919",
                   "repositoryIdentity": null,
                   "sha256": "314e4e91be3baa93c0fb4bccc9e4e97cd643eb839b065af921782c2175fe9909",
                   "sizeBytes": 1057,
@@ -76094,7 +76088,7 @@
                     "versionId": "n5jBYmaId1Rkj95rVorEW9EmhBEjMXcU",
                     "sha256": "314e4e91be3baa93c0fb4bccc9e4e97cd643eb839b065af921782c2175fe9909",
                     "sizeBytes": 1057,
-                    "restoredAt": "2026-07-26T01:56:59.980Z"
+                    "restoredAt": "2026-07-26T03:28:04.969Z"
                   }
                 },
                 {
@@ -76102,7 +76096,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "scipy-1.17.1.dist-info/LICENSE.txt",
                   "parentPackageId": "cache-file:model-dependencies/scout/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
-                  "parentArtifactEvidenceSha256": "faf815c25d0c4a2014287fe495d4d063c43ec0303a04fab397a34fd87eb952cc",
+                  "parentArtifactEvidenceSha256": "4b8affa3dcd96fc98540db0d58646ed31f2051e2ddc6ef8c2ce771aaf4cad4df",
                   "repositoryIdentity": null,
                   "sha256": "4daf14e37432e7026165979ecb7a39930707a3e89bef4876cfaf9dad36ed364a",
                   "sizeBytes": 46838,
@@ -76118,7 +76112,7 @@
                     "versionId": "Cef_lpzjRJ9mgEAJ0fdbAA_npsV9pNE0",
                     "sha256": "4daf14e37432e7026165979ecb7a39930707a3e89bef4876cfaf9dad36ed364a",
                     "sizeBytes": 46838,
-                    "restoredAt": "2026-07-26T01:56:51.294Z"
+                    "restoredAt": "2026-07-26T03:27:56.696Z"
                   }
                 },
                 {
@@ -76126,7 +76120,7 @@
                   "role": "BUNDLED_COMPONENT_LICENSE",
                   "path": "scipy/_lib/_uarray/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
-                  "parentArtifactEvidenceSha256": "faf815c25d0c4a2014287fe495d4d063c43ec0303a04fab397a34fd87eb952cc",
+                  "parentArtifactEvidenceSha256": "4b8affa3dcd96fc98540db0d58646ed31f2051e2ddc6ef8c2ce771aaf4cad4df",
                   "repositoryIdentity": null,
                   "sha256": "c80c39b5fce06ba4897e14e0b0a88b54458334d951eb1361402ffad2cfb863b4",
                   "sizeBytes": 1514,
@@ -76142,7 +76136,7 @@
                     "versionId": "kpnrg_8Gm40FQdiavRlwI91YL7Xv7Cce",
                     "sha256": "c80c39b5fce06ba4897e14e0b0a88b54458334d951eb1361402ffad2cfb863b4",
                     "sizeBytes": 1514,
-                    "restoredAt": "2026-07-26T01:57:06.384Z"
+                    "restoredAt": "2026-07-26T03:28:11.175Z"
                   }
                 },
                 {
@@ -76150,7 +76144,7 @@
                   "role": "BUNDLED_COMPONENT_LICENSE",
                   "path": "scipy/fft/_pocketfft/LICENSE.md",
                   "parentPackageId": "cache-file:model-dependencies/scout/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
-                  "parentArtifactEvidenceSha256": "faf815c25d0c4a2014287fe495d4d063c43ec0303a04fab397a34fd87eb952cc",
+                  "parentArtifactEvidenceSha256": "4b8affa3dcd96fc98540db0d58646ed31f2051e2ddc6ef8c2ce771aaf4cad4df",
                   "repositoryIdentity": null,
                   "sha256": "c254b2b5fd30ae3c89d36ba061730563b9760fca04f1b746a1b2c3157da2c789",
                   "sizeBytes": 1498,
@@ -76166,7 +76160,7 @@
                     "versionId": "JIG0nvi0IiNDKlGMFFe4g77RFSLEccP0",
                     "sha256": "c254b2b5fd30ae3c89d36ba061730563b9760fca04f1b746a1b2c3157da2c789",
                     "sizeBytes": 1498,
-                    "restoredAt": "2026-07-26T01:57:24.028Z"
+                    "restoredAt": "2026-07-26T03:28:28.052Z"
                   }
                 },
                 {
@@ -76174,7 +76168,7 @@
                   "role": "BUNDLED_COMPONENT_LICENSE",
                   "path": "scipy/integrate/LICENSE_DOP",
                   "parentPackageId": "cache-file:model-dependencies/scout/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
-                  "parentArtifactEvidenceSha256": "faf815c25d0c4a2014287fe495d4d063c43ec0303a04fab397a34fd87eb952cc",
+                  "parentArtifactEvidenceSha256": "4b8affa3dcd96fc98540db0d58646ed31f2051e2ddc6ef8c2ce771aaf4cad4df",
                   "repositoryIdentity": null,
                   "sha256": "ed9bf58c6d74d3fad9d92d1d67d9bff8141d8ab60de784516b0711364fd43357",
                   "sizeBytes": 3572,
@@ -76190,7 +76184,7 @@
                     "versionId": "hRqON8fPsigAFBmNTgJij7H2072OZ6EB",
                     "sha256": "ed9bf58c6d74d3fad9d92d1d67d9bff8141d8ab60de784516b0711364fd43357",
                     "sizeBytes": 3572,
-                    "restoredAt": "2026-07-26T01:56:55.643Z"
+                    "restoredAt": "2026-07-26T03:28:00.788Z"
                   }
                 },
                 {
@@ -76198,7 +76192,7 @@
                   "role": "BUNDLED_COMPONENT_LICENSE",
                   "path": "scipy/spatial/qhull_src/COPYING_QHULL.txt",
                   "parentPackageId": "cache-file:model-dependencies/scout/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
-                  "parentArtifactEvidenceSha256": "faf815c25d0c4a2014287fe495d4d063c43ec0303a04fab397a34fd87eb952cc",
+                  "parentArtifactEvidenceSha256": "4b8affa3dcd96fc98540db0d58646ed31f2051e2ddc6ef8c2ce771aaf4cad4df",
                   "repositoryIdentity": null,
                   "sha256": "106d55c931fd6a84822e5345d900273d059f1c27310d02567ccb313c5d18c55d",
                   "sizeBytes": 1720,
@@ -76214,7 +76208,7 @@
                     "versionId": "IZTmgkZrEebDkQ0TaGhYhHuIdJJWxHB6",
                     "sha256": "106d55c931fd6a84822e5345d900273d059f1c27310d02567ccb313c5d18c55d",
                     "sizeBytes": 1720,
-                    "restoredAt": "2026-07-26T01:57:02.116Z"
+                    "restoredAt": "2026-07-26T03:28:07.070Z"
                   }
                 },
                 {
@@ -76222,7 +76216,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "six-1.17.0.dist-info/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/six-1.17.0-py2.py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "cec7858cacf9f07befe91732c7f49ae36c22b20d57cc517ca58d7dd2a6d97467",
+                  "parentArtifactEvidenceSha256": "8ef1d7444bf39ace72f08c6314e5c78cf6feddc583cd894fdecee642badc28ea",
                   "repositoryIdentity": null,
                   "sha256": "4375ba20e2b9c6c4e7cad2940a628fd90e95cc3d50ee92aae755715d8ba1fbd0",
                   "sizeBytes": 1066,
@@ -76238,7 +76232,7 @@
                     "versionId": "GmqW_CnkGptDHSKnkk5n0FktC6_gjpxo",
                     "sha256": "4375ba20e2b9c6c4e7cad2940a628fd90e95cc3d50ee92aae755715d8ba1fbd0",
                     "sizeBytes": 1066,
-                    "restoredAt": "2026-07-26T01:58:32.608Z"
+                    "restoredAt": "2026-07-26T03:28:35.253Z"
                   }
                 },
                 {
@@ -76246,7 +76240,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "typing_extensions-4.16.0.dist-info/licenses/LICENSE",
                   "parentPackageId": "cache-file:model-dependencies/scout/typing_extensions-4.16.0-py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "bdad4ccd5100bb5d7936b14db3de15865df2e978f62a537234903b31e5ab4e8b",
+                  "parentArtifactEvidenceSha256": "8ffb0a907d819e38c580081634b92febe4c29be7536c7bbd6ffb3d40d1509ada",
                   "repositoryIdentity": null,
                   "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
                   "sizeBytes": 13936,
@@ -76262,7 +76256,7 @@
                     "versionId": "CRn7r9B3JMu1Utf5GMBy7eDKqZFBeLDb",
                     "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
                     "sizeBytes": 13936,
-                    "restoredAt": "2026-07-26T01:57:05.316Z"
+                    "restoredAt": "2026-07-26T03:28:10.171Z"
                   }
                 },
                 {
@@ -76270,7 +76264,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "urllib3-2.7.0.dist-info/licenses/LICENSE.txt",
                   "parentPackageId": "cache-file:model-dependencies/scout/urllib3-2.7.0-py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "6eb497b6b35453e6911f1740e18241e705d3aa41a4289570c0dcdab696c66aee",
+                  "parentArtifactEvidenceSha256": "a9926b78962ad6a668b74850f89f322e15765d3d90e1d6946685d19b835b8461",
                   "repositoryIdentity": null,
                   "sha256": "130e3a64d5fdd5d096a752694634a7d9df284469de86e5732100268041e3d686",
                   "sizeBytes": 1093,
@@ -76286,7 +76280,7 @@
                     "versionId": "xoXMujJlZSlfQEnvnimajswiKygOxZxW",
                     "sha256": "130e3a64d5fdd5d096a752694634a7d9df284469de86e5732100268041e3d686",
                     "sizeBytes": 1093,
-                    "restoredAt": "2026-07-26T01:56:47.918Z"
+                    "restoredAt": "2026-07-26T03:27:53.497Z"
                   }
                 },
                 {
@@ -76294,7 +76288,7 @@
                   "role": "PYTHON_DISTRIBUTION_LICENSE",
                   "path": "xlsxwriter-3.2.9.dist-info/LICENSE.txt",
                   "parentPackageId": "cache-file:model-dependencies/scout/xlsxwriter-3.2.9-py3-none-any.whl",
-                  "parentArtifactEvidenceSha256": "1119b7cb7ee45201e1ba3c0b46983b71e477c05cb3247e2846838a25214e139a",
+                  "parentArtifactEvidenceSha256": "bdba87081a3ccd36cc56949002b7848d31242fc92a67e9e91d3f07a00164d5ee",
                   "repositoryIdentity": null,
                   "sha256": "cf08b60a4ded986b58a617cb8304373bda5c4eff42fb4e30d7597b616e116e87",
                   "sizeBytes": 1349,
@@ -76310,7 +76304,7 @@
                     "versionId": "Li6FjJHY4FZjeu9GiCQ1wWeYP8_s9Xna",
                     "sha256": "cf08b60a4ded986b58a617cb8304373bda5c4eff42fb4e30d7597b616e116e87",
                     "sizeBytes": 1349,
-                    "restoredAt": "2026-07-26T01:58:41.379Z"
+                    "restoredAt": "2026-07-26T03:28:43.679Z"
                   }
                 }
               ],
@@ -76332,7 +76326,7 @@
                     "versionId": "l4sTUmZywBi_RqdBAB1pZ1Yy7q1XWgjd",
                     "sha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
                     "sizeBytes": 67548,
-                    "restoredAt": "2026-07-26T01:55:03.033Z"
+                    "restoredAt": "2026-07-26T03:26:11.035Z"
                   }
                 },
                 {
@@ -76352,7 +76346,7 @@
                     "versionId": "Njwjsk5ZGocL0qTiVyl39TDAv2iRfjqC",
                     "sha256": "63579f9a0628e06278f7e47b7d7d5b6ce20dc65c5e96a6f3ca99a6adca0396e8",
                     "sizeBytes": 15148,
-                    "restoredAt": "2026-07-26T01:55:04.065Z"
+                    "restoredAt": "2026-07-26T03:26:12.062Z"
                   }
                 },
                 {
@@ -76372,7 +76366,7 @@
                     "versionId": "RRA1V.gFSYPRYqyFSu2TlcJPo0LRfCMu",
                     "sha256": "62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775",
                     "sizeBytes": 136983,
-                    "restoredAt": "2026-07-26T01:55:05.275Z"
+                    "restoredAt": "2026-07-26T03:26:13.261Z"
                   }
                 },
                 {
@@ -76392,7 +76386,7 @@
                     "versionId": "hhL3Nn1YWXkRZHE0RJ3SMv8JlUtli7Kl",
                     "sha256": "9b2aff1c7b3884512b9512c3eaadd9bab39fb45042ffaaa1dd08ff2b9f8109d9",
                     "sizeBytes": 215802,
-                    "restoredAt": "2026-07-26T01:55:06.549Z"
+                    "restoredAt": "2026-07-26T03:26:14.479Z"
                   }
                 },
                 {
@@ -76412,7 +76406,7 @@
                     "versionId": "4prDIEczYG47jnNWFZAMml7BChXVYDpd",
                     "sha256": "92d9abc807cf7d0e047b95ca5d957cf4792fcd04e920ca70d48add15c1a90ea7",
                     "sizeBytes": 332653,
-                    "restoredAt": "2026-07-26T01:55:07.834Z"
+                    "restoredAt": "2026-07-26T03:26:15.786Z"
                   }
                 },
                 {
@@ -76432,7 +76426,7 @@
                     "versionId": "cy4VfykEqv0gHyUuBvnaqaYAthU_JzoA",
                     "sha256": "85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30",
                     "sizeBytes": 8321,
-                    "restoredAt": "2026-07-26T01:55:08.847Z"
+                    "restoredAt": "2026-07-26T03:26:16.841Z"
                   }
                 },
                 {
@@ -76452,7 +76446,7 @@
                     "versionId": "7KEVuMQywfobniyh7jfK4XIRMG3C74QM",
                     "sha256": "ef3048ef05dbb552b89817713d9cac912e00d0fde4a3105c00d29e52e10c89af",
                     "sizeBytes": 5044298,
-                    "restoredAt": "2026-07-26T01:55:10.530Z"
+                    "restoredAt": "2026-07-26T03:26:18.517Z"
                   }
                 },
                 {
@@ -76472,7 +76466,7 @@
                     "versionId": "eJSf542vKWUccH23y4Rj5eXulWc0.baO",
                     "sha256": "7f952cbe720b688055e3f87de14f5c3e5fdaa8bc3928985c4077ca689de849a2",
                     "sizeBytes": 65455,
-                    "restoredAt": "2026-07-26T01:55:11.669Z"
+                    "restoredAt": "2026-07-26T03:26:19.646Z"
                   }
                 },
                 {
@@ -76492,7 +76486,7 @@
                     "versionId": "IT39fV_mjUEBidwmvV5gvKB5EC0bls8G",
                     "sha256": "f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12",
                     "sizeBytes": 7484,
-                    "restoredAt": "2026-07-26T01:55:12.660Z"
+                    "restoredAt": "2026-07-26T03:26:20.633Z"
                   }
                 },
                 {
@@ -76512,7 +76506,7 @@
                     "versionId": "ZDtjey7SI0rnUrKjB6ukQm21mEwQrlgJ",
                     "sha256": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
                     "sizeBytes": 90630,
-                    "restoredAt": "2026-07-26T01:55:15.045Z"
+                    "restoredAt": "2026-07-26T03:26:22.782Z"
                   }
                 },
                 {
@@ -76532,7 +76526,7 @@
                     "versionId": "HC4OySLtFozWLrz0fUXW.ugxSkgtfUoN",
                     "sha256": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
                     "sizeBytes": 18437,
-                    "restoredAt": "2026-07-26T01:55:13.805Z"
+                    "restoredAt": "2026-07-26T03:26:21.598Z"
                   }
                 },
                 {
@@ -76552,7 +76546,7 @@
                     "versionId": "fK7F8OQvUWHhh8j02RjryXF7aS9lNDCu",
                     "sha256": "b2af221f268f5af85e776a73d62b0845fc8baf8ef0abfae79d29c77d0e776aaf",
                     "sizeBytes": 1278537,
-                    "restoredAt": "2026-07-26T01:55:16.589Z"
+                    "restoredAt": "2026-07-26T03:26:24.291Z"
                   }
                 },
                 {
@@ -76572,7 +76566,7 @@
                     "versionId": "CiaR4mXmc1bPARNIGvWNgXbI_nkOhCRs",
                     "sha256": "c52f7ad20ef476806ed212380b1d54d20310c8b86bdc2c9a68b51f0024a44472",
                     "sizeBytes": 10842559,
-                    "restoredAt": "2026-07-26T01:55:18.519Z"
+                    "restoredAt": "2026-07-26T03:26:26.421Z"
                   }
                 },
                 {
@@ -76592,7 +76586,7 @@
                     "versionId": "EnYJJpqCv0swmqc7Rqm0.Xsyv4gh3LiC",
                     "sha256": "9fad7dcb1aac3c7f0584a5a8133e3a43eeb2fe127f47e3632d43d677c66c102b",
                     "sizeBytes": 13925109,
-                    "restoredAt": "2026-07-26T01:55:21.485Z"
+                    "restoredAt": "2026-07-26T03:26:29.316Z"
                   }
                 },
                 {
@@ -76612,7 +76606,7 @@
                     "versionId": "WKRJVt35pdMv0b5jg1CPp1ojS4BS2WST",
                     "sha256": "bae534b357516f12258862d1f0181d911032d0467f215bfcd1c264b4da579047",
                     "sizeBytes": 14025,
-                    "restoredAt": "2026-07-26T01:55:19.585Z"
+                    "restoredAt": "2026-07-26T03:26:27.437Z"
                   }
                 },
                 {
@@ -76632,7 +76626,7 @@
                     "versionId": "7yjlCZzhZoTHJ0rOCqUr8e7ryxt0klww",
                     "sha256": "26a473dbb4162108b27901492546f83c76fdcea3d0eadff00ae7a07e18dcce09",
                     "sizeBytes": 132106,
-                    "restoredAt": "2026-07-26T01:55:22.735Z"
+                    "restoredAt": "2026-07-26T03:26:30.558Z"
                   }
                 },
                 {
@@ -76652,7 +76646,7 @@
                     "versionId": "kNdsqmEv26BNOYScEGymFEOa.1Q3G8ZU",
                     "sha256": "5fc45236b9446107ff2415ce77c807cee2862cb6fac22b8a73826d0693b0980e",
                     "sizeBytes": 100195,
-                    "restoredAt": "2026-07-26T01:55:23.917Z"
+                    "restoredAt": "2026-07-26T03:26:31.759Z"
                   }
                 },
                 {
@@ -76672,7 +76666,7 @@
                     "versionId": "AnBXTGVwbHWZDpkcK2W8g2TrTHL7nT4G",
                     "sha256": "73fa87b08a7ef706f8aafda39ddaccf2a99047bea62d8c88a0361bcafb2237bc",
                     "sizeBytes": 10485458,
-                    "restoredAt": "2026-07-26T01:55:25.783Z"
+                    "restoredAt": "2026-07-26T03:26:33.580Z"
                   }
                 },
                 {
@@ -76692,7 +76686,7 @@
                     "versionId": "msV.R1qwFH9f8zxsndymR38G1nFvOZrf",
                     "sha256": "d9c7f76c0673154f044e9d78c8655fb4213f6ca31a836df48b40fe5d187717b9",
                     "sizeBytes": 6266838,
-                    "restoredAt": "2026-07-26T01:55:27.707Z"
+                    "restoredAt": "2026-07-26T03:26:35.311Z"
                   }
                 },
                 {
@@ -76712,7 +76706,7 @@
                     "versionId": "rsOLFNvEHK5QzpoyT2Sz4xz2aExX5Urw",
                     "sha256": "e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746",
                     "sizeBytes": 20538,
-                    "restoredAt": "2026-07-26T01:55:28.763Z"
+                    "restoredAt": "2026-07-26T03:26:36.352Z"
                   }
                 },
                 {
@@ -76732,7 +76726,7 @@
                     "versionId": "HnyQMKhLZGW811HriBL7WW79SBY9JQ1l",
                     "sha256": "81a9e26dd42fd28a23a2d169d86d7ac03b46e2f8b59ed4698fb4785f946d0176",
                     "sizeBytes": 1231151,
-                    "restoredAt": "2026-07-26T01:55:30.291Z"
+                    "restoredAt": "2026-07-26T03:26:37.756Z"
                   }
                 },
                 {
@@ -76752,7 +76746,7 @@
                     "versionId": "3Tl4WFs0ZWNFiNDXg.cjW8f8Gfxd1n3W",
                     "sha256": "850ba148bd908d7e2411587e247a1e4f0327839c40e2e5e6d05a007ecc69911d",
                     "sizeBytes": 122781,
-                    "restoredAt": "2026-07-26T01:55:31.651Z"
+                    "restoredAt": "2026-07-26T03:26:38.984Z"
                   }
                 },
                 {
@@ -76772,7 +76766,7 @@
                     "versionId": "FzjqR6pHul498YCEbjBFhO21KmIEygdS",
                     "sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
                     "sizeBytes": 386536,
-                    "restoredAt": "2026-07-26T01:55:32.927Z"
+                    "restoredAt": "2026-07-26T03:26:40.305Z"
                   }
                 },
                 {
@@ -76792,7 +76786,7 @@
                     "versionId": "17w0PaFfsPYw33nc3DhOufvwM9KrP2BZ",
                     "sha256": "a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427",
                     "sizeBytes": 229892,
-                    "restoredAt": "2026-07-26T01:55:34.190Z"
+                    "restoredAt": "2026-07-26T03:26:41.558Z"
                   }
                 },
                 {
@@ -76812,7 +76806,7 @@
                     "versionId": "PNlcuNHyTWx0OjRYUQE7DUxBgGrRaY90",
                     "sha256": "1d8214789a24de455a8b8bd8ae6fe3c6b69a5e3d64aa8a8e5d68e694bbcb285a",
                     "sizeBytes": 22101,
-                    "restoredAt": "2026-07-26T01:55:35.276Z"
+                    "restoredAt": "2026-07-26T03:26:42.539Z"
                   }
                 },
                 {
@@ -76832,7 +76826,7 @@
                     "versionId": "6aWXNAxMOx8kgSqpth8nAyszkhaO95Qb",
                     "sha256": "9149cad251584d5fb4981be1ecde53a1ca46c891a79788c0df828d2f166bda28",
                     "sizeBytes": 775116,
-                    "restoredAt": "2026-07-26T01:55:36.703Z"
+                    "restoredAt": "2026-07-26T03:26:43.920Z"
                   }
                 },
                 {
@@ -76852,7 +76846,7 @@
                     "versionId": "u5rVj4_BCod5kfgDE9ear2CRjJ.hYlKB",
                     "sha256": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
                     "sizeBytes": 26766,
-                    "restoredAt": "2026-07-26T01:55:37.795Z"
+                    "restoredAt": "2026-07-26T03:26:44.964Z"
                   }
                 },
                 {
@@ -76872,7 +76866,7 @@
                     "versionId": "fuav4ZR.QEzG8Bwtd2QZFEJ8AIFLl5bk",
                     "sha256": "2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0",
                     "sizeBytes": 73075,
-                    "restoredAt": "2026-07-26T01:55:38.900Z"
+                    "restoredAt": "2026-07-26T03:26:46.009Z"
                   }
                 },
                 {
@@ -76892,7 +76886,7 @@
                     "versionId": "N7PYEl_KVPvOf2r9aGUyqC0jOtLx9ZdY",
                     "sha256": "55927d532399c2c646100ff7feb48eaa940ad70f42cd68e1328f3ded9f81ca24",
                     "sizeBytes": 368180,
-                    "restoredAt": "2026-07-26T01:55:40.172Z"
+                    "restoredAt": "2026-07-26T03:26:47.220Z"
                   }
                 },
                 {
@@ -76912,7 +76906,7 @@
                     "versionId": "QF6MdImemOvtGR.ViBhD6F1Okcrkz1u2",
                     "sha256": "e19ebea31758fac5893a2ac360fedd00116cbb7628e650842a6691ba7ca28a21",
                     "sizeBytes": 32927842,
-                    "restoredAt": "2026-07-26T01:55:42.903Z"
+                    "restoredAt": "2026-07-26T03:26:50.023Z"
                   }
                 },
                 {
@@ -76932,7 +76926,7 @@
                     "versionId": "Z1Wtseyg.PsI.sKKAJoLPxeUo2RFd9SZ",
                     "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
                     "sizeBytes": 11050,
-                    "restoredAt": "2026-07-26T01:55:44.003Z"
+                    "restoredAt": "2026-07-26T03:26:51.067Z"
                   }
                 },
                 {
@@ -76952,7 +76946,7 @@
                     "versionId": "qP59XpNYW16kSH5rEdZd6FD9qXxZfD_L",
                     "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
                     "sizeBytes": 45571,
-                    "restoredAt": "2026-07-26T01:55:45.159Z"
+                    "restoredAt": "2026-07-26T03:26:52.121Z"
                   }
                 },
                 {
@@ -76972,7 +76966,7 @@
                     "versionId": "mVYuOL4m.eZGcTDYraFnVgIEDe.oOtyk",
                     "sha256": "9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897",
                     "sizeBytes": 131087,
-                    "restoredAt": "2026-07-26T01:55:46.452Z"
+                    "restoredAt": "2026-07-26T03:26:53.327Z"
                   }
                 },
                 {
@@ -76992,7 +76986,7 @@
                     "versionId": "iu7cxSv_V1hIRt7QHb3ddIdVTTfXXSaf",
                     "sha256": "9a5db42bc5dff014806c58a20b9eae7322a134abb6fce3c92c181bfb275ec5b3",
                     "sizeBytes": 175315,
-                    "restoredAt": "2026-07-26T01:55:47.824Z"
+                    "restoredAt": "2026-07-26T03:26:54.543Z"
                   }
                 }
               ],
@@ -77018,7 +77012,7 @@
                     "versionId": "mlpv9ck93BnXnHdorUGD91ubOIxTOjvr",
                     "sha256": "ac4072b2b2e2069a7dbed51a7f1127a11e762165ca4f6890a2b461a19544ef83",
                     "sizeBytes": 3293,
-                    "restoredAt": "2026-07-26T02:00:08.703Z"
+                    "restoredAt": "2026-07-26T03:29:58.449Z"
                   }
                 },
                 "lockedArtifacts": [
@@ -77236,7 +77230,7 @@
                     "name": "attrs",
                     "version": "26.1.0",
                     "sha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
-                    "parentArtifactEvidenceSha256": "15230fda705f4c9602d41d2c47b0c3b816a455d463c74796a5c2b343b9ecc0fd"
+                    "parentArtifactEvidenceSha256": "031d7d705e9b2193ed6990f6fa5f9f4d893377fc010b7ade224b394fb6eaf76a"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/backoff-2.2.1-py3-none-any.whl",
@@ -77245,7 +77239,7 @@
                     "name": "backoff",
                     "version": "2.2.1",
                     "sha256": "63579f9a0628e06278f7e47b7d7d5b6ce20dc65c5e96a6f3ca99a6adca0396e8",
-                    "parentArtifactEvidenceSha256": "066843751a5ba91951a8de064f679916133f6aeb71481b26d1292b90ca6bf768"
+                    "parentArtifactEvidenceSha256": "2d0bb4c0bc87f480261786e4bace9012c3395962fb3cb7ded58aa1358444898f"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/certifi-2026.7.22-py3-none-any.whl",
@@ -77254,7 +77248,7 @@
                     "name": "certifi",
                     "version": "2026.7.22",
                     "sha256": "62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775",
-                    "parentArtifactEvidenceSha256": "095581008595698e848376dfaf237abc54503da2dce4874fa4f60685969f2658"
+                    "parentArtifactEvidenceSha256": "211add6fa51a7139a5214fcc6b18c56d0c3fbbf03a1dd7e0bd516a0920a04240"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/charset_normalizer-3.4.9-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
@@ -77263,7 +77257,7 @@
                     "name": "charset-normalizer",
                     "version": "3.4.9",
                     "sha256": "9b2aff1c7b3884512b9512c3eaadd9bab39fb45042ffaaa1dd08ff2b9f8109d9",
-                    "parentArtifactEvidenceSha256": "3ce7a9f4fe69b2af050ff14c9c3bfd8b794a1b8c9978f2962e7214bfb7781bd9"
+                    "parentArtifactEvidenceSha256": "1429d72b3f244ea7044f5cee100b6018ce268744c35ab46fa645a9b5595cb162"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/contourpy-1.3.3-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
@@ -77272,7 +77266,7 @@
                     "name": "contourpy",
                     "version": "1.3.3",
                     "sha256": "92d9abc807cf7d0e047b95ca5d957cf4792fcd04e920ca70d48add15c1a90ea7",
-                    "parentArtifactEvidenceSha256": "f70cc95b61d4fb881e17d8ce28e2b6c93e703d5024f9daf91e9132a1213d57d1"
+                    "parentArtifactEvidenceSha256": "1704980f3130e3453432a16d417373592974bf9052f87c71dbe5b6efd19051e0"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/cycler-0.12.1-py3-none-any.whl",
@@ -77281,7 +77275,7 @@
                     "name": "cycler",
                     "version": "0.12.1",
                     "sha256": "85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30",
-                    "parentArtifactEvidenceSha256": "0f4eb5e716228e73c197abc56dff0573af519653fc7bbeee4b8b9b7aea4765b4"
+                    "parentArtifactEvidenceSha256": "3a9b19b6a1f82701a1c45701aadcc54b3d64c4b9312569bc48f9c56237cac96e"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/fonttools-4.63.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
@@ -77290,7 +77284,7 @@
                     "name": "fonttools",
                     "version": "4.63.0",
                     "sha256": "ef3048ef05dbb552b89817713d9cac912e00d0fde4a3105c00d29e52e10c89af",
-                    "parentArtifactEvidenceSha256": "72d5a0fff943eeaa976bc2ccf7815964144ea3dd754d1e27eb1e27adc5fadc7e"
+                    "parentArtifactEvidenceSha256": "66c8a73ed6d89bf12e56f9e9e373c2c4cb2f0278915c941294945f2231a4aabe"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/idna-3.18-py3-none-any.whl",
@@ -77299,7 +77293,7 @@
                     "name": "idna",
                     "version": "3.18",
                     "sha256": "7f952cbe720b688055e3f87de14f5c3e5fdaa8bc3928985c4077ca689de849a2",
-                    "parentArtifactEvidenceSha256": "18026b4428db55e79e6ad0b5dd95ac4e4803bd254d851170853f09fcf46f4eec"
+                    "parentArtifactEvidenceSha256": "314d4bdaead80f1e9c7a27e2d9a132baaf22754373cf636e2c2dff97e8ca1726"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/iniconfig-2.3.0-py3-none-any.whl",
@@ -77308,7 +77302,7 @@
                     "name": "iniconfig",
                     "version": "2.3.0",
                     "sha256": "f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12",
-                    "parentArtifactEvidenceSha256": "36a784ee00dd107423780949b45bb6c7a05a3d46ab0e5f9463888624883333a6"
+                    "parentArtifactEvidenceSha256": "1870bb6bc9914ce098228222489af9b5883402300dbda534597390a232b96807"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/jsonschema-4.26.0-py3-none-any.whl",
@@ -77317,7 +77311,7 @@
                     "name": "jsonschema",
                     "version": "4.26.0",
                     "sha256": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
-                    "parentArtifactEvidenceSha256": "1881ce7269816dc236b06c2efc83afda26051d60ad43b0e77fca4846164e2bf0"
+                    "parentArtifactEvidenceSha256": "bdcf0be4e6e4632e2ae920a5577eaefe5446e16a78570af86d21b95f494be05d"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/jsonschema_specifications-2025.9.1-py3-none-any.whl",
@@ -77326,7 +77320,7 @@
                     "name": "jsonschema-specifications",
                     "version": "2025.9.1",
                     "sha256": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
-                    "parentArtifactEvidenceSha256": "1ca7da29ee74f24bb0f894cc8920e4ffaaf4ab6f7557ce8fe996903e53bf7774"
+                    "parentArtifactEvidenceSha256": "3b9864a89e2ba01a70d409f079f11773aa2a4a79783e20bb925bbbcafba2c3df"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/kiwisolver-1.5.0-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
@@ -77335,7 +77329,7 @@
                     "name": "kiwisolver",
                     "version": "1.5.0",
                     "sha256": "b2af221f268f5af85e776a73d62b0845fc8baf8ef0abfae79d29c77d0e776aaf",
-                    "parentArtifactEvidenceSha256": "f41535e454ec770974b4f11822a3824b6a72b29e1b48c131a72814269b0b440e"
+                    "parentArtifactEvidenceSha256": "5f37eeec510a464a24cfb4b8a26a7be4cb2776854a954a44236e7be23d3bdac4"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
@@ -77344,7 +77338,7 @@
                     "name": "matplotlib",
                     "version": "3.11.1",
                     "sha256": "c52f7ad20ef476806ed212380b1d54d20310c8b86bdc2c9a68b51f0024a44472",
-                    "parentArtifactEvidenceSha256": "5c306ec5332a5fe08af80bbff4fbd7740635803d0979919afcf3516afb9c66e9"
+                    "parentArtifactEvidenceSha256": "c8b104871c1f11392aa827f27a431ef6c893a4149521daef09f7df0d1d25dd9a"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
@@ -77353,7 +77347,7 @@
                     "name": "numpy",
                     "version": "1.26.4",
                     "sha256": "9fad7dcb1aac3c7f0584a5a8133e3a43eeb2fe127f47e3632d43d677c66c102b",
-                    "parentArtifactEvidenceSha256": "20b1a207b604881ee0c82948fbf929715225e0ff188426ac050fa1df4fef2441"
+                    "parentArtifactEvidenceSha256": "13ae6c0cc3d8d348e22898f9b0ddede039de1d1b2d864f9f23865ff04d8d7ab7"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/numpy_financial-1.0.0-py3-none-any.whl",
@@ -77362,7 +77356,7 @@
                     "name": "numpy-financial",
                     "version": "1.0.0",
                     "sha256": "bae534b357516f12258862d1f0181d911032d0467f215bfcd1c264b4da579047",
-                    "parentArtifactEvidenceSha256": "385098bb42c7b5657c65046fe271daa31d65dc6785c9e5a4a50ed9492d9e4c30"
+                    "parentArtifactEvidenceSha256": "4311a3a1e407bd33754a0d0ae788598e585ea10c817583cb1a319d8ed3ef688e"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
@@ -77371,7 +77365,7 @@
                     "name": "orjson",
                     "version": "3.11.9",
                     "sha256": "26a473dbb4162108b27901492546f83c76fdcea3d0eadff00ae7a07e18dcce09",
-                    "parentArtifactEvidenceSha256": "1bba28828578c1b0df164e701b5521357f69d10d0fc9d069abed4ad5e449ca05"
+                    "parentArtifactEvidenceSha256": "c23b1490a0b8ca34b5b40359fc9e835e7533d6483e7ef0be9caa138073286d8a"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/packaging-26.2-py3-none-any.whl",
@@ -77380,7 +77374,7 @@
                     "name": "packaging",
                     "version": "26.2",
                     "sha256": "5fc45236b9446107ff2415ce77c807cee2862cb6fac22b8a73826d0693b0980e",
-                    "parentArtifactEvidenceSha256": "1ae76e94964e4162c2cc4cb9707f9316fa487410df3c99538646a78d6ff4dcda"
+                    "parentArtifactEvidenceSha256": "0a85703cb29c07410b65b618a3fdac56f372f195d0b8f085fa5ab62ca7b56aa2"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/pandas-3.0.5-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
@@ -77389,7 +77383,7 @@
                     "name": "pandas",
                     "version": "3.0.5",
                     "sha256": "73fa87b08a7ef706f8aafda39ddaccf2a99047bea62d8c88a0361bcafb2237bc",
-                    "parentArtifactEvidenceSha256": "2f9f34a768ffce39d509207dcd240d6f967fd8e30bff400ecc494f79d684b1db"
+                    "parentArtifactEvidenceSha256": "bfecc219575305739e30ff5cd5288fc83636c99f33e0ef94192fc2b79696bd97"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/pillow-12.3.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
@@ -77398,7 +77392,7 @@
                     "name": "pillow",
                     "version": "12.3.0",
                     "sha256": "d9c7f76c0673154f044e9d78c8655fb4213f6ca31a836df48b40fe5d187717b9",
-                    "parentArtifactEvidenceSha256": "46b131e520f998e5494eedd7fdbf3d360368b9847b16e1db24a1904f4a7ae93f"
+                    "parentArtifactEvidenceSha256": "05293ad079749476e2168c6093097bff7a1008f9aad02c20dd59e8262bab3a67"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/pluggy-1.6.0-py3-none-any.whl",
@@ -77407,7 +77401,7 @@
                     "name": "pluggy",
                     "version": "1.6.0",
                     "sha256": "e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746",
-                    "parentArtifactEvidenceSha256": "bc6d1055feecd5c49d2ebc8a65a0e21fc715e50a7c5fd1ee7a37660a4c4580a6"
+                    "parentArtifactEvidenceSha256": "7a0f69958d6253094461bb6aa7c443a00bf76ad755e9004f53b78febb4cd3bd9"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/pygments-2.20.0-py3-none-any.whl",
@@ -77416,7 +77410,7 @@
                     "name": "pygments",
                     "version": "2.20.0",
                     "sha256": "81a9e26dd42fd28a23a2d169d86d7ac03b46e2f8b59ed4698fb4785f946d0176",
-                    "parentArtifactEvidenceSha256": "7951d83ab9ca55eb05423be0257bfbe675af685ee727851b6b20b01904a7ada7"
+                    "parentArtifactEvidenceSha256": "5e0d43da327c55504c97fbbfa91603e7d33aa712b4cf7f1860b36610ca5c4916"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/pyparsing-3.3.2-py3-none-any.whl",
@@ -77425,7 +77419,7 @@
                     "name": "pyparsing",
                     "version": "3.3.2",
                     "sha256": "850ba148bd908d7e2411587e247a1e4f0327839c40e2e5e6d05a007ecc69911d",
-                    "parentArtifactEvidenceSha256": "ded5f0dbf497bfdf2f54887d48b086465fd99314f3352c049325d6a6b16386e4"
+                    "parentArtifactEvidenceSha256": "631790a1bd997729c187c0d5291d41a5f0ec549d5a203842d0ddb44ead9d1f41"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/pytest-9.1.1-py3-none-any.whl",
@@ -77434,7 +77428,7 @@
                     "name": "pytest",
                     "version": "9.1.1",
                     "sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
-                    "parentArtifactEvidenceSha256": "a91be0ed021169ccfdc7d658fdee9b53f74e0fe1a556c306ed15f9c142f88852"
+                    "parentArtifactEvidenceSha256": "5b5aee3d602617233f1d0e45043ca5d26c052b17f55d1ed7044a8999005b350c"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
@@ -77443,7 +77437,7 @@
                     "name": "python-dateutil",
                     "version": "2.9.0.post0",
                     "sha256": "a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427",
-                    "parentArtifactEvidenceSha256": "80401359099707da9d46b0db60e442de5d8ed0722ef7215cadd113c316f5ec7f"
+                    "parentArtifactEvidenceSha256": "aa9359855da5ef7ff11e557bf4b9465e69bb40fc0b942628be90eaddf3fa2cf1"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/python_dotenv-1.2.2-py3-none-any.whl",
@@ -77452,7 +77446,7 @@
                     "name": "python-dotenv",
                     "version": "1.2.2",
                     "sha256": "1d8214789a24de455a8b8bd8ae6fe3c6b69a5e3d64aa8a8e5d68e694bbcb285a",
-                    "parentArtifactEvidenceSha256": "cb57ce4c47c9e07e0e84863f971777a3ca272d0a94208b0e26830294930a2208"
+                    "parentArtifactEvidenceSha256": "9b7e15770af3b1c0852b4a8a572aabecb148d457f949ae8e25fbb223c8d65aba"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/pyyaml-6.0.3-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
@@ -77461,7 +77455,7 @@
                     "name": "pyyaml",
                     "version": "6.0.3",
                     "sha256": "9149cad251584d5fb4981be1ecde53a1ca46c891a79788c0df828d2f166bda28",
-                    "parentArtifactEvidenceSha256": "28dd99060d451dfd8dae4624977d3173181b3fbe3218aecddfd5e6292ab875d8"
+                    "parentArtifactEvidenceSha256": "1ac2ae9a6a3112c88dbdb309281111f35f23a4cdf4e88acb575125dea3e17f76"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/referencing-0.37.0-py3-none-any.whl",
@@ -77470,7 +77464,7 @@
                     "name": "referencing",
                     "version": "0.37.0",
                     "sha256": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
-                    "parentArtifactEvidenceSha256": "b0f9f8d5a29c6fc85c0b1fcf98780b63b6e73af9ec186a57715a1e0d7bf9ce40"
+                    "parentArtifactEvidenceSha256": "fc2f6378a5bbb44ee721eaa7cf2c3f6345c95ebf07c62260a5b7914c0900e219"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/requests-2.34.2-py3-none-any.whl",
@@ -77479,7 +77473,7 @@
                     "name": "requests",
                     "version": "2.34.2",
                     "sha256": "2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0",
-                    "parentArtifactEvidenceSha256": "fa71c42341ea00b27eedda27733095793eedc31febc895756322d79a95693928"
+                    "parentArtifactEvidenceSha256": "219af6b0c7628708b145fc7b2b53f80edac4d4a6d175783fdfa2208753cb30b8"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
@@ -77488,7 +77482,7 @@
                     "name": "rpds-py",
                     "version": "2026.6.3",
                     "sha256": "55927d532399c2c646100ff7feb48eaa940ad70f42cd68e1328f3ded9f81ca24",
-                    "parentArtifactEvidenceSha256": "e4f55954c42effdd7d4ee2d0c6eea84ac3a482a88c838f2a04de63331b8933fe"
+                    "parentArtifactEvidenceSha256": "f3801f82075a8f5e012c7d5287ca0681f319d792a9c57884569c1f77697c3919"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
@@ -77497,7 +77491,7 @@
                     "name": "scipy",
                     "version": "1.17.1",
                     "sha256": "e19ebea31758fac5893a2ac360fedd00116cbb7628e650842a6691ba7ca28a21",
-                    "parentArtifactEvidenceSha256": "faf815c25d0c4a2014287fe495d4d063c43ec0303a04fab397a34fd87eb952cc"
+                    "parentArtifactEvidenceSha256": "4b8affa3dcd96fc98540db0d58646ed31f2051e2ddc6ef8c2ce771aaf4cad4df"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/six-1.17.0-py2.py3-none-any.whl",
@@ -77506,7 +77500,7 @@
                     "name": "six",
                     "version": "1.17.0",
                     "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
-                    "parentArtifactEvidenceSha256": "cec7858cacf9f07befe91732c7f49ae36c22b20d57cc517ca58d7dd2a6d97467"
+                    "parentArtifactEvidenceSha256": "8ef1d7444bf39ace72f08c6314e5c78cf6feddc583cd894fdecee642badc28ea"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/typing_extensions-4.16.0-py3-none-any.whl",
@@ -77515,7 +77509,7 @@
                     "name": "typing-extensions",
                     "version": "4.16.0",
                     "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
-                    "parentArtifactEvidenceSha256": "bdad4ccd5100bb5d7936b14db3de15865df2e978f62a537234903b31e5ab4e8b"
+                    "parentArtifactEvidenceSha256": "8ffb0a907d819e38c580081634b92febe4c29be7536c7bbd6ffb3d40d1509ada"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/urllib3-2.7.0-py3-none-any.whl",
@@ -77524,7 +77518,7 @@
                     "name": "urllib3",
                     "version": "2.7.0",
                     "sha256": "9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897",
-                    "parentArtifactEvidenceSha256": "6eb497b6b35453e6911f1740e18241e705d3aa41a4289570c0dcdab696c66aee"
+                    "parentArtifactEvidenceSha256": "a9926b78962ad6a668b74850f89f322e15765d3d90e1d6946685d19b835b8461"
                   },
                   {
                     "packageId": "cache-file:model-dependencies/scout/xlsxwriter-3.2.9-py3-none-any.whl",
@@ -77533,18 +77527,18 @@
                     "name": "xlsxwriter",
                     "version": "3.2.9",
                     "sha256": "9a5db42bc5dff014806c58a20b9eae7322a134abb6fce3c92c181bfb275ec5b3",
-                    "parentArtifactEvidenceSha256": "1119b7cb7ee45201e1ba3c0b46983b71e477c05cb3247e2846838a25214e139a"
+                    "parentArtifactEvidenceSha256": "bdba87081a3ccd36cc56949002b7848d31242fc92a67e9e91d3f07a00164d5ee"
                   }
                 ],
-                "wheelArtifactSetSha256": "62b9e42ddd21d4900836f15d86fe5fc338ff8c081a81747e3d1a04b7e0d2bb0b"
+                "wheelArtifactSetSha256": "e91fd5bce42480a508db108f755a104bfef527621f54b2e140d92583d1d78135"
               },
               "entryCount": 51,
               "parentArtifactCount": 34,
-              "evidenceSetSha256": "60277e67540fd0f8c92a764ee0b58ab93db532dc205b881c2a32693d50bbb080"
+              "evidenceSetSha256": "31e93a8cb34334f850baa672c0a829a4362a7bb9f35eb289f79b7edf1eb953b5"
             }
           },
-          "durableArtifactEvidenceSha256": "027150729c020f3273d20f662e48f0c512bb02ce6641b8094892bfeee7dd08ed",
-          "licenseEvidenceSetSha256": "60277e67540fd0f8c92a764ee0b58ab93db532dc205b881c2a32693d50bbb080"
+          "durableArtifactEvidenceSha256": "be5d345cc29bb7386ecd126c619512c2088026f30a9cdfde8b84a86e24ec70a1",
+          "licenseEvidenceSetSha256": "31e93a8cb34334f850baa672c0a829a4362a7bb9f35eb289f79b7edf1eb953b5"
         },
         {
           "modelId": "ssc",
@@ -77623,7 +77617,7 @@
                 "versionId": "mGL1gQBezYJij3UUKqAdg4RrEWNWKB02",
                 "sha256": "17d0b52c1010817df7fcfdac43b0cd4d3bd77e83978f7300b6623da3b0450f36",
                 "sizeBytes": 11823,
-                "restoredAt": "2026-07-26T02:00:09.763Z"
+                "restoredAt": "2026-07-26T03:29:59.489Z"
               }
             },
             "sourceArchive": {
@@ -77642,7 +77636,7 @@
                 "versionId": "vtfp8BAhpIolng0.LCJbSp4NNv1z9PFo",
                 "sha256": "00a3001c529c87b97c271bb75dd809c71003045ecadcedeb7b2b4d9cc9479631",
                 "sizeBytes": 278188118,
-                "restoredAt": "2026-07-26T01:54:43.267Z"
+                "restoredAt": "2026-07-26T03:25:51.600Z"
               }
             },
             "primaryLicense": {
@@ -77661,7 +77655,7 @@
                 "versionId": "tzaUDeQwQ9Ba2ZXOCbM4TpEBmGONJ_IE",
                 "sha256": "22b6f0585f60c136d6d3d196acf1cea2e69b9d84ac860125f9401960a7ef5a14",
                 "sizeBytes": 1548,
-                "restoredAt": "2026-07-26T02:00:18.686Z"
+                "restoredAt": "2026-07-26T03:30:07.820Z"
               }
             },
             "buildContentBinding": {
@@ -77702,9 +77696,9 @@
             "postHocReplayEvidence": {
               "schemaVersion": "operational-savings/ecr-post-hoc-replay-evidence-v1",
               "receiptPath": "scripts/research/operational-savings/containers/post-hoc-replay-receipt.v1.json",
-              "receiptContentSha256": "88785e77d25a364c6e67a7e26015e583098bc23f8b1a349078d85b4cc149acb5",
-              "contextGitCommit": "69f7ef3eda3f40a460df148f42f778e088a12be9",
-              "contextGitTree": "5e1fdf4a9f885039af403f9790b1fd18b55e86c2",
+              "receiptContentSha256": "49b11d6d44f3668aa3c7ed9b497dfbad9589dd08adc143d5b7de623a6d8271de",
+              "contextGitCommit": "2949fe78a9a039cdcfbbeeb52226a5fad378ecdb",
+              "contextGitTree": "27ef8f96972fd35a5af2e94fbf45ffb8811c6275",
               "semantics": {
                 "replayKind": "POST_HOC_REPLAY",
                 "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT",
@@ -77739,7 +77733,7 @@
                 "stdoutSizeBytes": 1737,
                 "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
                 "stderrSizeBytes": 0,
-                "replayedAt": "2026-07-26T03:08:08.746Z",
+                "replayedAt": "2026-07-26T04:07:25.659Z",
                 "replayKind": "POST_HOC_REPLAY",
                 "historicalBuildContext": "UNATTESTED_HISTORICAL_BUILD_CONTEXT"
               }
@@ -77801,7 +77795,7 @@
                     "versionId": "tzaUDeQwQ9Ba2ZXOCbM4TpEBmGONJ_IE",
                     "sha256": "22b6f0585f60c136d6d3d196acf1cea2e69b9d84ac860125f9401960a7ef5a14",
                     "sizeBytes": 1548,
-                    "restoredAt": "2026-07-26T02:00:18.686Z"
+                    "restoredAt": "2026-07-26T03:30:07.820Z"
                   }
                 },
                 {
@@ -77832,7 +77826,7 @@
                     "versionId": "Mk7NNgxmPkZpsaAba_A5clvJ0DgOC_xK",
                     "sha256": "78cd5fd2247e79f1386f12f6c32770df40fd88004acc630c5f3029420a23a09a",
                     "sizeBytes": 26411,
-                    "restoredAt": "2026-07-26T02:00:19.787Z"
+                    "restoredAt": "2026-07-26T03:30:08.909Z"
                   }
                 },
                 {
@@ -77863,7 +77857,7 @@
                     "versionId": "_vcuEm2WK7dDC5KQZy93PfcxQW_laYJf",
                     "sha256": "78cd5fd2247e79f1386f12f6c32770df40fd88004acc630c5f3029420a23a09a",
                     "sizeBytes": 26411,
-                    "restoredAt": "2026-07-26T02:00:20.848Z"
+                    "restoredAt": "2026-07-26T03:30:10.009Z"
                   }
                 },
                 {
@@ -77871,7 +77865,7 @@
                   "role": "BUILD_DEPENDENCY_LICENSE",
                   "path": "or-tools_aarch64_AlmaLinux-8.10_cpp_v9.14.6206/share/doc/ortools/LICENSE",
                   "parentPackageId": "cache-file:artifacts/or-tools_aarch64_AlmaLinux-8.10_cpp_v9.14.6206.tar.gz",
-                  "parentArtifactEvidenceSha256": "f9ddc2c28916b2d4aaa06d7bbba3fba8fccadc6c6aef5977f391af28dc853561",
+                  "parentArtifactEvidenceSha256": "3af4b636d75cee1ff17faf283a1542837e41dc9e02ecf4f1f17fdfc7899c4ce4",
                   "repositoryIdentity": null,
                   "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
                   "sizeBytes": 11358,
@@ -77887,7 +77881,7 @@
                     "versionId": "KoKDwWFdrIpu3CysokhCm0Cx22SrQjQ2",
                     "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
                     "sizeBytes": 11358,
-                    "restoredAt": "2026-07-26T01:57:18.210Z"
+                    "restoredAt": "2026-07-26T03:28:22.471Z"
                   }
                 }
               ],
@@ -77909,24 +77903,20 @@
                     "versionId": "3jJ.hQUDks93meFlTSIQ_y2FYW.ClcTw",
                     "sha256": "2f731a156cd9e4123d1433dec51a22ba74702d349457fe76c65bba0f1f7958e0",
                     "sizeBytes": 53631276,
-                    "restoredAt": "2026-07-26T01:53:39.586Z"
+                    "restoredAt": "2026-07-26T03:24:50.865Z"
                   }
                 }
               ],
               "dependencyLockEvidence": null,
               "entryCount": 4,
               "parentArtifactCount": 1,
-              "evidenceSetSha256": "48c7c48582b3b5bd57ef98cf8a1e5f4de7858d3c40adb04c3c5a3099d9b5fa89"
+              "evidenceSetSha256": "d402eafbbd1c4208e4678646b42cf080266b3b12a5cb7b3bd989993db32ebe08"
             }
           },
-          "durableArtifactEvidenceSha256": "0e459604d755c08ab5a431f971e3a031d7eb52ba43740c64d9d03b14bcfad9d7",
-          "licenseEvidenceSetSha256": "48c7c48582b3b5bd57ef98cf8a1e5f4de7858d3c40adb04c3c5a3099d9b5fa89"
+          "durableArtifactEvidenceSha256": "3454f4e705d01dad3bc8c7e9a5a328beec33f3d4cbcadde19ce144f927bb1db1",
+          "licenseEvidenceSetSha256": "d402eafbbd1c4208e4678646b42cf080266b3b12a5cb7b3bd989993db32ebe08"
         }
-      ],
-      "invalidatedBy": {
-        "packageId": "repository-license:ssc:nlopt:LICENSE.htm",
-        "hydratedAt": "2026-07-26T03:42:27.205Z"
-      }
+      ]
     }
   },
   "canonicalInventory": {
@@ -77934,5 +77924,5 @@
     "packageCount": 210,
     "contentSha256": "f55a398546e214bb9746ffa9a28dac1a95657e11c4caeb2822077c4df20f0a88"
   },
-  "manifestContentSha256": "8c7a30c4ec1874224594c0f601e851e66ae3f7ad2cd2f1e072c288450fd18a40"
+  "manifestContentSha256": "761ea9d348bcef0ae5fdacff5e1beaa18e01d7c56bd434e7d3326c62976fab24"
 }
