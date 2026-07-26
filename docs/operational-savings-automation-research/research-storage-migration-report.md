@@ -34,7 +34,7 @@ The ECR repository names are `retrofi-research-reopt`, `retrofi-research-ssc`, `
 
 4 runnable research container images have a passing committed post-hoc exact-context replay receipt.
 
-The replay receipt is committed and content-bound at source context `da12a2891b2142eb9b86e1bba56819951cffa1be`. It explicitly does not attest that the current source context produced the historical image. The receipt is unsigned, unauthenticated, and forgeable by any repository writer. Its hashes detect stale or corrupt content only under the recorded honest-local-operator trust model.
+The replay receipt is committed and content-bound at source context `2949fe78a9a039cdcfbbeeb52226a5fad378ecdb`. It explicitly does not attest that the current source context produced the historical image. The receipt is unsigned, unauthenticated, and forgeable by any repository writer. Its hashes detect stale or corrupt content only under the recorded honest-local-operator trust model.
 
 Inventory generation did not query the local Docker daemon, so it does not independently reconfirm that a recorded local image is still present.
 
@@ -51,9 +51,14 @@ Recorded ECR evidence is copied from the corresponding build manifest, and inven
 
 ## Final ECR restore and local cleanup receipt
 
-No complete current exact-digest ECR restore and local cleanup receipt is recorded. Validation blocker: ECR_RESTORE_RECEIPT_INVALID.
+No complete current exact-digest ECR restore and local cleanup receipt is recorded. Validation blocker: ECR_RESTORE_RECEIPT_IMAGE_INVALID: reopt.
 
-No final ECR restore image rows are recorded.
+| Model | Exact image URI | Platform | Pull | Replay | Live exact scan | License evidence objects | License evidence set SHA-256 | Durable evidence SHA-256 | Local cleanup |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| measur | 945129430686.dkr.ecr.us-east-1.amazonaws.com/retrofi-research-measur@sha256:0eb47e05f2fefa78ca86958140741181b5d2260b743da1c3b670a4f6c7540393 | linux/arm64 | PULLED_EXACT_DIGEST | PASS | MATCHED 0/0/9/0 | 2 | 243de099b35f34a3224141e45ed99727185804288322fe75aa4dedaa408470ac | 62b1e2976262e7aec4d69b2e915aec2de567f916e88c2a761d71e5ad60d23197 | EXACT_ECR_REFERENCE_REMOVED_AFTER_REPLAY_AND_IMAGE_ABSENT |
+| reopt | 945129430686.dkr.ecr.us-east-1.amazonaws.com/retrofi-research-reopt@sha256:3f894dad8b57d0b9a4e89d7401b882a17a067b1f4b186b7da155f0aa6d89e717 | linux/arm64 | PULLED_EXACT_DIGEST | PASS | MATCHED 10/51/48/8 | 3 | f023555a5e830dc2dfbf789a7a14b548911eb8293ac63354fd46361596aa882f | 8c05cfe20d933690a43a80adcff7f42ed292bd9cd25b2c82acc224c9269d158f | EXACT_ECR_REFERENCE_REMOVED_AFTER_REPLAY_AND_IMAGE_ABSENT |
+| scout | 945129430686.dkr.ecr.us-east-1.amazonaws.com/retrofi-research-scout@sha256:f46b0566f31270bc8070192ff587a76eb914801b239f9a21b13a30ddd5c5037e | linux/arm64 | PULLED_EXACT_DIGEST | PASS | MATCHED 3/5/3/1 | 51 | 31e93a8cb34334f850baa672c0a829a4362a7bb9f35eb289f79b7edf1eb953b5 | be5d345cc29bb7386ecd126c619512c2088026f30a9cdfde8b84a86e24ec70a1 | EXACT_ECR_REFERENCE_REMOVED_AFTER_REPLAY_AND_IMAGE_ABSENT |
+| ssc | 945129430686.dkr.ecr.us-east-1.amazonaws.com/retrofi-research-ssc@sha256:70eb1f134a8ca9342988c3593d51ce08b1c6042847b23bfb7e8c4e15a8f435cc | linux/arm64 | PULLED_EXACT_DIGEST | PASS | MATCHED 0/0/9/0 | 4 | d402eafbbd1c4208e4678646b42cf080266b3b12a5cb7b3bd989993db32ebe08 | 3454f4e705d01dad3bc8c7e9a5a328beec33f3d4cbcadde19ce144f927bb1db1 | EXACT_ECR_REFERENCE_REMOVED_AFTER_REPLAY_AND_IMAGE_ABSENT |
 
 ## Inventory summary
 

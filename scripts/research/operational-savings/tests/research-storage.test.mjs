@@ -2906,6 +2906,37 @@ test("dry-run planning never invokes a command runner", async () => {
   });
 });
 
+test("reports verified deletion after a previously hydrated package is cleaned", async () => {
+  await withTemporaryPackage(
+    async ({ manifest, packageRecord, sha256, sizeBytes }) => {
+      markRemoteVerified(packageRecord, sha256, sizeBytes);
+      markCleanupEligible(manifest, [packageRecord]);
+      packageRecord.hydration = {
+        status: "HYDRATED_FROM_VERIFIED_S3_VERSION"
+      };
+      packageRecord.remote.s3.deletionStatus =
+        "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION";
+      packageRecord.remote.s3.localDeletedAt =
+        "2026-07-24T01:00:00.000Z";
+      resealManifest(manifest);
+
+      const report = buildResearchStorageReport(manifest);
+      expect(report).toContain(
+        "| Packages deleted locally after verification | 1 |"
+      );
+      expect(report).toContain(
+        "| Deletable packages still local | 0 |"
+      );
+      expect(report).toContain(
+        "| LOCAL_DELETED_AFTER_REMOTE_VERIFICATION |"
+      );
+      expect(report).not.toContain(
+        "LOCAL_HYDRATED_FROM_VERIFIED_S3_VERSION"
+      );
+    }
+  );
+});
+
 test("rejects manifest object keys with traversal or control segments", async () => {
   await withTemporaryPackage(async ({ manifest, packageRecord }) => {
     packageRecord.plannedObject.key = "raw/../unsafe";

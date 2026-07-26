@@ -389,8 +389,7 @@ function durablePackageEvidence(
     restoredProof: {
       versionId: restore.restoredVersionId,
       sha256: restore.restoredSha256,
-      sizeBytes: restore.restoredSizeBytes,
-      restoredAt: restore.restoredAt
+      sizeBytes: restore.restoredSizeBytes
     }
   };
 }
@@ -1311,7 +1310,7 @@ export function assertEcrBuildEvidence({
     }
     durableArtifacts = {
       schemaVersion:
-        "operational-savings/ecr-durable-artifact-evidence-v3",
+        "operational-savings/ecr-durable-artifact-evidence-v4",
       buildManifest: durablePackageEvidence(
         buildManifestPackage,
         repository.buildManifest.sha256,

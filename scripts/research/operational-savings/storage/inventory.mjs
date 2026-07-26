@@ -5629,6 +5629,11 @@ function packageS3Version(packageRecord) {
 }
 
 function packageLocalStatus(packageRecord) {
+  const deletionStatus =
+    packageRecord.remote?.s3?.deletionStatus;
+  if (PACKAGE_LOCAL_DELETED_STATUSES.has(deletionStatus)) {
+    return deletionStatus;
+  }
   if (
     packageRecord.hydration?.status ===
     "HYDRATED_FROM_VERIFIED_S3_VERSION"
@@ -5636,7 +5641,7 @@ function packageLocalStatus(packageRecord) {
     return "LOCAL_HYDRATED_FROM_VERIFIED_S3_VERSION";
   }
   return (
-    packageRecord.remote?.s3?.deletionStatus ??
+    deletionStatus ??
     "LOCAL_STATUS_NOT_RECORDED"
   );
 }

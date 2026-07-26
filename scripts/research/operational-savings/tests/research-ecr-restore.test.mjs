@@ -2017,6 +2017,26 @@ test("pulls exact ECR digests and replays every verifier after all controls pass
   expect(() =>
     assertFixtureReceiptCurrent(manifest, receipt)
   ).not.toThrow();
+  for (const packageRecord of manifest.packages) {
+    if (packageRecord.cleanupEligibility?.restoredAt) {
+      packageRecord.cleanupEligibility.restoredAt =
+        "2026-07-24T23:31:00.000Z";
+    }
+  }
+  resealManifest(manifest);
+  expect(() =>
+    assertFixtureReceiptCurrent(manifest, receipt)
+  ).not.toThrow();
+  expect(
+    receipt.images.every(
+      (image) =>
+        image.durableArtifactEvidence.schemaVersion ===
+          "operational-savings/ecr-durable-artifact-evidence-v4" &&
+        JSON.stringify(
+          image.durableArtifactEvidence
+        ).includes("restoredAt") === false
+    )
+  ).toBe(true);
 
   const receiptMutations = [
     {
