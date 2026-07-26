@@ -49,10 +49,18 @@ import {
 const execFileAsync = promisify(execFile);
 
 export const RESTORE_ALL_JOURNAL_SCHEMA_VERSION =
-  "operational-savings/s3-restore-all-journal-v1";
+  "operational-savings/s3-restore-all-journal-v2";
 export const RESTORE_ALL_OFFLINE_VALIDATION_COMMAND =
   FULL_OFFLINE_RESEARCH_VALIDATION_COMMAND;
 
+const LEGACY_RESTORE_ALL_JOURNAL_SCHEMA_VERSION =
+  "operational-savings/s3-restore-all-journal-v1";
+const RESTORE_ALL_HISTORY_ENTRY_SCHEMA_VERSION =
+  "operational-savings/s3-restore-all-history-entry-v1";
+const RESTORE_ALL_JOURNAL_SCHEMA_VERSIONS = new Set([
+  LEGACY_RESTORE_ALL_JOURNAL_SCHEMA_VERSION,
+  RESTORE_ALL_JOURNAL_SCHEMA_VERSION
+]);
 const SOURCE_CONTROLLED_RETENTION_POLICY =
   "RETAIN_SOURCE_CONTROLLED_FIXTURE";
 const ALLOWED_ENCRYPTION = new Set([
@@ -358,6 +366,10 @@ function restoreInvariantSha256(manifest) {
   }
   for (const packageRecord of copy.packages) {
     delete packageRecord.hydration;
+    if (packageRecord.remote?.s3) {
+      delete packageRecord.remote.s3.deletionStatus;
+      delete packageRecord.remote.s3.localDeletedAt;
+    }
     const cleanup = packageRecord.cleanupEligibility;
     if (cleanup) {
       for (const field of [
@@ -558,6 +570,83 @@ export async function verifyExistingLocalPackage({
   );
 }
 
+function completedRestoreWasCleaned(manifest, journal) {
+  const cleanupJournal =
+    manifest.execution?.localCleanupJournal;
+  const deletableRootPackages =
+    manifest.packages.filter(
+      (packageRecord) =>
+        packageRecord.localRetentionPolicy ===
+          "DELETE_AFTER_VERIFIED_MIGRATION" &&
+        !isLogicalChild(packageRecord)
+    );
+  return (
+    journal.status === "COMPLETE" &&
+    manifest.execution?.localFilesDeleted === true &&
+    cleanupJournal?.status === "COMPLETE" &&
+    cleanupJournal.pendingAction === null &&
+    deletableRootPackages.length > 0 &&
+    deletableRootPackages.every(
+      (packageRecord) =>
+        packageRecord.remote?.s3?.deletionStatus ===
+        "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION"
+    ) &&
+    (
+      manifest.originalLocalArtifacts ?? []
+    ).every(
+      (artifact) =>
+        artifact.cleanupStatus ===
+        "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION"
+    )
+  );
+}
+
+function archivedRestoreEntryIsValid(
+  entry,
+  destination,
+  packageCount
+) {
+  if (entry === null) return true;
+  return (
+    entry &&
+    entry.schemaVersion ===
+      RESTORE_ALL_HISTORY_ENTRY_SCHEMA_VERSION &&
+    entry.status === "COMPLETE" &&
+    /^[a-f0-9]{64}$/.test(entry.attemptId ?? "") &&
+    typeof entry.startedAt === "string" &&
+    Number.isFinite(Date.parse(entry.startedAt)) &&
+    typeof entry.completedAt === "string" &&
+    Number.isFinite(Date.parse(entry.completedAt)) &&
+    /^[a-f0-9]{40,64}$/.test(
+      entry.startedCommit ?? ""
+    ) &&
+    /^[a-f0-9]{64}$/.test(
+      entry.startedManifestSourceSha256 ?? ""
+    ) &&
+    /^[a-f0-9]{64}$/.test(
+      entry.startedInvariantSha256 ?? ""
+    ) &&
+    /^[a-f0-9]{64}$/.test(
+      entry.packageSetSha256 ?? ""
+    ) &&
+    entry.packageCount === packageCount &&
+    entry.destination?.profile ===
+      destination.profile &&
+    entry.destination?.bucket ===
+      destination.bucket &&
+    entry.destination?.region ===
+      destination.region &&
+    VALIDATION_STATUSES.has(
+      entry.validation?.status
+    ) &&
+    entry.validation?.command ===
+      RESTORE_ALL_OFFLINE_VALIDATION_COMMAND &&
+    /^[a-f0-9]{64}$/.test(
+      entry.journalContentSha256 ?? ""
+    )
+  );
+}
+
 function validateJournal({
   manifest,
   destination,
@@ -570,8 +659,9 @@ function validateJournal({
   const expectedOrder = JSON.stringify(order);
   const completed = journal.completedPackages;
   const structurallyInvalid =
-    journal.schemaVersion !==
-      RESTORE_ALL_JOURNAL_SCHEMA_VERSION ||
+    !RESTORE_ALL_JOURNAL_SCHEMA_VERSIONS.has(
+      journal.schemaVersion
+    ) ||
     !JOURNAL_STATUSES.has(journal.status) ||
     !/^[a-f0-9]{64}$/.test(
       journal.startedManifestSourceSha256 ?? ""
@@ -600,7 +690,16 @@ function validateJournal({
       journal.validation?.status
     ) ||
     journal.validation?.command !==
-      RESTORE_ALL_OFFLINE_VALIDATION_COMMAND;
+      RESTORE_ALL_OFFLINE_VALIDATION_COMMAND ||
+    (
+      journal.schemaVersion ===
+        RESTORE_ALL_JOURNAL_SCHEMA_VERSION &&
+      !archivedRestoreEntryIsValid(
+        journal.previousCompletedAttempt,
+        destination,
+        order.length
+      )
+    );
   if (structurallyInvalid) {
     throw new Error(
       "RESTORE_ALL_JOURNAL_INVALID"
@@ -734,6 +833,9 @@ function validateJournal({
       "RESTORE_ALL_JOURNAL_VALIDATION_STATE_INVALID"
     );
   }
+  if (completedRestoreWasCleaned(manifest, journal)) {
+    return null;
+  }
   if (
     restoreInvariantSha256(manifest) !==
     journal.startedInvariantSha256
@@ -743,6 +845,28 @@ function validateJournal({
     );
   }
   return journal;
+}
+
+function archivedRestoreJournalEntry(journal) {
+  return {
+    schemaVersion:
+      RESTORE_ALL_HISTORY_ENTRY_SCHEMA_VERSION,
+    attemptId: journal.attemptId,
+    status: journal.status,
+    startedAt: journal.startedAt,
+    completedAt: journal.completedAt,
+    startedCommit: journal.startedCommit,
+    startedManifestSourceSha256:
+      journal.startedManifestSourceSha256,
+    startedInvariantSha256:
+      journal.startedInvariantSha256,
+    packageSetSha256: journal.packageSetSha256,
+    packageCount: journal.completedPackages.length,
+    destination: structuredClone(journal.destination),
+    validation: structuredClone(journal.validation),
+    journalContentSha256:
+      sha256CanonicalJson(journal)
+  };
 }
 
 async function manifestHeadCommit(repoRoot, gitRunner) {
@@ -1154,6 +1278,7 @@ function createJournal({
   headCommit,
   destination,
   order,
+  previousJournal = null,
   now
 }) {
   const startedAt = now();
@@ -1181,6 +1306,9 @@ function createJournal({
       bucket: destination.bucket,
       region: destination.region
     },
+    previousCompletedAttempt: previousJournal
+      ? archivedRestoreJournalEntry(previousJournal)
+      : null,
     order,
     pendingPackageId: null,
     completedPackages: [],
@@ -1488,15 +1616,28 @@ export async function restoreAllPackagesCheckpointed({
       )
   };
   manifest.execution ??= {};
-  let journal =
-    manifest.execution.restoreAllJournal ?? null;
+  let journal = start.journal;
   if (!journal) {
+    const previousJournal =
+      manifest.execution.restoreAllJournal ?? null;
+    if (
+      previousJournal &&
+      !completedRestoreWasCleaned(
+        manifest,
+        previousJournal
+      )
+    ) {
+      throw new Error(
+        "RESTORE_ALL_COMPLETED_JOURNAL_NOT_SUPERSEDED"
+      );
+    }
     journal = createJournal({
       manifest,
       sourceSha256: checkpointState.sourceSha256,
       headCommit: start.headCommit,
       destination: validated,
       order: start.order,
+      previousJournal,
       now
     });
     await checkpointMutation({

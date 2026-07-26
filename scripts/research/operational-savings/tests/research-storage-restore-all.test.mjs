@@ -800,6 +800,132 @@ test("restore-all checkpoints dependency-ordered hydration and returns the exact
   });
 }, 30_000);
 
+test("restore-all starts a new archived generation after a completed restore is cleaned", async () => {
+  await withTemporaryRoot(async (root) => {
+    const record = packageRecord({
+      packageId: "cache:repeatable-restore",
+      localPath:
+        `${CACHE_RELATIVE_PATH}/repeatable.bin`,
+      content: "repeatable"
+    });
+    const manifest = testManifest([record]);
+    const firstPersisted = await persistManifest(
+      root,
+      manifest
+    );
+    const hydrateOnePackage = vi.fn(
+      async ({ packageId, manifest: active }) => {
+        const packageRecord = active.packages.find(
+          (candidate) =>
+            candidate.packageId === packageId
+        );
+        return {
+          disposition:
+            "PACKAGE_HYDRATED_WITHOUT_OVERWRITE",
+          packageId,
+          ...fakeProof(packageRecord)
+        };
+      }
+    );
+    const verifyExistingPackage = vi.fn(
+      async ({ packageRecord }) => ({
+        kind: "TEST",
+        packageId: packageRecord.packageId,
+        sha256:
+          packageRecord.plannedObject.expectedSha256,
+        sizeBytes:
+          packageRecord.plannedObject.expectedSizeBytes
+      })
+    );
+    const sharedOptions = {
+      repoRoot: root,
+      manifestPath: firstPersisted.path,
+      manifest,
+      destination,
+      assertCleanManifest: vi.fn(),
+      gitRunner: cleanStartGitRunner(),
+      verifyExecutionContext: vi.fn(
+        async () => fakeContext()
+      ),
+      readRemote: fakeReadRemote(manifest),
+      hydrateOnePackage,
+      verifyExistingPackage
+    };
+    const first =
+      await restoreAllPackagesCheckpointed({
+        ...sharedOptions,
+        expectedManifestSourceSha256:
+          manifestSourceSha256(
+            firstPersisted.source
+          ),
+        now: sequencedNow()
+      });
+    expect(first.restartMode).toBe("NEW");
+    const previousJournal = structuredClone(
+      manifest.execution.restoreAllJournal
+    );
+    expect(previousJournal.status).toBe("COMPLETE");
+
+    record.remote.s3.deletionStatus =
+      "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION";
+    record.remote.s3.localDeletedAt =
+      "2026-07-24T02:00:00.000Z";
+    manifest.execution.localFilesDeleted = true;
+    manifest.execution.localCleanupJournal = {
+      status: "COMPLETE",
+      pendingAction: null,
+      completedActions: []
+    };
+    resealManifest(manifest);
+    const cleanedPersisted = await persistManifest(
+      root,
+      manifest
+    );
+
+    const second =
+      await restoreAllPackagesCheckpointed({
+        ...sharedOptions,
+        expectedManifestSourceSha256:
+          manifestSourceSha256(
+            cleanedPersisted.source
+          ),
+        now: sequencedNow()
+      });
+    expect(second.restartMode).toBe("NEW");
+    expect(hydrateOnePackage).toHaveBeenCalledTimes(2);
+    expect(
+      manifest.execution.restoreAllJournal.attemptId
+    ).not.toBe(previousJournal.attemptId);
+    expect(
+      manifest.execution.restoreAllJournal
+        .previousCompletedAttempt
+    ).toEqual(
+      expect.objectContaining({
+        schemaVersion:
+          "operational-savings/s3-restore-all-history-entry-v1",
+        attemptId: previousJournal.attemptId,
+        status: "COMPLETE",
+        packageCount: 1,
+        journalContentSha256:
+          sha256CanonicalJson(previousJournal)
+      })
+    );
+    const tampered = structuredClone(manifest);
+    tampered.execution.restoreAllJournal
+      .previousCompletedAttempt
+      .packageCount = 2;
+    resealManifest(tampered);
+    await expect(
+      planRestoreAllPackages({
+        repoRoot: root,
+        manifest: tampered,
+        destination,
+        verifyExistingPackage
+      })
+    ).rejects.toThrow(/RESTORE_ALL_JOURNAL_INVALID/);
+  });
+}, 30_000);
+
 test("restore-all resumes a pending package created before its completion checkpoint", async () => {
   await withTemporaryRoot(async (root) => {
     const first = packageRecord({
