@@ -178,9 +178,13 @@ test("isolated ECR Docker configuration disables inherited credential helpers", 
     join(tmpdir(), "retrofi-ecr-config-test-")
   );
   try {
+    const registry =
+      `${RESEARCH_AWS_ACCOUNT_ID}.dkr.ecr.${RESEARCH_AWS_REGION}.amazonaws.com`;
     const dockerConfigPath =
       await createIsolatedDockerConfig({
-        temporaryRoot
+        temporaryRoot,
+        registry,
+        password: "temporary-password"
       });
     const configPath = join(
       dockerConfigPath,
@@ -189,7 +193,13 @@ test("isolated ECR Docker configuration disables inherited credential helpers", 
     expect(
       JSON.parse(await readFile(configPath, "utf8"))
     ).toEqual({
-      auths: {}
+      auths: {
+        [registry]: {
+          auth: Buffer.from(
+            "AWS:temporary-password"
+          ).toString("base64")
+        }
+      }
     });
     expect(
       (await lstat(configPath)).mode & 0o777
@@ -1832,7 +1842,11 @@ test("pulls exact ECR digests and replays every verifier after all controls pass
     )
   ).toBe(true);
   expect(verifierRunner).toHaveBeenCalledTimes(5);
-  expect(createDockerConfig).toHaveBeenCalledTimes(1);
+  expect(createDockerConfig).toHaveBeenCalledWith({
+    registry:
+      `${RESEARCH_AWS_ACCOUNT_ID}.dkr.ecr.${RESEARCH_AWS_REGION}.amazonaws.com`,
+    password: "test-password"
+  });
   expect(removeDockerConfig).toHaveBeenCalledWith(
     "/private/tmp/ecr-auth-test"
   );
@@ -1842,9 +1856,7 @@ test("pulls exact ECR digests and replays every verifier after all controls pass
   const firstPull = events.findIndex((event) =>
     event.startsWith("pull:")
   );
-  expect(firstPull).toBeGreaterThan(
-    events.indexOf("login")
-  );
+  expect(firstPull).toBe(0);
   const preflightCallsBeforeLogin = runner.mock.calls
     .slice(
       0,

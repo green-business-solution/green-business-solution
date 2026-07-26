@@ -452,8 +452,28 @@ export async function defaultDockerRunner(
 }
 
 export async function createIsolatedDockerConfig({
-  temporaryRoot = tmpdir()
+  temporaryRoot = tmpdir(),
+  registry = null,
+  password = null
 } = {}) {
+  const expectedRegistry =
+    `${RESEARCH_AWS_ACCOUNT_ID}.dkr.ecr.${RESEARCH_AWS_REGION}.amazonaws.com`;
+  if (
+    (registry === null) !== (password === null) ||
+    (
+      registry !== null &&
+      (
+        registry !== expectedRegistry ||
+        typeof password !== "string" ||
+        password.length === 0 ||
+        password.trim() !== password
+      )
+    )
+  ) {
+    throw new Error(
+      "ECR_TEMPORARY_DOCKER_AUTH_INPUT_INVALID"
+    );
+  }
   const dockerConfigPath = await mkdtemp(
     join(
       temporaryRoot,
@@ -461,9 +481,20 @@ export async function createIsolatedDockerConfig({
     )
   );
   try {
+    const auths =
+      registry === null
+        ? {}
+        : {
+            [registry]: {
+              auth: Buffer.from(
+                `AWS:${password}`,
+                "utf8"
+              ).toString("base64")
+            }
+          };
     await writeFile(
       join(dockerConfigPath, "config.json"),
-      `${JSON.stringify({ auths: {} }, null, 2)}\n`,
+      `${JSON.stringify({ auths }, null, 2)}\n`,
       {
         encoding: "utf8",
         mode: 0o600,
@@ -6623,9 +6654,12 @@ export async function restoreAndReplayEcrImages({
     );
   }
 
-  const dockerConfigPath = await createDockerConfig();
   const registry =
     `${RESEARCH_AWS_ACCOUNT_ID}.dkr.ecr.${RESEARCH_AWS_REGION}.amazonaws.com`;
+  const dockerConfigPath = await createDockerConfig({
+    registry,
+    password: login.stdout.trim()
+  });
   const results = [];
   const cleanupCandidates = [];
   const cleanupByModel = new Map();
@@ -6633,24 +6667,6 @@ export async function restoreAndReplayEcrImages({
   let operationError = null;
   let postReplayResult = null;
   try {
-    successfulDockerOutput(
-      await dockerRunner(
-        [
-          "--config",
-          dockerConfigPath,
-          "login",
-          "--username",
-          "AWS",
-          "--password-stdin",
-          registry
-        ],
-        {
-          stdin: login.stdout,
-          dockerConfig: dockerConfigPath
-        }
-      ),
-      "ECR_RESTORE_DOCKER_LOGIN"
-    );
     for (const { spec, repository } of repositories) {
       const imageUri = repository.remoteImage.imageUri;
       cleanupCandidates.push({ spec, repository });
