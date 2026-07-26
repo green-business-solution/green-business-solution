@@ -12,7 +12,8 @@ import {
   realpath,
   rename,
   rm,
-  unlink
+  unlink,
+  writeFile
 } from "node:fs/promises";
 import { constants as fsConstants } from "node:fs";
 import {
@@ -376,12 +377,17 @@ export async function defaultAwsRunner(args) {
 
 export async function defaultDockerRunner(
   args,
-  { stdin = null } = {}
+  {
+    stdin = null,
+    dockerConfig = "/var/empty"
+  } = {}
 ) {
   const dockerPath = await verifiedDockerCliPath();
   return await new Promise((resolvePromise) => {
     const child = spawn(dockerPath, args, {
-      env: dockerSubprocessEnvironment(),
+      env: dockerSubprocessEnvironment({
+        dockerConfig
+      }),
       stdio: ["pipe", "pipe", "pipe"]
     });
     const stdout = [];
@@ -443,6 +449,35 @@ export async function defaultDockerRunner(
       child.stdin.end(stdin);
     }
   });
+}
+
+export async function createIsolatedDockerConfig({
+  temporaryRoot = tmpdir()
+} = {}) {
+  const dockerConfigPath = await mkdtemp(
+    join(
+      temporaryRoot,
+      "retrofi-research-ecr-auth-"
+    )
+  );
+  try {
+    await writeFile(
+      join(dockerConfigPath, "config.json"),
+      `${JSON.stringify({ auths: {} }, null, 2)}\n`,
+      {
+        encoding: "utf8",
+        mode: 0o600,
+        flag: "wx"
+      }
+    );
+    return dockerConfigPath;
+  } catch (error) {
+    await rm(dockerConfigPath, {
+      recursive: true,
+      force: true
+    });
+    throw error;
+  }
 }
 
 function parseJsonOutput(result, operation) {
@@ -6511,8 +6546,7 @@ export async function restoreAndReplayEcrImages({
   runner = defaultAwsRunner,
   dockerRunner = defaultDockerRunner,
   verifierRunner = defaultEcrVerifierRunner,
-  createDockerConfig = () =>
-    mkdtemp(join(tmpdir(), "retrofi-research-ecr-auth-")),
+  createDockerConfig = createIsolatedDockerConfig,
   removeDockerConfig = (path) =>
     rm(path, { recursive: true, force: true })
 }) {
@@ -6610,7 +6644,10 @@ export async function restoreAndReplayEcrImages({
           "--password-stdin",
           registry
         ],
-        { stdin: login.stdout }
+        {
+          stdin: login.stdout,
+          dockerConfig: dockerConfigPath
+        }
       ),
       "ECR_RESTORE_DOCKER_LOGIN"
     );
@@ -6618,14 +6655,19 @@ export async function restoreAndReplayEcrImages({
       const imageUri = repository.remoteImage.imageUri;
       cleanupCandidates.push({ spec, repository });
       successfulDockerOutput(
-        await dockerRunner([
-          "--config",
-          dockerConfigPath,
-          "pull",
-          "--platform",
-          repository.localImage.targetPlatform,
-          imageUri
-        ]),
+        await dockerRunner(
+          [
+            "--config",
+            dockerConfigPath,
+            "pull",
+            "--platform",
+            repository.localImage.targetPlatform,
+            imageUri
+          ],
+          {
+            dockerConfig: dockerConfigPath
+          }
+        ),
         `ECR_RESTORE_PULL_${spec.modelId.toUpperCase()}`
       );
       const inspection = dockerInspectRecord(

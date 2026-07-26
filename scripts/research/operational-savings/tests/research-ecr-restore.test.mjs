@@ -1,8 +1,10 @@
 import { execFile } from "node:child_process";
 import { createHash } from "node:crypto";
 import {
+  lstat,
   mkdir,
   mkdtemp,
+  readFile,
   rm,
   writeFile
 } from "node:fs/promises";
@@ -23,6 +25,7 @@ import {
   RESEARCH_AWS_PROFILE,
   RESEARCH_AWS_REGION,
   RESEARCH_S3_BUCKET,
+  createIsolatedDockerConfig,
   planEcrImageRestore,
   recordEcrRestoreReplay,
   restoreAndReplayEcrImages
@@ -168,6 +171,35 @@ const fixtureModelSources = Object.freeze({
     sourceCommitArgument: "SCOUT_COMMIT",
     sourceArchiveArgument: "SCOUT_ARCHIVE_SHA256"
   })
+});
+
+test("isolated ECR Docker configuration disables inherited credential helpers", async () => {
+  const temporaryRoot = await mkdtemp(
+    join(tmpdir(), "retrofi-ecr-config-test-")
+  );
+  try {
+    const dockerConfigPath =
+      await createIsolatedDockerConfig({
+        temporaryRoot
+      });
+    const configPath = join(
+      dockerConfigPath,
+      "config.json"
+    );
+    expect(
+      JSON.parse(await readFile(configPath, "utf8"))
+    ).toEqual({
+      auths: {}
+    });
+    expect(
+      (await lstat(configPath)).mode & 0o777
+    ).toBe(0o600);
+  } finally {
+    await rm(temporaryRoot, {
+      recursive: true,
+      force: true
+    });
+  }
 });
 
 function repositoryUri(repositoryName) {
