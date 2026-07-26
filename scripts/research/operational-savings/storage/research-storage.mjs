@@ -44,9 +44,14 @@ import {
   DEFAULT_REPO_ROOT,
   assertCanonicalInventoriesMatch,
   assertCanonicalInventoryIdentity,
+  buildResearchEcrInventory,
   buildResearchStorageInventory,
-  buildResearchStorageReport
+  buildResearchStorageReport,
+  sha256CanonicalJson
 } from "./inventory.mjs";
+import {
+  assertLivePostHocReplayReceipt
+} from "./post-hoc-replay.mjs";
 
 const VALUE_OPTIONS = new Set([
   "--bucket",
@@ -157,6 +162,10 @@ Hydrate and replay every runnable model from its exact verified ECR digest:
   Local removal is accepted only with --remove-after-replay --run-validation --confirm-no-active-consumers.
   That mode requires every accepted image to be absent before the pull, runs the fixed full offline validation while every restored S3 package and ECR image is present, removes only each exact ECR digest reference, and succeeds only when the corresponding image ID is then absent.
 
+Refresh only the recorded current post-hoc replay evidence after committing a new receipt:
+  Use refresh-ecr-evidence and add --execute.
+  The command refuses any change to durable build or exact ECR publication evidence and never calls AWS.
+
 Upload, verify, and cleanup accept only the dedicated research profile, account, role, bucket, and region.
 Repository packages remain blocked until a source archive is materialized and the manifest records its exact size and SHA-256.
 `;
@@ -189,6 +198,113 @@ async function readManifest(path) {
   }
   validateManifestDigest(manifest);
   return { manifest, source };
+}
+
+function durableEcrEvidence(ecr) {
+  return {
+    accountId: ecr?.accountId,
+    region: ecr?.region,
+    repositories: [...(ecr?.repositories ?? [])]
+      .sort((left, right) =>
+        left.modelId.localeCompare(right.modelId)
+      )
+      .map((repository) => {
+        const {
+          verificationStatus: _verificationStatus,
+          currentDaemonPresenceCheckedByInventory:
+            _currentDaemonPresenceCheckedByInventory,
+          ...durableLocalImage
+        } = repository.localImage ?? {};
+        return {
+          modelId: repository.modelId,
+          repositoryName:
+            repository.repositoryName,
+          expectedRepositoryUri:
+            repository.expectedRepositoryUri,
+          buildManifest: repository.buildManifest,
+          localImage: durableLocalImage,
+          plannedRemoteImage:
+            repository.plannedRemoteImage,
+          provenance: repository.provenance,
+          remoteImage: repository.remoteImage
+        };
+      })
+  };
+}
+
+async function refreshEcrEvidenceCommand(options) {
+  const repoRoot = resolve(
+    options["repo-root"] ?? DEFAULT_REPO_ROOT
+  );
+  const manifestPath = absoluteFromRoot(
+    repoRoot,
+    options.manifest,
+    DEFAULT_MANIFEST_RELATIVE_PATH
+  );
+  const { manifest, source } =
+    await readManifest(manifestPath);
+  const currentEcr = await buildResearchEcrInventory({
+    repoRoot
+  });
+  if (
+    currentEcr.postHocReplayReceipt?.status !==
+      "PASS_COMMITTED_POST_HOC_REPLAY" ||
+    currentEcr.postHocReplayReceipt.blocker !== null
+  ) {
+    throw new Error(
+      "CURRENT_POST_HOC_REPLAY_RECEIPT_REQUIRED: generate and commit the exact four-model replay receipt first"
+    );
+  }
+  const recordedDurableEvidenceSha256 =
+    sha256CanonicalJson(
+      durableEcrEvidence(manifest.destination?.ecr)
+    );
+  const currentDurableEvidenceSha256 =
+    sha256CanonicalJson(
+      durableEcrEvidence(currentEcr)
+    );
+  if (
+    recordedDurableEvidenceSha256 !==
+    currentDurableEvidenceSha256
+  ) {
+    throw new Error(
+      "DURABLE_ECR_EVIDENCE_CHANGED: refusing to refresh replay state across a build or publication evidence change"
+    );
+  }
+  const plan = {
+    dryRun: true,
+    operation: "refresh-ecr-evidence",
+    recordedDurableEvidenceSha256,
+    currentDurableEvidenceSha256,
+    receiptContentSha256:
+      currentEcr.postHocReplayReceipt.receipt
+        .receiptContentSha256,
+    wouldCallAws: false,
+    wouldDeleteLocal: false,
+    wouldOverwriteDurableEvidence: false
+  };
+  if (!options.execute) {
+    return plan;
+  }
+  manifest.destination.ecr = currentEcr;
+  delete manifest.manifestContentSha256;
+  manifest.manifestContentSha256 =
+    sha256CanonicalJson(manifest);
+  await assertLivePostHocReplayReceipt({
+    repoRoot,
+    manifest
+  });
+  const writeResult = await writeManifestAtomically({
+    manifestPath,
+    manifest,
+    expectedSourceSha256:
+      manifestSourceSha256(source)
+  });
+  return {
+    ...plan,
+    dryRun: false,
+    manifest: writeResult
+  };
 }
 
 async function verifyCurrentCanonicalInventory({
@@ -1002,6 +1118,8 @@ export async function main(argv = process.argv.slice(2)) {
     result = await restoreCommand(options);
   } else if (command === "restore-ecr-images") {
     result = await restoreEcrImagesCommand(options);
+  } else if (command === "refresh-ecr-evidence") {
+    result = await refreshEcrEvidenceCommand(options);
   } else if (["upload", "verify", "cleanup"].includes(command)) {
     result = await remoteCommand(command, options);
   } else {
