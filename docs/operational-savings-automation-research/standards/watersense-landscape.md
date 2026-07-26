@@ -10,7 +10,7 @@ The canonical output set contains 2 distinct output descriptions.
 
 | Category and process | Execution-verified proof level | Adapter | Actual adapter test result | Current blocker | Conditional next action |
 | --- | --- | --- | --- | --- | --- |
-| ITC-34/watersense_landscape | END_TO_END_REAL | scripts/research/operational-savings/adapters/watersense-landscape/run.mjs | watersense-landscape-header-failure-proof: PASSED; scripts/research/operational-savings/tests/watersense-landscape-real.test.mjs :: fails closed when an observed native header drifts<br>watersense-landscape-input-failure-proof: PASSED; scripts/research/operational-savings/tests/watersense-landscape-real.test.mjs :: rejects missing Version 2.0 inputs and incompatible project units<br>watersense-landscape-real-workbook-proof: PASSED; scripts/research/operational-savings/tests/watersense-landscape-real.test.mjs :: executes the exact reviewed Version 2.0 method and reaches both ITC-34 terms | None | Accept or connect the proved path only within its recorded boundary, and keep the exact execution record current when code, fixtures, artifacts, or canonical bindings change. |
+| ITC-34/watersense_landscape | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/watersense-landscape/run.mjs | watersense-landscape-header-failure-proof: PASSED; scripts/research/operational-savings/tests/watersense-landscape-real.test.mjs :: fails closed when an observed native header drifts<br>watersense-landscape-input-failure-proof: PASSED; scripts/research/operational-savings/tests/watersense-landscape-real.test.mjs :: rejects missing Version 2.0 inputs and incompatible project units<br>watersense-landscape-real-workbook-proof: PASSED; scripts/research/operational-savings/tests/watersense-landscape-real.test.mjs :: executes the exact reviewed Version 2.0 method and reaches both ITC-34 terms | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## 2. Official source inventory
 
@@ -54,13 +54,13 @@ It reports retained artifact releases, versions, locators, and integrity values 
 
 | Artifact ID | Evidence role | Retained release or version | Exact locator | Integrity | Current proof state | Bound processes |
 | --- | --- | --- | --- | --- | --- | --- |
-| artifact:watersense-landscape:2020-10 | PUBLIC_XLSX_DOWNLOAD | climate workbook path dated 2020-10 | https://www.epa.gov/sites/production/files/2020-10/ws-data-information-et-rainfall.xlsx | sha256:77afb36cff3dcb77eacad4db34a8dba44bd48eb24485c886958afd58e1846273; 10078683 bytes | END_TO_END_REAL | ITC-34/watersense_landscape |
+| artifact:watersense-landscape:2020-10 | PUBLIC_XLSX_DOWNLOAD | climate workbook path dated 2020-10 | https://www.epa.gov/sites/production/files/2020-10/ws-data-information-et-rainfall.xlsx | sha256:77afb36cff3dcb77eacad4db34a8dba44bd48eb24485c886958afd58e1846273; 10078683 bytes | DOCUMENTATION_ONLY | ITC-34/watersense_landscape |
 
 The current proof manifests record these inspected schemas:
 
 | Schema ID | Artifact ID | Format | Extractor | Required native fields | Current proof state |
 | --- | --- | --- | --- | --- | --- |
-| schema:watersense-landscape:2020-10 | artifact:watersense-landscape:2020-10 | XLSX | scripts/research/operational-savings/adapters/watersense-landscape/inspect-schema.mjs | About!A1; About!A2; About!C5; About!B6; About!B7; Peak_Month!A1:D31736; ETo!A1:N55915; P50!A1:N55915 | END_TO_END_REAL |
+| schema:watersense-landscape:2020-10 | artifact:watersense-landscape:2020-10 | XLSX | scripts/research/operational-savings/adapters/watersense-landscape/inspect-schema.mjs | About!A1; About!A2; About!C5; About!B6; About!B7; Peak_Month!A1:D31736; ETo!A1:N55915; P50!A1:N55915 | DOCUMENTATION_ONLY |
 
 Catalog-native field names that still require proof-backed inspection are:
 
@@ -167,11 +167,11 @@ This synthetic regression does not prove acquisition, source-specific parsing, a
 
 ## 12. Feasibility and supported boundary
 
-**FEASIBLE_NOW**
+**NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES**
 
 This verdict is derived from 1 bound process.
-Every bound process passes all real-source gates through its exact formula term, offline rerun, provenance, and failure tests.
-The proof ledger records 1 end-to-end real process, 1 source-verified process, and 0 processes with genuine manual-export downstream proof.
+No bound process has retained real-source execution proof beyond documentation, synthetic evidence, an access block, or an unsupported source boundary.
+The proof ledger records 0 end-to-end real processes, 0 source-verified processes, and 0 processes with genuine manual-export downstream proof.
 The supported boundary is U.S. ZIP-based design comparison for explicit hydrozones, plant factors, areas, and irrigation methods.
 The unsupported boundary is Real-time irrigation scheduling, actual measured water use, and missing landscape design inputs.
 

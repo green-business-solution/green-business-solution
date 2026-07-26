@@ -16,7 +16,7 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 | Process key | Execution-verified proof level | Adapter path | Actual adapter test result | Current blocker |
 | --- | --- | --- | --- | --- |
-| scout_ecm_screen | SOURCE_UNSUPPORTED | scripts/research/operational-savings/adapters/scout/run.mjs | scout-offline-crosswalk-proof: PASSED; scripts/research/operational-savings/tests/scout-real.test.mjs :: requires offline mode and an independently reviewed crosswalk<br>scout-pinned-source-gap-audit: PASSED; scripts/research/operational-savings/tests/scout-real.test.mjs :: proves the pinned source inventory cannot supply ITC-05 or ITC-11 | REMAINING_BLOCKER: The pinned Scout ECM inventory contains whole-equipment refrigeration efficiency measures but no compatible refrigeration-control ECM that supplies the required fractional control reduction. |
+| scout_ecm_screen | DOCUMENTATION_ONLY | scripts/research/operational-savings/adapters/scout/run.mjs | scout-offline-crosswalk-proof: PASSED; scripts/research/operational-savings/tests/scout-real.test.mjs :: requires offline mode and an independently reviewed crosswalk<br>scout-pinned-source-gap-audit: PASSED; scripts/research/operational-savings/tests/scout-real.test.mjs :: proves the pinned source inventory cannot supply ITC-05 or ITC-11 | EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
 
 ## End-to-end graph
 
@@ -24,7 +24,7 @@ Its current formula, tree, bindings, ownership decisions, and status remain unch
 
 ## Feasibility
 
-The category depends on these source-level verdicts: PARTIALLY_FEASIBLE.
+The category depends on these source-level verdicts: NOT_FEASIBLE_WITH_CURRENT_PUBLIC_SOURCES.
 The process table reports the final proof level after execution-record verification, not a higher level that a manifest may have declared before the current run.
 An exact path is usable only when every owned input is present and every Standard adapter returns one unambiguous compatible result.
 A benchmark path is usable only where the category has a retained authoritative population and exact selection rule.
@@ -34,4 +34,4 @@ The runtime external-call count remains zero.
 
 | Process key | Current proof level | Next action |
 | --- | --- | --- |
-| scout_ecm_screen | SOURCE_UNSUPPORTED | Revise the source strategy or keep the card path explicitly unsupported before implementation. REMAINING_BLOCKER: The pinned Scout ECM inventory contains whole-equipment refrigeration efficiency measures but no compatible refrigeration-control ECM that supplies the required fractional control reduction. |
+| scout_ecm_screen | DOCUMENTATION_ONLY | Acquire or implement the missing evidence named by the blocker, then add exact adapter tests before claiming executable coverage. EXECUTION_RUN_RECORD_REQUIRED: The static proof declaration is not counted as executed proof until one current local content-bound run record covers every required exact test. |
