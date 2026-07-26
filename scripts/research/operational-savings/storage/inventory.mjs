@@ -4732,6 +4732,138 @@ function totalPackageCoverage(packages) {
   );
 }
 
+async function committedVerifiedDeletedAuditPaths({
+  repoRoot,
+  audit
+}) {
+  let source;
+  try {
+    source = await runGit(
+      repoRoot,
+      [
+        "show",
+        `HEAD:${DEFAULT_MANIFEST_RELATIVE_PATH}`
+      ],
+      { encoding: "utf8" }
+    );
+  } catch {
+    return [];
+  }
+  let manifest;
+  try {
+    manifest = JSON.parse(source);
+  } catch {
+    return [];
+  }
+  const manifestWithoutDigest = structuredClone(manifest);
+  delete manifestWithoutDigest.manifestContentSha256;
+  if (
+    manifest.schemaVersion !== STORAGE_SCHEMA_VERSION ||
+    manifest.manifestContentSha256 !==
+      sha256CanonicalJson(manifestWithoutDigest) ||
+    manifest.localArtifactAudit?.sourcePath !==
+      audit.sourcePath ||
+    manifest.localArtifactAudit?.sourceSha256 !==
+      audit.sourceSha256 ||
+    sha256CanonicalJson(manifest.localArtifactAudit) !==
+      sha256CanonicalJson(audit)
+  ) {
+    return [];
+  }
+  const cleanup =
+    manifest.execution?.auditedLocalArtifactCleanup;
+  if (
+    cleanup?.auditSourcePath !== audit.sourcePath ||
+    cleanup?.auditSourceSha256 !== audit.sourceSha256 ||
+    !Array.isArray(cleanup.results)
+  ) {
+    return [];
+  }
+  const records = new Map(
+    audit.artifactGroups.flatMap((group) => [
+      ...(group.childFiles ?? []).map((record) => [
+        record.originalPath,
+        {
+          groupId: group.groupId,
+          recordKind: "EXACT_FILE",
+          disposition:
+            record.disposition ?? group.disposition,
+          byteSize: record.byteSize,
+          sha256: record.sha256
+        }
+      ]),
+      ...(group.directoryEntries ?? []).map((record) => [
+        record.originalPath,
+        {
+          groupId: group.groupId,
+          recordKind: "DIRECTORY_AGGREGATE",
+          disposition:
+            record.disposition ?? group.disposition,
+          fileCount: record.fileCount,
+          symlinkCount: record.symlinkCount,
+          logicalBytes: record.logicalBytes,
+          treeDigestSchemaVersion:
+            record.treeDigestSchemaVersion,
+          fullTreeSha256: record.fullTreeSha256
+        }
+      ])
+    ])
+  );
+  const verifiedPaths = [];
+  const seen = new Set();
+  for (const result of cleanup.results) {
+    if (
+      result.cleanupStatus !==
+        "LOCAL_DELETED_AFTER_VERIFICATION"
+    ) {
+      continue;
+    }
+    const record = records.get(result.originalPath);
+    if (
+      !record ||
+      record.disposition === "MIGRATE_UNIQUE" ||
+      seen.has(result.originalPath) ||
+      result.groupId !== record.groupId ||
+      result.recordKind !== record.recordKind ||
+      result.disposition !== record.disposition ||
+      typeof result.completedAt !== "string" ||
+      !Number.isFinite(Date.parse(result.completedAt))
+    ) {
+      return [];
+    }
+    if (
+      record.recordKind === "EXACT_FILE" &&
+      (
+        result.verification?.sizeBytes !==
+          record.byteSize ||
+        result.verification?.sha256 !== record.sha256
+      )
+    ) {
+      return [];
+    }
+    if (
+      record.recordKind === "DIRECTORY_AGGREGATE" &&
+      (
+        result.verification?.fileCount !==
+          record.fileCount ||
+        result.verification?.symlinkCount !==
+          record.symlinkCount ||
+        result.verification?.logicalBytes !==
+          record.logicalBytes ||
+        result.verification?.treeDigestSchemaVersion !==
+          record.treeDigestSchemaVersion ||
+        result.verification?.fullTreeSha256 !==
+          record.fullTreeSha256
+      )
+    ) {
+      return [];
+    }
+    seen.add(result.originalPath);
+    verifiedPaths.push(result.originalPath);
+  }
+  return verifiedPaths.sort();
+}
+
 export async function buildResearchStorageInventory({
   repoRoot = DEFAULT_REPO_ROOT,
   generatedOn = new Date().toISOString().slice(0, 10)
@@ -5007,8 +5139,14 @@ export async function buildResearchStorageInventory({
     audit: localArtifactAudit,
     repoRoot
   });
+  const verifiedDeletedRecordedPaths =
+    await committedVerifiedDeletedAuditPaths({
+      repoRoot,
+      audit: localArtifactAudit
+    });
   await assertLocalArtifactAuditFresh({
-    audit: localArtifactAudit
+    audit: localArtifactAudit,
+    verifiedDeletedRecordedPaths
   });
   const manifest = {
     schemaVersion: STORAGE_SCHEMA_VERSION,

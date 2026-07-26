@@ -71,12 +71,14 @@ function filesystemAuditRecords(audit) {
   return audit.artifactGroups.flatMap((group) => [
     ...(group.childFiles ?? []).map((record) => ({
       kind: "EXACT_FILE",
+      groupId: group.groupId,
       path: record.originalPath,
       byteSize: record.byteSize,
       sha256: record.sha256
     })),
     ...(group.directoryEntries ?? []).map((record) => ({
       kind: "DIRECTORY_AGGREGATE",
+      groupId: group.groupId,
       path: record.originalPath,
       fileCount: record.fileCount,
       symlinkCount: record.symlinkCount,
@@ -104,9 +106,8 @@ function canonicalExistingPath(path) {
   }
 }
 
-function recordWithinRoot(record, root) {
-  const canonicalPath = canonicalExistingPath(record.path);
-  const child = relative(root, canonicalPath);
+function relativeChild(root, path) {
+  const child = relative(root, path);
   if (
     child === "" ||
     child === ".." ||
@@ -114,8 +115,28 @@ function recordWithinRoot(record, root) {
   ) {
     return null;
   }
+  return child;
+}
+
+function recordWithinRoot(record, {
+  root,
+  canonicalRoot
+}) {
+  const recordedPath = resolve(record.path);
+  const canonicalPath = canonicalExistingPath(record.path);
+  const canonicalChild =
+    relativeChild(canonicalRoot, canonicalPath);
+  const child =
+    canonicalChild ??
+    (
+      canonicalPath === recordedPath
+        ? relativeChild(root, recordedPath)
+        : null
+    );
+  if (child === null) return null;
   return {
     ...record,
+    recordedPath,
     path: canonicalPath,
     topLevelName: child.split(sep)[0]
   };
@@ -363,8 +384,38 @@ export async function assertLocalArtifactAuditFresh({
   prefixes = OPERATIONAL_SAVINGS_TEMP_ENTRY_PREFIXES,
   excludedPrefixes =
     OPERATIONAL_SAVINGS_TEMP_ENTRY_EXCLUSIONS,
-  allowMissingRecordedPaths = false
+  allowMissingRecordedPaths = false,
+  verifiedDeletedRecordedPaths = []
 }) {
+  if (
+    !Array.isArray(verifiedDeletedRecordedPaths) ||
+    verifiedDeletedRecordedPaths.some(
+      (path) =>
+        typeof path !== "string" ||
+        !isAbsolute(path)
+    )
+  ) {
+    throw staleAuditError({
+      reason: "VERIFIED_DELETED_PATHS_INVALID"
+    });
+  }
+  const verifiedDeletedPaths = new Set(
+    verifiedDeletedRecordedPaths.map((path) => resolve(path))
+  );
+  if (
+    verifiedDeletedPaths.size !==
+      verifiedDeletedRecordedPaths.length
+  ) {
+    throw staleAuditError({
+      reason: "VERIFIED_DELETED_PATHS_INVALID"
+    });
+  }
+  const pathMatchesVerifiedDeletion = (record) =>
+    verifiedDeletedPaths.has(resolve(record.path)) ||
+    verifiedDeletedPaths.has(resolve(record.recordedPath));
+  const missingPathIsAllowed = (record) =>
+    allowMissingRecordedPaths ||
+    pathMatchesVerifiedDeletion(record);
   const rootsByCanonicalPath = new Map();
   for (const root of roots) {
     if (typeof root !== "string") {
@@ -406,29 +457,38 @@ export async function assertLocalArtifactAuditFresh({
 
     const records = auditRecords
       .map((record) =>
-        recordWithinRoot(record, canonicalRoot)
+        recordWithinRoot(record, {
+          root,
+          canonicalRoot
+        })
       )
       .filter(Boolean);
-    if (!allowMissingRecordedPaths) {
-      const missingRecordedPaths = [];
-      for (const record of records) {
-        try {
-          await lstat(record.path);
-        } catch (error) {
-          if (error.code === "ENOENT") {
-            missingRecordedPaths.push(record.path);
-            continue;
-          }
-          throw error;
+    const missingRecordedPaths = [];
+    for (const record of records) {
+      try {
+        await lstat(record.path);
+        if (pathMatchesVerifiedDeletion(record)) {
+          throw staleAuditError({
+            reason: "VERIFIED_DELETED_PATH_REAPPEARED",
+            path: record.path
+          });
         }
+      } catch (error) {
+        if (error.code === "ENOENT") {
+          if (!missingPathIsAllowed(record)) {
+            missingRecordedPaths.push(record.path);
+          }
+          continue;
+        }
+        throw error;
       }
-      if (missingRecordedPaths.length) {
-        throw staleAuditError({
-          reason: "RECORDED_PATH_MISSING",
-          root,
-          paths: [...new Set(missingRecordedPaths)].sort()
-        });
-      }
+    }
+    if (missingRecordedPaths.length) {
+      throw staleAuditError({
+        reason: "RECORDED_PATH_MISSING",
+        root,
+        paths: [...new Set(missingRecordedPaths)].sort()
+      });
     }
     const recordsByTopLevelName = new Map();
     for (const record of records) {
@@ -482,7 +542,7 @@ export async function assertLocalArtifactAuditFresh({
         } catch (error) {
           if (
             error.code === "ENOENT" &&
-            allowMissingRecordedPaths
+            missingPathIsAllowed(record)
           ) {
             continue;
           }
@@ -606,6 +666,8 @@ export async function assertLocalArtifactAuditFresh({
   return {
     status: "CURRENT",
     roots: results,
-    prefixCount: prefixes.length
+    prefixCount: prefixes.length,
+    verifiedDeletedRecordedPathCount:
+      verifiedDeletedPaths.size
   };
 }

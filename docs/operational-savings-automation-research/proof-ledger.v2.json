@@ -8,7 +8,7 @@
     "sourceEvidenceFingerprint": {
       "schemaVersion": "operational-savings/proof-source-evidence-fingerprint-v2",
       "algorithm": "SHA-256",
-      "digest": "4e96efe0add45d2b78793e37189d1c1afbe6c1d31ca6cb0abd30a69cbe7ef9c2",
+      "digest": "929a6e25989595bfde941b7a24387aee0a8059d2273563f6018f11101a76a860",
       "fileCount": 259,
       "testCatalogFingerprint": "275b0efb6d6f8c7b59ae9c9842e92761aeb194534f6e3f2d612e2f916a7e7355"
     },
@@ -76,18 +76,18 @@
     "status": "STALE_SOURCE_FINGERPRINT",
     "recordPath": "docs/operational-savings-automation-research/proof-execution-run-record.v2.json",
     "recordType": "LOCAL_CONTENT_BOUND_RUN_RECORD",
-    "runId": "local-content-18a2defd4e787c0ea55ecb8e29d71e0a7d39e6ba2ad6078f6bc1d43da373f7ce",
+    "runId": "local-content-56fdd0bc94db294c60346c1595a455c35bb0ed048811cfb6fcae96e646f5b9ec",
     "trustLevel": "LOCAL_CONTENT_BOUND",
     "runnerIdentityAuthenticated": false,
-    "recordContentSha256": "c291523b38b16a4e1d6d758afc2891f6791a9095a9cc56f673a7871e01078509",
+    "recordContentSha256": "2dda02d57696e3383718b94a1c3113d15a820870790b69203f89b5a22bb309d7",
     "repositoryState": {
       "observation": "PRE_RUN_AND_POST_RUN_BEFORE_RECORD_WRITE",
-      "gitHeadCommit": "a98ac7b519741a036ce15ebc47d986142cd478c0",
+      "gitHeadCommit": "95d9c6a9a611f79a9520961d040c689b14531ec0",
       "dirtyTreeStatus": "CLEAN",
       "dirtyEntryCount": 0,
       "porcelainV1Sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "porcelainV1Entries": [],
-      "relevantContentDigest": "0712568b39f4e76bedd1e6472109378aa1121d486da440ca9017bc78fc2f06f4",
+      "relevantContentDigest": "4e96efe0add45d2b78793e37189d1c1afbe6c1d31ca6cb0abd30a69cbe7ef9c2",
       "relevantContentFileCount": 259
     },
     "vitest": {
@@ -106,7 +106,7 @@
         "name": "enforces deny-network policy across the real Vitest process tree",
         "manifestPath": "RUN_RECORD_CONTROL",
         "status": "PASSED",
-        "durationMs": 2.396375000000006,
+        "durationMs": 3.76891599999999,
         "observedPaths": [
           "scripts/research/operational-savings/tests/network-sandbox-real.test.mjs"
         ],

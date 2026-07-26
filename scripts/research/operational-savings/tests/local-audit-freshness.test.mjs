@@ -75,6 +75,7 @@ async function fixture() {
   };
   return {
     root,
+    exactPath,
     aggregatePath,
     audit
   };
@@ -155,6 +156,46 @@ test("rejects an exact audited file whose bytes changed", async () => {
       prefixes: ["proof-ledger-", "retrofi-storage-"]
     })
   ).rejects.toThrow(/AUDITED_EXACT_FILE_CONTENT_CHANGED/);
+});
+
+test("accepts only cleanup-verified missing paths and rejects their reappearance", async () => {
+  const context = await fixture();
+  await rm(context.exactPath);
+  await expect(
+    assertLocalArtifactAuditFresh({
+      audit: context.audit,
+      roots: [context.root],
+      prefixes: ["proof-ledger-", "retrofi-storage-"]
+    })
+  ).rejects.toThrow(/RECORDED_PATH_MISSING/);
+
+  await expect(
+    assertLocalArtifactAuditFresh({
+      audit: context.audit,
+      roots: [context.root],
+      prefixes: ["proof-ledger-", "retrofi-storage-"],
+      verifiedDeletedRecordedPaths: [
+        context.exactPath
+      ]
+    })
+  ).resolves.toMatchObject({
+    status: "CURRENT",
+    verifiedDeletedRecordedPathCount: 1
+  });
+
+  await writeFile(context.exactPath, "{}\n", "utf8");
+  await expect(
+    assertLocalArtifactAuditFresh({
+      audit: context.audit,
+      roots: [context.root],
+      prefixes: ["proof-ledger-", "retrofi-storage-"],
+      verifiedDeletedRecordedPaths: [
+        context.exactPath
+      ]
+    })
+  ).rejects.toThrow(
+    /VERIFIED_DELETED_PATH_REAPPEARED/
+  );
 });
 
 test("rejects a later file inside an audited directory", async () => {

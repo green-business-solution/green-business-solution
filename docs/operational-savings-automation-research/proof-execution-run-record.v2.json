@@ -1220,9 +1220,9 @@
       },
       {
         "path": "scripts/research/operational-savings/storage/aws-guard.mjs",
-        "sizeBytes": 229421,
+        "sizeBytes": 230620,
         "executable": false,
-        "sha256": "7d5c6ebb719b90bb4c06ad59fa9cb5a2bb83dc12525111eac722bd09908bdd3b"
+        "sha256": "65c600f5ddf7dc8b4c84ceed4370c90b005c5381ea30fe4a69a8fd58e3b249f0"
       },
       {
         "path": "scripts/research/operational-savings/storage/ecr-evidence.mjs",
@@ -1256,9 +1256,9 @@
       },
       {
         "path": "scripts/research/operational-savings/storage/restore-all.mjs",
-        "sizeBytes": 43864,
+        "sizeBytes": 48013,
         "executable": false,
-        "sha256": "144ecb0e8fa48a327faad8272b87b98efd2973c8ffc25ff767a8fa1d5c9cbe4d"
+        "sha256": "634cf706b1247597053cd209943307b444cd612e1deab8d923e5d7b47a24c05f"
       },
       {
         "path": "scripts/research/operational-savings/storage/validation-commands.mjs",
@@ -1460,9 +1460,9 @@
       },
       {
         "path": "scripts/research/operational-savings/tests/research-ecr-restore.test.mjs",
-        "sizeBytes": 78975,
+        "sizeBytes": 80067,
         "executable": false,
-        "sha256": "9b97565adc634ca7d5b3c7693c8f4f00fdae5af4a8f89828d6e5cc9dc58426b0"
+        "sha256": "85cff4ed158d0f4720ab8f3a341c52b93587969640dc7f4281e3918a83f77582"
       },
       {
         "path": "scripts/research/operational-savings/tests/research-infrastructure.test.mjs",
@@ -1472,9 +1472,9 @@
       },
       {
         "path": "scripts/research/operational-savings/tests/research-storage-restore-all.test.mjs",
-        "sizeBytes": 37585,
+        "sizeBytes": 41309,
         "executable": false,
-        "sha256": "49e44267473d37cd935660c08838c9e28ff554883f70835117bf184bb993835a"
+        "sha256": "5b3c58e65273e9cf6d6f690a51bf681a1417ce45840d2f9feedc50a5f8b630a3"
       },
       {
         "path": "scripts/research/operational-savings/tests/research-storage.test.mjs",
@@ -1573,18 +1573,18 @@
         "sha256": "f6fbb2610bd9c672f4b6ff326c50f212bb8ca0b6a24a650e6f91d16067c279ea"
       }
     ],
-    "digest": "0712568b39f4e76bedd1e6472109378aa1121d486da440ca9017bc78fc2f06f4",
+    "digest": "4e96efe0add45d2b78793e37189d1c1afbe6c1d31ca6cb0abd30a69cbe7ef9c2",
     "fileCount": 259,
     "testCatalogFingerprint": "275b0efb6d6f8c7b59ae9c9842e92761aeb194534f6e3f2d612e2f916a7e7355"
   },
   "repositoryState": {
     "observation": "PRE_RUN_AND_POST_RUN_BEFORE_RECORD_WRITE",
-    "gitHeadCommit": "a98ac7b519741a036ce15ebc47d986142cd478c0",
+    "gitHeadCommit": "95d9c6a9a611f79a9520961d040c689b14531ec0",
     "dirtyTreeStatus": "CLEAN",
     "dirtyEntryCount": 0,
     "porcelainV1Sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "porcelainV1Entries": [],
-    "relevantContentDigest": "0712568b39f4e76bedd1e6472109378aa1121d486da440ca9017bc78fc2f06f4",
+    "relevantContentDigest": "4e96efe0add45d2b78793e37189d1c1afbe6c1d31ca6cb0abd30a69cbe7ef9c2",
     "relevantContentFileCount": 259
   },
   "artifactIdentityCatalog": {
@@ -2450,26 +2450,26 @@
   },
   "testCatalogFingerprint": "275b0efb6d6f8c7b59ae9c9842e92761aeb194534f6e3f2d612e2f916a7e7355",
   "execution": {
-    "status": "PASSED",
-    "command": "[\"/opt/homebrew/Cellar/node/26.3.1/bin/node\",\"/var/folders/n4/40s981js053d_qhy4jq0zcj00000gn/T/vitest-proof-attested-run-lTNfLh/repository/node_modules/vitest/vitest.mjs\",\"run\",\"scripts/research/operational-savings/tests\",\"--config\",\"vite.config.ts\",\"--reporter=json\",\"--outputFile\",\"/var/folders/n4/40s981js053d_qhy4jq0zcj00000gn/T/vitest-proof-attested-run-lTNfLh/vitest-results.json\",\"--no-file-parallelism\",\"--no-cache\"]",
+    "status": "FAILED",
+    "command": "[\"/opt/homebrew/Cellar/node/26.3.1/bin/node\",\"/var/folders/n4/40s981js053d_qhy4jq0zcj00000gn/T/vitest-proof-attested-run-nAUOta/repository/node_modules/vitest/vitest.mjs\",\"run\",\"scripts/research/operational-savings/tests\",\"--config\",\"vite.config.ts\",\"--reporter=json\",\"--outputFile\",\"/var/folders/n4/40s981js053d_qhy4jq0zcj00000gn/T/vitest-proof-attested-run-nAUOta/vitest-results.json\",\"--no-file-parallelism\",\"--no-cache\"]",
     "attestation": {
       "mode": "PRIVATE_COMMITTED_SNAPSHOT_WITH_PRE_RUN_POST_RUN_EQUALITY",
       "inputStateUnchanged": true,
-      "inputStateSha256": "1f163038a16f9d271e447b40fc76ed14d0d1b0d212b67b656519fb5a9037bcef",
-      "preRunCapturedAt": "2026-07-26T01:46:35.870Z",
-      "runnerStartedAt": "2026-07-26T01:46:43.612Z",
-      "runnerCompletedAt": "2026-07-26T01:48:58.133Z",
-      "postRunCapturedAt": "2026-07-26T01:49:05.448Z",
-      "runnerExitStatus": 0,
+      "inputStateSha256": "89ddd77d8d99bf998289e843fe5c20ebaee772b89ff02c4dff790bc5cd413202",
+      "preRunCapturedAt": "2026-07-26T02:24:15.730Z",
+      "runnerStartedAt": "2026-07-26T02:24:23.331Z",
+      "runnerCompletedAt": "2026-07-26T02:26:33.728Z",
+      "postRunCapturedAt": "2026-07-26T02:26:44.730Z",
+      "runnerExitStatus": 1,
       "executionSnapshot": {
         "mode": "PRIVATE_DETACHED_COMMITTED_GIT_WORKTREE",
-        "sourceCommit": "a98ac7b519741a036ce15ebc47d986142cd478c0",
-        "sourceEvidenceFingerprintDigest": "0712568b39f4e76bedd1e6472109378aa1121d486da440ca9017bc78fc2f06f4",
+        "sourceCommit": "95d9c6a9a611f79a9520961d040c689b14531ec0",
+        "sourceEvidenceFingerprintDigest": "4e96efe0add45d2b78793e37189d1c1afbe6c1d31ca6cb0abd30a69cbe7ef9c2",
         "artifactIdentityCatalogDigest": "5690b78424cfe1ff3b259f28d70e85d3cd0cb226d0e2a1c121fcfbe632b3aa3b",
-        "preRunSnapshotStateSha256": "157d2c271400016333593ed03f29f08a40aec7c0d0f1b26a3dba172be1c26477",
-        "postRunSnapshotStateSha256": "157d2c271400016333593ed03f29f08a40aec7c0d0f1b26a3dba172be1c26477",
-        "preRunCapturedAt": "2026-07-26T01:46:39.618Z",
-        "postRunCapturedAt": "2026-07-26T01:48:58.190Z",
+        "preRunSnapshotStateSha256": "f8d8a15b69ed1e62642ae57f5a2513f6070b97130f25733f05caa0b8051fea83",
+        "postRunSnapshotStateSha256": "f8d8a15b69ed1e62642ae57f5a2513f6070b97130f25733f05caa0b8051fea83",
+        "preRunCapturedAt": "2026-07-26T02:24:19.546Z",
+        "postRunCapturedAt": "2026-07-26T02:26:34.489Z",
         "privatePathRetained": false,
         "isolatedExecutionInputs": {
           "mode": "PRIVATE_CONTENT_VERIFIED_DEPENDENCY_AND_CACHE_COPIES",
@@ -2478,7 +2478,7 @@
           "snapshotInputsUnchanged": true,
           "originalAndSnapshotContentMatched": true,
           "installedDependencyIdentityDigest": "9b7b27581356650dfe0a28e1468f7586f785339f783f6cbe53d5ed4fadeec7a2",
-          "researchCacheIdentityDigest": "8604b6e15da0d7a2be6a7faee349cf461c4156d5cfa654882d6b07e8be317fd9",
+          "researchCacheIdentityDigest": "e4bfbffba4775bc88a067f49a0513c2a8a09493de9e9732d8e517eebc5d04c0b",
           "researchCacheFileCount": 4811,
           "researchCacheSizeBytes": 4796393089,
           "snapshotVitestEntrypointSha256": "39db22f579acf5639bbb17a261408debbde03f4692c0c439e77e7f13aeba74d6",
@@ -2507,7 +2507,7 @@
         "name": "enforces deny-network policy across the real Vitest process tree",
         "manifestPath": "RUN_RECORD_CONTROL",
         "status": "PASSED",
-        "durationMs": 2.396375000000006,
+        "durationMs": 3.76891599999999,
         "observedPaths": [
           "scripts/research/operational-savings/tests/network-sandbox-real.test.mjs"
         ],
@@ -2516,16 +2516,16 @@
         ]
       }
     },
-    "startedAt": "2026-07-26T01:46:44.724Z",
-    "completedAt": "2026-07-26T01:48:57.985Z",
-    "durationMs": 133261,
-    "vitestJsonSha256": "dcb7cc5785bec1565d059e12ee89237e0ea4e9d5110f82f5c0ce524844252c8f",
-    "vitestSuccess": true,
+    "startedAt": "2026-07-26T02:24:24.403Z",
+    "completedAt": "2026-07-26T02:26:33.074Z",
+    "durationMs": 128671,
+    "vitestJsonSha256": "2e40e3043be2bd278aedb68dc4ffe002a8843eaef88a65d3059244bccf317b79",
+    "vitestSuccess": false,
     "declaredTestCount": 103,
     "matchedPassedTestCount": 103,
     "requiredControlCount": 1,
     "matchedPassedControlCount": 1,
-    "unmatchedVitestAssertionCount": 386,
+    "unmatchedVitestAssertionCount": 388,
     "resultCounts": {
       "PASSED": 103,
       "FAILED": 0,
@@ -2543,7 +2543,7 @@
       "name": "rejects changed artifacts and attempted runtime network access",
       "manifestPath": "scripts/research/operational-savings/adapters/comstock/proof.json",
       "status": "PASSED",
-      "durationMs": 7.595166999999947,
+      "durationMs": 6.883707999999842,
       "observedPaths": [
         "scripts/research/operational-savings/tests/comstock-real.test.mjs"
       ],
@@ -2557,7 +2557,7 @@
       "name": "joins real baseline and LED rows, applies release weights, and publishes the ITC-01 output offline",
       "manifestPath": "scripts/research/operational-savings/adapters/comstock/proof.json",
       "status": "PASSED",
-      "durationMs": 2.7900419999998576,
+      "durationMs": 2.558292000000165,
       "observedPaths": [
         "scripts/research/operational-savings/tests/comstock-real.test.mjs"
       ],
@@ -2571,7 +2571,7 @@
       "name": "rejects mixed releases, insufficient populations, duplicates, and ambiguous resolution",
       "manifestPath": "scripts/research/operational-savings/adapters/comstock/proof.json",
       "status": "PASSED",
-      "durationMs": 0.34275000000002365,
+      "durationMs": 0.31425000000012915,
       "observedPaths": [
         "scripts/research/operational-savings/tests/comstock-real.test.mjs"
       ],
@@ -2585,7 +2585,7 @@
       "name": "fails closed on schema drift, missing columns, and incompatible units",
       "manifestPath": "scripts/research/operational-savings/adapters/comstock/proof.json",
       "status": "PASSED",
-      "durationMs": 0.35104200000000674,
+      "durationMs": 0.33337500000016007,
       "observedPaths": [
         "scripts/research/operational-savings/tests/comstock-real.test.mjs"
       ],
@@ -2599,7 +2599,7 @@
       "name": "maps both exact ITC-30 hourly intensity terms",
       "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
       "status": "PASSED",
-      "durationMs": 1.1192499999999654,
+      "durationMs": 1.1293749999999818,
       "observedPaths": [
         "scripts/research/operational-savings/tests/context-argonne-forklift-real.test.mjs"
       ],
@@ -2613,7 +2613,7 @@
       "name": "fails closed for every incompatible class or duty dimension",
       "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
       "status": "PASSED",
-      "durationMs": 0.5439579999999751,
+      "durationMs": 0.5393339999999966,
       "observedPaths": [
         "scripts/research/operational-savings/tests/context-argonne-forklift-real.test.mjs"
       ],
@@ -2627,7 +2627,7 @@
       "name": "resolves one exact dishwasher class and reaches annual racks",
       "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
       "status": "PASSED",
-      "durationMs": 1.3837919999999997,
+      "durationMs": 1.2135409999999922,
       "observedPaths": [
         "scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs"
       ],
@@ -2641,7 +2641,7 @@
       "name": "publishes exact official dishwasher and cooktop benchmark cells",
       "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
       "status": "PASSED",
-      "durationMs": 1.6838329999999928,
+      "durationMs": 1.6147499999999866,
       "observedPaths": [
         "scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs"
       ],
@@ -2655,7 +2655,7 @@
       "name": "fails changed benchmark cells and worksheet shapes",
       "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
       "status": "PASSED",
-      "durationMs": 20.226624999999984,
+      "durationMs": 21.282250000000005,
       "observedPaths": [
         "scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs"
       ],
@@ -2669,7 +2669,7 @@
       "name": "resolves an exact outdoor subsector and reaches ITC-02 existing_kW",
       "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
       "status": "PASSED",
-      "durationMs": 0.7171659999999918,
+      "durationMs": 0.7486250000000041,
       "observedPaths": [
         "scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs"
       ],
@@ -2683,7 +2683,7 @@
       "name": "fails Table 4-29 header, application, and value mutations",
       "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
       "status": "PASSED",
-      "durationMs": 9.076208000000008,
+      "durationMs": 10.162749999999988,
       "observedPaths": [
         "scripts/research/operational-savings/tests/context-benchmarks-real.test.mjs"
       ],
@@ -2697,7 +2697,7 @@
       "name": "publishes both exact ITC-49 formula terms with canonical units and scope",
       "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
       "status": "PASSED",
-      "durationMs": 1.1533750000000964,
+      "durationMs": 1.0707499999998618,
       "observedPaths": [
         "scripts/research/operational-savings/tests/context-doe-walkin-real.test.mjs"
       ],
@@ -2711,7 +2711,7 @@
       "name": "fails closed outside the reviewed row and exact class dimensions",
       "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
       "status": "PASSED",
-      "durationMs": 0.7709580000000642,
+      "durationMs": 0.7916669999999613,
       "observedPaths": [
         "scripts/research/operational-savings/tests/context-doe-walkin-real.test.mjs"
       ],
@@ -2725,7 +2725,7 @@
       "name": "fails source-title, table-row, and fixture-value mutations",
       "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
       "status": "PASSED",
-      "durationMs": 0.414209000000028,
+      "durationMs": 0.42420900000001893,
       "observedPaths": [
         "scripts/research/operational-savings/tests/context-doe-walkin-real.test.mjs"
       ],
@@ -2739,7 +2739,7 @@
       "name": "maps the narrow FEMA calculation to the exact ITC-54 term",
       "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
       "status": "PASSED",
-      "durationMs": 0.7963750000000118,
+      "durationMs": 0.8013339999999971,
       "observedPaths": [
         "scripts/research/operational-savings/tests/context-fema-real.test.mjs"
       ],
@@ -2753,7 +2753,7 @@
       "name": "fails closed outside the diesel full-load boundary",
       "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
       "status": "PASSED",
-      "durationMs": 0.4637079999999969,
+      "durationMs": 0.47374999999999545,
       "observedPaths": [
         "scripts/research/operational-savings/tests/context-fema-real.test.mjs"
       ],
@@ -2767,7 +2767,7 @@
       "name": "fails native-formula and applicability mutations",
       "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
       "status": "PASSED",
-      "durationMs": 0.2530410000000245,
+      "durationMs": 0.28754200000000196,
       "observedPaths": [
         "scripts/research/operational-savings/tests/context-fema-real.test.mjs"
       ],
@@ -2781,7 +2781,7 @@
       "name": "reaches the exact ITC-33 group annual flush term without fixture-count multiplication",
       "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
       "status": "PASSED",
-      "durationMs": 0.9809579999999869,
+      "durationMs": 0.9333340000000021,
       "observedPaths": [
         "scripts/research/operational-savings/tests/context-watersense-flush-real.test.mjs"
       ],
@@ -2795,7 +2795,7 @@
       "name": "fails closed for unproved visitors, subset allocation, and incompatible populations",
       "manifestPath": "scripts/research/operational-savings/adapters/context-benchmarks/proof.json",
       "status": "PASSED",
-      "durationMs": 0.49016699999998536,
+      "durationMs": 0.48900000000003274,
       "observedPaths": [
         "scripts/research/operational-savings/tests/context-watersense-flush-real.test.mjs"
       ],
@@ -2809,7 +2809,7 @@
       "name": "fails unsupported branches and invalid physical inputs",
       "manifestPath": "scripts/research/operational-savings/adapters/dishwasher-water-heating/proof.json",
       "status": "PASSED",
-      "durationMs": 0.25516700000000014,
+      "durationMs": 0.24491600000001768,
       "observedPaths": [
         "scripts/research/operational-savings/tests/dishwasher-water-heating-real.test.mjs"
       ],
@@ -2823,7 +2823,7 @@
       "name": "reproduces the workbook electric building and booster factors",
       "manifestPath": "scripts/research/operational-savings/adapters/dishwasher-water-heating/proof.json",
       "status": "PASSED",
-      "durationMs": 1.2029159999999877,
+      "durationMs": 1.0904170000000022,
       "observedPaths": [
         "scripts/research/operational-savings/tests/dishwasher-water-heating-real.test.mjs"
       ],
@@ -2837,7 +2837,7 @@
       "name": "fails mutations to a required workbook formula or cell",
       "manifestPath": "scripts/research/operational-savings/adapters/dishwasher-water-heating/proof.json",
       "status": "PASSED",
-      "durationMs": 23.043667,
+      "durationMs": 23.494209000000012,
       "observedPaths": [
         "scripts/research/operational-savings/tests/dishwasher-water-heating-real.test.mjs"
       ],
@@ -2851,7 +2851,7 @@
       "name": "verifies the retained official CCMS 403 access boundary",
       "manifestPath": "scripts/research/operational-savings/adapters/doe-ccms/proof.json",
       "status": "PASSED",
-      "durationMs": 3.492625000000004,
+      "durationMs": 3.4819169999999957,
       "observedPaths": [
         "scripts/research/operational-savings/tests/doe-ccms-blocked.test.mjs"
       ],
@@ -2865,7 +2865,7 @@
       "name": "detects native binding or golden-fixture drift",
       "manifestPath": "scripts/research/operational-savings/adapters/doe-measur/proof.json",
       "status": "PASSED",
-      "durationMs": 0.7929169999999885,
+      "durationMs": 0.7823750000000018,
       "observedPaths": [
         "scripts/research/operational-savings/tests/doe-measur-real.test.mjs"
       ],
@@ -2879,7 +2879,7 @@
       "name": "requires offline mode and rejects unsupported or invalid project inputs",
       "manifestPath": "scripts/research/operational-savings/adapters/doe-measur/proof.json",
       "status": "PASSED",
-      "durationMs": 0.6486250000000382,
+      "durationMs": 0.8572079999999005,
       "observedPaths": [
         "scripts/research/operational-savings/tests/doe-measur-real.test.mjs"
       ],
@@ -2893,7 +2893,7 @@
       "name": "detects MEASUR equipment binding and golden-fixture drift",
       "manifestPath": "scripts/research/operational-savings/adapters/doe-measur/proof.json",
       "status": "PASSED",
-      "durationMs": 1.322375000001557,
+      "durationMs": 1.3146659999983967,
       "observedPaths": [
         "scripts/research/operational-savings/tests/doe-measur-real.test.mjs"
       ],
@@ -2907,7 +2907,7 @@
       "name": "rejects incomplete or incompatible MEASUR equipment inputs before native execution",
       "manifestPath": "scripts/research/operational-savings/adapters/doe-measur/proof.json",
       "status": "PASSED",
-      "durationMs": 0.4758750000000873,
+      "durationMs": 0.5489999999990687,
       "observedPaths": [
         "scripts/research/operational-savings/tests/doe-measur-real.test.mjs"
       ],
@@ -2921,7 +2921,7 @@
       "name": "publishes all four native MEASUR equipment calculations with provenance",
       "manifestPath": "scripts/research/operational-savings/adapters/doe-measur/proof.json",
       "status": "PASSED",
-      "durationMs": 19.85883399999875,
+      "durationMs": 19.960583000000042,
       "observedPaths": [
         "scripts/research/operational-savings/tests/doe-measur-real.test.mjs"
       ],
@@ -2935,7 +2935,7 @@
       "name": "publishes native model execution and exact ITC-43 formula inputs to the research database",
       "manifestPath": "scripts/research/operational-savings/adapters/doe-measur/proof.json",
       "status": "PASSED",
-      "durationMs": 25.162041000000045,
+      "durationMs": 21.914582999999993,
       "observedPaths": [
         "scripts/research/operational-savings/tests/doe-measur-real.test.mjs"
       ],
@@ -2949,7 +2949,7 @@
       "name": "maps native MEASUR equipment outputs to the exact ITC-36, ITC-38, ITC-40, and ITC-41 terms",
       "manifestPath": "scripts/research/operational-savings/adapters/doe-measur/proof.json",
       "status": "PASSED",
-      "durationMs": 0.35437499999898137,
+      "durationMs": 0.4535420000011072,
       "observedPaths": [
         "scripts/research/operational-savings/tests/doe-measur-real.test.mjs"
       ],
@@ -2963,7 +2963,7 @@
       "name": "fails closed when current-snapshot requirements remain ambiguous",
       "manifestPath": "scripts/research/operational-savings/adapters/energy-star/proof.json",
       "status": "PASSED",
-      "durationMs": 0.3499999999999943,
+      "durationMs": 0.3258329999999887,
       "observedPaths": [
         "scripts/research/operational-savings/tests/energy-star-real.test.mjs"
       ],
@@ -2977,7 +2977,7 @@
       "name": "maps only genuine rack-machine fields to ITC-52 and records numeric provenance",
       "manifestPath": "scripts/research/operational-savings/adapters/energy-star/proof.json",
       "status": "PASSED",
-      "durationMs": 3.0593749999999886,
+      "durationMs": 1.3108330000000024,
       "observedPaths": [
         "scripts/research/operational-savings/tests/energy-star-real.test.mjs"
       ],
@@ -2991,7 +2991,7 @@
       "name": "resolves unique requirements across the complete current snapshot",
       "manifestPath": "scripts/research/operational-savings/adapters/energy-star/proof.json",
       "status": "PASSED",
-      "durationMs": 0.6789579999999944,
+      "durationMs": 0.5701250000000186,
       "observedPaths": [
         "scripts/research/operational-savings/tests/energy-star-real.test.mjs"
       ],
@@ -3005,7 +3005,7 @@
       "name": "fails schema mutations that remove a required field or pollute a native unit",
       "manifestPath": "scripts/research/operational-savings/adapters/energy-star/proof.json",
       "status": "PASSED",
-      "durationMs": 2.766750000000002,
+      "durationMs": 2.748625000000004,
       "observedPaths": [
         "scripts/research/operational-savings/tests/energy-star-real.test.mjs"
       ],
@@ -3019,7 +3019,7 @@
       "name": "reaches every ITC-22 formula term from the official representative system",
       "manifestPath": "scripts/research/operational-savings/adapters/epa-chp/proof.json",
       "status": "PASSED",
-      "durationMs": 0.42887500000006185,
+      "durationMs": 0.46879200000000765,
       "observedPaths": [
         "scripts/research/operational-savings/tests/epa-chp-real.test.mjs"
       ],
@@ -3033,7 +3033,7 @@
       "name": "fails closed when the biomass table loses native evidence",
       "manifestPath": "scripts/research/operational-savings/adapters/epa-chp/proof.json",
       "status": "PASSED",
-      "durationMs": 0.10445900000001984,
+      "durationMs": 0.11183299999993324,
       "observedPaths": [
         "scripts/research/operational-savings/tests/epa-chp-real.test.mjs"
       ],
@@ -3047,7 +3047,7 @@
       "name": "publishes ITC-22 values with biomass-artifact provenance",
       "manifestPath": "scripts/research/operational-savings/adapters/epa-chp/proof.json",
       "status": "PASSED",
-      "durationMs": 0.7872079999999642,
+      "durationMs": 0.7470410000000811,
       "observedPaths": [
         "scripts/research/operational-savings/tests/epa-chp-real.test.mjs"
       ],
@@ -3061,7 +3061,7 @@
       "name": "maps an exact fuel-cell table row to every ITC-20 formula term",
       "manifestPath": "scripts/research/operational-savings/adapters/epa-chp/proof.json",
       "status": "PASSED",
-      "durationMs": 0.127791000000002,
+      "durationMs": 0.13174999999989723,
       "observedPaths": [
         "scripts/research/operational-savings/tests/epa-chp-real.test.mjs"
       ],
@@ -3075,7 +3075,7 @@
       "name": "reaches every ITC-21 formula term from one exact real system",
       "manifestPath": "scripts/research/operational-savings/adapters/epa-chp/proof.json",
       "status": "PASSED",
-      "durationMs": 0.2831670000000486,
+      "durationMs": 0.3010830000000624,
       "observedPaths": [
         "scripts/research/operational-savings/tests/epa-chp-real.test.mjs"
       ],
@@ -3089,7 +3089,7 @@
       "name": "maps the same exact real system to the ITC-26 microgrid balance",
       "manifestPath": "scripts/research/operational-savings/adapters/epa-chp/proof.json",
       "status": "PASSED",
-      "durationMs": 0.13529200000004948,
+      "durationMs": 0.14020899999991343,
       "observedPaths": [
         "scripts/research/operational-savings/tests/epa-chp-real.test.mjs"
       ],
@@ -3103,7 +3103,7 @@
       "name": "requires the offline guard",
       "manifestPath": "scripts/research/operational-savings/adapters/epa-chp/proof.json",
       "status": "PASSED",
-      "durationMs": 0.05962499999998272,
+      "durationMs": 0.06595900000002075,
       "observedPaths": [
         "scripts/research/operational-savings/tests/epa-chp-real.test.mjs"
       ],
@@ -3117,7 +3117,7 @@
       "name": "publishes an exact real CHP output set and provenance",
       "manifestPath": "scripts/research/operational-savings/adapters/epa-chp/proof.json",
       "status": "PASSED",
-      "durationMs": 0.4765829999998914,
+      "durationMs": 0.46279200000003584,
       "observedPaths": [
         "scripts/research/operational-savings/tests/epa-chp-real.test.mjs"
       ],
@@ -3131,7 +3131,7 @@
       "name": "fails closed when an actual required table row is missing",
       "manifestPath": "scripts/research/operational-savings/adapters/epa-chp/proof.json",
       "status": "PASSED",
-      "durationMs": 0.21300000000007913,
+      "durationMs": 0.21641600000009475,
       "observedPaths": [
         "scripts/research/operational-savings/tests/epa-chp-real.test.mjs"
       ],
@@ -3145,7 +3145,7 @@
       "name": "fails a corrupt artifact checksum",
       "manifestPath": "scripts/research/operational-savings/adapters/femp-lighting/proof.json",
       "status": "PASSED",
-      "durationMs": 1.0015840000000082,
+      "durationMs": 0.7817499999999882,
       "observedPaths": [
         "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs"
       ],
@@ -3159,7 +3159,7 @@
       "name": "requires offline mode and makes no runtime network call",
       "manifestPath": "scripts/research/operational-savings/adapters/femp-lighting/proof.json",
       "status": "PASSED",
-      "durationMs": 0.2250829999999837,
+      "durationMs": 0.2050830000000019,
       "observedPaths": [
         "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs"
       ],
@@ -3173,7 +3173,7 @@
       "name": "maps an exact application and supplied lumen requirement to the ITC-02 power ceiling",
       "manifestPath": "scripts/research/operational-savings/adapters/femp-lighting/proof.json",
       "status": "PASSED",
-      "durationMs": 0.9935409999999933,
+      "durationMs": 1.1417079999999942,
       "observedPaths": [
         "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs"
       ],
@@ -3187,7 +3187,7 @@
       "name": "fails closed on unknown applications and invalid required light output",
       "manifestPath": "scripts/research/operational-savings/adapters/femp-lighting/proof.json",
       "status": "PASSED",
-      "durationMs": 6.933750000000003,
+      "durationMs": 7.077374999999989,
       "observedPaths": [
         "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs"
       ],
@@ -3201,7 +3201,7 @@
       "name": "fails header, threshold-unit, and duplicate-application schema mutations",
       "manifestPath": "scripts/research/operational-savings/adapters/femp-lighting/proof.json",
       "status": "PASSED",
-      "durationMs": 1.0058329999999955,
+      "durationMs": 1.0316669999999988,
       "observedPaths": [
         "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs"
       ],
@@ -3215,7 +3215,7 @@
       "name": "parses and publishes the exact seven-row FEMP Table 1 with its pinned checksum",
       "manifestPath": "scripts/research/operational-savings/adapters/femp-lighting/proof.json",
       "status": "PASSED",
-      "durationMs": 1.3855419999999867,
+      "durationMs": 1.3576249999999845,
       "observedPaths": [
         "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs"
       ],
@@ -3229,7 +3229,7 @@
       "name": "rejects exact-product resolution because the FEMP page has no products",
       "manifestPath": "scripts/research/operational-savings/adapters/femp-lighting/proof.json",
       "status": "PASSED",
-      "durationMs": 0.1337919999999997,
+      "durationMs": 0.12562500000001364,
       "observedPaths": [
         "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs"
       ],
@@ -3243,7 +3243,7 @@
       "name": "fails closed on incompatible exact pairs",
       "manifestPath": "scripts/research/operational-savings/adapters/fueleconomy/proof.json",
       "status": "PASSED",
-      "durationMs": 0.18816700000024866,
+      "durationMs": 0.17366600000013932,
       "observedPaths": [
         "scripts/research/operational-savings/tests/fueleconomy-real.test.mjs"
       ],
@@ -3257,7 +3257,7 @@
       "name": "maps an exact electric vehicle to ITC-28 intensity and publishes provenance",
       "manifestPath": "scripts/research/operational-savings/adapters/fueleconomy/proof.json",
       "status": "PASSED",
-      "durationMs": 0.5533329999998386,
+      "durationMs": 0.5971250000002328,
       "observedPaths": [
         "scripts/research/operational-savings/tests/fueleconomy-real.test.mjs"
       ],
@@ -3271,7 +3271,7 @@
       "name": "fails closed on a missing source column",
       "manifestPath": "scripts/research/operational-savings/adapters/fueleconomy/proof.json",
       "status": "PASSED",
-      "durationMs": 0.41108399999984613,
+      "durationMs": 0.34466699999984485,
       "observedPaths": [
         "scripts/research/operational-savings/tests/fueleconomy-real.test.mjs"
       ],
@@ -3285,7 +3285,7 @@
       "name": "requires the runtime network guard",
       "manifestPath": "scripts/research/operational-savings/adapters/fueleconomy/proof.json",
       "status": "PASSED",
-      "durationMs": 0.09729199999992488,
+      "durationMs": 0.09999999999990905,
       "observedPaths": [
         "scripts/research/operational-savings/tests/fueleconomy-real.test.mjs"
       ],
@@ -3299,7 +3299,7 @@
       "name": "reaches both exact ITC-29 formula terms offline and publishes provenance",
       "manifestPath": "scripts/research/operational-savings/adapters/fueleconomy/proof.json",
       "status": "PASSED",
-      "durationMs": 1.0715420000001359,
+      "durationMs": 1.4845000000000255,
       "observedPaths": [
         "scripts/research/operational-savings/tests/fueleconomy-real.test.mjs"
       ],
@@ -3313,7 +3313,7 @@
       "name": "returns the exact tariff_input_set formula term offline",
       "manifestPath": "scripts/research/operational-savings/adapters/interval-tariff/proof.json",
       "status": "PASSED",
-      "durationMs": 0.5808750000014697,
+      "durationMs": 0.4983749999992142,
       "observedPaths": [
         "scripts/research/operational-savings/tests/interval-tariff-real.test.mjs"
       ],
@@ -3327,7 +3327,7 @@
       "name": "fails closed when a required tariff term or schedule is mutated",
       "manifestPath": "scripts/research/operational-savings/adapters/interval-tariff/proof.json",
       "status": "PASSED",
-      "durationMs": 0.27525000000059663,
+      "durationMs": 0.31691700000010314,
       "observedPaths": [
         "scripts/research/operational-savings/tests/interval-tariff-real.test.mjs"
       ],
@@ -3341,7 +3341,7 @@
       "name": "composes real benchmark, requirement, and schedule outputs into annual_kWh",
       "manifestPath": "scripts/research/operational-savings/adapters/femp-lighting/proof.json",
       "status": "PASSED",
-      "durationMs": 31.654832999999996,
+      "durationMs": 31.408499999999975,
       "observedPaths": [
         "scripts/research/operational-savings/tests/femp-lighting-real.test.mjs"
       ],
@@ -3355,7 +3355,7 @@
       "name": "runs a full-year daylight-control model with the USNO-validated solar boundary",
       "manifestPath": "scripts/research/operational-savings/adapters/operating-schedule/proof.json",
       "status": "PASSED",
-      "durationMs": 1.0487090000000308,
+      "durationMs": 0.9784170000000358,
       "observedPaths": [
         "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs"
       ],
@@ -3369,7 +3369,7 @@
       "name": "records USNO only as daylight astronomy validation evidence",
       "manifestPath": "scripts/research/operational-savings/adapters/operating-schedule/proof.json",
       "status": "PASSED",
-      "durationMs": 0.9690830000000119,
+      "durationMs": 0.9128339999999753,
       "observedPaths": [
         "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs"
       ],
@@ -3383,7 +3383,7 @@
       "name": "executes the separate ITC-02 fixed-schedule branch from project inputs",
       "manifestPath": "scripts/research/operational-savings/adapters/operating-schedule/proof.json",
       "status": "PASSED",
-      "durationMs": 7.354792000000003,
+      "durationMs": 7.330708999999985,
       "observedPaths": [
         "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs"
       ],
@@ -3397,7 +3397,7 @@
       "name": "maps an explicit schedule reduction to avoided recirculation hours",
       "manifestPath": "scripts/research/operational-savings/adapters/operating-schedule/proof.json",
       "status": "PASSED",
-      "durationMs": 27.560584000000006,
+      "durationMs": 27.148915999999986,
       "observedPaths": [
         "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs"
       ],
@@ -3411,7 +3411,7 @@
       "name": "maps the ITC-12 project schedule fixture without USNO value attribution",
       "manifestPath": "scripts/research/operational-savings/adapters/operating-schedule/proof.json",
       "status": "PASSED",
-      "durationMs": 7.173917000000017,
+      "durationMs": 7.230290999999994,
       "observedPaths": [
         "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs"
       ],
@@ -3425,7 +3425,7 @@
       "name": "publishes exact schedule formula values and provenance to the research database",
       "manifestPath": "scripts/research/operational-savings/adapters/operating-schedule/proof.json",
       "status": "PASSED",
-      "durationMs": 7.150832999999977,
+      "durationMs": 7.14308299999999,
       "observedPaths": [
         "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs"
       ],
@@ -3439,7 +3439,7 @@
       "name": "pins the project-owned schedule fixture separately from USNO evidence",
       "manifestPath": "scripts/research/operational-savings/adapters/operating-schedule/proof.json",
       "status": "PASSED",
-      "durationMs": 0.3442919999999958,
+      "durationMs": 0.3027500000000032,
       "observedPaths": [
         "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs"
       ],
@@ -3453,7 +3453,7 @@
       "name": "matches the official USNO sunrise and sunset within two minutes",
       "manifestPath": "scripts/research/operational-savings/adapters/operating-schedule/proof.json",
       "status": "PASSED",
-      "durationMs": 28.487083000000013,
+      "durationMs": 24.821249999999992,
       "observedPaths": [
         "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs"
       ],
@@ -3467,7 +3467,7 @@
       "name": "fails closed when the pinned USNO artifact checksum changes",
       "manifestPath": "scripts/research/operational-savings/adapters/operating-schedule/proof.json",
       "status": "PASSED",
-      "durationMs": 0.49399999999997135,
+      "durationMs": 0.4779169999999908,
       "observedPaths": [
         "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs"
       ],
@@ -3481,7 +3481,7 @@
       "name": "fails closed when the USNO schema loses a required phenomenon",
       "manifestPath": "scripts/research/operational-savings/adapters/operating-schedule/proof.json",
       "status": "PASSED",
-      "durationMs": 9.057332999999971,
+      "durationMs": 8.149958000000026,
       "observedPaths": [
         "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs"
       ],
@@ -3495,7 +3495,7 @@
       "name": "pins and publishes the official USNO GeoJSON schema",
       "manifestPath": "scripts/research/operational-savings/adapters/operating-schedule/proof.json",
       "status": "PASSED",
-      "durationMs": 1.2260420000000067,
+      "durationMs": 1.1774580000000014,
       "observedPaths": [
         "scripts/research/operational-savings/tests/operating-schedule-real.test.mjs"
       ],
@@ -3509,7 +3509,7 @@
       "name": "STD-PVWATTS-V8 rejects mixed model identity and offline publication violations",
       "manifestPath": "scripts/research/operational-savings/adapters/pvwatts/process-proof.json",
       "status": "PASSED",
-      "durationMs": 0.7684999999999889,
+      "durationMs": 0.7604169999999897,
       "observedPaths": [
         "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs"
       ],
@@ -3523,7 +3523,7 @@
       "name": "STD-PVWATTS-V8 publishes its pinned model identity, calculation, provenance, and exact formula selection",
       "manifestPath": "scripts/research/operational-savings/adapters/pvwatts/process-proof.json",
       "status": "PASSED",
-      "durationMs": 1.299874999999986,
+      "durationMs": 1.1940409999999986,
       "observedPaths": [
         "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs"
       ],
@@ -3537,7 +3537,7 @@
       "name": "STD-PVWATTS-V8 executes a real pinned local SSC model deterministically",
       "manifestPath": "scripts/research/operational-savings/adapters/pvwatts/process-proof.json",
       "status": "PASSED",
-      "durationMs": 969.4374170000001,
+      "durationMs": 931.0521249999999,
       "observedPaths": [
         "scripts/research/operational-savings/tests/ssc-models.test.mjs"
       ],
@@ -3551,7 +3551,7 @@
       "name": "STD-PVWATTS-V8 rejects a caller model-version mismatch",
       "manifestPath": "scripts/research/operational-savings/adapters/pvwatts/process-proof.json",
       "status": "PASSED",
-      "durationMs": 160.34116600000016,
+      "durationMs": 159.29454199999964,
       "observedPaths": [
         "scripts/research/operational-savings/tests/ssc-models.test.mjs"
       ],
@@ -3565,7 +3565,7 @@
       "name": "fails closed instead of rewriting immutable artifact or calculation identities",
       "manifestPath": "scripts/research/operational-savings/adapters/reopt/proof.json",
       "status": "PASSED",
-      "durationMs": 176.573959,
+      "durationMs": 190.23954199999997,
       "observedPaths": [
         "scripts/research/operational-savings/tests/reopt-source-real.test.mjs"
       ],
@@ -3579,7 +3579,7 @@
       "name": "requires offline mode and never calls fetch",
       "manifestPath": "scripts/research/operational-savings/adapters/reopt/proof.json",
       "status": "PASSED",
-      "durationMs": 10.000500000000017,
+      "durationMs": 12.343874999999997,
       "observedPaths": [
         "scripts/research/operational-savings/tests/reopt-source-real.test.mjs"
       ],
@@ -3593,7 +3593,7 @@
       "name": "publishes exact offline official, baseline, and proposed runs",
       "manifestPath": "scripts/research/operational-savings/adapters/reopt/proof.json",
       "status": "PASSED",
-      "durationMs": 0.38316599999998857,
+      "durationMs": 0.4286250000000109,
       "observedPaths": [
         "scripts/research/operational-savings/tests/reopt-source-real.test.mjs"
       ],
@@ -3607,7 +3607,7 @@
       "name": "rejects mutated run evidence before database publication",
       "manifestPath": "scripts/research/operational-savings/adapters/reopt/proof.json",
       "status": "PASSED",
-      "durationMs": 15.534875,
+      "durationMs": 15.530165999999952,
       "observedPaths": [
         "scripts/research/operational-savings/tests/reopt-source-real.test.mjs"
       ],
@@ -3621,7 +3621,7 @@
       "name": "fails closed outside the exact solar-plus-storage input boundaries",
       "manifestPath": "scripts/research/operational-savings/adapters/reopt/proof.json",
       "status": "PASSED",
-      "durationMs": 2.3278329999999983,
+      "durationMs": 2.7586670000000026,
       "observedPaths": [
         "scripts/research/operational-savings/tests/reopt-source-real.test.mjs"
       ],
@@ -3635,7 +3635,7 @@
       "name": "publishes the exact solar-plus-storage bill pair and provenance",
       "manifestPath": "scripts/research/operational-savings/adapters/reopt/proof.json",
       "status": "PASSED",
-      "durationMs": 0.27149999999997476,
+      "durationMs": 0.2925419999999974,
       "observedPaths": [
         "scripts/research/operational-savings/tests/reopt-source-real.test.mjs"
       ],
@@ -3649,7 +3649,7 @@
       "name": "fails missing structs, missing result keys, and changed package identity",
       "manifestPath": "scripts/research/operational-savings/adapters/reopt/proof.json",
       "status": "PASSED",
-      "durationMs": 1.0932090000000017,
+      "durationMs": 1.2882089999999948,
       "observedPaths": [
         "scripts/research/operational-savings/tests/reopt-source-real.test.mjs"
       ],
@@ -3663,7 +3663,7 @@
       "name": "STD-SAM-SOLAR-THERMAL rejects mixed model identity and offline publication violations",
       "manifestPath": "scripts/research/operational-savings/adapters/sam-solar-thermal/process-proof.json",
       "status": "PASSED",
-      "durationMs": 0.29716700000000174,
+      "durationMs": 0.29966699999999946,
       "observedPaths": [
         "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs"
       ],
@@ -3677,7 +3677,7 @@
       "name": "STD-SAM-SOLAR-THERMAL publishes its pinned model identity, calculation, provenance, and exact formula selection",
       "manifestPath": "scripts/research/operational-savings/adapters/sam-solar-thermal/process-proof.json",
       "status": "PASSED",
-      "durationMs": 0.2787500000000023,
+      "durationMs": 0.25329199999998764,
       "observedPaths": [
         "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs"
       ],
@@ -3691,7 +3691,7 @@
       "name": "STD-SAM-SOLAR-THERMAL executes a real pinned local SSC model deterministically",
       "manifestPath": "scripts/research/operational-savings/adapters/sam-solar-thermal/process-proof.json",
       "status": "PASSED",
-      "durationMs": 562.633875,
+      "durationMs": 553.386416,
       "observedPaths": [
         "scripts/research/operational-savings/tests/ssc-models.test.mjs"
       ],
@@ -3705,7 +3705,7 @@
       "name": "STD-SAM-SOLAR-THERMAL rejects a caller model-version mismatch",
       "manifestPath": "scripts/research/operational-savings/adapters/sam-solar-thermal/process-proof.json",
       "status": "PASSED",
-      "durationMs": 161.04575000000023,
+      "durationMs": 162.04866700000002,
       "observedPaths": [
         "scripts/research/operational-savings/tests/ssc-models.test.mjs"
       ],
@@ -3719,7 +3719,7 @@
       "name": "rejects incompatible markets, unsupported units, and missing schema fields",
       "manifestPath": "scripts/research/operational-savings/adapters/scout/proof.json",
       "status": "PASSED",
-      "durationMs": 9.496834000000007,
+      "durationMs": 9.852417000000003,
       "observedPaths": [
         "scripts/research/operational-savings/tests/scout-real.test.mjs"
       ],
@@ -3733,7 +3733,7 @@
       "name": "requires offline mode and an independently reviewed crosswalk",
       "manifestPath": "scripts/research/operational-savings/adapters/scout/proof.json",
       "status": "PASSED",
-      "durationMs": 0.35958299999998644,
+      "durationMs": 0.3579160000000172,
       "observedPaths": [
         "scripts/research/operational-savings/tests/scout-real.test.mjs"
       ],
@@ -3747,7 +3747,7 @@
       "name": "proves the pinned source inventory cannot supply ITC-05 or ITC-11",
       "manifestPath": "scripts/research/operational-savings/adapters/scout/proof.json",
       "status": "PASSED",
-      "durationMs": 15.090167000000008,
+      "durationMs": 13.234375,
       "observedPaths": [
         "scripts/research/operational-savings/tests/scout-real.test.mjs"
       ],
@@ -3761,7 +3761,7 @@
       "name": "rejects mixed commits, altered outputs, and prepared-value mutations",
       "manifestPath": "scripts/research/operational-savings/adapters/scout/proof.json",
       "status": "PASSED",
-      "durationMs": 13.30129199999999,
+      "durationMs": 13.676749999999998,
       "observedPaths": [
         "scripts/research/operational-savings/tests/scout-real.test.mjs"
       ],
@@ -3775,7 +3775,7 @@
       "name": "maps only an exact prepared Scout market to the ITC-14 formula term",
       "manifestPath": "scripts/research/operational-savings/adapters/scout/proof.json",
       "status": "PASSED",
-      "durationMs": 1.0960420000000113,
+      "durationMs": 1.024583000000007,
       "observedPaths": [
         "scripts/research/operational-savings/tests/scout-real.test.mjs"
       ],
@@ -3789,7 +3789,7 @@
       "name": "retains cooling-tower measurements and the absent numeric equation as blockers",
       "manifestPath": "scripts/research/operational-savings/adapters/watersense-ci/proof.json",
       "status": "PASSED",
-      "durationMs": 0.15016700000001038,
+      "durationMs": 0.14687499999999432,
       "observedPaths": [
         "scripts/research/operational-savings/tests/watersense-ci-real.test.mjs"
       ],
@@ -3803,7 +3803,7 @@
       "name": "fails closed on a mutated native unit contract",
       "manifestPath": "scripts/research/operational-savings/adapters/watersense-ci/proof.json",
       "status": "PASSED",
-      "durationMs": 0.5115000000000123,
+      "durationMs": 0.4935000000000116,
       "observedPaths": [
         "scripts/research/operational-savings/tests/watersense-ci-real.test.mjs"
       ],
@@ -3817,7 +3817,7 @@
       "name": "requires the offline runtime guard",
       "manifestPath": "scripts/research/operational-savings/adapters/watersense-ci/proof.json",
       "status": "PASSED",
-      "durationMs": 0.11166699999998286,
+      "durationMs": 0.11012500000001069,
       "observedPaths": [
         "scripts/research/operational-savings/tests/watersense-ci-real.test.mjs"
       ],
@@ -3831,7 +3831,7 @@
       "name": "executes the measured flow-duration method and reaches both ITC-35 terms",
       "manifestPath": "scripts/research/operational-savings/adapters/watersense-ci/proof.json",
       "status": "PASSED",
-      "durationMs": 1.242541000000017,
+      "durationMs": 1.0444999999999993,
       "observedPaths": [
         "scripts/research/operational-savings/tests/watersense-ci-real.test.mjs"
       ],
@@ -3845,7 +3845,7 @@
       "name": "pins the repository operator-import contract but not a product schema",
       "manifestPath": "scripts/research/operational-savings/adapters/watersense-fixtures/proof.json",
       "status": "PASSED",
-      "durationMs": 1.2204169999999976,
+      "durationMs": 1.403583999999995,
       "observedPaths": [
         "scripts/research/operational-savings/tests/watersense-fixtures-operator.test.mjs"
       ],
@@ -3859,7 +3859,7 @@
       "name": "rejects secret-derived or guessed acquisition paths",
       "manifestPath": "scripts/research/operational-savings/adapters/watersense-fixtures/proof.json",
       "status": "PASSED",
-      "durationMs": 0.593041999999997,
+      "durationMs": 0.5768750000000011,
       "observedPaths": [
         "scripts/research/operational-savings/tests/watersense-fixtures-operator.test.mjs"
       ],
@@ -3873,7 +3873,7 @@
       "name": "rejects incomplete mappings and unsupported unit claims",
       "manifestPath": "scripts/research/operational-savings/adapters/watersense-fixtures/proof.json",
       "status": "PASSED",
-      "durationMs": 0.14770899999999187,
+      "durationMs": 0.14916600000000813,
       "observedPaths": [
         "scripts/research/operational-savings/tests/watersense-fixtures-operator.test.mjs"
       ],
@@ -3887,7 +3887,7 @@
       "name": "fails closed when an observed native header drifts",
       "manifestPath": "scripts/research/operational-savings/adapters/watersense-landscape/proof.json",
       "status": "PASSED",
-      "durationMs": 0.5191249999998035,
+      "durationMs": 0.5529160000005504,
       "observedPaths": [
         "scripts/research/operational-savings/tests/watersense-landscape-real.test.mjs"
       ],
@@ -3901,7 +3901,7 @@
       "name": "rejects missing Version 2.0 inputs and incompatible project units",
       "manifestPath": "scripts/research/operational-savings/adapters/watersense-landscape/proof.json",
       "status": "PASSED",
-      "durationMs": 0.2872079999997368,
+      "durationMs": 0.30495799999971496,
       "observedPaths": [
         "scripts/research/operational-savings/tests/watersense-landscape-real.test.mjs"
       ],
@@ -3915,7 +3915,7 @@
       "name": "executes the exact reviewed Version 2.0 method and reaches both ITC-34 terms",
       "manifestPath": "scripts/research/operational-savings/adapters/watersense-landscape/proof.json",
       "status": "PASSED",
-      "durationMs": 5.9757089999993696,
+      "durationMs": 5.974124999999731,
       "observedPaths": [
         "scripts/research/operational-savings/tests/watersense-landscape-real.test.mjs"
       ],
@@ -3929,7 +3929,7 @@
       "name": "STD-WIND-SAM rejects mixed model identity and offline publication violations",
       "manifestPath": "scripts/research/operational-savings/adapters/wind-sam/process-proof.json",
       "status": "PASSED",
-      "durationMs": 0.2985000000000184,
+      "durationMs": 0.2922499999999957,
       "observedPaths": [
         "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs"
       ],
@@ -3943,7 +3943,7 @@
       "name": "STD-WIND-SAM publishes its pinned model identity, calculation, provenance, and exact formula selection",
       "manifestPath": "scripts/research/operational-savings/adapters/wind-sam/process-proof.json",
       "status": "PASSED",
-      "durationMs": 0.22816700000001333,
+      "durationMs": 0.22175000000001432,
       "observedPaths": [
         "scripts/research/operational-savings/tests/ssc-database-publication.test.mjs"
       ],
@@ -3957,7 +3957,7 @@
       "name": "STD-WIND-SAM executes a real pinned local SSC model deterministically",
       "manifestPath": "scripts/research/operational-savings/adapters/wind-sam/process-proof.json",
       "status": "PASSED",
-      "durationMs": 507.55425000000014,
+      "durationMs": 505.7379159999998,
       "observedPaths": [
         "scripts/research/operational-savings/tests/ssc-models.test.mjs"
       ],
@@ -3971,7 +3971,7 @@
       "name": "STD-WIND-SAM rejects a caller model-version mismatch",
       "manifestPath": "scripts/research/operational-savings/adapters/wind-sam/process-proof.json",
       "status": "PASSED",
-      "durationMs": 159.42933300000004,
+      "durationMs": 161.14699999999993,
       "observedPaths": [
         "scripts/research/operational-savings/tests/ssc-models.test.mjs"
       ],
@@ -3980,7 +3980,7 @@
       ]
     }
   ],
-  "runId": "local-content-18a2defd4e787c0ea55ecb8e29d71e0a7d39e6ba2ad6078f6bc1d43da373f7ce",
-  "recordedAt": "2026-07-26T01:49:05.448Z",
-  "recordContentSha256": "c291523b38b16a4e1d6d758afc2891f6791a9095a9cc56f673a7871e01078509"
+  "runId": "local-content-56fdd0bc94db294c60346c1595a455c35bb0ed048811cfb6fcae96e646f5b9ec",
+  "recordedAt": "2026-07-26T02:26:44.730Z",
+  "recordContentSha256": "2dda02d57696e3383718b94a1c3113d15a820870790b69203f89b5a22bb309d7"
 }
