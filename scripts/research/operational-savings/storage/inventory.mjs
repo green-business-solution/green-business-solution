@@ -4732,7 +4732,7 @@ function totalPackageCoverage(packages) {
   );
 }
 
-async function committedVerifiedDeletedAuditPaths({
+export async function committedVerifiedDeletedAuditPaths({
   repoRoot,
   audit
 }) {
@@ -4781,32 +4781,47 @@ async function committedVerifiedDeletedAuditPaths({
   }
   const records = new Map(
     audit.artifactGroups.flatMap((group) => [
-      ...(group.childFiles ?? []).map((record) => [
-        record.originalPath,
-        {
-          groupId: group.groupId,
-          recordKind: "EXACT_FILE",
-          disposition:
-            record.disposition ?? group.disposition,
-          byteSize: record.byteSize,
-          sha256: record.sha256
-        }
-      ]),
-      ...(group.directoryEntries ?? []).map((record) => [
-        record.originalPath,
-        {
-          groupId: group.groupId,
-          recordKind: "DIRECTORY_AGGREGATE",
-          disposition:
-            record.disposition ?? group.disposition,
-          fileCount: record.fileCount,
-          symlinkCount: record.symlinkCount,
-          logicalBytes: record.logicalBytes,
-          treeDigestSchemaVersion:
-            record.treeDigestSchemaVersion,
-          fullTreeSha256: record.fullTreeSha256
-        }
-      ])
+      ...(group.childFiles ?? []).map((record) => {
+        const inherited = inheritedAuditRecord(
+          group,
+          record
+        );
+        return [
+          inherited.originalPath,
+          {
+            groupId: inherited.groupId,
+            recordKind: "EXACT_FILE",
+            disposition: inherited.disposition,
+            byteSize: inherited.byteSize,
+            sha256: inherited.sha256,
+            canonicalCachePath:
+              inherited.canonicalCachePath,
+            canonicalPackageLinkage:
+              inherited.canonicalPackageLinkage
+          }
+        ];
+      }),
+      ...(group.directoryEntries ?? []).map((record) => {
+        const inherited = inheritedAuditRecord(
+          group,
+          record
+        );
+        return [
+          inherited.originalPath,
+          {
+            groupId: inherited.groupId,
+            recordKind: "DIRECTORY_AGGREGATE",
+            disposition: inherited.disposition,
+            fileCount: inherited.fileCount,
+            symlinkCount: inherited.symlinkCount,
+            logicalBytes: inherited.logicalBytes,
+            treeDigestSchemaVersion:
+              inherited.treeDigestSchemaVersion,
+            fullTreeSha256:
+              inherited.fullTreeSha256
+          }
+        ];
+      })
     ])
   );
   const verifiedPaths = [];
@@ -4860,6 +4875,120 @@ async function committedVerifiedDeletedAuditPaths({
     }
     seen.add(result.originalPath);
     verifiedPaths.push(result.originalPath);
+  }
+  const originalArtifacts =
+    manifest.originalLocalArtifacts ?? [];
+  const packages = manifest.packages ?? [];
+  const batchResults =
+    manifest.execution?.lastBatchLocalDeletion?.results ??
+    [];
+  if (
+    !Array.isArray(originalArtifacts) ||
+    !Array.isArray(packages) ||
+    !Array.isArray(batchResults)
+  ) {
+    return [];
+  }
+  const uniqueMap = (values, key) => {
+    const output = new Map();
+    for (const value of values) {
+      const identity = value?.[key];
+      if (
+        typeof identity !== "string" ||
+        !identity ||
+        output.has(identity)
+      ) {
+        return null;
+      }
+      output.set(identity, value);
+    }
+    return output;
+  };
+  const originalByPath = uniqueMap(
+    originalArtifacts,
+    "path"
+  );
+  const packageById = uniqueMap(packages, "packageId");
+  const batchByPackageId = uniqueMap(
+    batchResults,
+    "packageId"
+  );
+  if (
+    !originalByPath ||
+    !packageById ||
+    !batchByPackageId
+  ) {
+    return [];
+  }
+  for (const [path, record] of records) {
+    if (record.disposition !== "MIGRATE_UNIQUE") {
+      continue;
+    }
+    const original = originalByPath.get(path);
+    const packageRecord = packageById.get(
+      record.canonicalPackageLinkage
+    );
+    const packageOriginal =
+      packageRecord?.originalLocalArtifacts?.find(
+        (candidate) => candidate.path === path
+      );
+    const batchResult = batchByPackageId.get(
+      packageRecord?.packageId
+    );
+    const remote = packageRecord?.remote?.s3;
+    const planned = packageRecord?.plannedObject;
+    if (
+      record.recordKind !== "EXACT_FILE" ||
+      typeof record.canonicalCachePath !== "string" ||
+      !record.canonicalCachePath ||
+      typeof record.canonicalPackageLinkage !==
+        "string" ||
+      !original ||
+      original.canonicalPackageId !==
+        record.canonicalPackageLinkage ||
+      original.canonicalLocalPath !==
+        record.canonicalCachePath ||
+      original.expectedSizeBytes !== record.byteSize ||
+      original.expectedSha256 !== record.sha256 ||
+      original.cleanupStatus !==
+        PACKAGE_LOCAL_DELETED_STATUS ||
+      typeof original.deletedAt !== "string" ||
+      !Number.isFinite(Date.parse(original.deletedAt)) ||
+      !packageRecord ||
+      packageRecord.localPath !==
+        record.canonicalCachePath ||
+      packageRecord.fingerprint?.digest !==
+        record.sha256 ||
+      planned?.expectedSizeBytes !== record.byteSize ||
+      planned?.expectedSha256 !== record.sha256 ||
+      remote?.verificationStatus !== "VERIFIED" ||
+      typeof remote.versionId !== "string" ||
+      !remote.versionId ||
+      remote.contentLength !== record.byteSize ||
+      remote.metadataSha256 !== record.sha256 ||
+      !packageOriginal ||
+      packageOriginal.expectedSizeBytes !==
+        record.byteSize ||
+      packageOriginal.expectedSha256 !== record.sha256 ||
+      packageOriginal.cleanupStatus !==
+        PACKAGE_LOCAL_DELETED_STATUS ||
+      typeof packageOriginal.deletedAt !== "string" ||
+      !Number.isFinite(
+        Date.parse(packageOriginal.deletedAt)
+      ) ||
+      batchResult?.disposition !==
+        PACKAGE_LOCAL_DELETED_STATUS ||
+      batchResult.remoteVersionId !== remote.versionId ||
+      !Array.isArray(batchResult.localPaths) ||
+      !batchResult.localPaths.includes(path) ||
+      typeof batchResult.deletedAt !== "string" ||
+      !Number.isFinite(Date.parse(batchResult.deletedAt)) ||
+      seen.has(path)
+    ) {
+      return [];
+    }
+    seen.add(path);
+    verifiedPaths.push(path);
   }
   return verifiedPaths.sort();
 }

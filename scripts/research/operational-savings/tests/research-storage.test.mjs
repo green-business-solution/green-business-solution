@@ -52,6 +52,7 @@ import {
   buildResearchStorageReport,
   buildResearchStorageInventory,
   canonicalInventoryContentSha256,
+  committedVerifiedDeletedAuditPaths,
   declaredWheelLicenseMembers,
   gitRepositoryIdentity,
   readArchiveMember,
@@ -1807,6 +1808,194 @@ test("canonical inventory freshness detects content-set changes while ignoring m
       assertCanonicalInventoryIdentity(manifest)
     ).toThrow(/CANONICAL_INVENTORY_IDENTITY_MISMATCH/);
   });
+});
+
+test("committed cleanup evidence covers exact migrated original paths only with a matching S3 package receipt", async () => {
+  const root = await mkdtemp(
+    join(tmpdir(), "retrofi-package-origin-cleanup-")
+  );
+  try {
+    const originalPath =
+      "/private/tmp/retrofi-package-origin.json";
+    const packageId =
+      "cache-file:artifacts/package-origin.json";
+    const canonicalLocalPath =
+      `${CACHE_RELATIVE_PATH}/artifacts/package-origin.json`;
+    const sha256 = "a".repeat(64);
+    const sourceSha256 = "b".repeat(64);
+    const versionId = "exact-version-id";
+    const audit = {
+      schemaVersion:
+        "operational-savings/research-local-artifact-audit-v1",
+      sourcePath:
+        "docs/operational-savings-automation-research/research-local-artifact-audit.v1.json",
+      sourceSha256,
+      artifactGroups: [
+        {
+          groupId: "migrated-original",
+          disposition: "MIGRATE_UNIQUE",
+          childFiles: [
+            {
+              originalPath,
+              byteSize: 12,
+              sha256,
+              canonicalCachePath:
+                canonicalLocalPath,
+              canonicalPackageLinkage: packageId
+            }
+          ]
+        }
+      ]
+    };
+    const deletedAt = "2026-07-26T03:30:00.000Z";
+    const originalArtifact = {
+      path: originalPath,
+      expectedSizeBytes: 12,
+      expectedSha256: sha256,
+      cleanupStatus:
+        "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+      deletedAt
+    };
+    const manifest = sealManifest({
+      schemaVersion:
+        "operational-savings/research-storage-migration-v1",
+      localArtifactAudit: audit,
+      originalLocalArtifacts: [
+        {
+          ...originalArtifact,
+          canonicalPackageId: packageId,
+          canonicalLocalPath
+        }
+      ],
+      packages: [
+        {
+          packageId,
+          localPath: canonicalLocalPath,
+          fingerprint: { digest: sha256 },
+          plannedObject: {
+            expectedSizeBytes: 12,
+            expectedSha256: sha256
+          },
+          remote: {
+            s3: {
+              versionId,
+              contentLength: 12,
+              metadataSha256: sha256,
+              verificationStatus: "VERIFIED"
+            }
+          },
+          originalLocalArtifacts: [
+            originalArtifact
+          ]
+        }
+      ],
+      execution: {
+        auditedLocalArtifactCleanup: {
+          auditSourcePath: audit.sourcePath,
+          auditSourceSha256: audit.sourceSha256,
+          results: []
+        },
+        lastBatchLocalDeletion: {
+          results: [
+            {
+              packageId,
+              disposition:
+                "LOCAL_DELETED_AFTER_REMOTE_VERIFICATION",
+              localPaths: [
+                originalPath,
+                canonicalLocalPath
+              ],
+              remoteVersionId: versionId,
+              deletedAt
+            }
+          ]
+        }
+      }
+    });
+    const manifestPath = join(
+      root,
+      DEFAULT_MANIFEST_RELATIVE_PATH
+    );
+    await mkdir(dirname(manifestPath), {
+      recursive: true
+    });
+    const commitManifest = async (message) => {
+      await writeFile(
+        manifestPath,
+        `${JSON.stringify(manifest, null, 2)}\n`,
+        "utf8"
+      );
+      await execFileAsync(
+        "/usr/bin/git",
+        [
+          "-C",
+          root,
+          "add",
+          "--",
+          DEFAULT_MANIFEST_RELATIVE_PATH
+        ]
+      );
+      await execFileAsync(
+        "/usr/bin/git",
+        [
+          "-C",
+          root,
+          "-c",
+          "commit.gpgsign=false",
+          "commit",
+          "--quiet",
+          "-m",
+          message
+        ]
+      );
+    };
+    await execFileAsync(
+      "/usr/bin/git",
+      ["-C", root, "init", "--quiet"]
+    );
+    await execFileAsync(
+      "/usr/bin/git",
+      [
+        "-C",
+        root,
+        "config",
+        "user.name",
+        "Cleanup Evidence Test"
+      ]
+    );
+    await execFileAsync(
+      "/usr/bin/git",
+      [
+        "-C",
+        root,
+        "config",
+        "user.email",
+        "cleanup-evidence@example.test"
+      ]
+    );
+    await commitManifest("record exact package cleanup");
+
+    await expect(
+      committedVerifiedDeletedAuditPaths({
+        repoRoot: root,
+        audit
+      })
+    ).resolves.toEqual([originalPath]);
+
+    manifest.execution.lastBatchLocalDeletion
+      .results[0].remoteVersionId =
+      "different-version";
+    resealManifest(manifest);
+    await commitManifest("corrupt package cleanup binding");
+    await expect(
+      committedVerifiedDeletedAuditPaths({
+        repoRoot: root,
+        audit
+      })
+    ).resolves.toEqual([]);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
 });
 
 cacheBackedTest("builds a complete logical-package inventory without an AWS call", {
