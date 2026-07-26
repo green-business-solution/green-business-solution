@@ -3093,10 +3093,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -4337,10 +4339,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -4516,10 +4520,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -4695,10 +4701,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -4874,10 +4882,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -5053,10 +5063,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -6255,10 +6267,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -6600,10 +6614,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -6776,10 +6792,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -7984,10 +8002,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -9886,10 +9906,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -10065,10 +10087,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -10247,10 +10271,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -10421,10 +10447,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -10595,10 +10623,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -10769,10 +10799,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -10943,10 +10975,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -11117,10 +11151,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -11291,10 +11327,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -11465,10 +11503,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -11639,10 +11679,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -11813,10 +11855,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -11987,10 +12031,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -12161,10 +12207,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -12335,10 +12383,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -12509,10 +12559,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -12683,10 +12735,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -12857,10 +12911,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -13031,10 +13087,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -13205,10 +13263,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -13379,10 +13439,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -13553,10 +13615,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -13727,10 +13791,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -13901,10 +13967,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -14075,10 +14143,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -14249,10 +14319,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -14423,10 +14495,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -14597,10 +14671,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -14771,10 +14847,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -14945,10 +15023,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -15119,10 +15199,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -15293,10 +15375,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -15467,10 +15551,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -15641,10 +15727,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -15815,10 +15903,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -15989,10 +16079,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -16163,10 +16255,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -16343,10 +16437,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -16522,10 +16618,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -16701,10 +16799,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -16876,10 +16976,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -17051,10 +17153,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -17226,10 +17330,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -17401,10 +17507,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -17576,10 +17684,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -17751,10 +17861,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -17926,10 +18038,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -18101,10 +18215,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -18276,10 +18392,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -18451,10 +18569,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -18626,10 +18746,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -18801,10 +18923,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -18976,10 +19100,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -19151,10 +19277,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -19326,10 +19454,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -19501,10 +19631,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -19676,10 +19808,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -19851,10 +19985,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -20026,10 +20162,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -20201,10 +20339,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -20376,10 +20516,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -20551,10 +20693,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -20726,10 +20870,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -20901,10 +21047,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -21080,10 +21228,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -21259,10 +21409,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -21438,10 +21590,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -21617,10 +21771,12 @@
         ],
         "materializationGeneration": 1,
         "cleanupActionGenerationByType": {
-          "PACKAGE_CANONICAL_FILE": 1
+          "PACKAGE_CANONICAL_FILE": 1,
+          "PACKAGE_ORIGINAL_FILE": 1
         },
         "materializedCleanupActionTypes": [
-          "PACKAGE_CANONICAL_FILE"
+          "PACKAGE_CANONICAL_FILE",
+          "PACKAGE_ORIGINAL_FILE"
         ]
       }
     },
@@ -55148,10 +55304,10 @@
     },
     "lastOriginalArtifactRestore": {
       "status": "COMPLETE",
-      "restoredAt": "2026-07-25T23:43:53.249Z",
+      "restoredAt": "2026-07-26T01:45:59.760Z",
       "artifactCount": 78,
-      "createdPathCount": 78,
-      "adoptedPathCount": 0,
+      "createdPathCount": 0,
+      "adoptedPathCount": 78,
       "permittedTempRoot": "/private/tmp",
       "overwriteAllowed": false,
       "source": "EXACT_LOCAL_BYTES_WITH_COMMITTED_S3_RESTORE_RECEIPT",
@@ -55160,625 +55316,703 @@
           "path": "/private/tmp/es-app.js",
           "canonicalPackageId": "cache-file:artifacts/energy-star-product-finder-app.js",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/energy-star-product-finder-app.js",
+          "materializationGeneration": 1,
           "sizeBytes": 3770,
           "sha256": "99cd0e3630f7e47612210ec211e517cf50471f6a7f7dbe8a1c169dc4c75cc3ee",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/evse-ac-page.png",
           "canonicalPackageId": "cache-file:model-support/inspection/energy-star-evse-ac-product-2440463-page.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/energy-star-evse-ac-product-2440463-page.png",
+          "materializationGeneration": 1,
           "sizeBytes": 231568,
           "sha256": "576dee53b11450d02b75afbd3fb8072ebe8e82aefc34c88af5950399991ea573",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/evse-ac.html",
           "canonicalPackageId": "cache-file:artifacts/energy-star-evse-ac-product-2440463.html",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/energy-star-evse-ac-product-2440463.html",
+          "materializationGeneration": 1,
           "sizeBytes": 1735,
           "sha256": "a14bc71eaed7e051ac47e25c526ce3adf005d65e61088ece43bfda67c8b3595e",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/evse-ac.pdf",
           "canonicalPackageId": "cache-file:artifacts/energy-star-evse-ac-product-2440463.pdf",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/energy-star-evse-ac-product-2440463.pdf",
+          "materializationGeneration": 1,
           "sizeBytes": 46071,
           "sha256": "0993e2fdf6616abb74defc9cb705c949db11b9769df8c3b167df56a1a486deee",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/evse-dc-page.png",
           "canonicalPackageId": "cache-file:model-support/inspection/energy-star-evse-dc-product-2665585-page.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/energy-star-evse-dc-product-2665585-page.png",
+          "materializationGeneration": 1,
           "sizeBytes": 227627,
           "sha256": "611581382375c9a5b3c31bc75f44a28863f02e369da7024f9ec8840d3b46d373",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/evse-dc.pdf",
           "canonicalPackageId": "cache-file:artifacts/energy-star-evse-dc-product-2665585.pdf",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/energy-star-evse-dc-product-2665585.pdf",
+          "materializationGeneration": 1,
           "sizeBytes": 44235,
           "sha256": "6b14fa2e7cc33b3571cf0b6cc46f1dcebe1833d33c7ba8c57027183d80a9bc27",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/evse-spec.pdf",
           "canonicalPackageId": "cache-file:artifacts/energy-star-evse-v1.2-specification.pdf",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/energy-star-evse-v1.2-specification.pdf",
+          "materializationGeneration": 1,
           "sizeBytes": 831466,
           "sha256": "a8e5da603d0f4d99f75dbb56b1ef8a050646982e9c0b850152cdaef7a4c8cf2d",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/lmc2015.pdf",
           "canonicalPackageId": "cache-file:artifacts/doe-lighting-market-characterization-2015.pdf",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/doe-lighting-market-characterization-2015.pdf",
+          "materializationGeneration": 1,
           "sizeBytes": 2343018,
           "sha256": "3966462686a83437e13fae5b74e6194aae0a95af670e78ff1e763a1c8e6445ca",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/reopt-f952cab.tar.gz",
           "canonicalPackageId": "cache-file:artifacts/reopt-f952cab-source.tar.gz",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/reopt-f952cab-source.tar.gz",
+          "materializationGeneration": 1,
           "sizeBytes": 222425044,
           "sha256": "9b0068246fc2ed73c1834302a03f6e8d3ff7003827d9b5032a6a5a5257ceeb70",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/retrofi-pvwatts-full.json",
           "canonicalPackageId": "cache-file:model-outputs/reopt/pvwatts-full-output.json",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-outputs/reopt/pvwatts-full-output.json",
+          "materializationGeneration": 1,
           "sizeBytes": 265587,
           "sha256": "eb01c3b8fc1dda18056dac7ca3b03f4460ad3241371705ad938f85f715639be4",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-72bcf419.tar.gz",
           "canonicalPackageId": "cache-file:artifacts/scout-72bcf419-source.tar.gz",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/scout-72bcf419-source.tar.gz",
+          "materializationGeneration": 1,
           "sizeBytes": 363816480,
           "sha256": "07abd78a5e1c778fa3fa46e45f2b2aaef3c11089c2b2d99bc5ea0db928457822",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/attrs-26.1.0-py3-none-any.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/attrs-26.1.0-py3-none-any.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/attrs-26.1.0-py3-none-any.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 67548,
           "sha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/backoff-2.2.1-py3-none-any.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/backoff-2.2.1-py3-none-any.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/backoff-2.2.1-py3-none-any.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 15148,
           "sha256": "63579f9a0628e06278f7e47b7d7d5b6ce20dc65c5e96a6f3ca99a6adca0396e8",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/certifi-2026.7.22-py3-none-any.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/certifi-2026.7.22-py3-none-any.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/certifi-2026.7.22-py3-none-any.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 136983,
           "sha256": "62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/charset_normalizer-3.4.9-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/charset_normalizer-3.4.9-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/charset_normalizer-3.4.9-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 215802,
           "sha256": "9b2aff1c7b3884512b9512c3eaadd9bab39fb45042ffaaa1dd08ff2b9f8109d9",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/contourpy-1.3.3-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/contourpy-1.3.3-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/contourpy-1.3.3-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 332653,
           "sha256": "92d9abc807cf7d0e047b95ca5d957cf4792fcd04e920ca70d48add15c1a90ea7",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/cycler-0.12.1-py3-none-any.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/cycler-0.12.1-py3-none-any.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/cycler-0.12.1-py3-none-any.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 8321,
           "sha256": "85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/fonttools-4.63.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/fonttools-4.63.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/fonttools-4.63.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 5044298,
           "sha256": "ef3048ef05dbb552b89817713d9cac912e00d0fde4a3105c00d29e52e10c89af",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/idna-3.18-py3-none-any.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/idna-3.18-py3-none-any.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/idna-3.18-py3-none-any.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 65455,
           "sha256": "7f952cbe720b688055e3f87de14f5c3e5fdaa8bc3928985c4077ca689de849a2",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/iniconfig-2.3.0-py3-none-any.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/iniconfig-2.3.0-py3-none-any.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/iniconfig-2.3.0-py3-none-any.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 7484,
           "sha256": "f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/jsonschema_specifications-2025.9.1-py3-none-any.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/jsonschema_specifications-2025.9.1-py3-none-any.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/jsonschema_specifications-2025.9.1-py3-none-any.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 18437,
           "sha256": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/jsonschema-4.26.0-py3-none-any.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/jsonschema-4.26.0-py3-none-any.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/jsonschema-4.26.0-py3-none-any.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 90630,
           "sha256": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/kiwisolver-1.5.0-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/kiwisolver-1.5.0-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/kiwisolver-1.5.0-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 1278537,
           "sha256": "b2af221f268f5af85e776a73d62b0845fc8baf8ef0abfae79d29c77d0e776aaf",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/matplotlib-3.11.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 10842559,
           "sha256": "c52f7ad20ef476806ed212380b1d54d20310c8b86bdc2c9a68b51f0024a44472",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/numpy_financial-1.0.0-py3-none-any.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/numpy_financial-1.0.0-py3-none-any.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/numpy_financial-1.0.0-py3-none-any.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 14025,
           "sha256": "bae534b357516f12258862d1f0181d911032d0467f215bfcd1c264b4da579047",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/numpy-1.26.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 13925109,
           "sha256": "9fad7dcb1aac3c7f0584a5a8133e3a43eeb2fe127f47e3632d43d677c66c102b",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/orjson-3.11.9-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 132106,
           "sha256": "26a473dbb4162108b27901492546f83c76fdcea3d0eadff00ae7a07e18dcce09",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/packaging-26.2-py3-none-any.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/packaging-26.2-py3-none-any.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/packaging-26.2-py3-none-any.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 100195,
           "sha256": "5fc45236b9446107ff2415ce77c807cee2862cb6fac22b8a73826d0693b0980e",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/pandas-3.0.5-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/pandas-3.0.5-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pandas-3.0.5-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 10485458,
           "sha256": "73fa87b08a7ef706f8aafda39ddaccf2a99047bea62d8c88a0361bcafb2237bc",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/pillow-12.3.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/pillow-12.3.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pillow-12.3.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 6266838,
           "sha256": "d9c7f76c0673154f044e9d78c8655fb4213f6ca31a836df48b40fe5d187717b9",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/pluggy-1.6.0-py3-none-any.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/pluggy-1.6.0-py3-none-any.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pluggy-1.6.0-py3-none-any.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 20538,
           "sha256": "e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/pygments-2.20.0-py3-none-any.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/pygments-2.20.0-py3-none-any.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pygments-2.20.0-py3-none-any.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 1231151,
           "sha256": "81a9e26dd42fd28a23a2d169d86d7ac03b46e2f8b59ed4698fb4785f946d0176",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/pyparsing-3.3.2-py3-none-any.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/pyparsing-3.3.2-py3-none-any.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pyparsing-3.3.2-py3-none-any.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 122781,
           "sha256": "850ba148bd908d7e2411587e247a1e4f0327839c40e2e5e6d05a007ecc69911d",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/pytest-9.1.1-py3-none-any.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/pytest-9.1.1-py3-none-any.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pytest-9.1.1-py3-none-any.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 386536,
           "sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 229892,
           "sha256": "a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/python_dotenv-1.2.2-py3-none-any.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/python_dotenv-1.2.2-py3-none-any.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/python_dotenv-1.2.2-py3-none-any.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 22101,
           "sha256": "1d8214789a24de455a8b8bd8ae6fe3c6b69a5e3d64aa8a8e5d68e694bbcb285a",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/pyyaml-6.0.3-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/pyyaml-6.0.3-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/pyyaml-6.0.3-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 775116,
           "sha256": "9149cad251584d5fb4981be1ecde53a1ca46c891a79788c0df828d2f166bda28",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/referencing-0.37.0-py3-none-any.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/referencing-0.37.0-py3-none-any.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/referencing-0.37.0-py3-none-any.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 26766,
           "sha256": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/requests-2.34.2-py3-none-any.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/requests-2.34.2-py3-none-any.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/requests-2.34.2-py3-none-any.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 73075,
           "sha256": "2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 368180,
           "sha256": "55927d532399c2c646100ff7feb48eaa940ad70f42cd68e1328f3ded9f81ca24",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/scipy-1.17.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 32927842,
           "sha256": "e19ebea31758fac5893a2ac360fedd00116cbb7628e650842a6691ba7ca28a21",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/six-1.17.0-py2.py3-none-any.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/six-1.17.0-py2.py3-none-any.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/six-1.17.0-py2.py3-none-any.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 11050,
           "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/typing_extensions-4.16.0-py3-none-any.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/typing_extensions-4.16.0-py3-none-any.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/typing_extensions-4.16.0-py3-none-any.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 45571,
           "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/urllib3-2.7.0-py3-none-any.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/urllib3-2.7.0-py3-none-any.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/urllib3-2.7.0-py3-none-any.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 131087,
           "sha256": "9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/scout-wheelhouse/xlsxwriter-3.2.9-py3-none-any.whl",
           "canonicalPackageId": "cache-file:model-dependencies/scout/xlsxwriter-3.2.9-py3-none-any.whl",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-dependencies/scout/xlsxwriter-3.2.9-py3-none-any.whl",
+          "materializationGeneration": 1,
           "sizeBytes": 175315,
           "sha256": "9a5db42bc5dff014806c58a20b9eae7322a134abb6fce3c92c181bfb275ec5b3",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/sdge-pdfparse.txt",
           "canonicalPackageId": "cache-file:normalized/interval-tariff/sdge-jrc-pdftotext.txt",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/normalized/interval-tariff/sdge-jrc-pdftotext.txt",
+          "materializationGeneration": 1,
           "sizeBytes": 10275,
           "sha256": "5030ed8b22f65b388f87edadf4e4f134479b36cb8bf7ab1baa814653fbf20999",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ssc-container-sources.7J3Lku/ortools.tar.gz",
           "canonicalPackageId": "cache-file:artifacts/or-tools-v9.14.6206-unused-source.tar.gz",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/or-tools-v9.14.6206-unused-source.tar.gz",
+          "materializationGeneration": 1,
           "sizeBytes": 21397016,
           "sha256": "9019facf316b54ee72bb58827efc875df4cfbb328fbf2b367615bf2226dd94ca",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ssc-container-sources.7J3Lku/ssc.tar.gz",
           "canonicalPackageId": "cache-file:artifacts/ssc-ba7a7968-source.tar.gz",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/ssc-ba7a7968-source.tar.gz",
+          "materializationGeneration": 1,
           "sizeBytes": 278188118,
           "sha256": "00a3001c529c87b97c271bb75dd809c71003045ecadcedeb7b2b4d9cc9479631",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/usurdb-inspect.json",
           "canonicalPackageId": "cache-file:normalized/interval-tariff/usurdb-schema-inspection.json",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/normalized/interval-tariff/usurdb-schema-inspection.json",
+          "materializationGeneration": 1,
           "sizeBytes": 196757,
           "sha256": "c001366e1603bee21fba6982185b50a796716eadfc52ac94b172c7d47784d386",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/watersense_water-budget-tool_v2.0.xlsx",
           "canonicalPackageId": "cache-file:artifacts/watersense-water-budget-tool-v2.0.xlsx",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/watersense-water-budget-tool-v2.0.xlsx",
+          "materializationGeneration": 1,
           "sizeBytes": 9678937,
           "sha256": "56fab916b37196655c9cf293928ca7d2f74a95fb44a47c0fc7bf5c770281201a",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/watersense-toilets-full.txt",
           "canonicalPackageId": "cache-file:normalized/watersense/watersense-toilets-pdftotext.txt",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/normalized/watersense/watersense-toilets-pdftotext.txt",
+          "materializationGeneration": 1,
           "sizeBytes": 89157,
           "sha256": "9072028ee818099ccf46bd60717bbd2cc83a074bfeef19df38e684b8eab570a5",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/watersense-toilets.txt",
           "canonicalPackageId": "cache-file:artifacts/watersense-toilets-landing-fragment.txt",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/watersense-toilets-landing-fragment.txt",
+          "materializationGeneration": 1,
           "sizeBytes": 980,
           "sha256": "df6d20cd99f0018012fa265e26a75dab40497b14ef24502a4e3a95a9f7706ed9",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/watersense-urinals-full.txt",
           "canonicalPackageId": "cache-file:normalized/watersense/watersense-urinals-pdftotext.txt",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/normalized/watersense/watersense-urinals-pdftotext.txt",
+          "materializationGeneration": 1,
           "sizeBytes": 89085,
           "sha256": "57a6a1bcaf96757d75010ff7aa98e4c7c6bcd9b7bcfd2b9d08c231946fd3760e",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/watersense-urinals.txt",
           "canonicalPackageId": "cache-file:artifacts/watersense-urinals-landing-fragment.txt",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/artifacts/watersense-urinals-landing-fragment.txt",
+          "materializationGeneration": 1,
           "sizeBytes": 980,
           "sha256": "00c2549f849d568d64faec569468ebe42d2a1cbbebfa16ec9ac072de61662ddc",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ws-toilet-pages/p-01.png",
           "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-01.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-01.png",
+          "materializationGeneration": 1,
           "sizeBytes": 554171,
           "sha256": "b824f4e233f82f8e27f9b7d74dc0b3265d4c424152bba280e5c1ad44fb7de65d",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ws-toilet-pages/p-02.png",
           "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-02.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-02.png",
+          "materializationGeneration": 1,
           "sizeBytes": 211364,
           "sha256": "83946323ebf1497cc3993b08e21dd075fa15e31244ff0e8a3aaf508901dbee3c",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ws-toilet-pages/p-03.png",
           "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-03.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-03.png",
+          "materializationGeneration": 1,
           "sizeBytes": 326783,
           "sha256": "5c9078aafd56b6a058a9b1648ba5fa28c8dcd09d11652a0a9f229c27d252829e",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ws-toilet-pages/p-04.png",
           "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-04.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-04.png",
+          "materializationGeneration": 1,
           "sizeBytes": 326539,
           "sha256": "93c1c8ff8ab80194a60eaa7d43274808beb7460e384e67660cb525eb36b9b4d5",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ws-toilet-pages/p-05.png",
           "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-05.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-05.png",
+          "materializationGeneration": 1,
           "sizeBytes": 278324,
           "sha256": "cba3dfb6d04e0fc805508c3cf9b920a892c0169f7c44b863673691e537fed6bc",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ws-toilet-pages/p-06.png",
           "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-06.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-06.png",
+          "materializationGeneration": 1,
           "sizeBytes": 224792,
           "sha256": "5a748125bc2ca6c07a15ffac9f1c182799c07271fbb44756997f8b85669f0362",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ws-toilet-pages/p-07.png",
           "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-07.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-07.png",
+          "materializationGeneration": 1,
           "sizeBytes": 319036,
           "sha256": "570eb95c1c409270f24ff431d23098ff27ed667d03bf1dccfe2f75d0a54db1b3",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ws-toilet-pages/p-08.png",
           "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-08.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-08.png",
+          "materializationGeneration": 1,
           "sizeBytes": 316360,
           "sha256": "207d682141e25e50109c64c521a99242816184b0d6e935a278ad7a833d9b3dcb",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ws-toilet-pages/p-09.png",
           "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-09.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-09.png",
+          "materializationGeneration": 1,
           "sizeBytes": 343021,
           "sha256": "82815955385b1f1adaef58b2a76b5d25798f3f63e89bf4ecdc9935a9844a592d",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ws-toilet-pages/p-10.png",
           "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-10.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-10.png",
+          "materializationGeneration": 1,
           "sizeBytes": 195565,
           "sha256": "102db7144119b8beb495c555663479f7cf4a2c54fa82f5702354a67978167a16",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ws-toilet-pages/p-11.png",
           "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-11.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-11.png",
+          "materializationGeneration": 1,
           "sizeBytes": 185771,
           "sha256": "8e24ac807006d3c9af505ab36cf7666bda252e1222ec39eaa90bf7f70c902339",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ws-toilet-pages/p-12.png",
           "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-12.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-12.png",
+          "materializationGeneration": 1,
           "sizeBytes": 159799,
           "sha256": "45b3f8963c9dc78af749f0ddc23cf8eeb770a149598da977b18a886338407d10",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ws-toilet-pages/p-13.png",
           "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-13.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-13.png",
+          "materializationGeneration": 1,
           "sizeBytes": 9099,
           "sha256": "a096bccf1c9fee4126ca68aa5159fab59c59f2dd6458112128f0c75bc4d79a61",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ws-toilet-pages/p-14.png",
           "canonicalPackageId": "cache-file:model-support/inspection/watersense-toilet-pages/p-14.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-toilet-pages/p-14.png",
+          "materializationGeneration": 1,
           "sizeBytes": 116013,
           "sha256": "34c9c02060dfeeb90ca3722abec381637a220a902a82fae29c159d401fb4c616",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ws-urinal-pages/p-01.png",
           "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-01.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-01.png",
+          "materializationGeneration": 1,
           "sizeBytes": 620213,
           "sha256": "b7b56210f197f2b93d9a037dcdf23b1487a8c9d85e1aff81a713de365ad3c1b7",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ws-urinal-pages/p-02.png",
           "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-02.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-02.png",
+          "materializationGeneration": 1,
           "sizeBytes": 214173,
           "sha256": "011dcee7c2a679037651d45060435051be80097d7d6dedf786d9a6617d02e937",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ws-urinal-pages/p-03.png",
           "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-03.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-03.png",
+          "materializationGeneration": 1,
           "sizeBytes": 305801,
           "sha256": "48ba693dec893af78faa69662bcd4b31839f3230228dcd98d58f0c4fb1a403e7",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ws-urinal-pages/p-04.png",
           "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-04.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-04.png",
+          "materializationGeneration": 1,
           "sizeBytes": 310643,
           "sha256": "f76e9fd4ed6336707c85ff9d5427154c4246f908fe5dd6791c29a9ddc469b15b",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ws-urinal-pages/p-05.png",
           "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-05.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-05.png",
+          "materializationGeneration": 1,
           "sizeBytes": 231866,
           "sha256": "2757db9c28d6a2c91a448640485bb07c2737b334566158c85b98c2e1fbfb2e85",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ws-urinal-pages/p-06.png",
           "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-06.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-06.png",
+          "materializationGeneration": 1,
           "sizeBytes": 336594,
           "sha256": "92f5678f0598fb17d3e72d6d07ff973512222eb25164eea5043006fe8e11486d",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ws-urinal-pages/p-07.png",
           "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-07.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-07.png",
+          "materializationGeneration": 1,
           "sizeBytes": 312904,
           "sha256": "8691b3bf6a3ff26cc7582d8ffc2904ac45dbd74826db6ba3f32f051e5e42e3bd",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ws-urinal-pages/p-08.png",
           "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-08.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-08.png",
+          "materializationGeneration": 1,
           "sizeBytes": 194840,
           "sha256": "78a914a9c74fd42a478b45d39d061b5d6fc9c47efb36af57d2a7f8a2c2e5b1ca",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ws-urinal-pages/p-09.png",
           "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-09.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-09.png",
+          "materializationGeneration": 1,
           "sizeBytes": 226530,
           "sha256": "10c70785e2b24ab9d24264eb6a10219373868bb5e9f3564ed923cbf28ea0121a",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         },
         {
           "path": "/private/tmp/ws-urinal-pages/p-10.png",
           "canonicalPackageId": "cache-file:model-support/inspection/watersense-urinal-pages/p-10.png",
           "canonicalLocalPath": "scripts/research/operational-savings/.cache/model-support/inspection/watersense-urinal-pages/p-10.png",
+          "materializationGeneration": 1,
           "sizeBytes": 127570,
           "sha256": "2ab9f8ec7557ff3331cf1e3df77e6211cc3f83e281c00bf84b4e665b9e96a8ec",
-          "disposition": "RESTORED_EXACT_ORIGINAL_PATH_BY_EXCLUSIVE_COPY"
+          "disposition": "ADOPTED_EXISTING_EXACT_ORIGINAL_PATH"
         }
       ]
     }
@@ -55788,5 +56022,5 @@
     "packageCount": 210,
     "contentSha256": "f55a398546e214bb9746ffa9a28dac1a95657e11c4caeb2822077c4df20f0a88"
   },
-  "manifestContentSha256": "30a6ac3b16edc1d1663e2a022031e901752a7941e35559046d14b83d06caf622"
+  "manifestContentSha256": "466f6e858861e1fa9564daa8353b0a9542344fde3be24c9f9232933edf630352"
 }
