@@ -2253,6 +2253,13 @@ function clearStoredEnergyDataUploadSession() {
   }
 }
 
+export function buildScanRecommendationSessionBody(session: EnergyDataUploadSession) {
+  return {
+    userId: session.userId,
+    uploadToken: session.token
+  };
+}
+
 function adminAuthBody(credential: AuthCredential) {
   if (credential.provider === "password") {
     return { passwordSessionToken: credential.value };
@@ -4650,99 +4657,80 @@ function ScanResultsPage({
   navigate: (route: Route) => void;
   publicAuth: PublicAuthState;
 }) {
-  const [sessionPayload, setSessionPayload] = useState<EnergyDataSessionPayload | null>(null);
+  const [storedSession] = useState<EnergyDataUploadSession | null>(() => readStoredEnergyDataUploadSession());
+  const [payload, setPayload] = useState<PortalRetrofitRecommendationsResponse | null>(null);
+  const [isLoading, setIsLoading] = useState(Boolean(storedSession));
+  const [isDetailLoading, setIsDetailLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedSession = readStoredEnergyDataUploadSession();
     if (!storedSession) {
-      setSessionPayload(null);
       return;
     }
 
     let isMounted = true;
-    apiPost<EnergyDataSessionPayload>("/api/energy-data/session", {
-      userId: storedSession.userId,
-      uploadToken: storedSession.token
-    })
-      .then((payload) => {
+    const sessionBody = buildScanRecommendationSessionBody(storedSession);
+
+    setIsLoading(true);
+    setError(null);
+    apiPost<PortalRetrofitRecommendationsResponse>("/api/scan/retrofit-preview", sessionBody)
+      .then((previewPayload) => {
         if (!isMounted) return;
-        setSessionPayload(payload);
+        setPayload(previewPayload);
+        setIsLoading(false);
+        setIsDetailLoading(true);
+        setError(null);
+        return apiPost<PortalRetrofitRecommendationsResponse>("/api/scan/retrofit-recommendations", sessionBody);
+      })
+      .then((recommendationPayload) => {
+        if (!isMounted || !recommendationPayload) return;
+        setPayload(recommendationPayload);
         setError(null);
       })
       .catch((requestError) => {
         if (!isMounted) return;
-        clearStoredEnergyDataUploadSession();
-        setSessionPayload(null);
-        setError(requestError instanceof Error ? requestError.message : "Could not load your upload session.");
+        setError(requestError instanceof Error ? requestError.message : "Could not load your retrofit recommendations.");
+      })
+      .finally(() => {
+        if (!isMounted) return;
+        setIsLoading(false);
+        setIsDetailLoading(false);
       });
 
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [storedSession]);
 
-  const latestRecord = sessionPayload?.uploadedUtilityFiles?.[0] || null;
-  const nextStepValue = latestRecord
-    ? latestRecord.processingStatus === "processed"
-      ? "Energy data uploaded. Detailed analysis can begin."
-      : latestRecord.processingStatus === "failed"
-        ? "Upload another file or review the failed import."
-        : latestRecord.processingStatus === "needs_review"
-          ? "File uploaded and queued for manual review."
-          : "Energy data uploaded and awaiting review."
-    : "Upload utility bills or a Green Button export for detailed savings and ROI";
+  if (!storedSession || (!isLoading && !payload && error)) {
+    return (
+      <PublicShell navigate={navigate} publicAuth={publicAuth}>
+        <section className="results-panel">
+          <p className="eyebrow">Free scan</p>
+          <h1>{error ? "We couldn't load your recommendations" : "Start a free scan to see your recommendations"}</h1>
+          <p>{error || "Complete the short intake form so RetroFi can securely match your property to current retrofit opportunities."}</p>
+          <div className="hero-actions">
+            <CTAButton navigate={navigate} route="scan">Start a New Scan</CTAButton>
+            <CTAButton navigate={navigate} route="sign-in" variant="secondary">Sign In</CTAButton>
+          </div>
+        </section>
+      </PublicShell>
+    );
+  }
 
   return (
-    <PublicShell navigate={navigate} publicAuth={publicAuth}>
-      <section className="results-panel">
-        <p className="eyebrow">Free scan</p>
-        <h1>Your free scan is being prepared</h1>
-        <p>
-          RetroFi is reviewing your business and site information to identify likely incentive and
-          retrofit opportunities.
-        </p>
-        <div className="card-grid three compact-cards">
-          {[
-            ["Estimated opportunity range", "Coming soon"],
-            ["Likely categories", "Pending analysis"],
-            ["Recommended next step", nextStepValue]
-          ].map(([label, value]) => (
-            <article className="feature-card" key={label}>
-              <span className="eyebrow">{label}</span>
-              <h3>{value}</h3>
-            </article>
-          ))}
-        </div>
-        {latestRecord ? (
-          <article className="feature-card energy-status-card">
-            <span className="eyebrow">Latest energy data</span>
-            <h3>{latestRecord.originalFilename}</h3>
-            <p>
-              {energyDataSourceTypeLabels[latestRecord.fileType]} · {formatUtilityCategory(latestRecord.utilityCategory)} · {formatProcessingStatus(latestRecord.processingStatus)}
-            </p>
-            <p>
-              Coverage:{" "}
-              {formatUtilityPeriod(
-                sessionPayload?.siteEnergyProfile?.latestBillingPeriodStart || null,
-                sessionPayload?.siteEnergyProfile?.latestBillingPeriodEnd || null
-              )}
-            </p>
-          </article>
-        ) : null}
-        {error ? (
-          <p className="error-message" role="alert">
-            {error}
-          </p>
-        ) : null}
-        <div className="hero-actions">
-          <CTAButton navigate={navigate} route="home" variant="secondary">Back to Home</CTAButton>
-          <button onClick={() => navigate("scan-energy-data")} type="button">
-            Upload Energy Data
-          </button>
-        </div>
-      </section>
-    </PublicShell>
+    <RetrofitRecommendationsPreview
+      credential={null}
+      emptyMessage="We couldn't confirm a currently eligible opportunity from the information provided. Review your profile details or add utility data to improve the match."
+      error={error}
+      eyebrow="Your initial opportunities"
+      intro="These recommendations are matched from the business, property, utility, and eligibility information you provided."
+      isDetailLoading={isDetailLoading}
+      isLoading={isLoading}
+      loadingMessage="Matching your profile to current retrofit opportunities..."
+      payload={payload}
+      title="Your Retrofit Recommendations"
+    />
   );
 }
 
