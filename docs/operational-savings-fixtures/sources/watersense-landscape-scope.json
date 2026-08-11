@@ -1,0 +1,94 @@
+{
+  "fixture_type": "reviewed_source_fixture",
+  "fixture_schema_version": "1.0.0",
+  "reviewed_on": "2026-07-22",
+  "retrieved_on": "2026-07-22",
+  "source_title": "EPA WaterSense Water Budget Tool Version 2.0",
+  "source_urls": [
+    "https://www.epa.gov/watersense/water-budget-tool"
+  ],
+  "raw_artifacts": [
+    {
+      "artifact_identifier": "watersense-water-budget-tool-v2",
+      "source_url": "https://www.epa.gov/watersense/water-budget-tool",
+      "source_version": "Version 2.0",
+      "exact_artifact": "Water Budget Tool Version 2.0 and downloadable climate data",
+      "source_checksum": "sha256:363af634ea93174dac1ec8e35487ad9c3ead88f94b05232aafb6cb5f070820c8"
+    }
+  ],
+  "coverage": {
+    "summary": "Designed residential or commercial landscape water use compared with typical standard new construction using local climate data and user entries.",
+    "source_roles": [
+      "physics_or_calculation_method",
+      "geographic_or_climate"
+    ],
+    "scenarios": [
+      "exact-input",
+      "class-or-context-estimate",
+      "linked-opportunity-constrained-input",
+      "insufficient-data"
+    ]
+  },
+  "fields": [
+    {
+      "field": "zip_code",
+      "unit_id": "postal_code",
+      "role": "local climate selector",
+      "source_location": "Water Budget Tool user entry"
+    },
+    {
+      "field": "landscape_area_by_hydrozone",
+      "unit_id": "square_foot",
+      "role": "landscape area input",
+      "source_location": "Water Budget Tool user entry"
+    },
+    {
+      "field": "plant_or_landscape_type",
+      "unit_id": "classification",
+      "role": "hydrozone input",
+      "source_location": "Water Budget Tool user entry"
+    },
+    {
+      "field": "irrigation_method",
+      "unit_id": "classification",
+      "role": "irrigation input",
+      "source_location": "Water Budget Tool user entry"
+    },
+    {
+      "field": "irrigation_efficiency",
+      "unit_id": "fraction",
+      "role": "irrigation input when used by the tool",
+      "source_location": "Water Budget Tool user entry"
+    },
+    {
+      "field": "modeled_design_allowance_difference",
+      "unit_id": "gallon_per_year",
+      "role": "modeled result",
+      "source_location": "Water Budget Tool result"
+    }
+  ],
+  "tables": [],
+  "values": [],
+  "methods": [
+    {
+      "field": "water_budget_comparison",
+      "unit_id": "gallon_per_year",
+      "role": "design allowance comparison",
+      "source_location": "EPA page description of Water Budget Tool Version 2.0"
+    }
+  ],
+  "supported_uses": [
+    "Modeled designed-landscape allowance comparison using the tool's required inputs",
+    "Use of the result as a design allowance rather than measured existing consumption"
+  ],
+  "unsupported_inferences": [
+    "Measured actual existing irrigation consumption",
+    "Irrigation scheduling",
+    "Whole-site water-bill end-use allocation",
+    "Sewer applicability"
+  ],
+  "provenance_notes": [
+    "The source checksum is for the official EPA page retrieved on the review date.",
+    "The category must label the result as a modeled design allowance."
+  ]
+}

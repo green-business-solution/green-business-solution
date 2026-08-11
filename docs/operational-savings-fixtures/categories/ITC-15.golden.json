@@ -1,0 +1,23 @@
+{
+  "fixture_type": "ready_category_golden",
+  "category_id": "ITC-15",
+  "scenario": "zero-direct-operational-resource-boundary",
+  "minimum_default_path_inputs": {},
+  "profile_fields": {},
+  "bill_fields": {},
+  "linked_opportunity_behavior": "The linked opportunity selects an ITC-15 taxonomy item but supplies no calculation input.",
+  "source_records": [],
+  "resolved_values": {
+    "low": {"value": 0, "unit": "USD/year"},
+    "base": {"value": 0, "unit": "USD/year"},
+    "high": {"value": 0, "unit": "USD/year"}
+  },
+  "intermediate_calculations": [
+    {"expression": "S = 0", "result": 0, "unit": "USD/year"}
+  ],
+  "final_resource_delta": [],
+  "final_dollar_result": {"value": 0, "unit": "USD/year"},
+  "expected_uncertainty": "none for the category boundary",
+  "expected_missing_data_warnings": [],
+  "boundary": "No direct operational-resource value is calculated. Physical savings that belong to another category must be modeled there and must not be duplicated here."
+}

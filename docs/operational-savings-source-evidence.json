@@ -1,0 +1,3468 @@
+{
+  "schema_version": "1.3.0",
+  "reviewed_on": "2026-07-23",
+  "status_definitions": {
+    "VERIFIED": "The exact artifact and field, table, equation, page, or function were inspected and a small repository fixture records the reviewed contract.",
+    "LIMITED": "The exact artifact was inspected, but its scope does not cover every category input, scenario, or role.",
+    "UNVERIFIED": "The source is relevant, but the exact adapter field or calculation contract has not been proved with a reviewed fixture.",
+    "UNSUPPORTED": "The inspected source does not support the claimed role or use."
+  },
+  "source_roles": [
+    "existing_equipment_baseline",
+    "proposed_or_qualified_product",
+    "usage_or_operating_schedule",
+    "physics_or_calculation_method",
+    "tariff_or_bill",
+    "geographic_or_climate"
+  ],
+  "standards": [
+    {
+      "standard_id": "STD-COMSTOCK-ANNUAL-DELTA",
+      "verdict": "LIMITED",
+      "output_keys": [
+        "comstock.annual_resource_delta_per_ft2",
+        "comstock.measure_crosswalk"
+      ],
+      "source_roles": {
+        "existing_equipment_baseline": [
+          "E-COMSTOCK-DELTA"
+        ],
+        "proposed_or_qualified_product": [
+          "E-COMSTOCK-DELTA"
+        ],
+        "usage_or_operating_schedule": [],
+        "physics_or_calculation_method": [
+          "E-COMSTOCK-DELTA",
+          "E-COMSTOCK-TAXONOMY"
+        ],
+        "tariff_or_bill": [],
+        "geographic_or_climate": [
+          "E-COMSTOCK-DELTA"
+        ]
+      },
+      "unsupported_roles": [
+        "tariff_or_bill",
+        "project_specific_exact_equipment"
+      ],
+      "manual_review_verdict": "The release can support an archetype simulation delta after a reviewed crosswalk and aggregate fixture exist. It cannot establish a project-specific exact existing or proposed product."
+    },
+    {
+      "standard_id": "STD-SCOUT-ECM-SCREEN",
+      "verdict": "LIMITED",
+      "output_keys": [
+        "scout.ecm_resource_reduction_factor"
+      ],
+      "source_roles": {
+        "existing_equipment_baseline": [],
+        "proposed_or_qualified_product": [],
+        "usage_or_operating_schedule": [],
+        "physics_or_calculation_method": [
+          "E-SCOUT-ECM"
+        ],
+        "tariff_or_bill": [],
+        "geographic_or_climate": [
+          "E-SCOUT-ECM"
+        ]
+      },
+      "unsupported_roles": [
+        "existing_equipment_baseline",
+        "proposed_or_qualified_product",
+        "tariff_or_bill"
+      ],
+      "manual_review_verdict": "Scout is a segment-level ECM method. The category crosswalk and exact performance fields still need reviewed source fixtures."
+    },
+    {
+      "standard_id": "STD-DOE-CCMS-RATINGS",
+      "verdict": "LIMITED",
+      "output_keys": [
+        "ccms.current_certified_product_rating",
+        "ccms.existing_installed_baseline"
+      ],
+      "source_roles": {
+        "existing_equipment_baseline": [
+          "E-CCMS-EXISTING-UNSUPPORTED"
+        ],
+        "proposed_or_qualified_product": [
+          "E-CCMS-CURRENT"
+        ],
+        "usage_or_operating_schedule": [],
+        "physics_or_calculation_method": [],
+        "tariff_or_bill": [],
+        "geographic_or_climate": []
+      },
+      "unsupported_roles": [
+        "usage_or_operating_schedule",
+        "tariff_or_bill",
+        "geographic_or_climate"
+      ],
+      "manual_review_verdict": "Current certification records can support an exact current product after a product-specific export is reviewed. They do not supply a representative installed existing-equipment population."
+    },
+    {
+      "standard_id": "STD-ENERGY-STAR-PRODUCT-DATA",
+      "verdict": "LIMITED",
+      "output_keys": [
+        "energy_star.commercial_dishwasher_fields",
+        "energy_star.evse_native_fields",
+        "energy_star.other_current_product_fields",
+        "energy_star.existing_installed_baseline"
+      ],
+      "source_roles": {
+        "existing_equipment_baseline": [
+          "E-ENERGY-STAR-EXISTING-UNSUPPORTED"
+        ],
+        "proposed_or_qualified_product": [
+          "E-ENERGY-STAR-DISHWASHER",
+          "E-ENERGY-STAR-EVSE-NATIVE",
+          "E-ENERGY-STAR-OTHER"
+        ],
+        "usage_or_operating_schedule": [],
+        "physics_or_calculation_method": [],
+        "tariff_or_bill": [],
+        "geographic_or_climate": []
+      },
+      "unsupported_roles": [
+        "usage_or_operating_schedule",
+        "tariff_or_bill",
+        "geographic_or_climate"
+      ],
+      "manual_review_verdict": "The commercial dishwasher schema and separate AC-output and DC-output EVSE exports prove their named proposed-product fields. Other product families and all existing-equipment or usage claims remain unverified or unsupported."
+    },
+    {
+      "standard_id": "STD-DOE-MEASUR",
+      "verdict": "LIMITED",
+      "output_keys": [
+        "measur.itc04",
+        "measur.itc09",
+        "measur.itc12",
+        "measur.itc36",
+        "measur.itc37",
+        "measur.itc38",
+        "measur.itc39",
+        "measur.itc40",
+        "measur.itc41",
+        "measur.itc42",
+        "measur.itc43",
+        "measur.itc44",
+        "measur.itc45",
+        "measur.itc46",
+        "measur.itc47",
+        "measur.itc51"
+      ],
+      "source_roles": {
+        "existing_equipment_baseline": [],
+        "proposed_or_qualified_product": [],
+        "usage_or_operating_schedule": [],
+        "physics_or_calculation_method": [
+          "E-MEASUR-ITC04",
+          "E-MEASUR-ITC09",
+          "E-MEASUR-ITC12",
+          "E-MEASUR-ITC36",
+          "E-MEASUR-ITC37",
+          "E-MEASUR-ITC38",
+          "E-MEASUR-ITC39",
+          "E-MEASUR-ITC40",
+          "E-MEASUR-ITC41",
+          "E-MEASUR-ITC42",
+          "E-MEASUR-ITC43",
+          "E-MEASUR-ITC44",
+          "E-MEASUR-ITC45",
+          "E-MEASUR-ITC46",
+          "E-MEASUR-ITC47",
+          "E-MEASUR-ITC51"
+        ],
+        "tariff_or_bill": [],
+        "geographic_or_climate": []
+      },
+      "unsupported_roles": [
+        "generic_default_inputs",
+        "tariff_or_bill"
+      ],
+      "manual_review_verdict": "The umbrella MEASUR claim is insufficient for implementation proof. Every category must identify its exact module, inputs, units, outputs, code function, and golden example while unresolved inputs continue through the single-value fallback policy."
+    },
+    {
+      "standard_id": "STD-SAM-SOLAR-THERMAL",
+      "verdict": "LIMITED",
+      "output_keys": [
+        "sam.solar_thermal_useful_energy"
+      ],
+      "source_roles": {
+        "existing_equipment_baseline": [],
+        "proposed_or_qualified_product": [],
+        "usage_or_operating_schedule": [],
+        "physics_or_calculation_method": [
+          "E-SAM-SOLAR-THERMAL"
+        ],
+        "tariff_or_bill": [],
+        "geographic_or_climate": [
+          "E-SAM-SOLAR-THERMAL"
+        ]
+      },
+      "unsupported_roles": [
+        "design_capacity_default",
+        "hot_water_load_default",
+        "tariff_or_bill"
+      ],
+      "manual_review_verdict": "SAM can calculate performance after design, weather, load, and backup inputs are supplied. It is not a source for those missing project inputs."
+    },
+    {
+      "standard_id": "STD-PVWATTS-V8",
+      "verdict": "LIMITED",
+      "output_keys": [
+        "pvwatts.v8_ac_energy"
+      ],
+      "source_roles": {
+        "existing_equipment_baseline": [],
+        "proposed_or_qualified_product": [],
+        "usage_or_operating_schedule": [],
+        "physics_or_calculation_method": [
+          "E-PVWATTS-V8"
+        ],
+        "tariff_or_bill": [],
+        "geographic_or_climate": [
+          "E-PVWATTS-V8"
+        ]
+      },
+      "unsupported_roles": [
+        "system_capacity_default",
+        "array_configuration_default",
+        "tariff_or_bill"
+      ],
+      "manual_review_verdict": "The API field contract is verified, but required system design inputs are project facts and the simulator does not supply a missing design. Any unresolved design input must be selected before simulation through the separate single-value fallback policy."
+    },
+    {
+      "standard_id": "STD-WIND-SAM",
+      "verdict": "LIMITED",
+      "output_keys": [
+        "wind_sam.ac_energy"
+      ],
+      "source_roles": {
+        "existing_equipment_baseline": [],
+        "proposed_or_qualified_product": [],
+        "usage_or_operating_schedule": [],
+        "physics_or_calculation_method": [
+          "E-WIND-SAM"
+        ],
+        "tariff_or_bill": [],
+        "geographic_or_climate": [
+          "E-WIND-SAM"
+        ]
+      },
+      "unsupported_roles": [
+        "turbine_capacity_default",
+        "power_curve_default",
+        "hub_height_default",
+        "tariff_or_bill"
+      ],
+      "manual_review_verdict": "The simulator requires an explicit turbine, power curve, hub height, losses, and resource selection. Those values cannot be supplied by the simulator itself."
+    },
+    {
+      "standard_id": "STD-INTERVAL-TARIFF",
+      "verdict": "LIMITED",
+      "output_keys": [
+        "interval_tariff.input_set"
+      ],
+      "source_roles": {
+        "existing_equipment_baseline": [],
+        "proposed_or_qualified_product": [],
+        "usage_or_operating_schedule": [],
+        "physics_or_calculation_method": [
+          "E-INTERVAL-TARIFF"
+        ],
+        "tariff_or_bill": [
+          "E-INTERVAL-TARIFF"
+        ],
+        "geographic_or_climate": []
+      },
+      "unsupported_roles": [
+        "generic_tariff_default",
+        "nearby_schedule_substitution",
+        "zero_missing_rate_placeholder"
+      ],
+      "manual_review_verdict": "The official database and matching contract are verified. Exact execution remains limited until a published utility tariff, normalized adapter, and monthly bill-reconciliation fixture are retained."
+    },
+    {
+      "standard_id": "STD-REOPT-LOCAL-DISPATCH",
+      "verdict": "LIMITED",
+      "output_keys": [
+        "reopt.interval_dispatch_bill"
+      ],
+      "source_roles": {
+        "existing_equipment_baseline": [],
+        "proposed_or_qualified_product": [],
+        "usage_or_operating_schedule": [],
+        "physics_or_calculation_method": [
+          "E-REOPT-DISPATCH"
+        ],
+        "tariff_or_bill": [
+          "E-REOPT-DISPATCH"
+        ],
+        "geographic_or_climate": []
+      },
+      "unsupported_roles": [
+        "load_profile_default",
+        "tariff_default",
+        "technology_design_default"
+      ],
+      "manual_review_verdict": "REopt can calculate dispatch only after a complete chronological load, tariff, technology, and operating constraint set is provided."
+    },
+    {
+      "standard_id": "STD-EPA-CHP-PERFORMANCE",
+      "verdict": "LIMITED",
+      "output_keys": [
+        "epa_chp.performance_balance"
+      ],
+      "source_roles": {
+        "existing_equipment_baseline": [],
+        "proposed_or_qualified_product": [
+          "E-EPA-CHP"
+        ],
+        "usage_or_operating_schedule": [],
+        "physics_or_calculation_method": [
+          "E-EPA-CHP"
+        ],
+        "tariff_or_bill": [],
+        "geographic_or_climate": []
+      },
+      "unsupported_roles": [
+        "exact_product_catalog",
+        "capacity_default",
+        "operating_profile_default",
+        "thermal_coincidence_default"
+      ],
+      "manual_review_verdict": "EPA technology and capacity rows can support proposed screening classes and a transparent energy balance. They do not identify exact equipment or supply site design and coincidence inputs."
+    },
+    {
+      "standard_id": "STD-FUELECONOMY-VEHICLES",
+      "verdict": "LIMITED",
+      "output_keys": [
+        "fueleconomy.comb08",
+        "fueleconomy.combE",
+        "fueleconomy.class_distribution"
+      ],
+      "source_roles": {
+        "existing_equipment_baseline": [
+          "E-FUELECONOMY-COMB08",
+          "E-FUELECONOMY-COMBE",
+          "E-FUELECONOMY-DISTRIBUTION-UNSUPPORTED"
+        ],
+        "proposed_or_qualified_product": [
+          "E-FUELECONOMY-COMB08",
+          "E-FUELECONOMY-COMBE"
+        ],
+        "usage_or_operating_schedule": [],
+        "physics_or_calculation_method": [
+          "E-FUELECONOMY-COMB08",
+          "E-FUELECONOMY-COMBE"
+        ],
+        "tariff_or_bill": [],
+        "geographic_or_climate": []
+      },
+      "unsupported_roles": [
+        "vehicle_fuel_price",
+        "annual_mileage",
+        "service_compatibility_default"
+      ],
+      "manual_review_verdict": "Exact vehicle records and units are verified. Class distributions are disabled until compatibility filters and sample-size fixtures are reviewed."
+    },
+    {
+      "standard_id": "STD-WATERSENSE-FIXTURES",
+      "verdict": "LIMITED",
+      "output_keys": [
+        "watersense.proposed_fixture_criteria",
+        "watersense.existing_fixture_and_usage"
+      ],
+      "source_roles": {
+        "existing_equipment_baseline": [
+          "E-WATERSENSE-EXISTING-UNSUPPORTED"
+        ],
+        "proposed_or_qualified_product": [
+          "E-WATERSENSE-PROPOSED"
+        ],
+        "usage_or_operating_schedule": [
+          "E-WATERSENSE-EXISTING-UNSUPPORTED"
+        ],
+        "physics_or_calculation_method": [],
+        "tariff_or_bill": [],
+        "geographic_or_climate": []
+      },
+      "unsupported_roles": [
+        "tariff_or_bill",
+        "commercial_usage_default"
+      ],
+      "manual_review_verdict": "WaterSense criteria support proposed performance. Existing installed ratings and commercial usage frequency remain separate unresolved inputs."
+    },
+    {
+      "standard_id": "STD-WATERSENSE-LANDSCAPE",
+      "verdict": "LIMITED",
+      "output_keys": [
+        "watersense.landscape_design_allowance",
+        "watersense.actual_irrigation_consumption"
+      ],
+      "source_roles": {
+        "existing_equipment_baseline": [
+          "E-WATERSENSE-LANDSCAPE-ACTUAL-UNSUPPORTED"
+        ],
+        "proposed_or_qualified_product": [],
+        "usage_or_operating_schedule": [
+          "E-WATERSENSE-LANDSCAPE-ACTUAL-UNSUPPORTED"
+        ],
+        "physics_or_calculation_method": [
+          "E-WATERSENSE-LANDSCAPE-DESIGN"
+        ],
+        "tariff_or_bill": [],
+        "geographic_or_climate": [
+          "E-WATERSENSE-LANDSCAPE-DESIGN"
+        ]
+      },
+      "unsupported_roles": [
+        "actual_existing_consumption",
+        "irrigation_schedule",
+        "tariff_or_bill"
+      ],
+      "manual_review_verdict": "Version 2.0 compares designed landscape water use with typical standard new construction. It does not measure actual consumption or determine irrigation scheduling."
+    },
+    {
+      "standard_id": "STD-WATERSENSE-CI-OPERATIONS",
+      "verdict": "LIMITED",
+      "output_keys": [
+        "watersense.ci_operation_equation"
+      ],
+      "source_roles": {
+        "existing_equipment_baseline": [],
+        "proposed_or_qualified_product": [],
+        "usage_or_operating_schedule": [],
+        "physics_or_calculation_method": [
+          "E-WATERSENSE-CI"
+        ],
+        "tariff_or_bill": [],
+        "geographic_or_climate": []
+      },
+      "unsupported_roles": [
+        "generic_site_default",
+        "tariff_or_bill"
+      ],
+      "manual_review_verdict": "The relevant leak and cooling-tower equations still require exact page, equation, and worked-example fixtures before they can resolve a default path."
+    },
+    {
+      "standard_id": "STD-FEMP-EXTERIOR-LIGHTING",
+      "verdict": "LIMITED",
+      "output_keys": [
+        "femp.proposed_exterior_efficacy",
+        "femp.wall_mounted_example",
+        "femp.existing_fixture_watts"
+      ],
+      "source_roles": {
+        "existing_equipment_baseline": [
+          "E-FEMP-EXISTING-UNSUPPORTED"
+        ],
+        "proposed_or_qualified_product": [
+          "E-FEMP-PROPOSED",
+          "E-FEMP-WALL-EXAMPLE"
+        ],
+        "usage_or_operating_schedule": [],
+        "physics_or_calculation_method": [
+          "E-FEMP-WALL-EXAMPLE"
+        ],
+        "tariff_or_bill": [],
+        "geographic_or_climate": []
+      },
+      "unsupported_roles": [
+        "existing_installed_distribution",
+        "profile_fallback",
+        "bill_fallback",
+        "exact_product_catalog"
+      ],
+      "manual_review_verdict": "Table 1 provides proposed efficacy requirements. Table 2 is one narrow wall-mounted example. Neither supplies a general existing legacy-wattage distribution."
+    },
+    {
+      "standard_id": "STD-OPERATING-SCHEDULE",
+      "verdict": "LIMITED",
+      "output_keys": [
+        "schedule.explicit_calendar_hours",
+        "schedule.context_default"
+      ],
+      "source_roles": {
+        "existing_equipment_baseline": [],
+        "proposed_or_qualified_product": [],
+        "usage_or_operating_schedule": [
+          "E-SCHEDULE-EXPLICIT",
+          "E-SCHEDULE-CONTEXT-UNSUPPORTED"
+        ],
+        "physics_or_calculation_method": [
+          "E-SCHEDULE-EXPLICIT"
+        ],
+        "tariff_or_bill": [],
+        "geographic_or_climate": [
+          "E-SCHEDULE-EXPLICIT"
+        ]
+      },
+      "unsupported_roles": [
+        "industry_label_only_default",
+        "tariff_or_bill"
+      ],
+      "manual_review_verdict": "Explicit calendar arithmetic and daylight calculations are defensible after all inputs are supplied. A business label alone does not prove annual operating hours."
+    },
+    {
+      "standard_id": "STD-CONTEXT-BENCHMARKS",
+      "verdict": "LIMITED",
+      "output_keys": [
+        "context.outdoor_lighting_application_wattage",
+        "context.commercial_flush_activity",
+        "context.single_value_selection",
+        "context.material_handling_intensity",
+        "context.commercial_cooktop_comparable_duty",
+        "context.walk_in_component_energy",
+        "context.public_charging_shape",
+        "context.dishwasher_rack_activity",
+        "context.diesel_generator_full_load_test_fuel"
+      ],
+      "source_roles": {
+        "existing_equipment_baseline": [
+          "E-CONTEXT-LIGHTING-WATTAGE",
+          "E-CONTEXT-FORKLIFT",
+          "E-CONTEXT-COOKTOP",
+          "E-CONTEXT-WALK-IN"
+        ],
+        "proposed_or_qualified_product": [
+          "E-CONTEXT-FORKLIFT",
+          "E-CONTEXT-COOKTOP",
+          "E-CONTEXT-WALK-IN"
+        ],
+        "usage_or_operating_schedule": [
+          "E-CONTEXT-FLUSH-ACTIVITY",
+          "E-CONTEXT-SELECTION",
+          "E-CONTEXT-COOKTOP",
+          "E-CONTEXT-EVI-SHAPE",
+          "E-CONTEXT-DISHWASHER-ACTIVITY"
+        ],
+        "physics_or_calculation_method": [
+          "E-CONTEXT-FLUSH-ACTIVITY",
+          "E-CONTEXT-SELECTION",
+          "E-CONTEXT-FORKLIFT",
+          "E-CONTEXT-COOKTOP",
+          "E-CONTEXT-WALK-IN",
+          "E-CONTEXT-FEMA-DIESEL-GENERATOR"
+        ],
+        "tariff_or_bill": [],
+        "geographic_or_climate": [
+          "E-CONTEXT-SELECTION"
+        ]
+      },
+      "unsupported_roles": [
+        "tariff_or_bill",
+        "future_contractor_product_selection",
+        "cross_category_field_substitution"
+      ],
+      "manual_review_verdict": "Reviewed fixtures prove DOE outdoor lighting, EPA commercial flush activity, the narrow Argonne forklift pair, the ENERGY STAR electric-cooktop duty, DOE walk-in component rows, and the ENERGY STAR dishwasher rack-machine activity method. EVI-Pro Lite documentation supports only a normalized charging time-of-day shape, not site daily energy or utilization. Other category adapters remain implementation-pending and must disclose source and population limitations."
+    },
+    {
+      "standard_id": "STD-DISHWASHER-WATER-HEATING",
+      "verdict": "LIMITED",
+      "output_keys": [
+        "dishwasher.water_heating_conversion"
+      ],
+      "source_roles": {
+        "existing_equipment_baseline": [],
+        "proposed_or_qualified_product": [],
+        "usage_or_operating_schedule": [],
+        "physics_or_calculation_method": [
+          "E-DISHWASHER-WATER-HEATING"
+        ],
+        "tariff_or_bill": [],
+        "geographic_or_climate": []
+      },
+      "unsupported_roles": [
+        "existing_equipment_baseline",
+        "proposed_or_qualified_product",
+        "usage_or_operating_schedule",
+        "tariff_or_bill",
+        "geographic_or_climate"
+      ],
+      "manual_review_verdict": "The retained March 2024 ENERGY STAR calculator fixture proves the building and booster water-heating equations and numeric inputs. The category adapter and end-to-end golden fixture remain implementation-pending."
+    }
+  ],
+  "evidence_records": [
+    {
+      "evidence_id": "E-COMSTOCK-DELTA",
+      "standard_id": "STD-COMSTOCK-ANNUAL-DELTA",
+      "output_key": "comstock.annual_resource_delta_per_ft2",
+      "source_roles": [
+        "existing_equipment_baseline",
+        "proposed_or_qualified_product",
+        "physics_or_calculation_method",
+        "geographic_or_climate"
+      ],
+      "source_url": "https://natlabrockies.github.io/ComStock.github.io/docs/data.html",
+      "source_title": "ComStock 2025 Release 3 data",
+      "source_version": "2025 Release 3",
+      "exact_artifact": "OEDI metadata_and_annual_results Parquet plus data_dictionary.tsv and enumeration_dictionary.tsv",
+      "exact_field_table_page_equation_or_function": "Baseline and upgrade annual resource fields joined by building ID, then normalized by floor area and weighted",
+      "units": "resource-unit/ft2-year",
+      "covered_product_or_method_scope": "Modeled commercial-building upgrade archetypes in the pinned release",
+      "existing_or_proposed_coverage": "modeled-baseline-and-modeled-upgrade",
+      "supported_scenarios": [
+        "exact-input",
+        "class-or-context-estimate",
+        "linked-opportunity-constrained-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "canonical_retrofit",
+        "site_geography",
+        "building_type",
+        "floor_area",
+        "existing_condition",
+        "proposed_option"
+      ],
+      "extraction_or_calculation_method": "Join paired rows, calculate baseline minus upgrade by resource, then compute reviewed weighted summaries",
+      "selected_value_basis": "Not approved until weighted population filters and sample count are captured in a fixture",
+      "uncertainty_basis": "Archetype screening does not establish project-specific equipment or operation",
+      "fixture_or_test_reference": null,
+      "access_limitations": "Large public release requires build-time download and local aggregation",
+      "unsupported_uses": [
+        "Exact project equipment performance",
+        "Combining separate upgrade results",
+        "Percentiles without eligible population and sample size"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-COMSTOCK-TAXONOMY",
+      "standard_id": "STD-COMSTOCK-ANNUAL-DELTA",
+      "output_key": "comstock.measure_crosswalk",
+      "source_roles": [
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://natlabrockies.github.io/ComStock.github.io/docs/upgrade_measures/upgrade_measures.html",
+      "source_title": "ComStock upgrade measures",
+      "source_version": "2025 Release 3",
+      "exact_artifact": "measure_name_crosswalk.csv and upgrades_lookup.json",
+      "exact_field_table_page_equation_or_function": "Universal measure ID and measure-name crosswalk",
+      "units": "identifier",
+      "covered_product_or_method_scope": "Documented ComStock universal measures",
+      "existing_or_proposed_coverage": "modeled-baseline-and-modeled-upgrade",
+      "supported_scenarios": [
+        "linked-opportunity-constrained-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "canonical_retrofit",
+        "existing_condition",
+        "proposed_option"
+      ],
+      "extraction_or_calculation_method": "Exact allowlist match only",
+      "selected_value_basis": "Not applicable to identifier mapping",
+      "uncertainty_basis": "Taxonomy labels can be broader than a documented measure",
+      "fixture_or_test_reference": null,
+      "access_limitations": "Crosswalk fixture has not been stored",
+      "unsupported_uses": [
+        "Keyword matching",
+        "Package IDs",
+        "Unlisted measure IDs"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-SCOUT-ECM",
+      "standard_id": "STD-SCOUT-ECM-SCREEN",
+      "output_key": "scout.ecm_resource_reduction_factor",
+      "source_roles": [
+        "physics_or_calculation_method",
+        "geographic_or_climate"
+      ],
+      "source_url": "https://github.com/trynthink/scout",
+      "source_title": "Scout source repository",
+      "source_version": "Unpinned",
+      "exact_artifact": "ECM definitions and Scout processing code",
+      "exact_field_table_page_equation_or_function": "Exact ECM identifier, market segment, performance field, and processing function not yet pinned",
+      "units": "fraction",
+      "covered_product_or_method_scope": "National and market-segment ECM screening",
+      "existing_or_proposed_coverage": "modeled-segment",
+      "supported_scenarios": [
+        "exact-input",
+        "class-or-context-estimate",
+        "linked-opportunity-constrained-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "canonical_retrofit",
+        "building_type",
+        "climate_zone",
+        "building_vintage",
+        "end_use_and_fuel",
+        "existing_condition",
+        "proposed_option"
+      ],
+      "extraction_or_calculation_method": "Pin an exact ECM definition and execute its versioned processing method",
+      "selected_value_basis": "Only source-explicit performance cases may be used",
+      "uncertainty_basis": "Segment-level assumptions are not site predictions",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No approved taxonomy crosswalk or normalized fixture",
+      "unsupported_uses": [
+        "Keyword-only matches",
+        "Individual-site precision",
+        "Generic reduction defaults"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-CCMS-CURRENT",
+      "standard_id": "STD-DOE-CCMS-RATINGS",
+      "output_key": "ccms.current_certified_product_rating",
+      "source_roles": [
+        "proposed_or_qualified_product"
+      ],
+      "source_url": "https://www.regulations.doe.gov/certification-data/",
+      "source_title": "DOE Compliance Certification Database",
+      "source_version": "Current interactive database",
+      "exact_artifact": "Product-specific analyst export and DOE test-result template",
+      "exact_field_table_page_equation_or_function": "Product-specific fields are not pinned until an export and template fixture are reviewed",
+      "units": "product-specific",
+      "covered_product_or_method_scope": "Current certified products in a selected DOE product group",
+      "existing_or_proposed_coverage": "proposed-or-current",
+      "supported_scenarios": [
+        "exact-current-model",
+        "linked-opportunity-exact-product",
+        "linked-opportunity-product-class",
+        "no-product-restriction",
+        "no-linked-opportunity",
+        "exact-proposed-model",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "ccms_product_context",
+        "ccms_exact_product",
+        "linked_opportunity"
+      ],
+      "extraction_or_calculation_method": "Human export followed by a product-specific adapter",
+      "selected_value_basis": "Exact records use one value; distributions require a separate reviewed population fixture",
+      "uncertainty_basis": "Certification value is exact only for an unambiguous model and test procedure",
+      "fixture_or_test_reference": null,
+      "access_limitations": "Anonymous direct automated access returned HTTP 403 during review",
+      "unsupported_uses": [
+        "Generic installed baseline",
+        "Profile or Bill model inference",
+        "Usage schedule inference"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-CCMS-EXISTING-UNSUPPORTED",
+      "standard_id": "STD-DOE-CCMS-RATINGS",
+      "output_key": "ccms.existing_installed_baseline",
+      "source_roles": [
+        "existing_equipment_baseline"
+      ],
+      "source_url": "https://www.regulations.doe.gov/certification-data/",
+      "source_title": "DOE Compliance Certification Database",
+      "source_version": "Current interactive database",
+      "exact_artifact": "No reviewed retained historical export",
+      "exact_field_table_page_equation_or_function": "No installed-population table or historical-retention proof",
+      "units": "product-specific",
+      "covered_product_or_method_scope": "None for a representative installed baseline",
+      "existing_or_proposed_coverage": "none",
+      "supported_scenarios": [],
+      "required_lookup_inputs": [
+        "ccms_exact_product"
+      ],
+      "extraction_or_calculation_method": "This record does not support the claimed calculation role; continue through the next supported source in the single-value fallback policy.",
+      "selected_value_basis": "Unsupported",
+      "uncertainty_basis": "Current certifications are not an installed-equipment distribution",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No historical snapshot fixture",
+      "unsupported_uses": [
+        "existing-type-or-application",
+        "profile-or-bill-fallback",
+        "existing-equipment percentiles"
+      ],
+      "evidence_status": "UNSUPPORTED"
+    },
+    {
+      "evidence_id": "E-ENERGY-STAR-DISHWASHER",
+      "standard_id": "STD-ENERGY-STAR-PRODUCT-DATA",
+      "output_key": "energy_star.commercial_dishwasher_fields",
+      "source_roles": [
+        "proposed_or_qualified_product"
+      ],
+      "source_url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Commercial-Dishwashers/pk8q-dim8",
+      "source_title": "ENERGY STAR Certified Commercial Dishwashers",
+      "source_version": "Socrata dataset pk8q-dim8 metadata inspected 2026-07-22",
+      "exact_artifact": "Socrata dataset metadata and column schema",
+      "exact_field_table_page_equation_or_function": "machine_type, sanitation_method, idle_energy_rate_for_low_temp_kw, idle_energy_rate_for_high_temp_kw, booster_heater_idle_energy_rate_for_high_temp_and_dual_sanitizing_machines_kw, water_use_gallons_per_rack_gpr, water_use_gallons_per_hour_gph, washing_energy_consumption_kwh_rack_for_low_temp_and_dual_sanitizing_machines, washing_energy_consumption_kwh_rack_for_high_temp_and_dual_sanitizing_machines; bound fixture fields: machine_type, sanitation_method, idle_energy_rate_for_low_temp_kw, idle_energy_rate_for_high_temp_kw, booster_heater_idle_energy_rate_for_high_temp_and_dual_sanitizing_machines_kw, water_use_gallons_per_rack_gpr, water_use_gallons_per_hour_gph, washing_energy_consumption_kwh_rack_for_low_temp_and_dual_sanitizing_machines, washing_energy_consumption_kwh_rack_for_high_temp_and_dual_sanitizing_machines",
+      "units": "kW, gallons/rack, gallons/hour, kWh/rack",
+      "covered_product_or_method_scope": "Current active-specification proposed commercial dishwasher products and their published certification fields.",
+      "existing_or_proposed_coverage": "proposed-or-current",
+      "supported_scenarios": [
+        "linked-opportunity-exact-product",
+        "linked-opportunity-product-class",
+        "no-product-restriction",
+        "no-linked-opportunity",
+        "exact-proposed-model",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "energy_star_product_context",
+        "energy_star_exact_product",
+        "linked_opportunity"
+      ],
+      "extraction_or_calculation_method": "Select exact fields by compatible machine type and sanitation method",
+      "selected_value_basis": "Exact record only; no percentile enabled",
+      "uncertainty_basis": "Certified test values do not supply site racks, hours, water heating, or existing performance",
+      "fixture_or_test_reference": "docs/operational-savings-fixtures/sources/energy-star-commercial-dishwasher-schema.json",
+      "access_limitations": "Current active-specification dataset only",
+      "unsupported_uses": [
+        "Existing installed-equipment baseline",
+        "Annual racks or operating hours",
+        "Cross-conversion between gallons per rack and gallons per hour"
+      ],
+      "evidence_status": "VERIFIED",
+      "unit_ids": [
+        "classification",
+        "kilowatt",
+        "gallon_per_rack",
+        "gallon_per_hour",
+        "kilowatt_hour_per_rack"
+      ],
+      "fixture_binding": {
+        "fixture_path": "docs/operational-savings-fixtures/sources/energy-star-commercial-dishwasher-schema.json",
+        "fixture_type_pointer": "/fixture_type",
+        "source_title_pointer": "/source_title",
+        "source_url_pointer": "/raw_artifacts/0/source_url",
+        "source_version_pointer": "/raw_artifacts/0/source_version",
+        "artifact_pointer": "/raw_artifacts/0/exact_artifact",
+        "artifact_identifier_pointer": "/raw_artifacts/0/artifact_identifier",
+        "checksum_pointer": "/raw_artifacts/0/source_checksum",
+        "coverage_pointer": "/coverage/summary",
+        "source_roles_pointer": "/coverage/source_roles",
+        "field_pointers": [
+          "/fields/2/field",
+          "/fields/3/field",
+          "/fields/4/field",
+          "/fields/5/field",
+          "/fields/6/field",
+          "/fields/7/field",
+          "/fields/8/field",
+          "/fields/9/field",
+          "/fields/10/field"
+        ],
+        "unit_pointers": [
+          "/fields/2/unit_id",
+          "/fields/3/unit_id",
+          "/fields/4/unit_id",
+          "/fields/5/unit_id",
+          "/fields/6/unit_id",
+          "/fields/7/unit_id",
+          "/fields/8/unit_id",
+          "/fields/9/unit_id",
+          "/fields/10/unit_id"
+        ],
+        "value_bindings": [],
+        "unsupported_inference_pointers": [
+          "/unsupported_inferences/0",
+          "/unsupported_inferences/1",
+          "/unsupported_inferences/2"
+        ],
+        "substantive_pointers": [
+          "/fields/4",
+          "/fields/7",
+          "/fields/9"
+        ]
+      },
+      "source_checksum": "sha256:da7d9999977b3a5f4bf80d85b68e2a36ff45e7f2f95a35cf9c86e1ffcef9a73a"
+    },
+    {
+      "evidence_id": "E-ENERGY-STAR-EVSE-NATIVE",
+      "standard_id": "STD-ENERGY-STAR-PRODUCT-DATA",
+      "output_key": "energy_star.evse_native_fields",
+      "source_roles": [
+        "proposed_or_qualified_product"
+      ],
+      "source_url": "https://www.energystar.gov/sites/default/files/asset/document/ENERGY%20STAR%20Version%201.2%20EVSE%20Final%20Specification.pdf",
+      "source_title": "ENERGY STAR Certified Electric Vehicle Chargers - AC and DC Native Fields",
+      "source_version": "Version 1.2",
+      "exact_artifact": "ENERGY STAR EVSE Version 1.2 test and reporting requirements",
+      "exact_field_table_page_equation_or_function": "Bound native fields: ac.maximum_output_power, ac.operation_mode_total_loss, ac.idle_mode_input_power, ac.no_vehicle_mode_input_power, dc.maximum_output_power, dc.idle_mode_input_power_ac_input, dc.no_vehicle_mode_input_power_ac_input, and dc.average_loading_adjusted_efficiency_ac_input.",
+      "units": "kW, Wac, and a dimensionless efficiency fraction normalized from the source field",
+      "covered_product_or_method_scope": "Native certified AC-output and DC-output charger fields required to keep charger-type calculations separate.",
+      "existing_or_proposed_coverage": "proposed-or-current",
+      "supported_scenarios": [
+        "linked-opportunity-exact-product",
+        "linked-opportunity-product-class"
+      ],
+      "required_lookup_inputs": [
+        "energy_star_product_context",
+        "energy_star_exact_product",
+        "linked_opportunity"
+      ],
+      "extraction_or_calculation_method": "Preserve charger subtype and native field families; calculate AC input as output plus the applicable mode-specific total loss, and calculate DC input as output divided by loading-adjusted efficiency.",
+      "selected_value_basis": "One exact record or one deterministically selected compatible record; no range is used.",
+      "uncertainty_basis": "Certified product fields do not resolve site utilization or an existing installed-equipment baseline.",
+      "fixture_or_test_reference": "docs/operational-savings-fixtures/sources/energy-star-evse-native-fields.json",
+      "access_limitations": "The retained fixture proves native field families and representative certified exports, not a complete eligible candidate population.",
+      "unsupported_uses": [
+        "Charging utilization or operating schedule",
+        "Existing installed-equipment baseline",
+        "Interchangeability of AC total-loss fields and DC loading-adjusted efficiency"
+      ],
+      "evidence_status": "VERIFIED",
+      "unit_ids": [
+        "kilowatt",
+        "watt_ac",
+        "fraction"
+      ],
+      "fixture_binding": {
+        "fixture_path": "docs/operational-savings-fixtures/sources/energy-star-evse-native-fields.json",
+        "fixture_type_pointer": "/fixture_type",
+        "source_title_pointer": "/source_title",
+        "source_url_pointer": "/raw_artifacts/0/source_url",
+        "source_version_pointer": "/raw_artifacts/0/source_version",
+        "artifact_pointer": "/raw_artifacts/0/exact_artifact",
+        "artifact_identifier_pointer": "/raw_artifacts/0/artifact_identifier",
+        "checksum_pointer": "/raw_artifacts/0/source_checksum",
+        "coverage_pointer": "/coverage/summary",
+        "source_roles_pointer": "/coverage/source_roles",
+        "field_pointers": [
+          "/fields/0/field",
+          "/fields/1/field",
+          "/fields/2/field",
+          "/fields/3/field",
+          "/fields/4/field",
+          "/fields/5/field",
+          "/fields/6/field",
+          "/fields/7/field"
+        ],
+        "unit_pointers": [
+          "/fields/0/unit_id",
+          "/fields/1/unit_id",
+          "/fields/2/unit_id",
+          "/fields/3/unit_id",
+          "/fields/4/unit_id",
+          "/fields/5/unit_id",
+          "/fields/6/unit_id",
+          "/fields/7/unit_id"
+        ],
+        "value_bindings": [
+          {
+            "pointer": "/values/0/value",
+            "expected": 11.52
+          },
+          {
+            "pointer": "/values/2/value",
+            "expected": 100
+          }
+        ],
+        "unsupported_inference_pointers": [
+          "/unsupported_inferences/0",
+          "/unsupported_inferences/1",
+          "/unsupported_inferences/2"
+        ],
+        "substantive_pointers": [
+          "/fields/1",
+          "/fields/7",
+          "/methods/0",
+          "/methods/1"
+        ],
+        "supporting_artifacts": [
+          {
+            "role": "certified AC-output product field example",
+            "source_url_pointer": "/raw_artifacts/1/source_url",
+            "source_version_pointer": "/raw_artifacts/1/source_version",
+            "artifact_pointer": "/raw_artifacts/1/exact_artifact",
+            "artifact_identifier_pointer": "/raw_artifacts/1/artifact_identifier",
+            "checksum_pointer": "/raw_artifacts/1/source_checksum"
+          },
+          {
+            "role": "certified DC-output product field example",
+            "source_url_pointer": "/raw_artifacts/2/source_url",
+            "source_version_pointer": "/raw_artifacts/2/source_version",
+            "artifact_pointer": "/raw_artifacts/2/exact_artifact",
+            "artifact_identifier_pointer": "/raw_artifacts/2/artifact_identifier",
+            "checksum_pointer": "/raw_artifacts/2/source_checksum"
+          }
+        ]
+      },
+      "source_checksum": "sha256:a8e5da603d0f4d99f75dbb56b1ef8a050646982e9c0b850152cdaef7a4c8cf2d"
+    },
+    {
+      "evidence_id": "E-ENERGY-STAR-OTHER",
+      "standard_id": "STD-ENERGY-STAR-PRODUCT-DATA",
+      "output_key": "energy_star.other_current_product_fields",
+      "source_roles": [
+        "proposed_or_qualified_product"
+      ],
+      "source_url": "https://www.energystar.gov/productfinder/advanced",
+      "source_title": "ENERGY STAR Product Finder datasets",
+      "source_version": "Current active specifications",
+      "exact_artifact": "Commercial clothes washer, ice machine, cooking, and EVSE datasets",
+      "exact_field_table_page_equation_or_function": "Product-specific field schemas are listed in the registry but have not all been captured as fixtures",
+      "units": "product-specific",
+      "covered_product_or_method_scope": "Currently certified proposed products",
+      "existing_or_proposed_coverage": "proposed-or-current",
+      "supported_scenarios": [
+        "linked-opportunity-exact-product",
+        "linked-opportunity-product-class",
+        "no-product-restriction",
+        "no-linked-opportunity",
+        "exact-proposed-model",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "energy_star_product_context",
+        "energy_star_exact_product",
+        "linked_opportunity"
+      ],
+      "extraction_or_calculation_method": "Product-specific adapter required",
+      "selected_value_basis": "No distribution until eligible records, filters, and sample size are fixture-tested",
+      "uncertainty_basis": "Current certification does not prove existing performance or site usage",
+      "fixture_or_test_reference": null,
+      "access_limitations": "Schema snapshots and representative rows remain incomplete",
+      "unsupported_uses": [
+        "Existing installed baseline",
+        "Usage assumptions",
+        "Cross-family field inference"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-ENERGY-STAR-EXISTING-UNSUPPORTED",
+      "standard_id": "STD-ENERGY-STAR-PRODUCT-DATA",
+      "output_key": "energy_star.existing_installed_baseline",
+      "source_roles": [
+        "existing_equipment_baseline"
+      ],
+      "source_url": "https://www.energystar.gov/productfinder/advanced",
+      "source_title": "ENERGY STAR Product Finder datasets",
+      "source_version": "Current active specifications",
+      "exact_artifact": "Current qualified-product datasets",
+      "exact_field_table_page_equation_or_function": "No installed-population artifact",
+      "units": "product-specific",
+      "covered_product_or_method_scope": "None for representative existing equipment",
+      "existing_or_proposed_coverage": "none",
+      "supported_scenarios": [],
+      "required_lookup_inputs": [],
+      "extraction_or_calculation_method": "This record does not support the claimed calculation role; continue through the next supported source in the single-value fallback policy.",
+      "selected_value_basis": "Unsupported",
+      "uncertainty_basis": "Efficient current products are not representative legacy equipment",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No retained historical installed-population source",
+      "unsupported_uses": [
+        "exact-existing-model without a retained record",
+        "existing-type-or-application",
+        "profile-or-bill-fallback",
+        "existing percentiles"
+      ],
+      "evidence_status": "UNSUPPORTED"
+    },
+    {
+      "evidence_id": "E-SAM-SOLAR-THERMAL",
+      "standard_id": "STD-SAM-SOLAR-THERMAL",
+      "output_key": "sam.solar_thermal_useful_energy",
+      "source_roles": [
+        "physics_or_calculation_method",
+        "geographic_or_climate"
+      ],
+      "source_url": "https://sam.nrel.gov/solar-water-heating.html",
+      "source_title": "SAM solar water heating model",
+      "source_version": "Unpinned",
+      "exact_artifact": "SAM solar water heating compute module",
+      "exact_field_table_page_equation_or_function": "Exact SSC input and output variable names and golden example are not pinned",
+      "units": "kWh-thermal/year",
+      "covered_product_or_method_scope": "Solar water-heating simulation after complete design and load inputs",
+      "existing_or_proposed_coverage": "proposed-system-method",
+      "supported_scenarios": [
+        "exact-input",
+        "linked-opportunity-constrained-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "site_coordinates",
+        "solar_thermal_configuration",
+        "hot_water_load",
+        "backup_resource"
+      ],
+      "extraction_or_calculation_method": "Run pinned SSC module locally",
+      "selected_value_basis": "Deterministic sensitivity inputs must be explicit",
+      "uncertainty_basis": "Design, load, and backup inputs dominate",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No module-version fixture",
+      "unsupported_uses": [
+        "Supplying missing design capacity",
+        "Supplying missing hot-water load",
+        "Tariff resolution"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-PVWATTS-V8",
+      "standard_id": "STD-PVWATTS-V8",
+      "output_key": "pvwatts.v8_ac_energy",
+      "source_roles": [
+        "physics_or_calculation_method",
+        "geographic_or_climate"
+      ],
+      "source_url": "https://developer.nrel.gov/docs/solar/pvwatts/v8/",
+      "source_title": "NREL PVWatts V8 API documentation",
+      "source_version": "8.0.0 documentation inspected 2026-07-22",
+      "exact_artifact": "Reviewed schema snapshot for GET /api/pvwatts/v8",
+      "exact_field_table_page_equation_or_function": "Required inputs system_capacity, module_type, losses, array_type, tilt, azimuth and location or solar_resource_file; outputs ac, ac_monthly, ac_annual, capacity_factor, station_info.solar_resource_file, warnings; bound fixture fields: system_capacity, module_type, losses, array_type, tilt, azimuth, location_or_solar_resource_file, outputs.ac, outputs.ac_monthly, outputs.ac_annual, outputs.capacity_factor, station_info.solar_resource_file, warnings",
+      "units": "kWdc input, Wac hourly, kWhac monthly and annual, percent",
+      "covered_product_or_method_scope": "PVWatts V8 required request fields and reviewed production-response fields.",
+      "existing_or_proposed_coverage": "proposed-system-method",
+      "supported_scenarios": [
+        "exact-input",
+        "linked-opportunity-constrained-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "site_coordinates",
+        "pv_array_configuration"
+      ],
+      "extraction_or_calculation_method": "Call or locally execute PVWatts V8 with explicit validated inputs",
+      "selected_value_basis": "Only explicit deterministic sensitivity cases; the API does not supply design ranges",
+      "uncertainty_basis": "Weather and loss assumptions plus system design",
+      "fixture_or_test_reference": "docs/operational-savings-fixtures/sources/pvwatts-v8-schema.json",
+      "access_limitations": "Hosted API requires a key for runtime calls; local SSC is preferred",
+      "unsupported_uses": [
+        "System capacity",
+        "Module selection",
+        "Tariff or bill value"
+      ],
+      "evidence_status": "VERIFIED",
+      "unit_ids": [
+        "kilowatt_dc",
+        "enumeration",
+        "percent",
+        "degree",
+        "location_selector",
+        "watt_ac",
+        "kilowatt_hour_ac_per_month",
+        "kilowatt_hour_ac_per_year",
+        "identifier",
+        "text_array"
+      ],
+      "fixture_binding": {
+        "fixture_path": "docs/operational-savings-fixtures/sources/pvwatts-v8-schema.json",
+        "fixture_type_pointer": "/fixture_type",
+        "source_title_pointer": "/source_title",
+        "source_url_pointer": "/raw_artifacts/0/source_url",
+        "source_version_pointer": "/raw_artifacts/0/source_version",
+        "artifact_pointer": "/raw_artifacts/0/exact_artifact",
+        "artifact_identifier_pointer": "/raw_artifacts/0/artifact_identifier",
+        "checksum_pointer": "/raw_artifacts/0/source_checksum",
+        "coverage_pointer": "/coverage/summary",
+        "source_roles_pointer": "/coverage/source_roles",
+        "field_pointers": [
+          "/fields/0/field",
+          "/fields/1/field",
+          "/fields/2/field",
+          "/fields/3/field",
+          "/fields/4/field",
+          "/fields/5/field",
+          "/fields/6/field",
+          "/fields/7/field",
+          "/fields/8/field",
+          "/fields/9/field",
+          "/fields/10/field",
+          "/fields/11/field",
+          "/fields/12/field"
+        ],
+        "unit_pointers": [
+          "/fields/0/unit_id",
+          "/fields/1/unit_id",
+          "/fields/2/unit_id",
+          "/fields/3/unit_id",
+          "/fields/4/unit_id",
+          "/fields/5/unit_id",
+          "/fields/6/unit_id",
+          "/fields/7/unit_id",
+          "/fields/8/unit_id",
+          "/fields/9/unit_id",
+          "/fields/10/unit_id",
+          "/fields/11/unit_id",
+          "/fields/12/unit_id"
+        ],
+        "value_bindings": [],
+        "unsupported_inference_pointers": [
+          "/unsupported_inferences/0",
+          "/unsupported_inferences/1",
+          "/unsupported_inferences/4"
+        ],
+        "substantive_pointers": [
+          "/fields/0",
+          "/fields/7",
+          "/methods/0"
+        ]
+      },
+      "source_checksum": "sha256:29d1ac02088e1cb5bbade030b48d9e024cd4ed59096878a0ea469c40e5adfae0"
+    },
+    {
+      "evidence_id": "E-WIND-SAM",
+      "standard_id": "STD-WIND-SAM",
+      "output_key": "wind_sam.ac_energy",
+      "source_roles": [
+        "physics_or_calculation_method",
+        "geographic_or_climate"
+      ],
+      "source_url": "https://sam.nrel.gov/wind.html",
+      "source_title": "SAM wind power model",
+      "source_version": "Unpinned",
+      "exact_artifact": "SAM wind compute module and Wind Toolkit resource",
+      "exact_field_table_page_equation_or_function": "Exact module variables and resource-field contract are not pinned",
+      "units": "kWhac",
+      "covered_product_or_method_scope": "Wind generation after explicit turbine and resource inputs",
+      "existing_or_proposed_coverage": "proposed-system-method",
+      "supported_scenarios": [
+        "exact-input",
+        "linked-opportunity-constrained-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "site_coordinates",
+        "wind_system_configuration",
+        "analysis_year"
+      ],
+      "extraction_or_calculation_method": "Run a pinned SAM module locally",
+      "selected_value_basis": "Explicit deterministic sensitivity only",
+      "uncertainty_basis": "Turbine curve, hub height, losses, and resource selection",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No schema or golden fixture",
+      "unsupported_uses": [
+        "Generic turbine capacity",
+        "Generic power curve",
+        "Tariff value"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-INTERVAL-TARIFF",
+      "standard_id": "STD-INTERVAL-TARIFF",
+      "output_key": "interval_tariff.input_set",
+      "source_roles": [
+        "physics_or_calculation_method",
+        "tariff_or_bill"
+      ],
+      "source_url": "https://developer.nlr.gov/docs/electricity/openei-utility-rates/",
+      "source_title": "OpenEI Utility Rates API documentation and Utility Rate Database",
+      "source_version": "Accessed 2026-07-23; exact utility tariff version remains project-specific",
+      "exact_artifact": "OpenEI Utility Rates API contract plus the controlling published utility tariff sheet for the matched account",
+      "exact_field_table_page_equation_or_function": "Match utility, schedule, customer class, and effective date; normalize energy periods, demand windows, ratchets, seasons, tiers, minimums, non-bypassable charges, and export rules; reconcile itemized monthly results",
+      "units": "record set containing native tariff units",
+      "covered_product_or_method_scope": "Electric interval, time-of-use, demand, and export tariff resolution",
+      "existing_or_proposed_coverage": "baseline-and-proposed-bill-input",
+      "supported_scenarios": [
+        "exact-published-tariff",
+        "itemized-bill-derived-screen",
+        "conservative-screening"
+      ],
+      "required_lookup_inputs": [
+        "utility_identity",
+        "rate_schedule_and_class",
+        "tariff_effective_date",
+        "interval_energy_and_demand",
+        "export_configuration"
+      ],
+      "extraction_or_calculation_method": "Resolve the exact published tariff first; otherwise use an itemized bill-derived screen; otherwise use a disclosed conservative screen with blended variable energy, effective demand when supported, and zero export credit only as a downside assumption",
+      "selected_value_basis": "One utility, schedule, customer class, and effective-date match, or one explicitly labeled screening input set",
+      "uncertainty_basis": "Exact tariff completeness and monthly bill-reconciliation residual",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No retained published tariff, normalized adapter fixture, or monthly bill-reconciliation golden case",
+      "unsupported_uses": [
+        "Generic tariff selection",
+        "Nearby schedule substitution",
+        "Zero as a missing energy or demand rate",
+        "Zero export credit represented as an inferred utility rule"
+      ],
+      "evidence_status": "LIMITED"
+    },
+    {
+      "evidence_id": "E-REOPT-DISPATCH",
+      "standard_id": "STD-REOPT-LOCAL-DISPATCH",
+      "output_key": "reopt.interval_dispatch_bill",
+      "source_roles": [
+        "physics_or_calculation_method",
+        "tariff_or_bill"
+      ],
+      "source_url": "https://github.com/NREL/REopt_API",
+      "source_title": "REopt API source repository",
+      "source_version": "Unpinned",
+      "exact_artifact": "Versioned REopt input schema, solver, and result schema",
+      "exact_field_table_page_equation_or_function": "Exact version, fields, and golden result are not pinned",
+      "units": "interval kW, interval kWh, dollars",
+      "covered_product_or_method_scope": "Dispatch and bill calculation with complete load, tariff, technology, and constraints",
+      "existing_or_proposed_coverage": "baseline-and-proposed-method",
+      "supported_scenarios": [
+        "exact-input",
+        "linked-opportunity-constrained-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "chronological_load_and_tariff",
+        "reopt_category_constraints"
+      ],
+      "extraction_or_calculation_method": "Run a pinned local REopt version and compare baseline with proposed",
+      "selected_value_basis": "Explicit deterministic scenario inputs only",
+      "uncertainty_basis": "No solution is valid without complete chronological and tariff inputs",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No pinned schema, solver, or category fixture",
+      "unsupported_uses": [
+        "Supplying missing load",
+        "Supplying missing tariff",
+        "Supplying missing technology design"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-EPA-CHP",
+      "standard_id": "STD-EPA-CHP-PERFORMANCE",
+      "output_key": "epa_chp.performance_balance",
+      "source_roles": [
+        "proposed_or_qualified_product",
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://www.epa.gov/chp/chp-technologies",
+      "source_title": "EPA CHP technologies",
+      "source_version": "Current page and linked catalog, unpinned",
+      "exact_artifact": "Technology and capacity performance tables plus CHP savings calculator workbook",
+      "exact_field_table_page_equation_or_function": "Exact row and workbook cell contract not yet captured",
+      "units": "kW, percent, MMBtu",
+      "covered_product_or_method_scope": "Representative proposed CHP technology and capacity classes",
+      "existing_or_proposed_coverage": "proposed-class-method",
+      "supported_scenarios": [
+        "exact-input",
+        "source-table-technology-and-capacity-class",
+        "linked-opportunity-constrained-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "prime_mover_and_fuel",
+        "chp_exact_model",
+        "generation_capacity",
+        "operating_profile",
+        "thermal_load_coincidence",
+        "linked_opportunity"
+      ],
+      "extraction_or_calculation_method": "Select one documented row, then calculate fuel and useful heat with explicit project inputs",
+      "selected_value_basis": "Documented table bounds only",
+      "uncertainty_basis": "Representative class plus project-specific heat coincidence",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No table or workbook fixture",
+      "unsupported_uses": [
+        "Exact model resolution",
+        "Capacity default",
+        "Operating-profile default",
+        "Thermal-coincidence default"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-FUELECONOMY-COMB08",
+      "standard_id": "STD-FUELECONOMY-VEHICLES",
+      "output_key": "fueleconomy.comb08",
+      "source_roles": [
+        "existing_equipment_baseline",
+        "proposed_or_qualified_product",
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://www.fueleconomy.gov/ws/rest/vehicle/43764",
+      "source_title": "FuelEconomy.gov Web Services exact Hyundai Kona vehicle records",
+      "source_version": "Vehicle record 43764 modified 2021-08-24; retrieved 2026-07-22",
+      "exact_artifact": "GET /ws/rest/vehicle/43764",
+      "exact_field_table_page_equation_or_function": "comb08 - combined MPG for fuelType1; id, year, make, model, VClass, drive, fuelType1; bound fixture fields: id, year, make, model, baseModel, VClass, drive, fuelType1, comb08",
+      "units": "miles/gallon",
+      "covered_product_or_method_scope": "One exact 2022 Hyundai Kona FWD gasoline record and one exact 2022 Hyundai Kona Electric record in the same FuelEconomy.gov vehicle class.",
+      "existing_or_proposed_coverage": "existing-and-proposed-exact-model",
+      "supported_scenarios": [
+        "exact-existing-model",
+        "exact-proposed-model",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "vehicle_context",
+        "vehicle_exact_model"
+      ],
+      "extraction_or_calculation_method": "Select an unambiguous vehicle record and calculate gallons per mile as 1 / comb08",
+      "selected_value_basis": "Exact record uses one value",
+      "uncertainty_basis": "Standardized rating differs from actual duty, payload, and weather",
+      "fixture_or_test_reference": "docs/operational-savings-fixtures/sources/fueleconomy-vehicle-schema.json",
+      "access_limitations": "Light-duty vehicle coverage only",
+      "unsupported_uses": [
+        "Annual mileage",
+        "Vehicle fuel price",
+        "Vehicle-class percentile or representative class estimate"
+      ],
+      "evidence_status": "VERIFIED",
+      "unit_ids": [
+        "identifier",
+        "model_year",
+        "text",
+        "classification",
+        "mile_per_gallon"
+      ],
+      "fixture_binding": {
+        "fixture_path": "docs/operational-savings-fixtures/sources/fueleconomy-vehicle-schema.json",
+        "fixture_type_pointer": "/fixture_type",
+        "source_title_pointer": "/source_title",
+        "source_url_pointer": "/raw_artifacts/0/source_url",
+        "source_version_pointer": "/raw_artifacts/0/source_version",
+        "artifact_pointer": "/raw_artifacts/0/exact_artifact",
+        "artifact_identifier_pointer": "/raw_artifacts/0/artifact_identifier",
+        "checksum_pointer": "/raw_artifacts/0/source_checksum",
+        "coverage_pointer": "/coverage/summary",
+        "source_roles_pointer": "/coverage/source_roles",
+        "field_pointers": [
+          "/fields/0/field",
+          "/fields/1/field",
+          "/fields/2/field",
+          "/fields/3/field",
+          "/fields/4/field",
+          "/fields/5/field",
+          "/fields/6/field",
+          "/fields/7/field",
+          "/fields/8/field"
+        ],
+        "unit_pointers": [
+          "/fields/0/unit_id",
+          "/fields/1/unit_id",
+          "/fields/2/unit_id",
+          "/fields/3/unit_id",
+          "/fields/4/unit_id",
+          "/fields/5/unit_id",
+          "/fields/6/unit_id",
+          "/fields/7/unit_id",
+          "/fields/8/unit_id"
+        ],
+        "value_bindings": [
+          {
+            "pointer": "/values/4/value",
+            "expected": 32
+          }
+        ],
+        "unsupported_inference_pointers": [
+          "/unsupported_inferences/0",
+          "/unsupported_inferences/1",
+          "/unsupported_inferences/4"
+        ],
+        "substantive_pointers": [
+          "/fields/8",
+          "/values/4",
+          "/methods/0"
+        ]
+      },
+      "source_checksum": "sha256:2dd19421526bb67394a257f812855e902adca8d83bf413b82b6aa3496f517207"
+    },
+    {
+      "evidence_id": "E-FUELECONOMY-COMBE",
+      "standard_id": "STD-FUELECONOMY-VEHICLES",
+      "output_key": "fueleconomy.combE",
+      "source_roles": [
+        "existing_equipment_baseline",
+        "proposed_or_qualified_product",
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://www.fueleconomy.gov/ws/rest/vehicle/44444",
+      "source_title": "FuelEconomy.gov Web Services exact Hyundai Kona vehicle records",
+      "source_version": "Vehicle record 44444 modified 2022-10-26; retrieved 2026-07-22",
+      "exact_artifact": "GET /ws/rest/vehicle/44444",
+      "exact_field_table_page_equation_or_function": "combE - combined electricity consumption in kWh/100 miles; EPA states MPGe values account for EVSE and on-board charger losses and represent electricity from the wall; bound fixture fields: id, year, make, model, baseModel, VClass, drive, fuelType1, combE",
+      "units": "kWh/100 miles at the wall",
+      "covered_product_or_method_scope": "One exact 2022 Hyundai Kona FWD gasoline record and one exact 2022 Hyundai Kona Electric record in the same FuelEconomy.gov vehicle class.",
+      "existing_or_proposed_coverage": "existing-and-proposed-exact-model",
+      "supported_scenarios": [
+        "exact-existing-model",
+        "exact-proposed-model",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "vehicle_context",
+        "vehicle_exact_model"
+      ],
+      "extraction_or_calculation_method": "Select an unambiguous vehicle record and calculate kWh per mile as combE / 100 with no additional charging-efficiency factor",
+      "selected_value_basis": "Exact record uses one value",
+      "uncertainty_basis": "Standardized rating differs from actual duty, payload, temperature, and charging conditions",
+      "fixture_or_test_reference": "docs/operational-savings-fixtures/sources/fueleconomy-vehicle-schema.json",
+      "access_limitations": "Light-duty vehicle coverage only",
+      "unsupported_uses": [
+        "Annual mileage",
+        "Electric tariff",
+        "Automatic service equivalence from VClass or baseModel",
+        "Vehicle-class percentile or representative class estimate",
+        "A second charging-loss adjustment"
+      ],
+      "evidence_status": "VERIFIED",
+      "unit_ids": [
+        "identifier",
+        "model_year",
+        "text",
+        "classification",
+        "kilowatt_hour_per_100_mile"
+      ],
+      "fixture_binding": {
+        "fixture_path": "docs/operational-savings-fixtures/sources/fueleconomy-vehicle-schema.json",
+        "fixture_type_pointer": "/fixture_type",
+        "source_title_pointer": "/source_title",
+        "source_url_pointer": "/raw_artifacts/1/source_url",
+        "source_version_pointer": "/raw_artifacts/1/source_version",
+        "artifact_pointer": "/raw_artifacts/1/exact_artifact",
+        "artifact_identifier_pointer": "/raw_artifacts/1/artifact_identifier",
+        "checksum_pointer": "/raw_artifacts/1/source_checksum",
+        "supporting_artifacts": [
+          {
+            "role": "wall-electricity and charging-loss method",
+            "source_url_pointer": "/raw_artifacts/3/source_url",
+            "source_version_pointer": "/raw_artifacts/3/source_version",
+            "artifact_pointer": "/raw_artifacts/3/exact_artifact",
+            "artifact_identifier_pointer": "/raw_artifacts/3/artifact_identifier",
+            "checksum_pointer": "/raw_artifacts/3/source_checksum"
+          }
+        ],
+        "coverage_pointer": "/coverage/summary",
+        "source_roles_pointer": "/coverage/source_roles",
+        "field_pointers": [
+          "/fields/0/field",
+          "/fields/1/field",
+          "/fields/2/field",
+          "/fields/3/field",
+          "/fields/4/field",
+          "/fields/5/field",
+          "/fields/6/field",
+          "/fields/7/field",
+          "/fields/9/field"
+        ],
+        "unit_pointers": [
+          "/fields/0/unit_id",
+          "/fields/1/unit_id",
+          "/fields/2/unit_id",
+          "/fields/3/unit_id",
+          "/fields/4/unit_id",
+          "/fields/5/unit_id",
+          "/fields/6/unit_id",
+          "/fields/7/unit_id",
+          "/fields/9/unit_id"
+        ],
+        "value_bindings": [
+          {
+            "pointer": "/values/9/value",
+            "expected": 28
+          }
+        ],
+        "unsupported_inference_pointers": [
+          "/unsupported_inferences/0",
+          "/unsupported_inferences/2",
+          "/unsupported_inferences/3",
+          "/unsupported_inferences/4",
+          "/unsupported_inferences/5"
+        ],
+        "substantive_pointers": [
+          "/fields/9",
+          "/values/9",
+          "/methods/1",
+          "/methods/2"
+        ]
+      },
+      "source_checksum": "sha256:559eaf6d9f60712e6c3accaa32d12c116640baf0b19655f7aa5dee1f0487fee2"
+    },
+    {
+      "evidence_id": "E-FUELECONOMY-DISTRIBUTION-UNSUPPORTED",
+      "standard_id": "STD-FUELECONOMY-VEHICLES",
+      "output_key": "fueleconomy.class_distribution",
+      "source_roles": [
+        "existing_equipment_baseline"
+      ],
+      "source_url": "https://www.fueleconomy.gov/feg/ws/index.shtml",
+      "source_title": "FuelEconomy.gov vehicle table",
+      "source_version": "1984-current",
+      "exact_artifact": "No approved eligible-population fixture",
+      "exact_field_table_page_equation_or_function": "Vehicle class and compatibility filters are not yet defined",
+      "units": "MPG or kWh/100 miles",
+      "covered_product_or_method_scope": "None for a class estimate",
+      "existing_or_proposed_coverage": "none",
+      "supported_scenarios": [],
+      "required_lookup_inputs": [
+        "vehicle_context"
+      ],
+      "extraction_or_calculation_method": "This record does not support the claimed calculation role; continue through the next supported source in the single-value fallback policy.",
+      "selected_value_basis": "Percentiles prohibited without filters and sample size",
+      "uncertainty_basis": "Vehicle class alone does not establish service compatibility",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No product decision or sample fixture",
+      "unsupported_uses": [
+        "existing-type-or-application",
+        "linked-opportunity-product-class",
+        "no-product-restriction",
+        "no-linked-opportunity"
+      ],
+      "evidence_status": "UNSUPPORTED"
+    },
+    {
+      "evidence_id": "E-WATERSENSE-PROPOSED",
+      "standard_id": "STD-WATERSENSE-FIXTURES",
+      "output_key": "watersense.proposed_fixture_criteria",
+      "source_roles": [
+        "proposed_or_qualified_product"
+      ],
+      "source_url": "https://www.epa.gov/watersense/best-management-practices",
+      "source_title": "WaterSense best management practices",
+      "source_version": "Current page, exact guide version unpinned",
+      "exact_artifact": "WaterSense at Work plumbing sections and product specifications",
+      "exact_field_table_page_equation_or_function": "Exact page, criterion, and product schema fixture not yet captured",
+      "units": "gallons/minute or gallons/flush",
+      "covered_product_or_method_scope": "Proposed WaterSense fixture criteria",
+      "existing_or_proposed_coverage": "proposed",
+      "supported_scenarios": [
+        "linked-opportunity-exact-product",
+        "linked-opportunity-product-class",
+        "no-product-restriction",
+        "no-linked-opportunity",
+        "exact-proposed-model",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "fixture_context",
+        "fixture_exact_rating",
+        "linked_opportunity"
+      ],
+      "extraction_or_calculation_method": "Select an exact compatible proposed criterion or rating",
+      "selected_value_basis": "Exact rating only until a population fixture exists",
+      "uncertainty_basis": "Rated performance does not establish actual use",
+      "fixture_or_test_reference": null,
+      "access_limitations": "Exact source pages and product rows remain unpinned",
+      "unsupported_uses": [
+        "Existing fixture baseline",
+        "Commercial use frequency",
+        "Hot-water fraction"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-WATERSENSE-EXISTING-UNSUPPORTED",
+      "standard_id": "STD-WATERSENSE-FIXTURES",
+      "output_key": "watersense.existing_fixture_and_usage",
+      "source_roles": [
+        "existing_equipment_baseline",
+        "usage_or_operating_schedule"
+      ],
+      "source_url": "https://www.epa.gov/watersense/commercial-buildings",
+      "source_title": "WaterSense commercial buildings",
+      "source_version": "Current",
+      "exact_artifact": "No reviewed installed-baseline or commercial-frequency fixture",
+      "exact_field_table_page_equation_or_function": "No approved exact table or equation",
+      "units": "gallons/minute, gallons/flush, uses/year",
+      "covered_product_or_method_scope": "None for the claimed default path",
+      "existing_or_proposed_coverage": "none",
+      "supported_scenarios": [],
+      "required_lookup_inputs": [
+        "fixture_context"
+      ],
+      "extraction_or_calculation_method": "This record does not support the claimed calculation role; continue through the next supported source in the single-value fallback policy.",
+      "selected_value_basis": "Unsupported",
+      "uncertainty_basis": "Household use assumptions cannot be transferred to commercial operation without explicit support",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No exact commercial-use artifact",
+      "unsupported_uses": [
+        "existing-type-or-application",
+        "profile-or-bill-fallback",
+        "commercial usage default"
+      ],
+      "evidence_status": "UNSUPPORTED"
+    },
+    {
+      "evidence_id": "E-WATERSENSE-LANDSCAPE-DESIGN",
+      "standard_id": "STD-WATERSENSE-LANDSCAPE",
+      "output_key": "watersense.landscape_design_allowance",
+      "source_roles": [
+        "physics_or_calculation_method",
+        "geographic_or_climate"
+      ],
+      "source_url": "https://www.epa.gov/watersense/water-budget-tool",
+      "source_title": "EPA WaterSense Water Budget Tool Version 2.0",
+      "source_version": "Version 2.0",
+      "exact_artifact": "Water Budget Tool Version 2.0 and downloadable climate data",
+      "exact_field_table_page_equation_or_function": "EPA page states the tool compares estimated designed-landscape water use with typical standard new construction using local climate data and user entries; bound fixture fields: zip_code, landscape_area_by_hydrozone, plant_or_landscape_type, irrigation_method, irrigation_efficiency, modeled_design_allowance_difference",
+      "units": "gallons/year",
+      "covered_product_or_method_scope": "Designed residential or commercial landscape water use compared with typical standard new construction using local climate data and user entries.",
+      "existing_or_proposed_coverage": "modeled-design-comparison",
+      "supported_scenarios": [
+        "exact-input",
+        "class-or-context-estimate",
+        "linked-opportunity-constrained-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "site_zip",
+        "hydrozone_definition",
+        "irrigation_configuration",
+        "irrigation_efficiency"
+      ],
+      "extraction_or_calculation_method": "Run Version 2.0 equations with identical climate and area boundaries for both designs",
+      "selected_value_basis": "Explicit deterministic plant factor and irrigation-efficiency sensitivity only",
+      "uncertainty_basis": "Design comparison is not measured operation or a schedule",
+      "fixture_or_test_reference": "docs/operational-savings-fixtures/sources/watersense-landscape-scope.json",
+      "access_limitations": "U.S. ZIP Codes and design inputs only",
+      "unsupported_uses": [
+        "Measured actual existing irrigation consumption",
+        "Irrigation scheduling",
+        "Whole-site water-bill end-use allocation"
+      ],
+      "evidence_status": "VERIFIED",
+      "unit_ids": [
+        "postal_code",
+        "square_foot",
+        "classification",
+        "fraction",
+        "gallon_per_year"
+      ],
+      "fixture_binding": {
+        "fixture_path": "docs/operational-savings-fixtures/sources/watersense-landscape-scope.json",
+        "fixture_type_pointer": "/fixture_type",
+        "source_title_pointer": "/source_title",
+        "source_url_pointer": "/raw_artifacts/0/source_url",
+        "source_version_pointer": "/raw_artifacts/0/source_version",
+        "artifact_pointer": "/raw_artifacts/0/exact_artifact",
+        "artifact_identifier_pointer": "/raw_artifacts/0/artifact_identifier",
+        "checksum_pointer": "/raw_artifacts/0/source_checksum",
+        "coverage_pointer": "/coverage/summary",
+        "source_roles_pointer": "/coverage/source_roles",
+        "field_pointers": [
+          "/fields/0/field",
+          "/fields/1/field",
+          "/fields/2/field",
+          "/fields/3/field",
+          "/fields/4/field",
+          "/fields/5/field"
+        ],
+        "unit_pointers": [
+          "/fields/0/unit_id",
+          "/fields/1/unit_id",
+          "/fields/2/unit_id",
+          "/fields/3/unit_id",
+          "/fields/4/unit_id",
+          "/fields/5/unit_id"
+        ],
+        "value_bindings": [],
+        "unsupported_inference_pointers": [
+          "/unsupported_inferences/0",
+          "/unsupported_inferences/1",
+          "/unsupported_inferences/2"
+        ],
+        "substantive_pointers": [
+          "/fields/5",
+          "/methods/0"
+        ]
+      },
+      "source_checksum": "sha256:363af634ea93174dac1ec8e35487ad9c3ead88f94b05232aafb6cb5f070820c8"
+    },
+    {
+      "evidence_id": "E-WATERSENSE-LANDSCAPE-ACTUAL-UNSUPPORTED",
+      "standard_id": "STD-WATERSENSE-LANDSCAPE",
+      "output_key": "watersense.actual_irrigation_consumption",
+      "source_roles": [
+        "existing_equipment_baseline",
+        "usage_or_operating_schedule"
+      ],
+      "source_url": "https://www.epa.gov/watersense/water-budget-tool",
+      "source_title": "WaterSense Water Budget Tool",
+      "source_version": "Version 2.0",
+      "exact_artifact": "Tool scope statement",
+      "exact_field_table_page_equation_or_function": "EPA states the tool is not meant to determine irrigation scheduling",
+      "units": "gallons/year",
+      "covered_product_or_method_scope": "None for measured actual use",
+      "existing_or_proposed_coverage": "none",
+      "supported_scenarios": [],
+      "required_lookup_inputs": [],
+      "extraction_or_calculation_method": "This record does not resolve actual consumption; continue through the next supported source in the single-value fallback policy.",
+      "selected_value_basis": "Unsupported",
+      "uncertainty_basis": "A design allowance is not a measurement",
+      "fixture_or_test_reference": "docs/operational-savings-fixtures/sources/watersense-landscape-scope.json",
+      "access_limitations": "Tool scope",
+      "unsupported_uses": [
+        "Measured operational savings",
+        "Existing irrigation consumption",
+        "Irrigation schedule"
+      ],
+      "evidence_status": "UNSUPPORTED"
+    },
+    {
+      "evidence_id": "E-WATERSENSE-CI",
+      "standard_id": "STD-WATERSENSE-CI-OPERATIONS",
+      "output_key": "watersense.ci_operation_equation",
+      "source_roles": [
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://www.epa.gov/watersense/best-management-practices",
+      "source_title": "WaterSense at Work",
+      "source_version": "Unpinned",
+      "exact_artifact": "Leak and mechanical-system best-management-practice sections",
+      "exact_field_table_page_equation_or_function": "Exact pages, equations, and worked examples not yet pinned",
+      "units": "gallons/year and kWh/year",
+      "covered_product_or_method_scope": "Commercial leak and cooling-tower methods after measured inputs",
+      "existing_or_proposed_coverage": "method",
+      "supported_scenarios": [
+        "exact-input",
+        "linked-opportunity-constrained-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "watersense_method_inputs"
+      ],
+      "extraction_or_calculation_method": "Implement exact reviewed equation only",
+      "selected_value_basis": "Explicit measured-input sensitivity only",
+      "uncertainty_basis": "Leak duration and tower operating data dominate",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No equation or golden fixture",
+      "unsupported_uses": [
+        "Generic defaults",
+        "Unmeasured leak duration",
+        "Unmeasured tower balance"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-FEMP-PROPOSED",
+      "standard_id": "STD-FEMP-EXTERIOR-LIGHTING",
+      "output_key": "femp.proposed_exterior_efficacy",
+      "source_roles": [
+        "proposed_or_qualified_product"
+      ],
+      "source_url": "https://www.energy.gov/cmei/femp/purchasing-energy-efficient-exterior-lighting",
+      "source_title": "FEMP Purchasing Energy-Efficient Exterior Lighting",
+      "source_version": "Updated June 2023",
+      "exact_artifact": "Table 1 - Efficiency Requirements for Exterior Lighting",
+      "exact_field_table_page_equation_or_function": "LER minimums by seven covered exterior application categories; bound fixture fields: application_category, ler_minimum",
+      "units": "lumens/watt",
+      "covered_product_or_method_scope": "Seven proposed exterior-lighting application efficacy minimums plus one wall-mounted example with three performance columns.",
+      "existing_or_proposed_coverage": "proposed",
+      "supported_scenarios": [
+        "proposed-application-threshold",
+        "linked-opportunity-product-class",
+        "no-product-restriction",
+        "no-linked-opportunity",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "exterior_fixture_context",
+        "linked_opportunity"
+      ],
+      "extraction_or_calculation_method": "Select the exact listed application and return its minimum LER",
+      "selected_value_basis": "Single threshold, not a distribution",
+      "uncertainty_basis": "Efficacy alone does not provide input watts without compatible light output",
+      "fixture_or_test_reference": "docs/operational-savings-fixtures/sources/femp-exterior-lighting-tables.json",
+      "access_limitations": "Seven covered application categories only",
+      "unsupported_uses": [
+        "General installed legacy-fixture wattage",
+        "Input watts outside the wall-mounted example",
+        "Exact proposed product input watts"
+      ],
+      "evidence_status": "VERIFIED",
+      "unit_ids": [
+        "classification",
+        "lumen_per_watt"
+      ],
+      "fixture_binding": {
+        "fixture_path": "docs/operational-savings-fixtures/sources/femp-exterior-lighting-tables.json",
+        "fixture_type_pointer": "/fixture_type",
+        "source_title_pointer": "/source_title",
+        "source_url_pointer": "/raw_artifacts/0/source_url",
+        "source_version_pointer": "/raw_artifacts/0/source_version",
+        "artifact_pointer": "/raw_artifacts/0/exact_artifact",
+        "artifact_identifier_pointer": "/raw_artifacts/0/artifact_identifier",
+        "checksum_pointer": "/raw_artifacts/0/source_checksum",
+        "coverage_pointer": "/coverage/summary",
+        "source_roles_pointer": "/coverage/source_roles",
+        "field_pointers": [
+          "/fields/0/field",
+          "/fields/1/field"
+        ],
+        "unit_pointers": [
+          "/fields/0/unit_id",
+          "/fields/1/unit_id"
+        ],
+        "value_bindings": [
+          {
+            "pointer": "/values/0/value",
+            "expected": 126
+          }
+        ],
+        "unsupported_inference_pointers": [
+          "/unsupported_inferences/0",
+          "/unsupported_inferences/2",
+          "/unsupported_inferences/3"
+        ],
+        "substantive_pointers": [
+          "/tables/0",
+          "/values/0"
+        ]
+      },
+      "source_checksum": "sha256:c9c3a975668e7b7b929556927bd181dbf99a8e37d45b155a060da1aa89685727"
+    },
+    {
+      "evidence_id": "E-FEMP-WALL-EXAMPLE",
+      "standard_id": "STD-FEMP-EXTERIOR-LIGHTING",
+      "output_key": "femp.wall_mounted_example",
+      "source_roles": [
+        "proposed_or_qualified_product",
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://www.energy.gov/cmei/femp/purchasing-energy-efficient-exterior-lighting",
+      "source_title": "FEMP Purchasing Energy-Efficient Exterior Lighting",
+      "source_version": "Updated June 2023",
+      "exact_artifact": "Table 2 - Lifetime Savings for Efficient Wall-Mounted Luminaires and Performance Column assumptions",
+      "exact_field_table_page_equation_or_function": "LER 139, 126, and 65; annual energy 257, 286, and 565 kWh; 9,900 to 10,100 lumen output; 3,600 annual operating hours; bound fixture fields: ler_minimum, annual_operating_hours, annual_energy",
+      "units": "lumens/watt, kWh/year, hours/year",
+      "covered_product_or_method_scope": "Seven proposed exterior-lighting application efficacy minimums plus one wall-mounted example with three performance columns.",
+      "existing_or_proposed_coverage": "narrow-comparison-example",
+      "supported_scenarios": [
+        "proposed-application-threshold",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "exterior_fixture_context"
+      ],
+      "extraction_or_calculation_method": "Use only as the exact documented example",
+      "selected_value_basis": "Three named example columns, not percentiles",
+      "uncertainty_basis": "Narrow product and lumen range",
+      "fixture_or_test_reference": "docs/operational-savings-fixtures/sources/femp-exterior-lighting-tables.json",
+      "access_limitations": "Wall-mounted 9,900 to 10,100 lumen example only",
+      "unsupported_uses": [
+        "General installed legacy-fixture wattage",
+        "Existing fixture percentiles",
+        "Profile or Bill product fallback"
+      ],
+      "evidence_status": "VERIFIED",
+      "unit_ids": [
+        "lumen_per_watt",
+        "hour_per_year",
+        "kilowatt_hour_per_year"
+      ],
+      "fixture_binding": {
+        "fixture_path": "docs/operational-savings-fixtures/sources/femp-exterior-lighting-tables.json",
+        "fixture_type_pointer": "/fixture_type",
+        "source_title_pointer": "/source_title",
+        "source_url_pointer": "/raw_artifacts/1/source_url",
+        "source_version_pointer": "/raw_artifacts/1/source_version",
+        "artifact_pointer": "/raw_artifacts/1/exact_artifact",
+        "artifact_identifier_pointer": "/raw_artifacts/1/artifact_identifier",
+        "checksum_pointer": "/raw_artifacts/1/source_checksum",
+        "coverage_pointer": "/coverage/summary",
+        "source_roles_pointer": "/coverage/source_roles",
+        "field_pointers": [
+          "/fields/1/field",
+          "/fields/2/field",
+          "/fields/3/field"
+        ],
+        "unit_pointers": [
+          "/fields/1/unit_id",
+          "/fields/2/unit_id",
+          "/fields/3/unit_id"
+        ],
+        "value_bindings": [
+          {
+            "pointer": "/values/1/value",
+            "expected": 65
+          },
+          {
+            "pointer": "/values/2/value",
+            "expected": 3600
+          }
+        ],
+        "unsupported_inference_pointers": [
+          "/unsupported_inferences/0",
+          "/unsupported_inferences/1",
+          "/unsupported_inferences/4"
+        ],
+        "substantive_pointers": [
+          "/tables/1",
+          "/values/1",
+          "/values/2"
+        ]
+      },
+      "source_checksum": "sha256:c9c3a975668e7b7b929556927bd181dbf99a8e37d45b155a060da1aa89685727"
+    },
+    {
+      "evidence_id": "E-FEMP-EXISTING-UNSUPPORTED",
+      "standard_id": "STD-FEMP-EXTERIOR-LIGHTING",
+      "output_key": "femp.existing_fixture_watts",
+      "source_roles": [
+        "existing_equipment_baseline"
+      ],
+      "source_url": "https://www.energy.gov/cmei/femp/purchasing-energy-efficient-exterior-lighting",
+      "source_title": "Purchasing Energy-Efficient Exterior Lighting",
+      "source_version": "Updated June 2023",
+      "exact_artifact": "Tables 1 and 2",
+      "exact_field_table_page_equation_or_function": "No general installed legacy input-watt table or candidate population",
+      "units": "watts",
+      "covered_product_or_method_scope": "None for general existing fixtures",
+      "existing_or_proposed_coverage": "none",
+      "supported_scenarios": [],
+      "required_lookup_inputs": [
+        "existing_fixture_model"
+      ],
+      "extraction_or_calculation_method": "Require nameplate, measurement, or a separate verified historical source",
+      "selected_value_basis": "Unsupported",
+      "uncertainty_basis": "A proposed efficacy threshold cannot establish existing watts",
+      "fixture_or_test_reference": "docs/operational-savings-fixtures/sources/femp-exterior-lighting-tables.json",
+      "access_limitations": "Source role mismatch",
+      "unsupported_uses": [
+        "exact-existing-model",
+        "existing-type-or-application",
+        "profile-or-bill-fallback",
+        "legacy percentiles"
+      ],
+      "evidence_status": "UNSUPPORTED"
+    },
+    {
+      "evidence_id": "E-SCHEDULE-EXPLICIT",
+      "standard_id": "STD-OPERATING-SCHEDULE",
+      "output_key": "schedule.explicit_calendar_hours",
+      "source_roles": [
+        "usage_or_operating_schedule",
+        "physics_or_calculation_method",
+        "geographic_or_climate"
+      ],
+      "source_url": "https://aa.usno.navy.mil/faq/RST_defs",
+      "source_title": "USNO Rise, Set, and Twilight Definitions",
+      "source_version": "Current",
+      "exact_artifact": "Calendar arithmetic and USNO daylight definitions",
+      "exact_field_table_page_equation_or_function": "annual hours from explicit hours/day, days/week, active weeks, holidays, timezone, and declared daylight control",
+      "units": "hours/year",
+      "covered_product_or_method_scope": "Explicit schedules and exterior daylight-control calculations",
+      "existing_or_proposed_coverage": "usage-method",
+      "supported_scenarios": [
+        "measured-exact-input",
+        "explicit-calendar-calculation",
+        "daylight-control-calculation",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "operating_schedule",
+        "operating_schedule_details",
+        "measured_annual_operating_hours"
+      ],
+      "extraction_or_calculation_method": "Sum a complete explicit calendar or calculate daylight-controlled hours from coordinates and timezone",
+      "selected_value_basis": "Explicit deterministic sensitivity values only",
+      "uncertainty_basis": "Actual overrides, holidays, and control behavior",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No executable daylight or calendar fixture yet",
+      "unsupported_uses": [
+        "Industry label alone",
+        "Unexplained annual-hours constant"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-SCHEDULE-CONTEXT-UNSUPPORTED",
+      "standard_id": "STD-OPERATING-SCHEDULE",
+      "output_key": "schedule.context_default",
+      "source_roles": [
+        "usage_or_operating_schedule"
+      ],
+      "source_url": "https://www.energy.gov/cmei/buildings/commercial-reference-buildings",
+      "source_title": "DOE Commercial Reference Buildings",
+      "source_version": "Current",
+      "exact_artifact": "Reference-building schedules",
+      "exact_field_table_page_equation_or_function": "No reviewed mapping from business.primaryActivityText or buildingTypes to project operating hours",
+      "units": "hours/year",
+      "covered_product_or_method_scope": "None for a site default",
+      "existing_or_proposed_coverage": "none",
+      "supported_scenarios": [],
+      "required_lookup_inputs": [
+        "operating_schedule"
+      ],
+      "extraction_or_calculation_method": "Profile context alone does not resolve this value; combine it with the next supported source in the single-value fallback policy.",
+      "selected_value_basis": "Unsupported",
+      "uncertainty_basis": "Reference schedules do not prove site operation",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No mapping fixture",
+      "unsupported_uses": [
+        "class-or-context-estimate",
+        "Industry-label-only annual hours"
+      ],
+      "evidence_status": "UNSUPPORTED"
+    },
+    {
+      "evidence_id": "E-MEASUR-ITC04",
+      "standard_id": "STD-DOE-MEASUR",
+      "output_key": "measur.itc04",
+      "source_roles": [
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://github.com/ORNL-AMO/AMO-Tools-Suite",
+      "source_title": "MEASUR source repository",
+      "source_version": "Unpinned",
+      "exact_artifact": "ITC-04 boiler-control adapter not selected",
+      "exact_field_table_page_equation_or_function": "Calculator ID, inputs, units, output, function, and golden example missing",
+      "units": "fraction",
+      "covered_product_or_method_scope": "None until adapter selection",
+      "existing_or_proposed_coverage": "method",
+      "supported_scenarios": [
+        "exact-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "measur_calculator_inputs"
+      ],
+      "extraction_or_calculation_method": "This record does not support the claimed calculation role; continue through the next supported source in the single-value fallback policy.",
+      "selected_value_basis": "Explicit sensitivity only after adapter validation",
+      "uncertainty_basis": "Missing calculator contract",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No exact module fixture",
+      "unsupported_uses": [
+        "Generic MEASUR defaults"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-MEASUR-ITC09",
+      "standard_id": "STD-DOE-MEASUR",
+      "output_key": "measur.itc09",
+      "source_roles": [
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://github.com/ORNL-AMO/AMO-Tools-Suite",
+      "source_title": "MEASUR source repository",
+      "source_version": "Unpinned",
+      "exact_artifact": "ITC-09 recirculation adapter not selected",
+      "exact_field_table_page_equation_or_function": "Calculator ID, inputs, units, output, function, and golden example missing",
+      "units": "energy/year",
+      "covered_product_or_method_scope": "None until adapter selection",
+      "existing_or_proposed_coverage": "method",
+      "supported_scenarios": [
+        "exact-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "measur_calculator_inputs"
+      ],
+      "extraction_or_calculation_method": "This record does not support the claimed calculation role; continue through the next supported source in the single-value fallback policy.",
+      "selected_value_basis": "Explicit sensitivity only after adapter validation",
+      "uncertainty_basis": "Missing calculator contract",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No exact module fixture",
+      "unsupported_uses": [
+        "Generic MEASUR defaults"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-MEASUR-ITC12",
+      "standard_id": "STD-DOE-MEASUR",
+      "output_key": "measur.itc12",
+      "source_roles": [
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://github.com/ORNL-AMO/AMO-Tools-Suite",
+      "source_title": "MEASUR source repository",
+      "source_version": "Unpinned",
+      "exact_artifact": "ITC-12 motor adapter not selected",
+      "exact_field_table_page_equation_or_function": "Calculator ID, inputs, units, output, function, and golden example missing",
+      "units": "kW",
+      "covered_product_or_method_scope": "None until adapter selection",
+      "existing_or_proposed_coverage": "method",
+      "supported_scenarios": [
+        "exact-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "measur_calculator_inputs"
+      ],
+      "extraction_or_calculation_method": "This record does not support the claimed calculation role; continue through the next supported source in the single-value fallback policy.",
+      "selected_value_basis": "Explicit sensitivity only after adapter validation",
+      "uncertainty_basis": "Missing calculator contract",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No exact module fixture",
+      "unsupported_uses": [
+        "Generic MEASUR defaults"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-MEASUR-ITC36",
+      "standard_id": "STD-DOE-MEASUR",
+      "output_key": "measur.itc36",
+      "source_roles": [
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://github.com/ORNL-AMO/AMO-Tools-Suite",
+      "source_title": "MEASUR source repository",
+      "source_version": "Unpinned",
+      "exact_artifact": "ITC-36 cooling-tower adapter not selected",
+      "exact_field_table_page_equation_or_function": "Calculator ID, inputs, units, output, function, and golden example missing",
+      "units": "gallons/year and kWh/year",
+      "covered_product_or_method_scope": "None until adapter selection",
+      "existing_or_proposed_coverage": "method",
+      "supported_scenarios": [
+        "exact-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "measur_calculator_inputs"
+      ],
+      "extraction_or_calculation_method": "This record does not support the claimed calculation role; continue through the next supported source in the single-value fallback policy.",
+      "selected_value_basis": "Explicit sensitivity only after adapter validation",
+      "uncertainty_basis": "Missing calculator contract",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No exact module fixture",
+      "unsupported_uses": [
+        "Generic MEASUR defaults"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-MEASUR-ITC37",
+      "standard_id": "STD-DOE-MEASUR",
+      "output_key": "measur.itc37",
+      "source_roles": [
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://github.com/ORNL-AMO/AMO-Tools-Suite",
+      "source_title": "MEASUR source repository",
+      "source_version": "Unpinned",
+      "exact_artifact": "ITC-37 fan and HVAC adapter not selected",
+      "exact_field_table_page_equation_or_function": "Calculator ID, inputs, units, output, function, and golden example missing",
+      "units": "kWh/year and thermal-resource/year",
+      "covered_product_or_method_scope": "None until adapter selection",
+      "existing_or_proposed_coverage": "method",
+      "supported_scenarios": [
+        "exact-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "measur_calculator_inputs"
+      ],
+      "extraction_or_calculation_method": "This record does not support the claimed calculation role; continue through the next supported source in the single-value fallback policy.",
+      "selected_value_basis": "Explicit sensitivity only after adapter validation",
+      "uncertainty_basis": "Missing calculator contract",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No exact module fixture",
+      "unsupported_uses": [
+        "Generic MEASUR defaults"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-MEASUR-ITC38",
+      "standard_id": "STD-DOE-MEASUR",
+      "output_key": "measur.itc38",
+      "source_roles": [
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://github.com/ORNL-AMO/AMO-Tools-Suite",
+      "source_title": "MEASUR source repository",
+      "source_version": "Unpinned",
+      "exact_artifact": "ITC-38 motor adapter not selected",
+      "exact_field_table_page_equation_or_function": "Calculator ID, inputs, units, output, function, and golden example missing",
+      "units": "kWh/year",
+      "covered_product_or_method_scope": "None until adapter selection",
+      "existing_or_proposed_coverage": "method",
+      "supported_scenarios": [
+        "exact-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "measur_calculator_inputs"
+      ],
+      "extraction_or_calculation_method": "This record does not support the claimed calculation role; continue through the next supported source in the single-value fallback policy.",
+      "selected_value_basis": "Explicit sensitivity only after adapter validation",
+      "uncertainty_basis": "Missing calculator contract",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No exact module fixture",
+      "unsupported_uses": [
+        "Generic MEASUR defaults"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-MEASUR-ITC39",
+      "standard_id": "STD-DOE-MEASUR",
+      "output_key": "measur.itc39",
+      "source_roles": [
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://github.com/ORNL-AMO/AMO-Tools-Suite",
+      "source_title": "MEASUR source repository",
+      "source_version": "Unpinned",
+      "exact_artifact": "ITC-39 variable-speed load-bin adapter not selected",
+      "exact_field_table_page_equation_or_function": "Calculator ID, inputs, units, output, function, and golden example missing",
+      "units": "kWh/year",
+      "covered_product_or_method_scope": "None until adapter selection",
+      "existing_or_proposed_coverage": "method",
+      "supported_scenarios": [
+        "exact-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "measur_calculator_inputs"
+      ],
+      "extraction_or_calculation_method": "This record does not support the claimed calculation role; continue through the next supported source in the single-value fallback policy.",
+      "selected_value_basis": "Explicit sensitivity only after adapter validation",
+      "uncertainty_basis": "Missing calculator contract",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No exact module fixture",
+      "unsupported_uses": [
+        "Generic MEASUR defaults"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-MEASUR-ITC40",
+      "standard_id": "STD-DOE-MEASUR",
+      "output_key": "measur.itc40",
+      "source_roles": [
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://github.com/ORNL-AMO/AMO-Tools-Suite",
+      "source_title": "MEASUR source repository",
+      "source_version": "Unpinned",
+      "exact_artifact": "ITC-40 pump adapter not selected",
+      "exact_field_table_page_equation_or_function": "Calculator ID, inputs, units, output, function, and golden example missing",
+      "units": "kW and kWh/year",
+      "covered_product_or_method_scope": "None until adapter selection",
+      "existing_or_proposed_coverage": "method",
+      "supported_scenarios": [
+        "exact-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "measur_calculator_inputs"
+      ],
+      "extraction_or_calculation_method": "This record does not support the claimed calculation role; continue through the next supported source in the single-value fallback policy.",
+      "selected_value_basis": "Explicit sensitivity only after adapter validation",
+      "uncertainty_basis": "Missing calculator contract",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No exact module fixture",
+      "unsupported_uses": [
+        "Generic MEASUR defaults"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-MEASUR-ITC41",
+      "standard_id": "STD-DOE-MEASUR",
+      "output_key": "measur.itc41",
+      "source_roles": [
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://github.com/ORNL-AMO/AMO-Tools-Suite",
+      "source_title": "MEASUR source repository",
+      "source_version": "Unpinned",
+      "exact_artifact": "ITC-41 fan adapter not selected",
+      "exact_field_table_page_equation_or_function": "Calculator ID, inputs, units, output, function, and golden example missing",
+      "units": "kW and kWh/year",
+      "covered_product_or_method_scope": "None until adapter selection",
+      "existing_or_proposed_coverage": "method",
+      "supported_scenarios": [
+        "exact-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "measur_calculator_inputs"
+      ],
+      "extraction_or_calculation_method": "This record does not support the claimed calculation role; continue through the next supported source in the single-value fallback policy.",
+      "selected_value_basis": "Explicit sensitivity only after adapter validation",
+      "uncertainty_basis": "Missing calculator contract",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No exact module fixture",
+      "unsupported_uses": [
+        "Generic MEASUR defaults"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-MEASUR-ITC42",
+      "standard_id": "STD-DOE-MEASUR",
+      "output_key": "measur.itc42",
+      "source_roles": [
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://github.com/ORNL-AMO/AMO-Tools-Suite",
+      "source_title": "MEASUR source repository",
+      "source_version": "Unpinned",
+      "exact_artifact": "ITC-42 compressed-air specific-power adapter not selected",
+      "exact_field_table_page_equation_or_function": "Calculator ID, inputs, units, output, function, and golden example missing",
+      "units": "kW/flow and kWh/year",
+      "covered_product_or_method_scope": "None until adapter selection",
+      "existing_or_proposed_coverage": "method",
+      "supported_scenarios": [
+        "exact-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "measur_calculator_inputs"
+      ],
+      "extraction_or_calculation_method": "This record does not support the claimed calculation role; continue through the next supported source in the single-value fallback policy.",
+      "selected_value_basis": "Explicit sensitivity only after adapter validation",
+      "uncertainty_basis": "Missing calculator contract",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No exact module fixture",
+      "unsupported_uses": [
+        "Generic MEASUR defaults"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-MEASUR-ITC43",
+      "standard_id": "STD-DOE-MEASUR",
+      "output_key": "measur.itc43",
+      "source_roles": [
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://github.com/ORNL-AMO/AMO-Tools-Suite",
+      "source_title": "MEASUR source repository",
+      "source_version": "Unpinned",
+      "exact_artifact": "ITC-43 compressed-air leak adapter not selected",
+      "exact_field_table_page_equation_or_function": "Calculator ID, inputs, units, output, function, and golden example missing",
+      "units": "flow and kWh/year",
+      "covered_product_or_method_scope": "None until adapter selection",
+      "existing_or_proposed_coverage": "method",
+      "supported_scenarios": [
+        "exact-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "measur_calculator_inputs"
+      ],
+      "extraction_or_calculation_method": "This record does not support the claimed calculation role; continue through the next supported source in the single-value fallback policy.",
+      "selected_value_basis": "Explicit sensitivity only after adapter validation",
+      "uncertainty_basis": "Missing calculator contract",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No exact module fixture",
+      "unsupported_uses": [
+        "Generic MEASUR defaults"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-MEASUR-ITC44",
+      "standard_id": "STD-DOE-MEASUR",
+      "output_key": "measur.itc44",
+      "source_roles": [
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://github.com/ORNL-AMO/AMO-Tools-Suite",
+      "source_title": "MEASUR source repository",
+      "source_version": "Unpinned",
+      "exact_artifact": "ITC-44 compressed-air control-profile adapter not selected",
+      "exact_field_table_page_equation_or_function": "Calculator ID, inputs, units, output, function, and golden example missing",
+      "units": "kWh/year",
+      "covered_product_or_method_scope": "None until adapter selection",
+      "existing_or_proposed_coverage": "method",
+      "supported_scenarios": [
+        "exact-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "measur_calculator_inputs"
+      ],
+      "extraction_or_calculation_method": "This record does not support the claimed calculation role; continue through the next supported source in the single-value fallback policy.",
+      "selected_value_basis": "Explicit sensitivity only after adapter validation",
+      "uncertainty_basis": "Missing calculator contract",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No exact module fixture",
+      "unsupported_uses": [
+        "Generic MEASUR defaults"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-MEASUR-ITC45",
+      "standard_id": "STD-DOE-MEASUR",
+      "output_key": "measur.itc45",
+      "source_roles": [
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://github.com/ORNL-AMO/AMO-Tools-Suite",
+      "source_title": "MEASUR source repository",
+      "source_version": "Unpinned",
+      "exact_artifact": "ITC-45 waste-heat adapter not selected",
+      "exact_field_table_page_equation_or_function": "Calculator ID, inputs, units, output, function, and golden example missing",
+      "units": "energy/year",
+      "covered_product_or_method_scope": "None until adapter selection",
+      "existing_or_proposed_coverage": "method",
+      "supported_scenarios": [
+        "exact-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "measur_calculator_inputs"
+      ],
+      "extraction_or_calculation_method": "This record does not support the claimed calculation role; continue through the next supported source in the single-value fallback policy.",
+      "selected_value_basis": "Explicit sensitivity only after adapter validation",
+      "uncertainty_basis": "Missing calculator contract",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No exact module fixture",
+      "unsupported_uses": [
+        "Generic MEASUR defaults"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-MEASUR-ITC46",
+      "standard_id": "STD-DOE-MEASUR",
+      "output_key": "measur.itc46",
+      "source_roles": [
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://github.com/ORNL-AMO/AMO-Tools-Suite",
+      "source_title": "MEASUR source repository",
+      "source_version": "Unpinned",
+      "exact_artifact": "ITC-46 process-electrification adapter not selected",
+      "exact_field_table_page_equation_or_function": "Calculator ID, inputs, units, output, function, and golden example missing",
+      "units": "fuel-unit/year and kWh/year",
+      "covered_product_or_method_scope": "None until adapter selection",
+      "existing_or_proposed_coverage": "method",
+      "supported_scenarios": [
+        "exact-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "measur_calculator_inputs"
+      ],
+      "extraction_or_calculation_method": "This record does not support the claimed calculation role; continue through the next supported source in the single-value fallback policy.",
+      "selected_value_basis": "Explicit sensitivity only after adapter validation",
+      "uncertainty_basis": "Missing calculator contract",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No exact module fixture",
+      "unsupported_uses": [
+        "Generic MEASUR defaults"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-MEASUR-ITC47",
+      "standard_id": "STD-DOE-MEASUR",
+      "output_key": "measur.itc47",
+      "source_roles": [
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://github.com/ORNL-AMO/AMO-Tools-Suite",
+      "source_title": "MEASUR source repository",
+      "source_version": "Unpinned",
+      "exact_artifact": "ITC-47 steam-trap adapter not selected",
+      "exact_field_table_page_equation_or_function": "Calculator ID, inputs, units, output, function, and golden example missing",
+      "units": "steam-mass/year and fuel-unit/year",
+      "covered_product_or_method_scope": "None until adapter selection",
+      "existing_or_proposed_coverage": "method",
+      "supported_scenarios": [
+        "exact-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "measur_calculator_inputs"
+      ],
+      "extraction_or_calculation_method": "This record does not support the claimed calculation role; continue through the next supported source in the single-value fallback policy.",
+      "selected_value_basis": "Explicit sensitivity only after adapter validation",
+      "uncertainty_basis": "Missing calculator contract",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No exact module fixture",
+      "unsupported_uses": [
+        "Generic MEASUR defaults"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-MEASUR-ITC51",
+      "standard_id": "STD-DOE-MEASUR",
+      "output_key": "measur.itc51",
+      "source_roles": [
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://github.com/ORNL-AMO/AMO-Tools-Suite",
+      "source_title": "MEASUR source repository",
+      "source_version": "Unpinned",
+      "exact_artifact": "ITC-51 filtration fan-power adapter not selected",
+      "exact_field_table_page_equation_or_function": "Calculator ID, inputs, units, output, function, and golden example missing",
+      "units": "kW and kWh/year",
+      "covered_product_or_method_scope": "None until adapter selection",
+      "existing_or_proposed_coverage": "method",
+      "supported_scenarios": [
+        "exact-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "measur_calculator_inputs"
+      ],
+      "extraction_or_calculation_method": "This record does not support the claimed calculation role; continue through the next supported source in the single-value fallback policy.",
+      "selected_value_basis": "Explicit sensitivity only after adapter validation",
+      "uncertainty_basis": "Missing calculator contract",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No exact module fixture",
+      "unsupported_uses": [
+        "Generic MEASUR defaults"
+      ],
+      "evidence_status": "UNVERIFIED"
+    },
+    {
+      "evidence_id": "E-CONTEXT-LIGHTING-WATTAGE",
+      "standard_id": "STD-CONTEXT-BENCHMARKS",
+      "output_key": "context.outdoor_lighting_application_wattage",
+      "source_roles": [
+        "existing_equipment_baseline"
+      ],
+      "source_url": "https://www.energy.gov/sites/prod/files/2017/12/f46/lmc2015_nov17.pdf",
+      "source_title": "2015 U.S. Lighting Market Characterization",
+      "source_version": "November 2017 publication of 2015 characterization",
+      "exact_artifact": "Table 4.29 - Average Wattage by Outdoor Application",
+      "exact_field_table_page_equation_or_function": "Bound fields outdoor_application and average_system_wattage; Table 4.29 application rows and the all_outdoor_applications_average source aggregate.",
+      "units": "watts per lighting system",
+      "covered_product_or_method_scope": "National average outdoor lighting system wattage by application for the applications reported in Table 4.29.",
+      "existing_or_proposed_coverage": "existing-equipment-screening-benchmark",
+      "supported_scenarios": [
+        "context-matched-authoritative-benchmark"
+      ],
+      "required_lookup_inputs": [
+        "benchmark_context",
+        "eligible_population"
+      ],
+      "extraction_or_calculation_method": "Map the recognizable exterior application to one inspected Table 4.29 row; use the all-outdoor source aggregate only when no listed application can be distinguished.",
+      "selected_value_basis": "One application row or one source aggregate is selected; no range is used.",
+      "uncertainty_basis": "The source is a national screening benchmark and does not replace a project-specific nameplate or measurement.",
+      "fixture_or_test_reference": "docs/operational-savings-fixtures/sources/doe-outdoor-lighting-application-wattage.json",
+      "access_limitations": "The source does not provide project-specific fixture watts or proposed-product performance.",
+      "unsupported_uses": [
+        "Project-specific nameplate wattage",
+        "Proposed-product wattage",
+        "Lighting quality, photometry, controls, or code compliance"
+      ],
+      "evidence_status": "VERIFIED",
+      "unit_ids": [
+        "classification",
+        "watt_per_fixture"
+      ],
+      "fixture_binding": {
+        "fixture_path": "docs/operational-savings-fixtures/sources/doe-outdoor-lighting-application-wattage.json",
+        "fixture_type_pointer": "/fixture_type",
+        "source_title_pointer": "/source_title",
+        "source_url_pointer": "/raw_artifacts/0/source_url",
+        "source_version_pointer": "/raw_artifacts/0/source_version",
+        "artifact_pointer": "/raw_artifacts/0/exact_artifact",
+        "artifact_identifier_pointer": "/raw_artifacts/0/artifact_identifier",
+        "checksum_pointer": "/raw_artifacts/0/source_checksum",
+        "coverage_pointer": "/coverage/summary",
+        "source_roles_pointer": "/coverage/source_roles",
+        "field_pointers": [
+          "/fields/0/field",
+          "/fields/1/field"
+        ],
+        "unit_pointers": [
+          "/fields/0/unit_id",
+          "/fields/1/unit_id"
+        ],
+        "value_bindings": [
+          {
+            "pointer": "/tables/0/rows/commercial_or_industrial_building_exterior",
+            "expected": 97
+          },
+          {
+            "pointer": "/values/0/value",
+            "expected": 166
+          }
+        ],
+        "unsupported_inference_pointers": [
+          "/unsupported_inferences/0",
+          "/unsupported_inferences/1",
+          "/unsupported_inferences/2"
+        ],
+        "substantive_pointers": [
+          "/tables/0",
+          "/values/0",
+          "/methods/0"
+        ]
+      },
+      "source_checksum": "sha256:3966462686a83437e13fae5b74e6194aae0a95af670e78ff1e763a1c8e6445ca"
+    },
+    {
+      "evidence_id": "E-CONTEXT-FLUSH-ACTIVITY",
+      "standard_id": "STD-CONTEXT-BENCHMARKS",
+      "output_key": "context.commercial_flush_activity",
+      "source_roles": [
+        "usage_or_operating_schedule",
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://nepis.epa.gov/Exe/ZyPDF.cgi/P1017K41.PDF?Dockey=P1017K41.PDF",
+      "source_title": "WaterSense at Work 2023 - Toilets and Urinals",
+      "source_version": "WaterSense at Work 2023, Section 3.1",
+      "exact_artifact": "Toilet water-use estimation method and daily flush assumptions",
+      "exact_field_table_page_equation_or_function": "Bound fields female_toilet_flushes_per_person_per_day, male_toilet_flushes_per_person_per_day, male_urinal_flushes_per_person_per_day, facility_operating_days_per_year, and annual_flush_count.",
+      "units": "flush counts per person per day and annual flushes",
+      "covered_product_or_method_scope": "Commercial toilet and urinal flush-frequency assumptions and equations that convert recognizable population and operating-day context into one annual flush count.",
+      "existing_or_proposed_coverage": "commercial-usage-method",
+      "supported_scenarios": [
+        "context-matched-authoritative-benchmark"
+      ],
+      "required_lookup_inputs": [
+        "benchmark_context",
+        "eligible_population"
+      ],
+      "extraction_or_calculation_method": "Apply the fixture-specific daily use assumption to the eligible population and selected operating days, then return one annual flush count.",
+      "selected_value_basis": "The official fixture-specific daily assumption yields one selected annual count; no range is used.",
+      "uncertainty_basis": "An observed restroom study or audit overrides the screening activity method.",
+      "fixture_or_test_reference": "docs/operational-savings-fixtures/sources/watersense-commercial-flush-activity.json",
+      "access_limitations": "The method covers toilets and urinals and does not supply product gallons-per-flush ratings or flow-fixture durations.",
+      "unsupported_uses": [
+        "Exact project usage without observed data",
+        "Fixture product gallons-per-flush ratings",
+        "Flow-fixture duration or commercial kitchen activity"
+      ],
+      "evidence_status": "VERIFIED",
+      "unit_ids": [
+        "count",
+        "flushes_fixture_year"
+      ],
+      "fixture_binding": {
+        "fixture_path": "docs/operational-savings-fixtures/sources/watersense-commercial-flush-activity.json",
+        "fixture_type_pointer": "/fixture_type",
+        "source_title_pointer": "/source_title",
+        "source_url_pointer": "/raw_artifacts/0/source_url",
+        "source_version_pointer": "/raw_artifacts/0/source_version",
+        "artifact_pointer": "/raw_artifacts/0/exact_artifact",
+        "artifact_identifier_pointer": "/raw_artifacts/0/artifact_identifier",
+        "checksum_pointer": "/raw_artifacts/0/source_checksum",
+        "coverage_pointer": "/coverage/summary",
+        "source_roles_pointer": "/coverage/source_roles",
+        "field_pointers": [
+          "/fields/0/field",
+          "/fields/1/field",
+          "/fields/2/field",
+          "/fields/3/field",
+          "/methods/0/field"
+        ],
+        "unit_pointers": [
+          "/fields/0/unit_id",
+          "/fields/1/unit_id",
+          "/fields/2/unit_id",
+          "/fields/3/unit_id",
+          "/methods/0/unit_id"
+        ],
+        "value_bindings": [
+          {
+            "pointer": "/values/0/value",
+            "expected": 3
+          },
+          {
+            "pointer": "/values/1/value",
+            "expected": 1
+          },
+          {
+            "pointer": "/values/2/value",
+            "expected": 2
+          }
+        ],
+        "unsupported_inference_pointers": [
+          "/unsupported_inferences/0",
+          "/unsupported_inferences/1",
+          "/unsupported_inferences/2"
+        ],
+        "substantive_pointers": [
+          "/values/0",
+          "/values/1",
+          "/values/2",
+          "/methods/0"
+        ],
+        "supporting_artifacts": [
+          {
+            "role": "urinal activity method",
+            "source_url_pointer": "/raw_artifacts/1/source_url",
+            "source_version_pointer": "/raw_artifacts/1/source_version",
+            "artifact_pointer": "/raw_artifacts/1/exact_artifact",
+            "artifact_identifier_pointer": "/raw_artifacts/1/artifact_identifier",
+            "checksum_pointer": "/raw_artifacts/1/source_checksum"
+          }
+        ]
+      },
+      "source_checksum": "sha256:47ef36b3d505ef39be821ea1665b5bab62da961a529488d96d560b04021182b6"
+    },
+    {
+      "evidence_id": "E-CONTEXT-SELECTION",
+      "standard_id": "STD-CONTEXT-BENCHMARKS",
+      "output_key": "context.single_value_selection",
+      "source_roles": [
+        "usage_or_operating_schedule",
+        "physics_or_calculation_method",
+        "geographic_or_climate"
+      ],
+      "source_url": "https://www.energy.gov/cmei/buildings/commercial-reference-buildings",
+      "source_title": "Category-specific authoritative benchmark sources",
+      "source_version": "Source-specific versions must be pinned by each category adapter",
+      "exact_artifact": "Shared fallback order and category-specific source registry",
+      "exact_field_table_page_equation_or_function": "Select official recommended or typical value, otherwise a weighted median with valid weights, otherwise the ordinary median of the eligible compatible population.",
+      "units": "category-specific",
+      "covered_product_or_method_scope": "Shared single-value selection policy over category-specific authoritative sources.",
+      "existing_or_proposed_coverage": "method",
+      "supported_scenarios": [
+        "exact-measured-or-documented",
+        "exact-product-or-project-specification",
+        "exact-authoritative-database",
+        "context-matched-authoritative-benchmark"
+      ],
+      "required_lookup_inputs": [
+        "benchmark_context",
+        "exact_value_override",
+        "eligible_population"
+      ],
+      "extraction_or_calculation_method": "Use only an exact value or a category-specific authoritative population or equation whose source version, compatibility filters, numeric rule, unit, scope, and retained evidence are implemented. Report a limitation when no such path exists.",
+      "selected_value_basis": "One source-supported selected output only; ranges and unspecified future fallbacks are not calculation inputs.",
+      "uncertainty_basis": "Source coverage and category-context fit determine screening quality and remain disclosed in the existing Validation paragraph.",
+      "fixture_or_test_reference": null,
+      "access_limitations": "Only the lighting and toilet or urinal adapters have new inspected source fixtures in this pass; other named category adapters remain implementation-pending.",
+      "unsupported_uses": [
+        "Cross-category source-field substitution",
+        "Arbitrary future contractor product selection",
+        "Zero as a missing-data placeholder"
+      ],
+      "evidence_status": "LIMITED"
+    },
+    {
+      "evidence_id": "E-CONTEXT-FORKLIFT",
+      "standard_id": "STD-CONTEXT-BENCHMARKS",
+      "output_key": "context.material_handling_intensity",
+      "source_roles": [
+        "existing_equipment_baseline",
+        "proposed_or_qualified_product",
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://www.energy.gov/sites/prod/files/2014/03/f11/forklift_anl_esd.pdf",
+      "source_title": "Argonne National Laboratory Full Fuel-Cycle Comparison of Forklift Propulsion Systems",
+      "source_version": "ANL/ESD/08-3, October 2008",
+      "exact_artifact": "Full Fuel-Cycle Comparison of Forklift Propulsion Systems",
+      "exact_field_table_page_equation_or_function": "Section 3.1 and Table 10 bound fields rated_capacity_class, operating_duty, electric_5000_lb_wall_energy_rate, propane_5000_lb_fuel_rate, grid_to_work_efficiency, propane_gallons_per_kwh_work, and compatible_resource_intensity_selection.",
+      "units": "kWh/hour, gallons/hour, fraction, and gallon/kWh-work",
+      "covered_product_or_method_scope": "Source-supported grid-to-work efficiency and one side-by-side 5,000-pound electric and propane forklift operating-intensity comparison.",
+      "existing_or_proposed_coverage": "paired-existing-and-proposed-screening-record",
+      "supported_scenarios": [
+        "exact-measured-or-documented",
+        "context-matched-authoritative-benchmark"
+      ],
+      "required_lookup_inputs": [
+        "benchmark_context",
+        "exact_value_override",
+        "eligible_population"
+      ],
+      "extraction_or_calculation_method": "Use exact comparable project intensity first; otherwise require a 5,000-pound capacity and compatible duty match before selecting the paired 1.38 gallons/hour and 7.5 kWh/hour record.",
+      "selected_value_basis": "One exact project pair or the one retained compatible paired record; no cross-capacity statistical selection is enabled.",
+      "uncertainty_basis": "Capacity and duty compatibility plus the report documented scarcity of operating data.",
+      "fixture_or_test_reference": "docs/operational-savings-fixtures/sources/argonne-forklift-energy-intensity.json",
+      "access_limitations": "The retained fixture supports only its explicit class, duty, fields, units, and source version.",
+      "unsupported_uses": [
+        "A universal forklift hourly resource intensity",
+        "Battery size, charger size, shift schedule, or annual hours",
+        "A 5,000-pound comparison applied to a different capacity or duty without a compatible authoritative population"
+      ],
+      "evidence_status": "VERIFIED",
+      "unit_ids": [
+        "record_set",
+        "kwh_hour",
+        "gallon_per_hour",
+        "fraction",
+        "gallon_per_kwh_work"
+      ],
+      "fixture_binding": {
+        "fixture_path": "docs/operational-savings-fixtures/sources/argonne-forklift-energy-intensity.json",
+        "fixture_type_pointer": "/fixture_type",
+        "source_title_pointer": "/source_title",
+        "source_url_pointer": "/raw_artifacts/0/source_url",
+        "source_version_pointer": "/raw_artifacts/0/source_version",
+        "artifact_pointer": "/raw_artifacts/0/exact_artifact",
+        "artifact_identifier_pointer": "/raw_artifacts/0/artifact_identifier",
+        "checksum_pointer": "/raw_artifacts/0/source_checksum",
+        "coverage_pointer": "/coverage/summary",
+        "source_roles_pointer": "/coverage/source_roles",
+        "field_pointers": [
+          "/fields/0/field",
+          "/fields/1/field",
+          "/tables/0/field",
+          "/tables/1/field",
+          "/values/0/field",
+          "/values/1/field",
+          "/methods/0/field"
+        ],
+        "unit_pointers": [
+          "/fields/0/unit_id",
+          "/fields/1/unit_id",
+          "/tables/0/unit_id",
+          "/tables/1/unit_id",
+          "/values/0/unit_id",
+          "/values/1/unit_id",
+          "/methods/0/unit_id"
+        ],
+        "value_bindings": [
+          {
+            "pointer": "/tables/0/value",
+            "expected": 7.5
+          },
+          {
+            "pointer": "/tables/1/value",
+            "expected": 1.38
+          },
+          {
+            "pointer": "/values/0/value",
+            "expected": 0.64
+          },
+          {
+            "pointer": "/values/1/value",
+            "expected": 0.19
+          }
+        ],
+        "unsupported_inference_pointers": [
+          "/unsupported_inferences/0",
+          "/unsupported_inferences/1",
+          "/unsupported_inferences/2"
+        ],
+        "substantive_pointers": [
+          "/fields/0",
+          "/fields/1",
+          "/tables/0",
+          "/tables/1",
+          "/values/0",
+          "/values/1",
+          "/methods/0"
+        ]
+      },
+      "source_checksum": "sha256:cf26a69395287f5cdadc7125674632501def5033a8b37774c7a006d6ca5b9eed"
+    },
+    {
+      "evidence_id": "E-CONTEXT-COOKTOP",
+      "standard_id": "STD-CONTEXT-BENCHMARKS",
+      "output_key": "context.commercial_cooktop_comparable_duty",
+      "source_roles": [
+        "existing_equipment_baseline",
+        "proposed_or_qualified_product",
+        "usage_or_operating_schedule",
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx",
+      "source_title": "ENERGY STAR Commercial Food Service Equipment Calculator - Electric Cooktop Calculations",
+      "source_version": "Workbook published March 2024",
+      "exact_artifact": "Electric Cooktop Calcs worksheet",
+      "exact_field_table_page_equation_or_function": "Electric Cooktop Calcs bound fields tested_duty_definition, boil_cycles_per_hour, conventional_electric_cooking_efficiency, energy_star_cooking_efficiency, conventional_kwh_per_boil, energy_star_kwh_per_boil, and annual_cooktop_energy.",
+      "units": "record set, activity/year, fraction, kWh/activity, and kWh/year",
+      "covered_product_or_method_scope": "Comparable electric-cooktop boil duty, conventional and ENERGY STAR cooking efficiencies, energy per boil, and annualization equations.",
+      "existing_or_proposed_coverage": "paired-existing-and-proposed-electric-cooktop-duty",
+      "supported_scenarios": [
+        "context-matched-authoritative-benchmark"
+      ],
+      "required_lookup_inputs": [
+        "benchmark_context",
+        "eligible_population"
+      ],
+      "extraction_or_calculation_method": "Require the identical commercial electric-cooktop 20-pound water-boil duty and multiply the retained 1.03 and 0.91 kWh/boil intensities by project activity in the same duty unit.",
+      "selected_value_basis": "The exact published duty pair; no gas or different-duty substitution.",
+      "uncertainty_basis": "Duty compatibility and project annual activity.",
+      "fixture_or_test_reference": "docs/operational-savings-fixtures/sources/energy-star-commercial-cooktop-calculator.json",
+      "access_limitations": "The retained fixture supports only its explicit class, duty, fields, units, and source version.",
+      "unsupported_uses": [
+        "Gas-to-electric induction savings",
+        "A different cooking product, batch size, temperature rise, or food duty",
+        "Annual energy without a compatible activity input"
+      ],
+      "evidence_status": "VERIFIED",
+      "unit_ids": [
+        "record_set",
+        "activity_year",
+        "fraction",
+        "kwh_activity",
+        "kwh_year"
+      ],
+      "fixture_binding": {
+        "fixture_path": "docs/operational-savings-fixtures/sources/energy-star-commercial-cooktop-calculator.json",
+        "fixture_type_pointer": "/fixture_type",
+        "source_title_pointer": "/source_title",
+        "source_url_pointer": "/raw_artifacts/0/source_url",
+        "source_version_pointer": "/raw_artifacts/0/source_version",
+        "artifact_pointer": "/raw_artifacts/0/exact_artifact",
+        "artifact_identifier_pointer": "/raw_artifacts/0/artifact_identifier",
+        "checksum_pointer": "/raw_artifacts/0/source_checksum",
+        "coverage_pointer": "/coverage/summary",
+        "source_roles_pointer": "/coverage/source_roles",
+        "field_pointers": [
+          "/fields/0/field",
+          "/fields/1/field",
+          "/values/3/field",
+          "/values/4/field",
+          "/values/5/field",
+          "/values/6/field",
+          "/methods/0/field"
+        ],
+        "unit_pointers": [
+          "/fields/0/unit_id",
+          "/fields/1/unit_id",
+          "/values/3/unit_id",
+          "/values/4/unit_id",
+          "/values/5/unit_id",
+          "/values/6/unit_id",
+          "/methods/0/unit_id"
+        ],
+        "value_bindings": [
+          {
+            "pointer": "/values/3/value",
+            "expected": 0.7603
+          },
+          {
+            "pointer": "/values/4/value",
+            "expected": 0.8
+          },
+          {
+            "pointer": "/values/5/value",
+            "expected": 1.03
+          },
+          {
+            "pointer": "/values/6/value",
+            "expected": 0.91
+          }
+        ],
+        "unsupported_inference_pointers": [
+          "/unsupported_inferences/0",
+          "/unsupported_inferences/1",
+          "/unsupported_inferences/3"
+        ],
+        "substantive_pointers": [
+          "/fields/0",
+          "/fields/1",
+          "/values/3",
+          "/values/4",
+          "/values/5",
+          "/values/6",
+          "/methods/0"
+        ]
+      },
+      "source_checksum": "sha256:3d2abed1938bd1400378a2e0ca2095058fe490b2b599ef15f09056639f06fcd6"
+    },
+    {
+      "evidence_id": "E-CONTEXT-WALK-IN",
+      "standard_id": "STD-CONTEXT-BENCHMARKS",
+      "output_key": "context.walk_in_component_energy",
+      "source_roles": [
+        "existing_equipment_baseline",
+        "proposed_or_qualified_product",
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://www.energy.gov/sites/default/files/2023-08/Walk-In%20Coolers%20and%20Freezers%20ECS%20NOPR.pdf",
+      "source_title": "DOE Walk-In Coolers and Freezers Energy Conservation Standards NOPR",
+      "source_version": "August 2023 NOPR technical support document",
+      "exact_artifact": "Tables IV.31, IV.32, and IV.33",
+      "exact_field_table_page_equation_or_function": "Tables IV.31 through IV.33 bound fields equipment_class, efficiency_level, panel_pf_l_baseline, panel_pf_l_tsl3, door_dw_l_baseline, door_dw_l_tsl3, refrigeration_dc_l_i_baseline, refrigeration_dc_l_i_tsl3, and component_annual_energy_delta.",
+      "units": "record set, kWh/ft2-year, and kWh/year",
+      "covered_product_or_method_scope": "Class-specific baseline and efficiency-level annual energy values for walk-in panels, doors, and refrigeration systems.",
+      "existing_or_proposed_coverage": "paired-baseline-and-upgrade-screening",
+      "supported_scenarios": [
+        "context-matched-authoritative-benchmark"
+      ],
+      "required_lookup_inputs": [
+        "benchmark_context",
+        "eligible_population"
+      ],
+      "extraction_or_calculation_method": "Select baseline and proposed values from the same exact component-class row, multiply panel intensity by panel area once, and sum only explicitly in-scope components.",
+      "selected_value_basis": "One class-matched baseline and proposed row pair with native units.",
+      "uncertainty_basis": "Component boundary, DOE class, configuration, panel area, and same-duty compatibility.",
+      "fixture_or_test_reference": "docs/operational-savings-fixtures/sources/doe-walk-in-energy-benchmarks.json",
+      "access_limitations": "The retained fixture supports only its explicit class, duty, fields, units, and source version.",
+      "unsupported_uses": [
+        "Whole-box annual energy from a single unmatched component row",
+        "A class selected without temperature, component, indoor or outdoor, and configuration filters",
+        "Multiplying an already annual benchmark by annual operating hours"
+      ],
+      "evidence_status": "VERIFIED",
+      "unit_ids": [
+        "record_set",
+        "kwh_ft2_year",
+        "kwh_year"
+      ],
+      "fixture_binding": {
+        "fixture_path": "docs/operational-savings-fixtures/sources/doe-walk-in-energy-benchmarks.json",
+        "fixture_type_pointer": "/fixture_type",
+        "source_title_pointer": "/source_title",
+        "source_url_pointer": "/raw_artifacts/0/source_url",
+        "source_version_pointer": "/raw_artifacts/0/source_version",
+        "artifact_pointer": "/raw_artifacts/0/exact_artifact",
+        "artifact_identifier_pointer": "/raw_artifacts/0/artifact_identifier",
+        "checksum_pointer": "/raw_artifacts/0/source_checksum",
+        "coverage_pointer": "/coverage/summary",
+        "source_roles_pointer": "/coverage/source_roles",
+        "field_pointers": [
+          "/fields/0/field",
+          "/fields/1/field",
+          "/tables/0/field",
+          "/tables/1/field",
+          "/tables/6/field",
+          "/tables/7/field",
+          "/tables/12/field",
+          "/tables/13/field",
+          "/methods/0/field"
+        ],
+        "unit_pointers": [
+          "/fields/0/unit_id",
+          "/fields/1/unit_id",
+          "/tables/0/unit_id",
+          "/tables/1/unit_id",
+          "/tables/6/unit_id",
+          "/tables/7/unit_id",
+          "/tables/12/unit_id",
+          "/tables/13/unit_id",
+          "/methods/0/unit_id"
+        ],
+        "value_bindings": [
+          {
+            "pointer": "/tables/0/value",
+            "expected": 5.8
+          },
+          {
+            "pointer": "/tables/1/value",
+            "expected": 4
+          },
+          {
+            "pointer": "/tables/6/value",
+            "expected": 2698
+          },
+          {
+            "pointer": "/tables/7/value",
+            "expected": 2120
+          },
+          {
+            "pointer": "/tables/12/value",
+            "expected": 26420
+          },
+          {
+            "pointer": "/tables/13/value",
+            "expected": 25887
+          }
+        ],
+        "unsupported_inference_pointers": [
+          "/unsupported_inferences/0",
+          "/unsupported_inferences/1",
+          "/unsupported_inferences/3"
+        ],
+        "substantive_pointers": [
+          "/fields/0",
+          "/fields/1",
+          "/tables/0",
+          "/tables/1",
+          "/tables/6",
+          "/tables/7",
+          "/tables/12",
+          "/tables/13",
+          "/methods/0"
+        ]
+      },
+      "source_checksum": "sha256:d46c285120da35349dfe1017b1d2739cfa20efe62f00261e89c8c225c6fd1bbc"
+    },
+    {
+      "evidence_id": "E-CONTEXT-DISHWASHER-ACTIVITY",
+      "standard_id": "STD-CONTEXT-BENCHMARKS",
+      "output_key": "context.dishwasher_rack_activity",
+      "source_roles": [
+        "usage_or_operating_schedule"
+      ],
+      "source_url": "https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx",
+      "source_title": "ENERGY STAR Commercial Food Service Equipment Calculator - Dishwasher Calculations",
+      "source_version": "Workbook published March 2024",
+      "exact_artifact": "Dishwasher Calcs worksheet",
+      "exact_field_table_page_equation_or_function": "Dishwasher Calcs bound fields machine_type_and_sanitation, rack_machine_activity, low_temp_undercounter_default_racks_per_day, low_temp_door_default_racks_per_day, low_temp_single_tank_conveyor_default_racks_per_day, low_temp_multi_tank_conveyor_default_racks_per_day, and rack_machine_annual_activity.",
+      "units": "record set, racks/day, and racks/year",
+      "covered_product_or_method_scope": "Rack-machine activity defaults, native water and energy metrics, and explicit building and booster water-heating conversion equations.",
+      "existing_or_proposed_coverage": "activity-method",
+      "supported_scenarios": [
+        "context-matched-authoritative-benchmark"
+      ],
+      "required_lookup_inputs": [
+        "benchmark_context",
+        "eligible_population"
+      ],
+      "extraction_or_calculation_method": "Select one compatible exact project or retained rack-machine daily activity and multiply it by operating days per week and active weeks per year",
+      "selected_value_basis": "One machine-type-compatible racks-per-day value and one annual racks-per-equipment-unit result",
+      "uncertainty_basis": "Machine type, sanitation method, and operating-calendar compatibility",
+      "fixture_or_test_reference": "docs/operational-savings-fixtures/sources/energy-star-commercial-dishwasher-calculator.json",
+      "access_limitations": "The retained fixture supports explicit rack-machine defaults only and does not supply flight-machine annual hours",
+      "unsupported_uses": [
+        "Flight-machine gallons per hour converted to racks without an exact throughput source",
+        "A project-specific activity value without matching context",
+        "Double application of equipment quantity to activity already expressed for the fixture group"
+      ],
+      "evidence_status": "VERIFIED",
+      "unit_ids": [
+        "record_set",
+        "racks_day",
+        "racks_year"
+      ],
+      "fixture_binding": {
+        "fixture_path": "docs/operational-savings-fixtures/sources/energy-star-commercial-dishwasher-calculator.json",
+        "fixture_type_pointer": "/fixture_type",
+        "source_title_pointer": "/source_title",
+        "source_url_pointer": "/raw_artifacts/0/source_url",
+        "source_version_pointer": "/raw_artifacts/0/source_version",
+        "artifact_pointer": "/raw_artifacts/0/exact_artifact",
+        "artifact_identifier_pointer": "/raw_artifacts/0/artifact_identifier",
+        "checksum_pointer": "/raw_artifacts/0/source_checksum",
+        "coverage_pointer": "/coverage/summary",
+        "source_roles_pointer": "/coverage/source_roles",
+        "field_pointers": [
+          "/fields/0/field",
+          "/fields/1/field",
+          "/tables/0/field",
+          "/tables/1/field",
+          "/tables/2/field",
+          "/tables/3/field",
+          "/methods/1/field"
+        ],
+        "unit_pointers": [
+          "/fields/0/unit_id",
+          "/fields/1/unit_id",
+          "/tables/0/unit_id",
+          "/tables/1/unit_id",
+          "/tables/2/unit_id",
+          "/tables/3/unit_id",
+          "/methods/1/unit_id"
+        ],
+        "value_bindings": [
+          {
+            "pointer": "/tables/0/value",
+            "expected": 75
+          },
+          {
+            "pointer": "/tables/1/value",
+            "expected": 280
+          }
+        ],
+        "unsupported_inference_pointers": [
+          "/unsupported_inferences/0",
+          "/unsupported_inferences/2",
+          "/unsupported_inferences/3"
+        ],
+        "substantive_pointers": [
+          "/fields/0",
+          "/fields/1",
+          "/tables/0",
+          "/tables/1",
+          "/tables/2",
+          "/tables/3",
+          "/methods/1"
+        ]
+      },
+      "source_checksum": "sha256:3d2abed1938bd1400378a2e0ca2095058fe490b2b599ef15f09056639f06fcd6"
+    },
+    {
+      "evidence_id": "E-DISHWASHER-WATER-HEATING",
+      "standard_id": "STD-DISHWASHER-WATER-HEATING",
+      "output_key": "dishwasher.water_heating_conversion",
+      "source_roles": [
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://www.energystar.gov/sites/default/files/2024-03/CFS%20Equipment%20Calculator.xlsx",
+      "source_title": "ENERGY STAR Commercial Food Service Equipment Calculator - Dishwasher Calculations",
+      "source_version": "Workbook published March 2024",
+      "exact_artifact": "Dishwasher Calcs worksheet",
+      "exact_field_table_page_equation_or_function": "Dishwasher Calcs building_water_heater_electric_efficiency, building_water_heater_gas_efficiency, building_water_temperature_increase_f, booster_water_temperature_increase_f, building_electric_kwh_per_gallon, booster_electric_kwh_per_gallon, and water_heating_input_per_gallon equations.",
+      "units": "fraction, degrees Fahrenheit, and energy/gallon converted to resource per rack or resource per hour",
+      "covered_product_or_method_scope": "Rack-machine activity defaults, native water and energy metrics, and explicit building and booster water-heating conversion equations.",
+      "existing_or_proposed_coverage": "existing-and-proposed-water-heating-method",
+      "supported_scenarios": [
+        "exact-input",
+        "class-or-context-estimate",
+        "linked-opportunity-constrained-input",
+        "insufficient-data"
+      ],
+      "required_lookup_inputs": [
+        "dishwasher_machine_type",
+        "dishwasher_native_water_quantity",
+        "incoming_water_temperature",
+        "wash_rinse_or_booster_temperature",
+        "water_heating_resource",
+        "water_heater_efficiency"
+      ],
+      "extraction_or_calculation_method": "Calculate purchased resource from native water volume, water density, specific heat, temperature rise, resource conversion, and heater efficiency, preserving the selected rack or hourly activity unit",
+      "selected_value_basis": "One complete compatible project or retained calculator conversion input set",
+      "uncertainty_basis": "Water quantity, temperature, resource, efficiency, machine-type, and sanitation-method compatibility",
+      "fixture_or_test_reference": "docs/operational-savings-fixtures/sources/energy-star-commercial-dishwasher-calculator.json",
+      "access_limitations": "The retained fixture supports only its explicit building and booster equation boundaries",
+      "unsupported_uses": [
+        "Total water treated as hot water without a building and booster boundary",
+        "Flight-machine gallons per hour converted to racks without an exact throughput source"
+      ],
+      "evidence_status": "VERIFIED",
+      "unit_ids": [
+        "fraction",
+        "degree",
+        "energy_gallon"
+      ],
+      "fixture_binding": {
+        "fixture_path": "docs/operational-savings-fixtures/sources/energy-star-commercial-dishwasher-calculator.json",
+        "fixture_type_pointer": "/fixture_type",
+        "source_title_pointer": "/source_title",
+        "source_url_pointer": "/raw_artifacts/0/source_url",
+        "source_version_pointer": "/raw_artifacts/0/source_version",
+        "artifact_pointer": "/raw_artifacts/0/exact_artifact",
+        "artifact_identifier_pointer": "/raw_artifacts/0/artifact_identifier",
+        "checksum_pointer": "/raw_artifacts/0/source_checksum",
+        "coverage_pointer": "/coverage/summary",
+        "source_roles_pointer": "/coverage/source_roles",
+        "field_pointers": [
+          "/values/0/field",
+          "/values/1/field",
+          "/values/2/field",
+          "/values/3/field",
+          "/values/4/field",
+          "/values/5/field",
+          "/methods/0/field"
+        ],
+        "unit_pointers": [
+          "/values/0/unit_id",
+          "/values/1/unit_id",
+          "/values/2/unit_id",
+          "/values/3/unit_id",
+          "/values/4/unit_id",
+          "/values/5/unit_id",
+          "/methods/0/unit_id"
+        ],
+        "value_bindings": [
+          {
+            "pointer": "/values/0/value",
+            "expected": 0.98
+          },
+          {
+            "pointer": "/values/1/value",
+            "expected": 0.8
+          },
+          {
+            "pointer": "/values/2/value",
+            "expected": 70
+          },
+          {
+            "pointer": "/values/3/value",
+            "expected": 40
+          }
+        ],
+        "unsupported_inference_pointers": [
+          "/unsupported_inferences/1",
+          "/unsupported_inferences/0"
+        ],
+        "substantive_pointers": [
+          "/values/0",
+          "/values/1",
+          "/values/2",
+          "/values/3",
+          "/values/4",
+          "/values/5",
+          "/methods/0"
+        ]
+      },
+      "source_checksum": "sha256:3d2abed1938bd1400378a2e0ca2095058fe490b2b599ef15f09056639f06fcd6"
+    },
+    {
+      "evidence_id": "E-CONTEXT-EVI-SHAPE",
+      "standard_id": "STD-CONTEXT-BENCHMARKS",
+      "output_key": "context.public_charging_shape",
+      "source_roles": [
+        "usage_or_operating_schedule"
+      ],
+      "source_url": "https://developer.nlr.gov/docs/transportation/evi-pro-lite-v1/",
+      "source_title": "National Laboratory of the Rockies EVI-Pro Lite API documentation",
+      "source_version": "Version 1 documentation accessed 2026-07-23",
+      "exact_artifact": "EVI-Pro Lite API response contract for weekday and weekend charging load profiles",
+      "exact_field_table_page_equation_or_function": "Normalized 24-hour weekday and weekend time-of-day charging profiles returned in 15-minute steps",
+      "units": "dimensionless normalized fraction by interval",
+      "covered_product_or_method_scope": "Time-of-day charging shape only",
+      "existing_or_proposed_coverage": "proposed-load-shape",
+      "supported_scenarios": [
+        "location-and-scenario-matched-normalized-shape"
+      ],
+      "required_lookup_inputs": [
+        "benchmark_context",
+        "eligible_population"
+      ],
+      "extraction_or_calculation_method": "Select one compatible EVI-Pro Lite scenario response, retain weekday and weekend 15-minute values, and normalize each applicable daily shape to sum to one",
+      "selected_value_basis": "One complete compatible normalized profile",
+      "uncertainty_basis": "Scenario fit and lack of a retained request-response fixture",
+      "fixture_or_test_reference": null,
+      "access_limitations": "No retained request-response fixture or RetroFi adapter golden case",
+      "unsupported_uses": [
+        "Site daily delivered energy",
+        "Sessions per day",
+        "Charging utilization",
+        "Site load magnitude"
+      ],
+      "evidence_status": "LIMITED"
+    },
+    {
+      "evidence_id": "E-CONTEXT-FEMA-DIESEL-GENERATOR",
+      "standard_id": "STD-CONTEXT-BENCHMARKS",
+      "output_key": "context.diesel_generator_full_load_test_fuel",
+      "source_roles": [
+        "physics_or_calculation_method"
+      ],
+      "source_url": "https://emilms.fema.gov/IS0815/groups/90.html",
+      "source_title": "FEMA Operational Generator Fueling Requirements",
+      "source_version": "FEMA IS-815 page retrieved 2026-07-23",
+      "exact_artifact": "Operational generator fueling requirements lesson page",
+      "exact_field_table_page_equation_or_function": "generator_rated_capacity; full_load_diesel_fuel_coefficient; full_load_diesel_fuel_coefficient_value; full_load_diesel_fuel_rate; test_fuel_gallons_per_hour = 0.07 gallon/kWh × generator_rated_capacity_kW",
+      "units": "kW, gallon/kWh, and gallons/hour",
+      "covered_product_or_method_scope": "FEMA full-load diesel-generator fuel rule of thumb by rated generator kilowatts.",
+      "existing_or_proposed_coverage": "routine-test-fuel-method",
+      "supported_scenarios": [
+        "class-or-context-estimate"
+      ],
+      "required_lookup_inputs": [
+        "benchmark_context",
+        "exact_value_override"
+      ],
+      "extraction_or_calculation_method": "For a confirmed full-load diesel-generator test, calculate gallons per hour as 0.07 gallon/kWh multiplied by rated generator kW, then multiply by separately documented annual test hours per equipment unit",
+      "selected_value_basis": "One transparent source-derived full-load diesel formula; no population median is used",
+      "uncertainty_basis": "Rule-of-thumb source, full-load-only boundary, rated-capacity accuracy, and separately documented annual test hours",
+      "fixture_or_test_reference": "docs/operational-savings-fixtures/sources/fema-diesel-generator-full-load-fuel.json",
+      "access_limitations": "Diesel generators under full load only; no part-load curve, test-hour schedule, or standby-electricity population",
+      "unsupported_uses": [
+        "Part-load diesel fuel use",
+        "Natural-gas, propane, battery, fuel-cell, or hybrid backup-system fuel use",
+        "Annual routine-test hours",
+        "Standby electrical input or annual standby electricity",
+        "Outage operation or resilience value"
+      ],
+      "evidence_status": "VERIFIED",
+      "unit_ids": [
+        "kilowatt",
+        "gallon_per_kwh",
+        "gallon_per_hour"
+      ],
+      "fixture_binding": {
+        "fixture_path": "docs/operational-savings-fixtures/sources/fema-diesel-generator-full-load-fuel.json",
+        "fixture_type_pointer": "/fixture_type",
+        "source_title_pointer": "/source_title",
+        "source_url_pointer": "/raw_artifacts/0/source_url",
+        "source_version_pointer": "/raw_artifacts/0/source_version",
+        "artifact_pointer": "/raw_artifacts/0/exact_artifact",
+        "artifact_identifier_pointer": "/raw_artifacts/0/artifact_identifier",
+        "checksum_pointer": "/raw_artifacts/0/source_checksum",
+        "coverage_pointer": "/coverage/summary",
+        "source_roles_pointer": "/coverage/source_roles",
+        "field_pointers": [
+          "/fields/0/field",
+          "/fields/1/field",
+          "/values/0/field",
+          "/methods/0/field"
+        ],
+        "unit_pointers": [
+          "/fields/0/unit_id",
+          "/fields/1/unit_id",
+          "/values/0/unit_id",
+          "/methods/0/unit_id"
+        ],
+        "value_bindings": [
+          {
+            "pointer": "/values/0/value",
+            "expected": 0.07
+          }
+        ],
+        "unsupported_inference_pointers": [
+          "/unsupported_inferences/0",
+          "/unsupported_inferences/1",
+          "/unsupported_inferences/2",
+          "/unsupported_inferences/3",
+          "/unsupported_inferences/4"
+        ],
+        "substantive_pointers": [
+          "/fields/0",
+          "/fields/1",
+          "/values/0",
+          "/methods/0"
+        ]
+      },
+      "source_checksum": "sha256:104fd7d8fe018001753d4700616f4f5a96bb27ae88440ea794e9d03a0bd32a0a"
+    }
+  ]
+}

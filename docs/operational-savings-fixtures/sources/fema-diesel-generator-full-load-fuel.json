@@ -1,0 +1,75 @@
+{
+  "fixture_type": "reviewed_source_fixture",
+  "fixture_schema_version": "1.0.0",
+  "reviewed_on": "2026-07-23",
+  "retrieved_on": "2026-07-23",
+  "source_title": "FEMA Operational Generator Fueling Requirements",
+  "source_urls": [
+    "https://emilms.fema.gov/IS0815/groups/90.html"
+  ],
+  "raw_artifacts": [
+    {
+      "artifact_identifier": "fema-is0815-operational-generator-fueling-requirements",
+      "source_url": "https://emilms.fema.gov/IS0815/groups/90.html",
+      "source_version": "FEMA IS-815 page retrieved 2026-07-23",
+      "exact_artifact": "Operational generator fueling requirements lesson page",
+      "source_checksum": "sha256:104fd7d8fe018001753d4700616f4f5a96bb27ae88440ea794e9d03a0bd32a0a"
+    }
+  ],
+  "coverage": {
+    "summary": "FEMA full-load diesel-generator fuel rule of thumb by rated generator kilowatts.",
+    "source_roles": [
+      "physics_or_calculation_method"
+    ],
+    "scenarios": [
+      "class-or-context-estimate"
+    ]
+  },
+  "fields": [
+    {
+      "field": "generator_rated_capacity",
+      "unit_id": "kilowatt",
+      "role": "required full-load generator capacity",
+      "source_location": "FEMA formula term kW size of the generator"
+    },
+    {
+      "field": "full_load_diesel_fuel_coefficient",
+      "unit_id": "gallon_per_kwh",
+      "role": "full-load diesel fuel coefficient",
+      "source_location": "FEMA rule of thumb 0.07 gallons/hour times generator kW"
+    }
+  ],
+  "tables": [],
+  "values": [
+    {
+      "field": "full_load_diesel_fuel_coefficient_value",
+      "unit_id": "gallon_per_kwh",
+      "role": "full-load diesel fuel coefficient value",
+      "source_location": "FEMA rule of thumb",
+      "value": 0.07
+    }
+  ],
+  "methods": [
+    {
+      "field": "full_load_diesel_fuel_rate",
+      "unit_id": "gallon_per_hour",
+      "role": "fuel-rate equation",
+      "source_location": "test_fuel_gallons_per_hour = 0.07 gallon/kWh × generator_rated_capacity_kW"
+    }
+  ],
+  "supported_uses": [
+    "Estimate full-load diesel-generator fuel use per operating hour from rated generator kilowatts",
+    "Calculate annual routine-test diesel fuel per equipment unit when annual full-load test hours are separately documented"
+  ],
+  "unsupported_inferences": [
+    "Part-load diesel fuel use",
+    "Natural-gas, propane, battery, fuel-cell, or hybrid backup-system fuel use",
+    "Annual routine-test hours",
+    "Standby electrical input or annual standby electricity",
+    "Outage operation or resilience value"
+  ],
+  "provenance_notes": [
+    "The source calls the coefficient a rule of thumb and limits it to diesel generators.",
+    "RetroFi applies the coefficient only to a documented full-load diesel test and does not treat it as a manufacturer-specific curve."
+  ]
+}

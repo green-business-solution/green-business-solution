@@ -1,0 +1,92 @@
+{
+  "fixture_type": "reviewed_source_fixture",
+  "fixture_schema_version": "1.0.0",
+  "reviewed_on": "2026-07-23",
+  "retrieved_on": "2026-07-23",
+  "source_title": "2015 U.S. Lighting Market Characterization",
+  "source_urls": [
+    "https://www.energy.gov/cmei/ssl/2015-us-lighting-market-characterization",
+    "https://www.energy.gov/sites/prod/files/2017/12/f46/lmc2015_nov17.pdf"
+  ],
+  "raw_artifacts": [
+    {
+      "artifact_identifier": "doe-lmc-2015-final-report",
+      "source_url": "https://www.energy.gov/sites/prod/files/2017/12/f46/lmc2015_nov17.pdf",
+      "source_version": "November 2017 publication of 2015 characterization",
+      "exact_artifact": "Table 4.29 - Average Wattage by Outdoor Application",
+      "source_checksum": "sha256:3966462686a83437e13fae5b74e6194aae0a95af670e78ff1e763a1c8e6445ca"
+    }
+  ],
+  "coverage": {
+    "summary": "National average outdoor lighting system wattage by application for the applications reported in Table 4.29.",
+    "source_roles": [
+      "existing_equipment_baseline"
+    ],
+    "scenarios": [
+      "context-matched-authoritative-benchmark"
+    ]
+  },
+  "fields": [
+    {
+      "field": "outdoor_application",
+      "unit_id": "classification",
+      "role": "compatibility filter",
+      "source_location": "Table 4.29 Application column"
+    },
+    {
+      "field": "average_system_wattage",
+      "unit_id": "watt_per_fixture",
+      "role": "selected existing-fixture wattage benchmark",
+      "source_location": "Table 4.29 Average Wattage column"
+    }
+  ],
+  "tables": [
+    {
+      "field": "table_4_29_average_wattage_by_outdoor_application",
+      "unit_id": "watt_per_fixture",
+      "role": "application-specific existing outdoor lighting benchmark population",
+      "source_location": "Table 4.29",
+      "rows": {
+        "airfield": 79,
+        "billboard": 348,
+        "commercial_or_industrial_building_exterior": 97,
+        "communications_tower": 205,
+        "parking": 216,
+        "railway": 15,
+        "roadway": 262,
+        "sports_field": 1357,
+        "traffic_signal": 34
+      }
+    }
+  ],
+  "values": [
+    {
+      "field": "all_outdoor_applications_average",
+      "unit_id": "watt_per_fixture",
+      "role": "last-resort source aggregate after application matching",
+      "source_location": "Table 4.29 All Outdoor row",
+      "value": 166
+    }
+  ],
+  "methods": [
+    {
+      "field": "application_exact_then_all_outdoor_selection",
+      "unit_id": "enumeration",
+      "role": "deterministic selected-value rule",
+      "source_location": "RetroFi adapter rule over the inspected Table 4.29 rows"
+    }
+  ],
+  "supported_uses": [
+    "Select one existing exterior-fixture wattage after mapping the recognizable application to a Table 4.29 row",
+    "Use the all-outdoor average only when the available context cannot distinguish a listed application"
+  ],
+  "unsupported_inferences": [
+    "Project-specific nameplate wattage",
+    "Proposed-product wattage",
+    "Lighting quality, photometry, controls, or code compliance"
+  ],
+  "provenance_notes": [
+    "The application row is selected deterministically before the all-outdoor aggregate fallback.",
+    "The fixture does not restore the unsupported FEMP legacy-wattage claim."
+  ]
+}

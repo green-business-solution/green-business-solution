@@ -1,0 +1,36 @@
+name: Assistant card repair workspace export
+
+on:
+  push:
+    branches:
+      - docs/operational-savings-information-trees
+    paths:
+      - .github/workflows/assistant-card-repair-export.yml
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/assistant-card-repair-export.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Create workspace archive
+        run: |
+          tar --exclude=.git --exclude=node_modules -czf /tmp/retrofi-card-repair-workspace.tar.gz .
+      - name: Upload workspace archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: retrofi-card-repair-workspace
+          path: /tmp/retrofi-card-repair-workspace.tar.gz
+          if-no-files-found: error
+          retention-days: 1

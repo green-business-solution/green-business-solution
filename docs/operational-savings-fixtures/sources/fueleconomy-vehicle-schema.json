@@ -1,0 +1,241 @@
+{
+  "fixture_type": "reviewed_source_fixture",
+  "fixture_schema_version": "1.0.0",
+  "reviewed_on": "2026-07-22",
+  "retrieved_on": "2026-07-22",
+  "source_title": "FuelEconomy.gov Web Services exact Hyundai Kona vehicle records",
+  "source_urls": [
+    "https://www.fueleconomy.gov/ws/rest/vehicle/43764",
+    "https://www.fueleconomy.gov/ws/rest/vehicle/44444",
+    "https://www.epa.gov/greenvehicles/fuel-economy-and-ev-range-testing",
+    "https://www.fueleconomy.gov/feg/ws/index.shtml"
+  ],
+  "raw_artifacts": [
+    {
+      "artifact_identifier": "fueleconomy-vehicle-43764",
+      "source_url": "https://www.fueleconomy.gov/ws/rest/vehicle/43764",
+      "source_version": "Vehicle record 43764 modified 2021-08-24; retrieved 2026-07-22",
+      "exact_artifact": "GET /ws/rest/vehicle/43764",
+      "source_checksum": "sha256:2dd19421526bb67394a257f812855e902adca8d83bf413b82b6aa3496f517207"
+    },
+    {
+      "artifact_identifier": "fueleconomy-vehicle-44444",
+      "source_url": "https://www.fueleconomy.gov/ws/rest/vehicle/44444",
+      "source_version": "Vehicle record 44444 modified 2022-10-26; retrieved 2026-07-22",
+      "exact_artifact": "GET /ws/rest/vehicle/44444",
+      "source_checksum": "sha256:559eaf6d9f60712e6c3accaa32d12c116640baf0b19655f7aa5dee1f0487fee2"
+    },
+    {
+      "artifact_identifier": "fueleconomy-exact-pair",
+      "source_url": "https://www.fueleconomy.gov/feg/ws/index.shtml",
+      "source_version": "Vehicle records 43764 and 44444 retrieved 2026-07-22 in that order",
+      "exact_artifact": "Ordered pair of FuelEconomy.gov vehicle API responses",
+      "source_checksum": "sha256:dd9db42b0d9ec60720bdb6e5232779f2753bdf9dd389433b5f25f8e49e15df1b"
+    },
+    {
+      "artifact_identifier": "epa-fuel-economy-ev-range-testing",
+      "source_url": "https://www.epa.gov/greenvehicles/fuel-economy-and-ev-range-testing",
+      "source_version": "EPA testing method page retrieved 2026-07-22",
+      "exact_artifact": "EPA Fuel Economy and EV Range Testing method page",
+      "source_checksum": "sha256:1a5fef26b78cdd5c177ba65b42e0bb00bf6b4489c413026f96a43b28e001674b"
+    }
+  ],
+  "coverage": {
+    "summary": "One exact 2022 Hyundai Kona FWD gasoline record and one exact 2022 Hyundai Kona Electric record in the same FuelEconomy.gov vehicle class.",
+    "source_roles": [
+      "existing_equipment_baseline",
+      "proposed_or_qualified_product",
+      "physics_or_calculation_method"
+    ],
+    "scenarios": [
+      "exact-existing-model",
+      "exact-proposed-model",
+      "exact-existing-model-and-exact-proposed-model",
+      "insufficient-data"
+    ]
+  },
+  "fields": [
+    {
+      "field": "id",
+      "unit_id": "identifier",
+      "role": "exact record identity",
+      "source_location": "vehicle.id"
+    },
+    {
+      "field": "year",
+      "unit_id": "model_year",
+      "role": "compatibility support",
+      "source_location": "vehicle.year"
+    },
+    {
+      "field": "make",
+      "unit_id": "text",
+      "role": "exact record selection",
+      "source_location": "vehicle.make"
+    },
+    {
+      "field": "model",
+      "unit_id": "text",
+      "role": "exact record selection",
+      "source_location": "vehicle.model"
+    },
+    {
+      "field": "baseModel",
+      "unit_id": "text",
+      "role": "same product-line check",
+      "source_location": "vehicle.baseModel"
+    },
+    {
+      "field": "VClass",
+      "unit_id": "classification",
+      "role": "compatibility support only",
+      "source_location": "vehicle.VClass"
+    },
+    {
+      "field": "drive",
+      "unit_id": "classification",
+      "role": "compatibility support",
+      "source_location": "vehicle.drive"
+    },
+    {
+      "field": "fuelType1",
+      "unit_id": "classification",
+      "role": "fuel compatibility",
+      "source_location": "vehicle.fuelType1"
+    },
+    {
+      "field": "comb08",
+      "unit_id": "mile_per_gallon",
+      "role": "existing combined fuel economy",
+      "source_location": "vehicle.comb08"
+    },
+    {
+      "field": "combE",
+      "unit_id": "kilowatt_hour_per_100_mile",
+      "role": "proposed combined electricity consumption at the wall",
+      "source_location": "vehicle.combE"
+    }
+  ],
+  "tables": [],
+  "values": [
+    {
+      "field": "existing.id",
+      "unit_id": "identifier",
+      "role": "existing exact record",
+      "source_location": "GET /ws/rest/vehicle/43764 vehicle.id",
+      "value": 43764
+    },
+    {
+      "field": "existing.baseModel",
+      "unit_id": "text",
+      "role": "same product-line support",
+      "source_location": "GET /ws/rest/vehicle/43764 vehicle.baseModel",
+      "value": "Kona"
+    },
+    {
+      "field": "existing.VClass",
+      "unit_id": "classification",
+      "role": "class compatibility support",
+      "source_location": "GET /ws/rest/vehicle/43764 vehicle.VClass",
+      "value": "Small Sport Utility Vehicle 2WD"
+    },
+    {
+      "field": "existing.drive",
+      "unit_id": "classification",
+      "role": "drive compatibility support",
+      "source_location": "GET /ws/rest/vehicle/43764 vehicle.drive",
+      "value": "Front-Wheel Drive"
+    },
+    {
+      "field": "existing.comb08",
+      "unit_id": "mile_per_gallon",
+      "role": "existing exact combined fuel economy",
+      "source_location": "GET /ws/rest/vehicle/43764 vehicle.comb08",
+      "value": 32
+    },
+    {
+      "field": "proposed.id",
+      "unit_id": "identifier",
+      "role": "proposed exact record",
+      "source_location": "GET /ws/rest/vehicle/44444 vehicle.id",
+      "value": 44444
+    },
+    {
+      "field": "proposed.baseModel",
+      "unit_id": "text",
+      "role": "same product-line support",
+      "source_location": "GET /ws/rest/vehicle/44444 vehicle.baseModel",
+      "value": "Kona"
+    },
+    {
+      "field": "proposed.VClass",
+      "unit_id": "classification",
+      "role": "class compatibility support",
+      "source_location": "GET /ws/rest/vehicle/44444 vehicle.VClass",
+      "value": "Small Sport Utility Vehicle 2WD"
+    },
+    {
+      "field": "proposed.drive",
+      "unit_id": "classification",
+      "role": "drive compatibility support",
+      "source_location": "GET /ws/rest/vehicle/44444 vehicle.drive",
+      "value": "Front-Wheel Drive"
+    },
+    {
+      "field": "proposed.combE",
+      "unit_id": "kilowatt_hour_per_100_mile",
+      "role": "proposed exact electricity consumption at the wall",
+      "source_location": "GET /ws/rest/vehicle/44444 vehicle.combE",
+      "value": 28
+    },
+    {
+      "field": "user_confirmed_service_equivalence",
+      "unit_id": "boolean",
+      "role": "explicit service-equivalence gate",
+      "source_location": "golden scenario project confirmation",
+      "value": true
+    }
+  ],
+  "methods": [
+    {
+      "field": "combustion_gallons_per_mile",
+      "unit_id": "gallon_per_mile",
+      "role": "existing fuel conversion",
+      "source_location": "1 / comb08",
+      "expression": "1 / comb08"
+    },
+    {
+      "field": "electricity_kwh_per_mile",
+      "unit_id": "kilowatt_hour_per_mile",
+      "role": "proposed electricity conversion",
+      "source_location": "combE / 100",
+      "expression": "combE / 100"
+    },
+    {
+      "field": "charging_efficiency_adjustment",
+      "unit_id": "boolean",
+      "role": "double-counting guard",
+      "source_location": "combE represents electricity consumption at the wall",
+      "value": false
+    }
+  ],
+  "supported_uses": [
+    "Exact existing-model comb08 lookup",
+    "Exact proposed-model combE lookup",
+    "Same-product-line and class compatibility support",
+    "Exact-model comparison after explicit user confirmation of service equivalence"
+  ],
+  "unsupported_inferences": [
+    "Annual mileage",
+    "Vehicle fuel price",
+    "Electric tariff",
+    "Automatic service equivalence from VClass or baseModel",
+    "Vehicle-class percentile or representative class estimate",
+    "A second charging-loss adjustment"
+  ],
+  "provenance_notes": [
+    "The exact record IDs, modified dates, response checksums, and reviewed values are retained together.",
+    "Matching baseModel, VClass, model year, and drive are supporting compatibility facts, not an automatic service-equivalence decision.",
+    "The user confirmation in the golden scenario is scenario input, not a value asserted by FuelEconomy.gov."
+  ]
+}

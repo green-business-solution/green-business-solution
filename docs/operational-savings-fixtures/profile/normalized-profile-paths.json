@@ -1,0 +1,338 @@
+{
+  "fixture_type": "normalized_profile_path_contract",
+  "fixture_schema_version": "1.0.0",
+  "normalizer_schema_version": "user-match-profile-v1",
+  "paths": [
+    {
+      "path": "business",
+      "kind": "object"
+    },
+    {
+      "path": "business.naicsCodes",
+      "kind": "array",
+      "item_kind": "string"
+    },
+    {
+      "path": "business.organizationSize",
+      "kind": "string"
+    },
+    {
+      "path": "business.organizationTypes",
+      "kind": "array",
+      "item_kind": "string"
+    },
+    {
+      "path": "business.primaryActivityText",
+      "kind": "string"
+    },
+    {
+      "path": "completeness",
+      "kind": "object"
+    },
+    {
+      "path": "completeness.hasBuildingType",
+      "kind": "boolean"
+    },
+    {
+      "path": "completeness.hasCensusTract",
+      "kind": "boolean"
+    },
+    {
+      "path": "completeness.hasCounty",
+      "kind": "boolean"
+    },
+    {
+      "path": "completeness.hasOrganizationType",
+      "kind": "boolean"
+    },
+    {
+      "path": "completeness.hasPlace",
+      "kind": "boolean"
+    },
+    {
+      "path": "completeness.hasSquareFootage",
+      "kind": "boolean"
+    },
+    {
+      "path": "completeness.hasState",
+      "kind": "boolean"
+    },
+    {
+      "path": "completeness.hasUtility",
+      "kind": "boolean"
+    },
+    {
+      "path": "completeness.hasZip",
+      "kind": "boolean"
+    },
+    {
+      "path": "contact",
+      "kind": "object"
+    },
+    {
+      "path": "contact.hasEmail",
+      "kind": "boolean"
+    },
+    {
+      "path": "contact.hasPhone",
+      "kind": "boolean"
+    },
+    {
+      "path": "grant",
+      "kind": "object"
+    },
+    {
+      "path": "grant.grantDoNotForceQualificationReasons",
+      "kind": "array",
+      "item_kind": "string"
+    },
+    {
+      "path": "grant.grantMissingOrReviewInputs",
+      "kind": "array",
+      "item_kind": "object"
+    },
+    {
+      "path": "grant.grantOpportunitySpecificInputs",
+      "kind": "array",
+      "item_kind": "object"
+    },
+    {
+      "path": "grant.grantProfileConfidence",
+      "kind": "null"
+    },
+    {
+      "path": "grant.grantProfileDataSchemaVersion",
+      "kind": "null"
+    },
+    {
+      "path": "grant.grantProfileDataSourceArtifact",
+      "kind": "null"
+    },
+    {
+      "path": "grant.grantProfileFacts",
+      "kind": "array",
+      "item_kind": "object"
+    },
+    {
+      "path": "grant.grantProfileNotes",
+      "kind": "null"
+    },
+    {
+      "path": "grant.grantRetrofitProjectInputs",
+      "kind": "array",
+      "item_kind": "object"
+    },
+    {
+      "path": "grant.syntheticGrantProfileDataNotice",
+      "kind": "null"
+    },
+    {
+      "path": "project",
+      "kind": "object"
+    },
+    {
+      "path": "project.alreadyPurchasedEquipment",
+      "kind": "null"
+    },
+    {
+      "path": "project.stage",
+      "kind": "string"
+    },
+    {
+      "path": "project.targetStartDate",
+      "kind": "null"
+    },
+    {
+      "path": "schemaVersion",
+      "kind": "string"
+    },
+    {
+      "path": "site",
+      "kind": "object"
+    },
+    {
+      "path": "site.addressStructured",
+      "kind": "object"
+    },
+    {
+      "path": "site.addressStructured.matched",
+      "kind": "string"
+    },
+    {
+      "path": "site.addressStructured.raw",
+      "kind": "string"
+    },
+    {
+      "path": "site.addressStructured.stateCode",
+      "kind": "string"
+    },
+    {
+      "path": "site.addressStructured.zip5",
+      "kind": "string"
+    },
+    {
+      "path": "site.buildingTypes",
+      "kind": "array",
+      "item_kind": "string"
+    },
+    {
+      "path": "site.geo",
+      "kind": "object"
+    },
+    {
+      "path": "site.geo.censusBlockGeoid",
+      "kind": "string"
+    },
+    {
+      "path": "site.geo.censusTractGeoid",
+      "kind": "string"
+    },
+    {
+      "path": "site.geo.coordinates",
+      "kind": "object"
+    },
+    {
+      "path": "site.geo.coordinates.latitude",
+      "kind": "number"
+    },
+    {
+      "path": "site.geo.coordinates.longitude",
+      "kind": "number"
+    },
+    {
+      "path": "site.geo.countyFips",
+      "kind": "string"
+    },
+    {
+      "path": "site.geo.countyName",
+      "kind": "string"
+    },
+    {
+      "path": "site.geo.designations",
+      "kind": "array"
+    },
+    {
+      "path": "site.geo.placeGeoid",
+      "kind": "string"
+    },
+    {
+      "path": "site.geo.placeName",
+      "kind": "string"
+    },
+    {
+      "path": "site.geo.resolutionProvider",
+      "kind": "string"
+    },
+    {
+      "path": "site.geo.resolutionStatus",
+      "kind": "string"
+    },
+    {
+      "path": "site.geo.stateCode",
+      "kind": "string"
+    },
+    {
+      "path": "site.geo.zip5",
+      "kind": "string"
+    },
+    {
+      "path": "site.ownershipRelationship",
+      "kind": "string"
+    },
+    {
+      "path": "site.squareFootage",
+      "kind": "object"
+    },
+    {
+      "path": "site.squareFootage.parsingStatus",
+      "kind": "string"
+    },
+    {
+      "path": "site.squareFootage.raw",
+      "kind": "string"
+    },
+    {
+      "path": "site.squareFootage.value",
+      "kind": "number"
+    },
+    {
+      "path": "site.utility",
+      "kind": "object"
+    },
+    {
+      "path": "site.utility.electric",
+      "kind": "object"
+    },
+    {
+      "path": "site.utility.electric.customerClass",
+      "kind": "null"
+    },
+    {
+      "path": "site.utility.electric.distributionUtilityId",
+      "kind": "string"
+    },
+    {
+      "path": "site.utility.electric.selfReportedName",
+      "kind": "string"
+    },
+    {
+      "path": "site.utility.electric.territoryCandidates",
+      "kind": "array",
+      "item_kind": "string"
+    },
+    {
+      "path": "site.utility.electric.verificationStatus",
+      "kind": "string"
+    },
+    {
+      "path": "sourceIntakeId",
+      "kind": "string"
+    },
+    {
+      "path": "tax",
+      "kind": "object"
+    },
+    {
+      "path": "tax.siteTaxProfile",
+      "kind": "object"
+    },
+    {
+      "path": "tax.syntheticTaxDataNotice",
+      "kind": "null"
+    },
+    {
+      "path": "tax.taxDataSchemaVersion",
+      "kind": "null"
+    },
+    {
+      "path": "tax.taxDataSourceArtifact",
+      "kind": "null"
+    },
+    {
+      "path": "tax.taxExtractedValues",
+      "kind": "array",
+      "item_kind": "object"
+    },
+    {
+      "path": "tax.taxMissingOrReviewInputs",
+      "kind": "array",
+      "item_kind": "object"
+    },
+    {
+      "path": "tax.taxOpportunitySpecificInputs",
+      "kind": "array",
+      "item_kind": "object"
+    },
+    {
+      "path": "tax.taxProfileFacts",
+      "kind": "array",
+      "item_kind": "object"
+    },
+    {
+      "path": "tax.uploadedTaxFiles",
+      "kind": "array",
+      "item_kind": "object"
+    }
+  ],
+  "contract_sha256": "sha256:f68c91d0bf9d49a3c31fb34e910458203bb0955095a345eb503104f24a7548e8"
+}

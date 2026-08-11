@@ -6,6 +6,9 @@
     "apps/*"
   ],
   "type": "module",
+  "overrides": {
+    "shell-quote": "1.10.0"
+  },
   "scripts": {
     "dev": "concurrently -k -n api,web -c blue,green \"npm run dev -w @gbs/api\" \"npm run dev -w @gbs/web\"",
     "dev:local": "node scripts/dev-local.mjs",
@@ -51,6 +54,7 @@
     "matching:opportunity-data-targets": "node scripts/write-opportunity-data-research-targets.mjs",
     "matching:low-source-confidence-queue": "node scripts/write-low-source-confidence-opportunity-queue.mjs",
     "matching:sample": "node scripts/run-sample-matching.mjs",
+    "operational-savings:profile-fixture": "node scripts/write-normalized-profile-path-fixture.mjs",
     "matching:sample-opportunity-audit": "node scripts/audit-sample-matching-opportunity-data.mjs",
     "application-prep:first10": "node scripts/application-prep-first10.mjs",
     "matching:test-case-utility-prompt": "node scripts/write-sample-test-case-utility-data-prompt.mjs",
@@ -108,7 +112,7 @@
     "@vitejs/plugin-react": "^5.0.0",
     "concurrently": "^10.0.3",
     "express": "^5.2.1",
-    "fast-xml-parser": "^5.9.3",
+    "fast-xml-parser": "^5.10.1",
     "pdf-parse": "^1.1.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

@@ -1,0 +1,210 @@
+{
+  "fixture_type": "reviewed_source_fixture",
+  "fixture_schema_version": "1.0.0",
+  "reviewed_on": "2026-07-23",
+  "retrieved_on": "2026-07-23",
+  "source_title": "DOE Walk-In Coolers and Freezers Energy Conservation Standards NOPR",
+  "source_urls": [
+    "https://www.energy.gov/sites/default/files/2023-08/Walk-In%20Coolers%20and%20Freezers%20ECS%20NOPR.pdf"
+  ],
+  "raw_artifacts": [
+    {
+      "artifact_identifier": "doe-wicf-ecs-nopr-2023",
+      "source_url": "https://www.energy.gov/sites/default/files/2023-08/Walk-In%20Coolers%20and%20Freezers%20ECS%20NOPR.pdf",
+      "source_version": "August 2023 NOPR technical support document",
+      "exact_artifact": "Tables IV.31, IV.32, and IV.33",
+      "source_checksum": "sha256:d46c285120da35349dfe1017b1d2739cfa20efe62f00261e89c8c225c6fd1bbc"
+    }
+  ],
+  "coverage": {
+    "summary": "Class-specific baseline and efficiency-level annual energy values for walk-in panels, doors, and refrigeration systems.",
+    "source_roles": [
+      "existing_equipment_baseline",
+      "proposed_or_qualified_product",
+      "physics_or_calculation_method"
+    ],
+    "scenarios": [
+      "context-matched-authoritative-benchmark"
+    ]
+  },
+  "fields": [
+    {
+      "field": "equipment_class",
+      "unit_id": "record_set",
+      "role": "mandatory compatibility filter",
+      "source_location": "Tables IV.31 through IV.33 row labels"
+    },
+    {
+      "field": "efficiency_level",
+      "unit_id": "record_set",
+      "role": "baseline and proposed scenario selector",
+      "source_location": "Tables IV.31 through IV.33 columns"
+    }
+  ],
+  "tables": [
+    {
+      "field": "panel_pf_l_baseline",
+      "unit_id": "kwh_ft2_year",
+      "role": "panel baseline",
+      "source_location": "Table IV.31, PF.L baseline",
+      "value": 5.8
+    },
+    {
+      "field": "panel_pf_l_tsl3",
+      "unit_id": "kwh_ft2_year",
+      "role": "panel efficiency level",
+      "source_location": "Table IV.31, PF.L TSL 3",
+      "value": 4.0
+    },
+    {
+      "field": "panel_ps_l_baseline",
+      "unit_id": "kwh_ft2_year",
+      "role": "panel baseline",
+      "source_location": "Table IV.31, PS.L baseline",
+      "value": 9.5
+    },
+    {
+      "field": "panel_ps_l_tsl3",
+      "unit_id": "kwh_ft2_year",
+      "role": "panel efficiency level",
+      "source_location": "Table IV.31, PS.L TSL 3",
+      "value": 5.2
+    },
+    {
+      "field": "panel_ps_m_baseline",
+      "unit_id": "kwh_ft2_year",
+      "role": "panel baseline",
+      "source_location": "Table IV.31, PS.M baseline",
+      "value": 2.3
+    },
+    {
+      "field": "panel_ps_m_tsl3",
+      "unit_id": "kwh_ft2_year",
+      "role": "panel efficiency level",
+      "source_location": "Table IV.31, PS.M TSL 3",
+      "value": 1.1
+    },
+    {
+      "field": "door_dw_l_baseline",
+      "unit_id": "kwh_year",
+      "role": "door baseline",
+      "source_location": "Table IV.32, DW.L baseline",
+      "value": 2698
+    },
+    {
+      "field": "door_dw_l_tsl3",
+      "unit_id": "kwh_year",
+      "role": "door efficiency level",
+      "source_location": "Table IV.32, DW.L TSL 3",
+      "value": 2120
+    },
+    {
+      "field": "door_nm_l_baseline",
+      "unit_id": "kwh_year",
+      "role": "door baseline",
+      "source_location": "Table IV.32, NM.L baseline",
+      "value": 3796
+    },
+    {
+      "field": "door_nm_l_tsl3",
+      "unit_id": "kwh_year",
+      "role": "door efficiency level",
+      "source_location": "Table IV.32, NM.L TSL 3",
+      "value": 1118
+    },
+    {
+      "field": "door_no_l_baseline",
+      "unit_id": "kwh_year",
+      "role": "door baseline",
+      "source_location": "Table IV.32, NO.L baseline",
+      "value": 5320
+    },
+    {
+      "field": "door_no_l_tsl3",
+      "unit_id": "kwh_year",
+      "role": "door efficiency level",
+      "source_location": "Table IV.32, NO.L TSL 3",
+      "value": 1678
+    },
+    {
+      "field": "refrigeration_dc_l_i_baseline",
+      "unit_id": "kwh_year",
+      "role": "dedicated condensing baseline",
+      "source_location": "Table IV.33, DC.L.I baseline",
+      "value": 26420
+    },
+    {
+      "field": "refrigeration_dc_l_i_tsl3",
+      "unit_id": "kwh_year",
+      "role": "dedicated condensing efficiency level",
+      "source_location": "Table IV.33, DC.L.I TSL 3",
+      "value": 25887
+    },
+    {
+      "field": "refrigeration_dc_m_i_baseline",
+      "unit_id": "kwh_year",
+      "role": "dedicated condensing baseline",
+      "source_location": "Table IV.33, DC.M.I baseline",
+      "value": 12178
+    },
+    {
+      "field": "refrigeration_dc_m_i_tsl3",
+      "unit_id": "kwh_year",
+      "role": "dedicated condensing efficiency level",
+      "source_location": "Table IV.33, DC.M.I TSL 3",
+      "value": 11615
+    },
+    {
+      "field": "refrigeration_sp_h_i_baseline",
+      "unit_id": "kwh_year",
+      "role": "single-package baseline",
+      "source_location": "Table IV.33, SP.H.I baseline",
+      "value": 2275
+    },
+    {
+      "field": "refrigeration_sp_h_i_tsl3",
+      "unit_id": "kwh_year",
+      "role": "single-package efficiency level",
+      "source_location": "Table IV.33, SP.H.I TSL 3",
+      "value": 1999
+    },
+    {
+      "field": "refrigeration_uc_l_baseline",
+      "unit_id": "kwh_year",
+      "role": "unit-cooler baseline",
+      "source_location": "Table IV.33, UC.L baseline",
+      "value": 45993
+    },
+    {
+      "field": "refrigeration_uc_l_tsl3",
+      "unit_id": "kwh_year",
+      "role": "unit-cooler efficiency level",
+      "source_location": "Table IV.33, UC.L TSL 3",
+      "value": 43190
+    }
+  ],
+  "values": [],
+  "methods": [
+    {
+      "field": "component_annual_energy_delta",
+      "unit_id": "kwh_year",
+      "role": "class-matched baseline minus proposed annual energy",
+      "source_location": "Tables IV.31 through IV.33"
+    }
+  ],
+  "supported_uses": [
+    "Select baseline and proposed values only from the same component and equipment-class row",
+    "Multiply panel intensity by matched panel area before combining with annual door and refrigeration component values",
+    "Sum only the components explicitly included in the project boundary"
+  ],
+  "unsupported_inferences": [
+    "Whole-box annual energy from a single unmatched component row",
+    "A class selected without temperature, component, indoor or outdoor, and configuration filters",
+    "A project-specific duty or box load",
+    "Multiplying an already annual benchmark by annual operating hours"
+  ],
+  "provenance_notes": [
+    "Panel values use kWh per square foot per year while door and refrigeration values use kWh per year.",
+    "The adapter must preserve native units and same-row class matching."
+  ]
+}

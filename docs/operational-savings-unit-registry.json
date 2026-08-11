@@ -1,0 +1,1108 @@
+{
+  "registry_type": "operational_savings_unit_registry",
+  "schema_version": "1.0.0",
+  "units": {
+    "100_lb_units_year": {
+      "unit_id": "100_lb_units_year",
+      "display_unit": "100-lb units/year",
+      "dimension": "declared",
+      "quantity_kind": "numeric",
+      "dimension_vector": null
+    },
+    "activity_year": {
+      "unit_id": "activity_year",
+      "display_unit": "activity/year",
+      "dimension": "activity_per_time",
+      "quantity_kind": "activity_rate",
+      "dimension_vector": {
+        "activity": 1,
+        "time": -1
+      }
+    },
+    "and_kwh": {
+      "unit_id": "and_kwh",
+      "display_unit": "and kWh",
+      "dimension": "energy",
+      "quantity_kind": "energy",
+      "dimension_vector": {
+        "energy": 1
+      }
+    },
+    "api_operation": {
+      "unit_id": "api_operation",
+      "display_unit": "API operation",
+      "dimension": "metadata",
+      "quantity_kind": "metadata",
+      "dimension_vector": null
+    },
+    "boolean": {
+      "unit_id": "boolean",
+      "display_unit": "boolean",
+      "dimension": "boolean",
+      "quantity_kind": "boolean",
+      "dimension_vector": null
+    },
+    "certified_activity_unit_year": {
+      "unit_id": "certified_activity_unit_year",
+      "display_unit": "certified activity-unit/year",
+      "dimension": "declared",
+      "quantity_kind": "numeric",
+      "dimension_vector": null
+    },
+    "classification": {
+      "unit_id": "classification",
+      "display_unit": "classification",
+      "dimension": "metadata",
+      "quantity_kind": "metadata",
+      "dimension_vector": null
+    },
+    "common_energy_unit_resource_unit": {
+      "unit_id": "common_energy_unit_resource_unit",
+      "display_unit": "common-energy-unit/resource-unit",
+      "dimension": "energy",
+      "quantity_kind": "energy",
+      "dimension_vector": {
+        "energy": 1
+      }
+    },
+    "compressors": {
+      "unit_id": "compressors",
+      "display_unit": "compressors",
+      "dimension": "declared",
+      "quantity_kind": "numeric",
+      "dimension_vector": null
+    },
+    "contract_rule": {
+      "unit_id": "contract_rule",
+      "display_unit": "contract rule",
+      "dimension": "metadata",
+      "quantity_kind": "metadata",
+      "dimension_vector": null
+    },
+    "count": {
+      "unit_id": "count",
+      "display_unit": "count",
+      "dimension": "count",
+      "quantity_kind": "count",
+      "dimension_vector": {
+        "count": 1
+      }
+    },
+    "cycles_year": {
+      "unit_id": "cycles_year",
+      "display_unit": "cycles/year",
+      "dimension": "activity_per_time",
+      "quantity_kind": "activity_rate",
+      "dimension_vector": {
+        "activity": 1,
+        "time": -1
+      }
+    },
+    "date": {
+      "unit_id": "date",
+      "display_unit": "date",
+      "dimension": "metadata",
+      "quantity_kind": "metadata",
+      "dimension_vector": null
+    },
+    "date_range": {
+      "unit_id": "date_range",
+      "display_unit": "date range",
+      "dimension": "metadata",
+      "quantity_kind": "metadata",
+      "dimension_vector": null
+    },
+    "degree": {
+      "unit_id": "degree",
+      "display_unit": "degree",
+      "dimension": "declared",
+      "quantity_kind": "numeric",
+      "dimension_vector": null
+    },
+    "energy_activity": {
+      "unit_id": "energy_activity",
+      "display_unit": "energy/activity",
+      "dimension": "energy",
+      "quantity_kind": "energy",
+      "dimension_vector": {
+        "energy": 1
+      }
+    },
+    "energy_fuel_unit": {
+      "unit_id": "energy_fuel_unit",
+      "display_unit": "energy/fuel-unit",
+      "dimension": "energy",
+      "quantity_kind": "energy",
+      "dimension_vector": {
+        "energy": 1
+      }
+    },
+    "energy_gallon": {
+      "unit_id": "energy_gallon",
+      "display_unit": "energy/gallon",
+      "dimension": "energy",
+      "quantity_kind": "energy",
+      "dimension_vector": {
+        "energy": 1
+      }
+    },
+    "energy_mass": {
+      "unit_id": "energy_mass",
+      "display_unit": "energy/mass",
+      "dimension": "energy",
+      "quantity_kind": "energy",
+      "dimension_vector": {
+        "energy": 1
+      }
+    },
+    "energy_year": {
+      "unit_id": "energy_year",
+      "display_unit": "energy/year",
+      "dimension": "energy_per_time",
+      "quantity_kind": "energy",
+      "dimension_vector": {
+        "energy": 1,
+        "time": -1
+      }
+    },
+    "enumeration": {
+      "unit_id": "enumeration",
+      "display_unit": "enumeration",
+      "dimension": "metadata",
+      "quantity_kind": "metadata",
+      "dimension_vector": null
+    },
+    "flow": {
+      "unit_id": "flow",
+      "display_unit": "flow",
+      "dimension": "declared",
+      "quantity_kind": "numeric",
+      "dimension_vector": null
+    },
+    "flow_leak": {
+      "unit_id": "flow_leak",
+      "display_unit": "flow/leak",
+      "dimension": "declared",
+      "quantity_kind": "numeric",
+      "dimension_vector": null
+    },
+    "flow_unit": {
+      "unit_id": "flow_unit",
+      "display_unit": "flow-unit",
+      "dimension": "flow",
+      "quantity_kind": "flow",
+      "dimension_vector": {
+        "flow": 1,
+        "time": -1
+      }
+    },
+    "flow_unit_hour_per_year": {
+      "unit_id": "flow_unit_hour_per_year",
+      "display_unit": "flow-unit-hours/year",
+      "dimension": "flow_time_per_time",
+      "quantity_kind": "annual_activity",
+      "dimension_vector": {
+        "flow": 1
+      }
+    },
+    "flushes_fixture_year": {
+      "unit_id": "flushes_fixture_year",
+      "display_unit": "flushes/fixture-year",
+      "dimension": "activity_per_time",
+      "quantity_kind": "activity_rate",
+      "dimension_vector": {
+        "activity": 1,
+        "time": -1
+      }
+    },
+    "flushes_year": {
+      "unit_id": "flushes_year",
+      "display_unit": "flushes/year",
+      "dimension": "activity_per_time",
+      "quantity_kind": "activity_rate",
+      "dimension_vector": {
+        "activity": 1,
+        "time": -1
+      }
+    },
+    "fraction": {
+      "unit_id": "fraction",
+      "display_unit": "fraction",
+      "dimension": "dimensionless",
+      "quantity_kind": "ratio",
+      "dimension_vector": {}
+    },
+    "ft2": {
+      "unit_id": "ft2",
+      "display_unit": "ft2",
+      "dimension": "area",
+      "quantity_kind": "area",
+      "dimension_vector": {
+        "area": 1
+      }
+    },
+    "ft3": {
+      "unit_id": "ft3",
+      "display_unit": "ft3",
+      "dimension": "declared",
+      "quantity_kind": "numeric",
+      "dimension_vector": null
+    },
+    "fuel_unit_hour": {
+      "unit_id": "fuel_unit_hour",
+      "display_unit": "fuel-unit/hour",
+      "dimension": "declared",
+      "quantity_kind": "numeric",
+      "dimension_vector": null
+    },
+    "fuel_unit_mass": {
+      "unit_id": "fuel_unit_mass",
+      "display_unit": "fuel-unit/mass",
+      "dimension": "mass",
+      "quantity_kind": "mass",
+      "dimension_vector": {
+        "mass": 1,
+        "time": -1
+      }
+    },
+    "fuel_unit_year": {
+      "unit_id": "fuel_unit_year",
+      "display_unit": "fuel-unit/year",
+      "dimension": "resource_per_time",
+      "quantity_kind": "resource_rate",
+      "dimension_vector": {
+        "resource": 1,
+        "time": -1
+      }
+    },
+    "gallon_per_hour": {
+      "unit_id": "gallon_per_hour",
+      "display_unit": "gallons/hour",
+      "dimension": "volume_per_time",
+      "quantity_kind": "volume",
+      "dimension_vector": {
+        "volume": 1,
+        "time": -1
+      }
+    },
+    "gallon_per_kwh": {
+      "unit_id": "gallon_per_kwh",
+      "display_unit": "gallon/kWh",
+      "dimension": "volume_per_energy",
+      "quantity_kind": "resource_intensity",
+      "dimension_vector": {
+        "volume": 1,
+        "energy": -1
+      }
+    },
+    "gallon_per_kwh_work": {
+      "unit_id": "gallon_per_kwh_work",
+      "display_unit": "gallon/kWh-work",
+      "dimension": "volume_per_energy",
+      "quantity_kind": "resource_intensity",
+      "dimension_vector": {
+        "volume": 1,
+        "energy": -1
+      }
+    },
+    "gallon_per_mile": {
+      "unit_id": "gallon_per_mile",
+      "display_unit": "gallon per mile",
+      "dimension": "volume",
+      "quantity_kind": "volume",
+      "dimension_vector": {
+        "volume": 1
+      }
+    },
+    "gallon_per_rack": {
+      "unit_id": "gallon_per_rack",
+      "display_unit": "gallons/rack",
+      "dimension": "volume",
+      "quantity_kind": "volume",
+      "dimension_vector": {
+        "volume": 1
+      }
+    },
+    "gallon_per_vehicle_year": {
+      "unit_id": "gallon_per_vehicle_year",
+      "display_unit": "gallons/vehicle-year",
+      "dimension": "volume_per_item_time",
+      "quantity_kind": "resource_rate",
+      "dimension_vector": {
+        "volume": 1,
+        "count": -1,
+        "time": -1
+      }
+    },
+    "gallon_per_year": {
+      "unit_id": "gallon_per_year",
+      "display_unit": "gallons/year",
+      "dimension": "volume_per_time",
+      "quantity_kind": "volume",
+      "dimension_vector": {
+        "volume": 1,
+        "time": -1
+      }
+    },
+    "gallons_100_lb": {
+      "unit_id": "gallons_100_lb",
+      "display_unit": "gallons/100 lb",
+      "dimension": "volume",
+      "quantity_kind": "volume",
+      "dimension_vector": {
+        "volume": 1
+      }
+    },
+    "gallons_cycle": {
+      "unit_id": "gallons_cycle",
+      "display_unit": "gallons/cycle",
+      "dimension": "volume",
+      "quantity_kind": "volume",
+      "dimension_vector": {
+        "volume": 1
+      }
+    },
+    "gallons_flush": {
+      "unit_id": "gallons_flush",
+      "display_unit": "gallons/flush",
+      "dimension": "volume",
+      "quantity_kind": "volume",
+      "dimension_vector": {
+        "volume": 1
+      }
+    },
+    "gallons_minute": {
+      "unit_id": "gallons_minute",
+      "display_unit": "gallons/minute",
+      "dimension": "volume_per_time",
+      "quantity_kind": "volume",
+      "dimension_vector": {
+        "volume": 1,
+        "time": -1
+      }
+    },
+    "gallons_rack": {
+      "unit_id": "gallons_rack",
+      "display_unit": "gallons/rack",
+      "dimension": "volume",
+      "quantity_kind": "volume",
+      "dimension_vector": {
+        "volume": 1
+      }
+    },
+    "gallons_year": {
+      "unit_id": "gallons_year",
+      "display_unit": "gallons/year",
+      "dimension": "volume_per_time",
+      "quantity_kind": "volume",
+      "dimension_vector": {
+        "volume": 1,
+        "time": -1
+      }
+    },
+    "hour_per_year": {
+      "unit_id": "hour_per_year",
+      "display_unit": "hours/year",
+      "dimension": "time",
+      "quantity_kind": "duration",
+      "dimension_vector": {
+        "time": 1
+      }
+    },
+    "hours_bin": {
+      "unit_id": "hours_bin",
+      "display_unit": "hours/bin",
+      "dimension": "time",
+      "quantity_kind": "duration",
+      "dimension_vector": {
+        "time": 1
+      }
+    },
+    "hours_day": {
+      "unit_id": "hours_day",
+      "display_unit": "hours/day",
+      "dimension": "time",
+      "quantity_kind": "duration",
+      "dimension_vector": {
+        "time": 1
+      }
+    },
+    "hours_event": {
+      "unit_id": "hours_event",
+      "display_unit": "hours/event",
+      "dimension": "time",
+      "quantity_kind": "duration",
+      "dimension_vector": {
+        "time": 1
+      }
+    },
+    "hours_interval": {
+      "unit_id": "hours_interval",
+      "display_unit": "hours/interval",
+      "dimension": "time",
+      "quantity_kind": "duration",
+      "dimension_vector": {
+        "time": 1
+      }
+    },
+    "hours_period": {
+      "unit_id": "hours_period",
+      "display_unit": "hours/period",
+      "dimension": "time",
+      "quantity_kind": "duration",
+      "dimension_vector": {
+        "time": 1
+      }
+    },
+    "identifier": {
+      "unit_id": "identifier",
+      "display_unit": "identifier",
+      "dimension": "metadata",
+      "quantity_kind": "metadata",
+      "dimension_vector": null
+    },
+    "interval_set": {
+      "unit_id": "interval_set",
+      "display_unit": "interval set",
+      "dimension": "declared",
+      "quantity_kind": "numeric",
+      "dimension_vector": null
+    },
+    "kilowatt": {
+      "unit_id": "kilowatt",
+      "display_unit": "kW",
+      "dimension": "power",
+      "quantity_kind": "power",
+      "dimension_vector": {
+        "energy": 1,
+        "time": -1
+      }
+    },
+    "kilowatt_dc": {
+      "unit_id": "kilowatt_dc",
+      "display_unit": "kWdc",
+      "dimension": "power",
+      "quantity_kind": "power",
+      "dimension_vector": {
+        "energy": 1,
+        "time": -1
+      }
+    },
+    "kilowatt_hour_ac_per_month": {
+      "unit_id": "kilowatt_hour_ac_per_month",
+      "display_unit": "kWh/month",
+      "dimension": "energy_per_time",
+      "quantity_kind": "energy_rate",
+      "dimension_vector": {
+        "energy": 1,
+        "time": -1
+      }
+    },
+    "kilowatt_hour_ac_per_year": {
+      "unit_id": "kilowatt_hour_ac_per_year",
+      "display_unit": "kWh/year",
+      "dimension": "energy_per_time",
+      "quantity_kind": "energy_rate",
+      "dimension_vector": {
+        "energy": 1,
+        "time": -1
+      }
+    },
+    "kilowatt_hour_per_100_mile": {
+      "unit_id": "kilowatt_hour_per_100_mile",
+      "display_unit": "kWh/100 miles",
+      "dimension": "energy_per_distance",
+      "quantity_kind": "intensity",
+      "dimension_vector": {
+        "energy": 1,
+        "distance": -1
+      }
+    },
+    "kilowatt_hour_per_mile": {
+      "unit_id": "kilowatt_hour_per_mile",
+      "display_unit": "kWh/mile",
+      "dimension": "energy_per_distance",
+      "quantity_kind": "intensity",
+      "dimension_vector": {
+        "energy": 1,
+        "distance": -1
+      }
+    },
+    "kilowatt_hour_per_rack": {
+      "unit_id": "kilowatt_hour_per_rack",
+      "display_unit": "kWh/rack",
+      "dimension": "energy_per_activity",
+      "quantity_kind": "intensity",
+      "dimension_vector": {
+        "energy": 1,
+        "activity": -1
+      }
+    },
+    "kilowatt_hour_per_vehicle_year": {
+      "unit_id": "kilowatt_hour_per_vehicle_year",
+      "display_unit": "kWh/vehicle-year",
+      "dimension": "energy_per_item_time",
+      "quantity_kind": "resource_rate",
+      "dimension_vector": {
+        "energy": 1,
+        "count": -1,
+        "time": -1
+      }
+    },
+    "kilowatt_hour_per_year": {
+      "unit_id": "kilowatt_hour_per_year",
+      "display_unit": "kWh/year",
+      "dimension": "energy_per_time",
+      "quantity_kind": "energy_rate",
+      "dimension_vector": {
+        "energy": 1,
+        "time": -1
+      }
+    },
+    "kilowatt_per_fixture": {
+      "unit_id": "kilowatt_per_fixture",
+      "display_unit": "kW/fixture",
+      "dimension": "power",
+      "quantity_kind": "power",
+      "dimension_vector": {
+        "energy": 1,
+        "time": -1
+      }
+    },
+    "kilowatt_per_flow_unit": {
+      "unit_id": "kilowatt_per_flow_unit",
+      "display_unit": "kW/flow-unit",
+      "dimension": "power_per_flow",
+      "quantity_kind": "specific_power",
+      "dimension_vector": {
+        "energy": 1,
+        "flow": -1
+      }
+    },
+    "kw": {
+      "unit_id": "kw",
+      "display_unit": "kW",
+      "dimension": "power",
+      "quantity_kind": "power",
+      "dimension_vector": {
+        "energy": 1,
+        "time": -1
+      }
+    },
+    "kw_bin": {
+      "unit_id": "kw_bin",
+      "display_unit": "kW/bin",
+      "dimension": "power",
+      "quantity_kind": "power",
+      "dimension_vector": {
+        "energy": 1,
+        "time": -1
+      }
+    },
+    "kw_flow_unit_x_pressure_unit": {
+      "unit_id": "kw_flow_unit_x_pressure_unit",
+      "display_unit": "kW/(flow-unit × pressure-unit)",
+      "dimension": "power",
+      "quantity_kind": "power",
+      "dimension_vector": {
+        "energy": 1,
+        "time": -1
+      }
+    },
+    "kw_port": {
+      "unit_id": "kw_port",
+      "display_unit": "kW/port",
+      "dimension": "power",
+      "quantity_kind": "power",
+      "dimension_vector": {
+        "energy": 1,
+        "time": -1
+      }
+    },
+    "kw_unit": {
+      "unit_id": "kw_unit",
+      "display_unit": "kW/unit",
+      "dimension": "power",
+      "quantity_kind": "power",
+      "dimension_vector": {
+        "energy": 1,
+        "time": -1
+      }
+    },
+    "kwh": {
+      "unit_id": "kwh",
+      "display_unit": "kWh",
+      "dimension": "energy",
+      "quantity_kind": "energy",
+      "dimension_vector": {
+        "energy": 1
+      }
+    },
+    "kwh_100_lb": {
+      "unit_id": "kwh_100_lb",
+      "display_unit": "kWh/100 lb",
+      "dimension": "energy_per_mass",
+      "quantity_kind": "energy_intensity",
+      "dimension_vector": {
+        "energy": 1,
+        "mass": -1
+      }
+    },
+    "kwh_activity": {
+      "unit_id": "kwh_activity",
+      "display_unit": "kWh/activity",
+      "dimension": "energy_per_activity",
+      "quantity_kind": "energy_intensity",
+      "dimension_vector": {
+        "energy": 1,
+        "activity": -1
+      }
+    },
+    "kwh_cycle": {
+      "unit_id": "kwh_cycle",
+      "display_unit": "kWh/cycle",
+      "dimension": "energy_per_activity",
+      "quantity_kind": "energy_intensity",
+      "dimension_vector": {
+        "energy": 1,
+        "activity": -1
+      }
+    },
+    "kwh_day": {
+      "unit_id": "kwh_day",
+      "display_unit": "kWh/day",
+      "dimension": "energy_per_time",
+      "quantity_kind": "energy_rate",
+      "dimension_vector": {
+        "energy": 1,
+        "time": -1
+      }
+    },
+    "kwh_hour": {
+      "unit_id": "kwh_hour",
+      "display_unit": "kWh/hour",
+      "dimension": "power",
+      "quantity_kind": "power",
+      "dimension_vector": {
+        "energy": 1,
+        "time": -1
+      }
+    },
+    "kwh_ft2_year": {
+      "unit_id": "kwh_ft2_year",
+      "display_unit": "kWh/ft2-year",
+      "dimension": "energy_per_area_time",
+      "quantity_kind": "energy_intensity",
+      "dimension_vector": {
+        "energy": 1,
+        "area": -1,
+        "time": -1
+      }
+    },
+    "kwh_interval": {
+      "unit_id": "kwh_interval",
+      "display_unit": "kWh/interval",
+      "dimension": "interval_energy",
+      "quantity_kind": "energy",
+      "dimension_vector": {
+        "energy": 1
+      }
+    },
+    "kwh_mile": {
+      "unit_id": "kwh_mile",
+      "display_unit": "kWh/mile",
+      "dimension": "energy_per_distance",
+      "quantity_kind": "intensity",
+      "dimension_vector": {
+        "energy": 1,
+        "distance": -1
+      }
+    },
+    "kwh_period": {
+      "unit_id": "kwh_period",
+      "display_unit": "kWh/period",
+      "dimension": "energy_per_time",
+      "quantity_kind": "energy_rate",
+      "dimension_vector": {
+        "energy": 1,
+        "time": -1
+      }
+    },
+    "kwh_thermal_year": {
+      "unit_id": "kwh_thermal_year",
+      "display_unit": "kWh-thermal/year",
+      "dimension": "energy_per_time",
+      "quantity_kind": "energy_rate",
+      "dimension_vector": {
+        "energy": 1,
+        "time": -1
+      }
+    },
+    "kwh_unit_year": {
+      "unit_id": "kwh_unit_year",
+      "display_unit": "kWh/unit-year",
+      "dimension": "energy_per_item_time",
+      "quantity_kind": "resource_rate",
+      "dimension_vector": {
+        "energy": 1,
+        "item": -1,
+        "time": -1
+      }
+    },
+    "kwh_year": {
+      "unit_id": "kwh_year",
+      "display_unit": "kWh/year",
+      "dimension": "energy_per_time",
+      "quantity_kind": "energy_rate",
+      "dimension_vector": {
+        "energy": 1,
+        "time": -1
+      }
+    },
+    "lb_year": {
+      "unit_id": "lb_year",
+      "display_unit": "lb/year",
+      "dimension": "declared",
+      "quantity_kind": "numeric",
+      "dimension_vector": null
+    },
+    "location_selector": {
+      "unit_id": "location_selector",
+      "display_unit": "location selector",
+      "dimension": "metadata",
+      "quantity_kind": "metadata",
+      "dimension_vector": null
+    },
+    "lumen_per_watt": {
+      "unit_id": "lumen_per_watt",
+      "display_unit": "lumens/watt",
+      "dimension": "declared",
+      "quantity_kind": "numeric",
+      "dimension_vector": null
+    },
+    "mass_hour": {
+      "unit_id": "mass_hour",
+      "display_unit": "mass/hour",
+      "dimension": "mass_per_time",
+      "quantity_kind": "mass",
+      "dimension_vector": {
+        "mass": 1,
+        "time": -1
+      }
+    },
+    "mass_year": {
+      "unit_id": "mass_year",
+      "display_unit": "mass/year",
+      "dimension": "mass_per_time",
+      "quantity_kind": "mass",
+      "dimension_vector": {
+        "mass": 1,
+        "time": -1
+      }
+    },
+    "mile_per_gallon": {
+      "unit_id": "mile_per_gallon",
+      "display_unit": "miles/gallon",
+      "dimension": "distance_per_volume",
+      "quantity_kind": "efficiency",
+      "dimension_vector": {
+        "distance": 1,
+        "volume": -1
+      }
+    },
+    "mile_per_vehicle_year": {
+      "unit_id": "mile_per_vehicle_year",
+      "display_unit": "miles/vehicle-year",
+      "dimension": "distance_per_item_time",
+      "quantity_kind": "activity_rate",
+      "dimension_vector": {
+        "distance": 1,
+        "count": -1,
+        "time": -1
+      }
+    },
+    "miles_year": {
+      "unit_id": "miles_year",
+      "display_unit": "miles/year",
+      "dimension": "distance_per_time",
+      "quantity_kind": "activity_rate",
+      "dimension_vector": {
+        "distance": 1,
+        "time": -1
+      }
+    },
+    "minutes_use": {
+      "unit_id": "minutes_use",
+      "display_unit": "minutes/use",
+      "dimension": "declared",
+      "quantity_kind": "numeric",
+      "dimension_vector": null
+    },
+    "minutes_year": {
+      "unit_id": "minutes_year",
+      "display_unit": "minutes/year",
+      "dimension": "declared",
+      "quantity_kind": "numeric",
+      "dimension_vector": null
+    },
+    "model_year": {
+      "unit_id": "model_year",
+      "display_unit": "model year",
+      "dimension": "metadata",
+      "quantity_kind": "metadata",
+      "dimension_vector": null
+    },
+    "percent": {
+      "unit_id": "percent",
+      "display_unit": "percent",
+      "dimension": "dimensionless",
+      "quantity_kind": "ratio",
+      "dimension_vector": {}
+    },
+    "postal_code": {
+      "unit_id": "postal_code",
+      "display_unit": "postal code",
+      "dimension": "metadata",
+      "quantity_kind": "metadata",
+      "dimension_vector": null
+    },
+    "pressure": {
+      "unit_id": "pressure",
+      "display_unit": "pressure",
+      "dimension": "declared",
+      "quantity_kind": "numeric",
+      "dimension_vector": null
+    },
+    "racks_day": {
+      "unit_id": "racks_day",
+      "display_unit": "racks/day",
+      "dimension": "activity_per_time",
+      "quantity_kind": "activity_rate",
+      "dimension_vector": {
+        "activity": 1,
+        "time": -1
+      }
+    },
+    "racks_year": {
+      "unit_id": "racks_year",
+      "display_unit": "racks/year",
+      "dimension": "activity_per_time",
+      "quantity_kind": "activity_rate",
+      "dimension_vector": {
+        "activity": 1,
+        "time": -1
+      }
+    },
+    "reciprocal": {
+      "unit_id": "reciprocal",
+      "display_unit": "reciprocal",
+      "dimension": "declared",
+      "quantity_kind": "numeric",
+      "dimension_vector": null
+    },
+    "record_set": {
+      "unit_id": "record_set",
+      "display_unit": "record set",
+      "dimension": "metadata",
+      "quantity_kind": "metadata",
+      "dimension_vector": null
+    },
+    "resource_certified_activity": {
+      "unit_id": "resource_certified_activity",
+      "display_unit": "resource/certified activity",
+      "dimension": "resource_per_activity",
+      "quantity_kind": "intensity",
+      "dimension_vector": {
+        "resource": 1,
+        "activity": -1
+      }
+    },
+    "resource_hour": {
+      "unit_id": "resource_hour",
+      "display_unit": "resource/hour",
+      "dimension": "resource_per_time",
+      "quantity_kind": "resource_rate",
+      "dimension_vector": {
+        "resource": 1,
+        "time": -1
+      }
+    },
+    "resource_unit_ft2_year": {
+      "unit_id": "resource_unit_ft2_year",
+      "display_unit": "resource-unit/ft2-year",
+      "dimension": "resource_per_area_time",
+      "quantity_kind": "resource_intensity",
+      "dimension_vector": {
+        "resource": 1,
+        "area": -1,
+        "time": -1
+      }
+    },
+    "resource_unit_year": {
+      "unit_id": "resource_unit_year",
+      "display_unit": "resource-unit/year",
+      "dimension": "resource_per_time",
+      "quantity_kind": "resource_rate",
+      "dimension_vector": {
+        "resource": 1,
+        "time": -1
+      }
+    },
+    "square_foot": {
+      "unit_id": "square_foot",
+      "display_unit": "ft2",
+      "dimension": "area",
+      "quantity_kind": "area",
+      "dimension_vector": {
+        "area": 1
+      }
+    },
+    "tested_duty_definition": {
+      "unit_id": "tested_duty_definition",
+      "display_unit": "tested-duty definition",
+      "dimension": "metadata",
+      "quantity_kind": "metadata",
+      "dimension_vector": null
+    },
+    "text": {
+      "unit_id": "text",
+      "display_unit": "text",
+      "dimension": "metadata",
+      "quantity_kind": "metadata",
+      "dimension_vector": null
+    },
+    "text_array": {
+      "unit_id": "text_array",
+      "display_unit": "text array",
+      "dimension": "metadata",
+      "quantity_kind": "metadata",
+      "dimension_vector": null
+    },
+    "thermal_energy": {
+      "unit_id": "thermal_energy",
+      "display_unit": "thermal-energy",
+      "dimension": "energy",
+      "quantity_kind": "energy",
+      "dimension_vector": {
+        "energy": 1
+      }
+    },
+    "therms_year": {
+      "unit_id": "therms_year",
+      "display_unit": "therms/year",
+      "dimension": "resource_per_time",
+      "quantity_kind": "resource_rate",
+      "dimension_vector": {
+        "resource": 1,
+        "time": -1
+      }
+    },
+    "usd_fuel_unit": {
+      "unit_id": "usd_fuel_unit",
+      "display_unit": "USD/fuel-unit",
+      "dimension": "currency_per_resource",
+      "quantity_kind": "price",
+      "dimension_vector": {
+        "currency": 1,
+        "resource": -1
+      }
+    },
+    "usd_kwh_by_interval": {
+      "unit_id": "usd_kwh_by_interval",
+      "display_unit": "USD/kWh by interval",
+      "dimension": "currency_per_energy",
+      "quantity_kind": "price",
+      "dimension_vector": {
+        "currency": 1,
+        "energy": -1
+      }
+    },
+    "usd_per_gallon": {
+      "unit_id": "usd_per_gallon",
+      "display_unit": "USD/gallon",
+      "dimension": "currency_per_volume",
+      "quantity_kind": "price",
+      "dimension_vector": {
+        "currency": 1,
+        "volume": -1
+      }
+    },
+    "usd_per_kilowatt_hour": {
+      "unit_id": "usd_per_kilowatt_hour",
+      "display_unit": "USD/kWh",
+      "dimension": "currency_per_energy",
+      "quantity_kind": "price",
+      "dimension_vector": {
+        "currency": 1,
+        "energy": -1
+      }
+    },
+    "usd_per_resource_unit": {
+      "unit_id": "usd_per_resource_unit",
+      "display_unit": "USD/resource-unit",
+      "dimension": "currency_per_resource",
+      "quantity_kind": "price",
+      "dimension_vector": {
+        "currency": 1,
+        "resource": -1
+      }
+    },
+    "usd_per_therm": {
+      "unit_id": "usd_per_therm",
+      "display_unit": "USD/therm",
+      "dimension": "currency_per_resource",
+      "quantity_kind": "price",
+      "dimension_vector": {
+        "currency": 1,
+        "resource": -1
+      }
+    },
+    "usd_per_year": {
+      "unit_id": "usd_per_year",
+      "display_unit": "USD/year",
+      "dimension": "currency_per_time",
+      "quantity_kind": "currency_flow",
+      "dimension_vector": {
+        "currency": 1,
+        "time": -1
+      }
+    },
+    "uses_fixture_year": {
+      "unit_id": "uses_fixture_year",
+      "display_unit": "uses/fixture-year",
+      "dimension": "activity_per_time",
+      "quantity_kind": "activity_rate",
+      "dimension_vector": {
+        "activity": 1,
+        "time": -1
+      }
+    },
+    "vehicles": {
+      "unit_id": "vehicles",
+      "display_unit": "vehicles",
+      "dimension": "declared",
+      "quantity_kind": "numeric",
+      "dimension_vector": null
+    },
+    "watt_ac": {
+      "unit_id": "watt_ac",
+      "display_unit": "Wac",
+      "dimension": "power",
+      "quantity_kind": "power",
+      "dimension_vector": {
+        "energy": 1,
+        "time": -1
+      }
+    },
+    "watt_per_fixture": {
+      "unit_id": "watt_per_fixture",
+      "display_unit": "W/fixture",
+      "dimension": "power",
+      "quantity_kind": "power",
+      "dimension_vector": {
+        "energy": 1,
+        "time": -1
+      }
+    }
+  }
+}

@@ -1,0 +1,3777 @@
+import { readdir, readFile, mkdir, rm, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
+import { basename, join, resolve } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
+
+import {
+  buildInformationCardProjection,
+  buildUserInputRealismEntries,
+  INFORMATION_CARD_REGISTRY_METADATA,
+  renderPresentationTree
+} from "./operational-savings-information-card-registry.mjs";
+
+const SCRIPT_ROOT = fileURLToPath(new URL("..", import.meta.url));
+const CATEGORY_HEADING = /^### (ITC-\d{2}) - (.+)$/gm;
+const BRANCH_HEADING = /^### (BR-[A-Z0-9-]+) - (.+)$/gm;
+const STANDARD_HEADING = /^### ■ (STD-[A-Z0-9-]+) - (.+)$/gm;
+const ALLOWED_LEAF_LABELS = [
+  "(User)",
+  "(Profile)",
+  "(Bill)",
+  "(Project Document)",
+  "(Standard)"
+];
+const INTERMEDIATE_TAG = /\{\{intermediate:\s*([^}]+)\}\}/;
+const ALLOWED_RESOURCES = new Set(["electricity", "gas", "water-sewer", "liquid-fuel", "vehicle-fuel", "none"]);
+const USER_INPUT_TAG = /\{\{input:\s*(required|conditional|optional)\}\}/g;
+const ALLOWED_SCENARIO_READINESS = new Set([
+  "VERIFIED_EXECUTABLE",
+  "VERIFIED_NONEXECUTABLE",
+  "UNVERIFIED",
+  "UNSUPPORTED"
+]);
+const OPAQUE_PROFILE_OBJECT_PATHS = new Set([
+  "tax.siteTaxProfile"
+]);
+const ALLOWED_CATEGORY_STATUSES = new Set(["DRAFT", "RESEARCHED — READY FOR HUMAN REVIEW", "BLOCKED"]);
+const ALLOWED_STANDARD_STATUSES = new Set([...ALLOWED_CATEGORY_STATUSES, "LIMITED"]);
+const REQUIRED_CATEGORY_MARKERS = [
+  "**Status:**",
+  "**Applicable Resources:**",
+  "**Retrofits:**",
+  "**Primary Formula:**",
+  "**Supporting Formula(s):**",
+  "**Information Tree:**",
+  "**Standards:**",
+  "**Default Estimate:**",
+  "**Notes:**"
+];
+const REQUIRED_STANDARD_MARKERS = [
+  "**Status:**",
+  "**Purpose:**",
+  "**Source:**",
+  "**Lookup Inputs:**",
+  "**Value Needed:**",
+  "**Resolution Contract:**",
+  "**How to Use:**",
+  "**Automation:**",
+  "**Used By:**"
+];
+const RESOLUTION_CONTRACT_FIELDS = [
+  "**Resolver Type:**",
+  "**Supported Scenarios:**",
+  "**Scenario Output Behavior:**",
+  "**Selected-Value Rule:**",
+  "**Uncertainty Rule:**",
+  "**Exact Override:**",
+  "**Source Version:**",
+  "**Selected Class or Candidate Set:**",
+  "**Assumptions:**",
+  "**Editable:**",
+  "**Missing-Exact-Value Rule:**"
+];
+const AUTOMATION_FIELDS = [
+  "**Selected Strategy:**",
+  "**Automation Method:**",
+  "**Difficulty:**",
+  "**Efficient Build-Time Estimate:**",
+  "**Expected Accuracy or Uncertainty:**",
+  "**Basis:**",
+  "**Why This Is the Best Value-for-Time Strategy:**",
+  "**Access, Refresh, Versioning, and Maintenance Requirements:**"
+];
+export async function loadOperationalSavingsSources(root = SCRIPT_ROOT) {
+  const [
+    treeDocument,
+    standardDocument,
+    auditDocument,
+    evidenceText,
+    categoryContractText,
+    billFieldDictionaryText,
+    sourceFixtureSchemaText,
+    unitRegistryText,
+    profilePathFixtureText,
+    informationCardSchemaText,
+    informationCardBindingRegistryText,
+    userInputRealismSchemaText,
+    userInputDecisionRegistryText
+  ] = await Promise.all([
+    readFile(join(root, "docs/operational-savings-information-trees.md"), "utf8"),
+    readFile(join(root, "docs/operational-savings-standard-registry.md"), "utf8"),
+    readFile(join(root, "docs/operational-savings-information-tree-audit.md"), "utf8"),
+    readFile(join(root, "docs/operational-savings-source-evidence.json"), "utf8"),
+    readFile(join(root, "docs/operational-savings-category-contracts.json"), "utf8"),
+    readFile(join(root, "data/bill_field_dictionary.json"), "utf8"),
+    readFile(join(root, "docs/operational-savings-fixtures/source-fixture.schema.json"), "utf8"),
+    readFile(join(root, "docs/operational-savings-unit-registry.json"), "utf8"),
+    readFile(join(root, "docs/operational-savings-fixtures/profile/normalized-profile-paths.json"), "utf8"),
+    readFile(join(root, "docs/operational-savings-information-card.schema.json"), "utf8"),
+    readFile(join(root, "docs/operational-savings-information-card-bindings.json"), "utf8"),
+    readFile(join(root, "docs/operational-savings-user-input-realism.schema.json"), "utf8"),
+    readFile(join(root, "docs/operational-savings-user-input-decisions.json"), "utf8")
+  ]);
+  const goldenFixtureRoot = join(root, "docs/operational-savings-fixtures/categories");
+  const sourceFixtureRoot = join(root, "docs/operational-savings-fixtures/sources");
+  const goldenFixtures = new Map();
+  for (const file of await readdir(goldenFixtureRoot).catch(() => [])) {
+    if (!/^ITC-\d{2}\.golden\.json$/.test(file)) continue;
+    const content = JSON.parse(await readFile(join(goldenFixtureRoot, file), "utf8"));
+    goldenFixtures.set(content.category_id, { path: `docs/operational-savings-fixtures/categories/${file}`, content });
+  }
+  const sourceFixtures = new Map();
+  for (const file of await readdir(sourceFixtureRoot).catch(() => [])) {
+    if (!file.endsWith(".json")) continue;
+    const path = `docs/operational-savings-fixtures/sources/${file}`;
+    sourceFixtures.set(path, JSON.parse(await readFile(join(root, path), "utf8")));
+  }
+  const taxonomyModule = await import(
+    `${pathToFileURL(join(root, "apps/api/server/matching/retrofitTaxonomy.mjs")).href}?review=${Date.now()}`
+  );
+  const profileModule = await import(
+    `${pathToFileURL(join(root, "apps/api/server/matching/normalizeUserProfile.mjs")).href}?review=${Date.now()}`
+  );
+  const actualProfilePathContract = deriveNormalizedProfilePathContract(
+    profileModule.normalizeUserProfile,
+    profileModule.USER_MATCH_PROFILE_SCHEMA_VERSION
+  );
+  return {
+    root,
+    treeDocument,
+    standardDocument,
+    auditDocument,
+    evidenceManifest: JSON.parse(evidenceText),
+    categoryContracts: JSON.parse(categoryContractText),
+    billFieldDictionary: JSON.parse(billFieldDictionaryText),
+    sourceFixtureSchema: JSON.parse(sourceFixtureSchemaText),
+    sourceFixtures,
+    unitRegistry: JSON.parse(unitRegistryText),
+    profilePathFixture: JSON.parse(profilePathFixtureText),
+    actualProfilePathContract,
+    informationCardSchema: JSON.parse(informationCardSchemaText),
+    informationCardBindingRegistry: JSON.parse(informationCardBindingRegistryText),
+    userInputRealismSchema: JSON.parse(userInputRealismSchemaText),
+    userInputDecisionRegistry: JSON.parse(userInputDecisionRegistryText),
+    goldenFixtures,
+    taxonomy: taxonomyModule.RETROFIT_TYPES
+  };
+}
+
+export function deriveNormalizedProfilePathContract(normalizeUserProfile, normalizerSchemaVersion) {
+  const normalized = normalizeUserProfile({
+    submissionId: "profile-contract-probe",
+    contact: {
+      email: "probe@example.com",
+      phone: "555-0100"
+    },
+    business: {
+      organizationType: "business",
+      primaryActivityText: "profile contract probe",
+      naicsCodes: ["000000"],
+      organizationSize: "probe"
+    },
+    site: {
+      address: "1 Probe Street, Sacramento, CA 95814",
+      buildingType: "office",
+      electricUtilityProvider: "SMUD",
+      squareFootage: "1000",
+      ownershipStatus: "owner",
+      geography: {
+        matchedAddress: "1 Probe Street, Sacramento, CA 95814",
+        stateCode: "CA",
+        zip5: "95814",
+        countyFips: "06067",
+        countyName: "Sacramento",
+        placeGeoid: "0664000",
+        placeName: "Sacramento",
+        censusTractGeoid: "06067000100",
+        censusBlockGeoid: "060670001001000",
+        coordinates: {
+          latitude: 38.5816,
+          longitude: -121.4944
+        },
+        status: "resolved",
+        provider: "profile-contract-probe"
+      }
+    },
+    project: {
+      stage: "planning"
+    },
+    siteTaxProfile: {
+      probe: true
+    },
+    uploadedTaxFiles: [{ id: "probe" }],
+    taxProfileFacts: [{ key: "probe" }],
+    taxExtractedValues: [{ key: "probe" }],
+    taxOpportunitySpecificInputs: [{ key: "probe" }],
+    taxMissingOrReviewInputs: [{ key: "probe" }],
+    grantProfileFacts: [{ key: "probe" }],
+    grantRetrofitProjectInputs: [{ key: "probe" }],
+    grantOpportunitySpecificInputs: [{ key: "probe" }],
+    grantMissingOrReviewInputs: [{ key: "probe" }],
+    grantDoNotForceQualificationReasons: ["probe"]
+  });
+  const paths = [];
+  collectProfilePathDescriptors(normalized, "", paths);
+  const contract = {
+    fixture_type: "normalized_profile_path_contract",
+    fixture_schema_version: "1.0.0",
+    normalizer_schema_version: normalizerSchemaVersion,
+    paths
+  };
+  return {
+    ...contract,
+    contract_sha256: `sha256:${createHash("sha256").update(JSON.stringify(contract)).digest("hex")}`
+  };
+}
+
+function collectProfilePathDescriptors(value, path, output) {
+  if (path) {
+    output.push({
+      path,
+      kind: Array.isArray(value) ? "array" : value === null ? "null" : typeof value
+    });
+  }
+  if (Array.isArray(value)) {
+    if (value.length > 0) {
+      output[output.length - 1].item_kind =
+        Array.isArray(value[0]) ? "array" : value[0] === null ? "null" : typeof value[0];
+    }
+    return;
+  }
+  if (!value || typeof value !== "object") return;
+  if (OPAQUE_PROFILE_OBJECT_PATHS.has(path)) return;
+  for (const key of Object.keys(value).sort()) {
+    collectProfilePathDescriptors(value[key], path ? `${path}.${key}` : key, output);
+  }
+}
+
+export function buildOperationalSavingsReview(sources) {
+  const errors = [];
+  const categories = parseSections(sources.treeDocument, CATEGORY_HEADING).map(parseCategory);
+  const branches = parseSections(sources.treeDocument, BRANCH_HEADING).map(parseBranch);
+  const standards = parseSections(sources.standardDocument, STANDARD_HEADING).map(parseStandard);
+  const categoryById = uniqueMap(categories, "category", errors);
+  const branchById = uniqueMap(branches, "shared branch", errors);
+  const standardById = uniqueMap(standards, "Standard", errors);
+  const semanticContractById = uniqueMap(
+    sources.categoryContracts.categories.map((contract) => ({ ...contract, id: contract.category_id })),
+    "category semantic contract",
+    errors
+  );
+  const evidenceById = uniqueMap(
+    sources.evidenceManifest.evidence_records.map((record) => ({ ...record, id: record.evidence_id })),
+    "evidence record",
+    errors
+  );
+  const taxonomyById = new Map(sources.taxonomy.map((retrofit) => [retrofit.retrofitTypeId, retrofit]));
+  const canonicalProfilePaths = new Set(
+    sources.actualProfilePathContract.paths.map((descriptor) => descriptor.path)
+  );
+  const canonicalBillFields = new Set(sources.billFieldDictionary.map((field) => field.id));
+
+  assertContiguousCategoryIds(categories, errors);
+  validateCanonicalMarkers(categories, REQUIRED_CATEGORY_MARKERS, errors);
+  validateCanonicalMarkers(branches, ["**Status:**", "**Value:**", "**Used By:**"], errors);
+  validateCanonicalMarkers(standards, REQUIRED_STANDARD_MARKERS, errors);
+  validateCategoryResources(categories, errors);
+  validateStatuses(categories, branches, standards, sources, errors);
+  validateTaxonomyCoverage(categories, taxonomyById, errors);
+  validateStandards(standards, errors);
+  validateProfilePathContract(sources.profilePathFixture, sources.actualProfilePathContract, errors);
+  validateUnitRegistry(sources.unitRegistry, errors);
+  validateInformationCardSchema(sources.informationCardSchema, errors);
+  validateSourceFixtures(
+    sources.sourceFixtureSchema,
+    sources.sourceFixtures,
+    sources.unitRegistry,
+    errors
+  );
+  validateDirectInputPolicyDefinitions(sources.categoryContracts, standardById, errors);
+  validateEvidenceManifest(
+    standards,
+    standardById,
+    sources.evidenceManifest,
+    evidenceById,
+    sources.sourceFixtures,
+    errors
+  );
+  validateAuditEvidenceCount(
+    sources.auditDocument,
+    sources.evidenceManifest,
+    errors
+  );
+  validateRateComponentDefinitions(sources.categoryContracts, canonicalBillFields, errors);
+  validateCategoryContracts(
+    categories,
+    semanticContractById,
+    sources,
+    evidenceById,
+    canonicalProfilePaths,
+    errors
+  );
+  validateDimensionalRelationships(
+    sources.categoryContracts,
+    semanticContractById,
+    sources.unitRegistry,
+    errors
+  );
+
+  const branchUsage = new Map(branches.map((branch) => [branch.id, new Set()]));
+  const standardUsage = new Map(standards.map((standard) => [standard.id, new Set()]));
+  const categoryReviews = [];
+
+  for (const category of categories) {
+    const semanticContract = semanticContractById.get(category.id);
+    const tree = parseTree(category.treeBlock, category.id, errors);
+    const referencedBranches = new Set();
+    const expandedTree = expandTree(
+      tree,
+      branchById,
+      referencedBranches,
+      errors,
+      [],
+      category.resources,
+      semanticContract?.rate_components || []
+    );
+    for (const branchId of referencedBranches) branchUsage.get(branchId)?.add(category.id);
+
+    validateTerminalLabels(expandedTree, category.id, errors);
+    validateCanonicalSourceLeaves(
+      expandedTree,
+      category.id,
+      canonicalProfilePaths,
+      canonicalBillFields,
+      errors
+    );
+    validateRequiredDirectInputs(
+      expandedTree,
+      category,
+      sources.categoryContracts.required_direct_input_policies || [],
+      errors
+    );
+    validateDeclaredCanonicalPaths(
+      expandedTree,
+      category.id,
+      semanticContract,
+      errors
+    );
+    validateUserInputClassifications(expandedTree, category.id, errors);
+    validateConditionalGates(expandedTree, category.id, semanticContract, errors);
+    validateFormulaRoot(category, expandedTree, errors);
+    validateFormulaTermTreeCoverage(category, expandedTree, semanticContract, errors);
+
+    const inheritedStandardIds = [...referencedBranches]
+      .flatMap((branchId) => branchById.get(branchId)?.standardIds || []);
+    const referencedStandards = [...new Set([...category.standardIds, ...inheritedStandardIds])];
+    for (const standardId of referencedStandards) {
+      if (!standardById.has(standardId)) {
+        errors.push(`${category.id} references undefined Standard ${standardId}`);
+      } else {
+        standardUsage.get(standardId).add(category.id);
+      }
+    }
+    if (category.standardsLine !== "None." && referencedStandards.length === 0) {
+      errors.push(`${category.id} Standards must contain canonical Standard IDs or exactly None.`);
+    }
+
+    const resolutionIndex = buildResolutionIndex(expandedTree);
+    const tracedStandards = referencedStandards
+      .map((standardId) => standardById.get(standardId))
+      .filter(Boolean)
+      .map((standard) => traceStandardInputs(category, standard, resolutionIndex, errors));
+    validateTreeUserInputUsage(
+      expandedTree,
+      category,
+      semanticContract,
+      tracedStandards,
+      errors
+    );
+    const inputs = summarizeInputs(expandedTree);
+    if (referencedStandards.length > 0 && inputs.Standard.length === 0) {
+      errors.push(`${category.id} references Standards but has no Standard terminal leaf`);
+    }
+    if (referencedStandards.length === 0 && inputs.Standard.length > 0) {
+      errors.push(`${category.id} declares no Standards but has a Standard terminal leaf`);
+    }
+    const decisions = deriveReviewDecisions(category, semanticContract);
+    const uncertainty = deriveUncertainty(category, tracedStandards);
+    const automationReadiness = deriveAutomationReadiness(category, tracedStandards);
+
+    const categoryReview = {
+      ...category,
+      standardIds: referencedStandards,
+      expandedTree,
+      referencedBranches: [...referencedBranches],
+      tracedStandards,
+      inputs,
+      decisions,
+      uncertainty,
+      automationReadiness,
+      semanticContract,
+      goldenFixture: sources.goldenFixtures.get(category.id)?.content || null,
+      rateComponentDefinitions: sources.categoryContracts.rate_component_definitions,
+      unitConversionDefinitions: sources.categoryContracts.unit_conversion_definitions,
+      sourceEvidence: buildCategoryEvidence(
+        semanticContract,
+        sources.evidenceManifest,
+        evidenceById,
+        tracedStandards
+      ),
+      informationCardBindingRegistry: sources.informationCardBindingRegistry
+    };
+    categoryReview.informationCard = buildInformationCardProjection(
+      categoryReview,
+      sources.informationCardBindingRegistry
+    );
+    categoryReview.userInputRealism = buildUserInputRealismEntries(
+      categoryReview.id,
+      categoryReview.informationCard.tree,
+      categoryReview.informationCard.processes,
+      sources.userInputDecisionRegistry
+    );
+    validateInformationCardProjection(
+      categoryReview.informationCard,
+      categoryReview,
+      standardById,
+      sources.informationCardSchema,
+      sources.evidenceManifest,
+      errors,
+      sources.informationCardBindingRegistry
+    );
+    categoryReviews.push(categoryReview);
+  }
+
+  validateUsageDeclarations(branches, branchUsage, categoryById, errors);
+  validateUsageDeclarations(standards, standardUsage, categoryById, errors);
+  validateInformationCardBindingRegistry(
+    categoryReviews,
+    sources.informationCardBindingRegistry,
+    errors
+  );
+
+  const userInputRealismContract = {
+    schema_version: "operational-savings/user-input-realism-v2",
+    generated_from: "operational-savings Information Card presentation trees",
+    user_leaf_count: categoryReviews.reduce(
+      (sum, category) => sum + category.userInputRealism.length,
+      0
+    ),
+    inputs: categoryReviews.flatMap((category) => category.userInputRealism)
+  };
+  validateUserInputRealismContract(
+    userInputRealismContract,
+    sources.userInputRealismSchema,
+    categoryReviews,
+    errors
+  );
+
+  const artifacts = new Map();
+  for (const category of categoryReviews) {
+    const outputPath = `docs/operational-savings-review/categories/${category.id}.md`;
+    if (artifacts.has(outputPath)) errors.push(`duplicate output path: ${outputPath}`);
+    artifacts.set(outputPath, renderCategoryPage(category));
+  }
+  const indexPath = "docs/operational-savings-review/README.md";
+  if (artifacts.has(indexPath)) errors.push(`duplicate output path: ${indexPath}`);
+  artifacts.set(indexPath, renderReviewIndex(categoryReviews, standards));
+  artifacts.set(
+    "docs/operational-savings-user-input-realism.json",
+    `${JSON.stringify(userInputRealismContract, null, 2)}\n`
+  );
+
+  return {
+    errors,
+    categories,
+    branches,
+    standards,
+    categoryReviews,
+    userInputRealismContract,
+    artifacts,
+    report: buildReport(categoryReviews, branches, standards, sources.taxonomy)
+  };
+}
+
+export async function writeReviewArtifacts(root, artifacts) {
+  const reviewRoot = join(root, "docs/operational-savings-review");
+  const categoryRoot = join(reviewRoot, "categories");
+  await mkdir(categoryRoot, { recursive: true });
+
+  const expectedCategoryFiles = new Set(
+    [...artifacts.keys()]
+      .filter((path) => path.startsWith("docs/operational-savings-review/categories/"))
+      .map((path) => basename(path))
+  );
+  for (const file of await readdir(categoryRoot).catch(() => [])) {
+    if (/^ITC-\d{2}\.md$/.test(file) && !expectedCategoryFiles.has(file)) {
+      await rm(join(categoryRoot, file));
+    }
+  }
+
+  for (const [relativePath, content] of artifacts) {
+    const outputPath = join(root, relativePath);
+    await mkdir(resolve(outputPath, ".."), { recursive: true });
+    await writeFile(outputPath, content, "utf8");
+  }
+}
+
+export async function checkReviewArtifacts(root, artifacts) {
+  const errors = [];
+  const categoryRoot = join(root, "docs/operational-savings-review/categories");
+  const expectedCategoryFiles = new Set(
+    [...artifacts.keys()]
+      .filter((path) => path.startsWith("docs/operational-savings-review/categories/"))
+      .map((path) => basename(path))
+  );
+  const actualCategoryFiles = new Set(
+    (await readdir(categoryRoot).catch(() => [])).filter((file) => /^ITC-\d{2}\.md$/.test(file))
+  );
+  for (const file of expectedCategoryFiles) {
+    if (!actualCategoryFiles.has(file)) errors.push(`missing generated category page: ${file}`);
+  }
+  for (const file of actualCategoryFiles) {
+    if (!expectedCategoryFiles.has(file)) errors.push(`extra generated category page: ${file}`);
+  }
+  for (const [relativePath, expected] of artifacts) {
+    const actual = await readFile(join(root, relativePath), "utf8").catch(() => null);
+    if (actual !== null && actual !== expected) errors.push(`stale generated review page: ${relativePath}`);
+  }
+  return errors;
+}
+
+function parseCategory(section) {
+  const retrofitBlock = sliceBetween(section.body, "**Retrofits:**", "**Primary Formula:**");
+  const retrofitMatches = [...retrofitBlock.matchAll(/^- `([^`]+)` - (.+)$/gm)];
+  const standardsLine = matchField(section.body, "Standards") || "";
+  return {
+    ...section,
+    status: matchField(section.body, "Status"),
+    resources: parseResources(matchField(section.body, "Applicable Resources"), section.id),
+    retrofits: retrofitMatches.map((match) => ({ id: match[1], name: match[2].trim() })),
+    primaryFormula: sliceBetween(section.body, "**Primary Formula:**", "**Supporting Formula(s):**").trim(),
+    supportingFormulas: sliceBetween(section.body, "**Supporting Formula(s):**", "**Information Tree:**").trim(),
+    treeBlock: sliceBetween(section.body, "**Information Tree:**", "**Standards:**"),
+    standardsLine,
+    standardIds: standardsLine.match(/\bSTD-[A-Z0-9-]+\b/g) || [],
+    defaultEstimate: matchField(section.body, "Default Estimate"),
+    notes: section.body.slice(section.body.indexOf("**Notes:**") + "**Notes:**".length).trim()
+  };
+}
+
+function parseResources(value) {
+  return String(value || "").split(",").map((resource) => resource.trim()).filter(Boolean);
+}
+
+function parseBranch(section) {
+  const standardsLine = matchField(section.body, "Standards") || "";
+  return {
+    ...section,
+    status: matchField(section.body, "Status"),
+    treeBlock: sliceBetween(section.body, "**Value:**", "**Used By:**"),
+    standardsLine,
+    standardIds: standardsLine.match(/\bSTD-[A-Z0-9-]+\b/g) || [],
+    usedByLine: matchField(section.body, "Used By") || ""
+  };
+}
+
+function parseStandard(section) {
+  const fields = {};
+  for (let index = 0; index < REQUIRED_STANDARD_MARKERS.length - 1; index += 1) {
+    const start = REQUIRED_STANDARD_MARKERS[index];
+    const end = REQUIRED_STANDARD_MARKERS[index + 1];
+    fields[start] = sliceBetween(section.body, start, end).trim();
+  }
+  fields["**Used By:**"] = section.body.slice(section.body.indexOf("**Used By:**") + "**Used By:**".length).trim();
+  const lookupInputs = [...fields["**Lookup Inputs:**"].matchAll(/^- `([a-z0-9_]+)` - \[(Required|Optional|Conditional)\] (.+)$/gm)].map((match) => ({
+    key: match[1],
+    classification: match[2],
+    description: match[3].trim(),
+    conditional: match[2] === "Conditional"
+  }));
+  return {
+    ...section,
+    status: matchField(section.body, "Status"),
+    fields,
+    lookupInputs,
+    usedByLine: matchField(section.body, "Used By") || ""
+  };
+}
+
+function parseSections(document, pattern) {
+  const matches = [...document.matchAll(pattern)];
+  return matches.map((match, index) => {
+    const bodyStart = match.index + match[0].length;
+    const nextSameLevel = matches[index + 1]?.index ?? document.length;
+    const nextParentHeading = document.indexOf("\n## ", bodyStart);
+    const bodyEnd = nextParentHeading >= 0 ? Math.min(nextSameLevel, nextParentHeading) : nextSameLevel;
+    return {
+      id: match[1],
+      title: match[2].trim(),
+      body: document.slice(bodyStart, bodyEnd)
+    };
+  });
+}
+
+function parseTree(block, ownerId, errors) {
+  const codeMatch = block.match(/```text\n([\s\S]*?)\n```/);
+  if (!codeMatch) {
+    errors.push(`${ownerId} has no text code block in Information Tree`);
+    return { text: `${ownerId} tree is missing`, children: [] };
+  }
+  const lines = codeMatch[1].split("\n").filter((line) => line.trim());
+  if (lines.length === 0) {
+    errors.push(`${ownerId} Information Tree is empty`);
+    return { text: `${ownerId} tree is empty`, children: [] };
+  }
+  const root = { text: stripTreePrefix(lines[0]), children: [] };
+  const stack = [{ depth: 0, node: root }];
+  for (const line of lines.slice(1)) {
+    const depth = treeDepth(line);
+    const node = { text: stripTreePrefix(line), children: [] };
+    while (stack.length > 0 && stack.at(-1).depth >= depth) stack.pop();
+    const parent = stack.at(-1)?.node;
+    if (!parent) {
+      errors.push(`${ownerId} Information Tree has an invalid depth before ${JSON.stringify(node.text)}`);
+      root.children.push(node);
+    } else {
+      parent.children.push(node);
+    }
+    stack.push({ depth, node });
+  }
+  return root;
+}
+
+function expandTree(tree, branchById, referencedBranches, errors, stack, resources, rateComponents) {
+  const branchId = /^BR-[A-Z0-9-]+$/.test(tree.text) ? tree.text : null;
+  if (branchId) {
+    referencedBranches.add(branchId);
+    const branch = branchById.get(branchId);
+    if (!branch) {
+      errors.push(`undefined branch ${branchId}`);
+      return { text: `Undefined shared branch [${branchId}]`, children: [] };
+    }
+    if (stack.includes(branchId)) {
+      errors.push(`circular shared-branch reference: ${[...stack, branchId].join(" -> ")}`);
+      return { text: `Circular shared branch [${branchId}]`, children: [] };
+    }
+    const branchTree = parseTree(branch.treeBlock, branchId, errors);
+    const expanded = expandTree(branchTree, branchById, referencedBranches, errors, [...stack, branchId], resources, rateComponents);
+    return { ...expanded, text: `${expanded.text} [${branchId}]` };
+  }
+  return {
+    ...tree,
+    children: tree.children
+      .filter((child) => nodeAppliesToCategory(child, resources, rateComponents))
+      .map((child) => expandTree(child, branchById, referencedBranches, errors, stack, resources, rateComponents))
+  };
+}
+
+function nodeAppliesToCategory(node, resources, rateComponents) {
+  const declaration = node.text.match(/\{\{resource:\s*([^}]+)\}\}/)?.[1];
+  if (declaration) {
+    const allowed = declaration.split(",").map((resource) => resource.trim());
+    if (!allowed.some((resource) => resources.includes(resource))) return false;
+  }
+  const component = node.text.match(/\{\{component:\s*([^}]+)\}\}/)?.[1]?.trim();
+  return !component || rateComponents.includes(component);
+}
+
+function validateTerminalLabels(tree, ownerId, errors) {
+  walkTree(tree, (node, path) => {
+    if (node.children.length > 0 || path.length === 1) return;
+    if (INTERMEDIATE_TAG.test(node.text)) return;
+    if (!ALLOWED_LEAF_LABELS.some((label) => node.text.endsWith(label))) {
+      errors.push(`${ownerId} terminal leaf lacks an allowed source label: ${JSON.stringify(stripResolutionTags(node.text))}`);
+    }
+  });
+}
+
+function validateCanonicalSourceLeaves(tree, ownerId, profilePaths, billFields, errors) {
+  walkTree(tree, (node, path) => {
+    if (node.children.length > 0 || path.length === 1) return;
+    const text = stripResolutionTags(node.text);
+    if (text.endsWith("(Profile)") && ![...profilePaths].some((profilePath) => mentionsCanonicalPath(text, profilePath))) {
+      errors.push(`${ownerId} Profile leaf has no real canonical path: ${JSON.stringify(text)}`);
+    }
+    if (text.endsWith("(Bill)") && ![...billFields].some((fieldId) => text.includes(fieldId))) {
+      errors.push(`${ownerId} Bill leaf has no real canonical field: ${JSON.stringify(text)}`);
+    }
+  });
+}
+
+function validateDeclaredCanonicalPaths(tree, ownerId, contract, errors) {
+  if (!contract) return;
+  const profileLeaves = [];
+  const billLeaves = [];
+  walkTree(tree, (node, path) => {
+    if (node.children.length > 0 || path.length === 1) return;
+    const text = stripResolutionTags(node.text);
+    if (text.endsWith("(Profile)")) profileLeaves.push(text);
+    if (text.endsWith("(Bill)")) billLeaves.push(text);
+  });
+  for (const profilePath of contract.profile_paths || []) {
+    if (!profileLeaves.some((leaf) => mentionsCanonicalPath(leaf, profilePath))) {
+      errors.push(`${ownerId} declares unused Profile field ${profilePath}`);
+    }
+  }
+  for (const fieldId of contract.bill_field_ids || []) {
+    if (!billLeaves.some((leaf) => leaf.includes(fieldId))) {
+      errors.push(`${ownerId} declares unused Bill field ${fieldId}`);
+    }
+  }
+}
+
+function mentionsCanonicalPath(text, canonicalPath) {
+  const escapedSegments = canonicalPath.split(".").map((segment) =>
+    segment.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+  );
+  return new RegExp(escapedSegments.join("[.\\s_-]+"), "i").test(text);
+}
+
+function validateUserInputClassifications(tree, ownerId, errors) {
+  walkTree(tree, (node, path) => {
+    if (node.children.length > 0 || path.length === 1 || !node.text.endsWith("(User)")) return;
+    const classifications = [...node.text.matchAll(USER_INPUT_TAG)].map((match) => match[1]);
+    if (classifications.length !== 1) {
+      errors.push(`${ownerId} User input must have exactly one required, conditional, or optional classification: ${JSON.stringify(stripResolutionTags(node.text))}`);
+      return;
+    }
+    if (classifications[0] === "optional" && !/\bif known\b/i.test(node.text)) {
+      errors.push(`${ownerId} Optional Known Detail must say "if known": ${JSON.stringify(stripResolutionTags(node.text))}`);
+    }
+    if (classifications[0] === "required" && /\bif known\b/i.test(node.text)) {
+      errors.push(`${ownerId} Required Screening Input cannot say "if known": ${JSON.stringify(stripResolutionTags(node.text))}`);
+    }
+  });
+}
+
+function validateConditionalGates(tree, ownerId, contract, errors) {
+  if (!contract) return;
+  const conditionalNodes = [];
+  walkTree(tree, (node, path) => {
+    if (node.children.length > 0 || path.length === 1 || !node.text.endsWith("(User)")) return;
+    const classification = [...node.text.matchAll(USER_INPUT_TAG)][0]?.[1];
+    if (classification === "conditional") conditionalNodes.push(cleanTreeText(node.text));
+  });
+  const gateByNode = new Map(
+    (contract.conditional_gates || []).map((gate) => [normalizeText(gate.tree_node), gate])
+  );
+  for (const node of conditionalNodes) {
+    const gate = gateByNode.get(normalizeText(node));
+    if (!gate) {
+      errors.push(`${ownerId} Conditional Calculation Gate lacks metadata: ${node}`);
+      continue;
+    }
+    for (const field of ["gate_id", "activation_condition"]) {
+      if (!String(gate[field] || "").trim()) {
+        errors.push(`${ownerId} Conditional Calculation Gate ${node} lacks ${field}`);
+      }
+    }
+    if (!Array.isArray(gate.resolves_terms) || gate.resolves_terms.length === 0) {
+      errors.push(`${ownerId} Conditional Calculation Gate ${node} resolves no formula terms`);
+    }
+    if (typeof gate.otherwise_use_single_value_fallback !== "boolean") {
+      errors.push(`${ownerId} Conditional Calculation Gate ${node} lacks otherwise_use_single_value_fallback`);
+    }
+    if (
+      gate.otherwise_use_single_value_fallback === false &&
+      !String(gate.unresolved_behavior || "").trim()
+    ) {
+      errors.push(
+        `${ownerId} Conditional Calculation Gate ${node} lacks an explicit unresolved behavior`
+      );
+    }
+    if (typeof gate.future_verified_standard_could_remove !== "boolean") {
+      errors.push(`${ownerId} Conditional Calculation Gate ${node} lacks future Standard-removal metadata`);
+    }
+    const termNames = new Set((contract.formula_terms || []).map((term) => term.name));
+    for (const termName of gate.resolves_terms || []) {
+      if (!termNames.has(termName)) {
+        errors.push(`${ownerId} Conditional Calculation Gate ${node} references unknown term ${termName}`);
+      }
+    }
+  }
+  for (const gate of contract.conditional_gates || []) {
+    if (!conditionalNodes.some((node) => normalizeText(node) === normalizeText(gate.tree_node))) {
+      errors.push(`${ownerId} declares unused Conditional Calculation Gate ${gate.tree_node}`);
+    }
+  }
+}
+
+function validateRequiredDirectInputs(tree, category, policies, errors) {
+  const applicablePolicies = policies.filter((policy) => category.standardIds.includes(policy.standard_id));
+  if (applicablePolicies.length === 0) return;
+  walkTree(tree, (node, path) => {
+    if (node.children.length > 0 || path.length === 1 || !node.text.endsWith("(User)")) return;
+    const classification = [...node.text.matchAll(USER_INPUT_TAG)][0]?.[1];
+    if (classification !== "optional") return;
+    const lookupKeys = new Set(
+      [...node.text.matchAll(/\{\{lookup:\s*([^}]+)\}\}/g)]
+        .flatMap((match) => match[1].split(","))
+        .map((key) => key.trim())
+        .filter(Boolean)
+    );
+    const label = cleanTreeText(node.text);
+    for (const policy of applicablePolicies) {
+      if (!(policy.lookup_keys || []).some((lookupKey) => lookupKeys.has(lookupKey))) continue;
+      if ((policy.optional_leaf_exceptions || []).includes(label)) continue;
+      errors.push(`${category.id} unresolved direct input must be required for ${policy.standard_id}: ${label}`);
+    }
+  });
+}
+
+function validateFormulaRoot(category, tree, errors) {
+  const formula = normalizeText(category.primaryFormula);
+  const root = normalizeText(stripResolutionTags(tree.text));
+  if (/s\s*=\s*0\b/.test(formula)) {
+    if (!/(zero|equals 0|equals zero)/.test(root)) {
+      errors.push(`${category.id} formula/tree root mismatch: zero formula has root ${JSON.stringify(stripResolutionTags(tree.text))}`);
+    }
+    return;
+  }
+  if (!/(dollar|bill|value|cost|savings|impact)/.test(root)) {
+    errors.push(`${category.id} formula/tree root mismatch: dollar formula has physical root ${JSON.stringify(stripResolutionTags(tree.text))}`);
+  }
+}
+
+function validateCategoryResources(categories, errors) {
+  for (const category of categories) {
+    if (category.resources.length === 0) errors.push(`${category.id} must declare at least one applicable resource`);
+    for (const resource of category.resources) {
+      if (!ALLOWED_RESOURCES.has(resource)) errors.push(`${category.id} declares invalid applicable resource ${resource}`);
+    }
+    if (category.resources.includes("none") && category.resources.length !== 1) {
+      errors.push(`${category.id} applicable resource none cannot be combined with another resource`);
+    }
+    if (!["AVAILABLE", "UNVALIDATED", "UNAVAILABLE", "NOT APPLICABLE"].includes(category.defaultEstimate)) {
+      errors.push(`${category.id} has invalid Default Estimate ${JSON.stringify(category.defaultEstimate)}`);
+    }
+    if (category.status === "RESEARCHED — READY FOR HUMAN REVIEW" && !["AVAILABLE", "NOT APPLICABLE"].includes(category.defaultEstimate)) {
+      errors.push(`${category.id} cannot be ready while its Default Estimate is ${category.defaultEstimate}`);
+    }
+  }
+}
+
+function validateStandards(standards, errors) {
+  for (const standard of standards) {
+    if (!/https:\/\//.test(standard.fields["**Source:**"] || "")) {
+      errors.push(`${standard.id} Standard missing source link`);
+    }
+    if (standard.lookupInputs.length === 0) {
+      errors.push(`${standard.id} has no classified atomic keyed Lookup Inputs`);
+    }
+    const rawLookupLines = standard.fields["**Lookup Inputs:**"].match(/^- `/gm)?.length || 0;
+    if (rawLookupLines !== standard.lookupInputs.length) errors.push(`${standard.id} has an unclassified Lookup Input`);
+    const contract = standard.fields["**Resolution Contract:**"] || "";
+    for (const field of RESOLUTION_CONTRACT_FIELDS) {
+      if (!contract.includes(field)) errors.push(`${standard.id} Standard missing Resolution Contract field ${field}`);
+    }
+    const resolverType = extractContractField(contract, "Resolver Type");
+    if (!/^(Equipment|Method)\b/.test(resolverType || "")) {
+      errors.push(`${standard.id} Resolver Type must start with Equipment or Method`);
+    }
+    const scenarios = parseScenarioList(extractContractField(contract, "Supported Scenarios"));
+    if (scenarios.length === 0) errors.push(`${standard.id} must declare at least one supported scenario`);
+    if (/^Equipment\b/.test(resolverType || "") && scenarios.includes("profile-or-bill-fallback")) {
+      errors.push(`${standard.id} equipment resolver must not claim profile-or-bill-fallback without field-level evidence`);
+    }
+    if (!/^Yes\b/i.test(extractContractField(contract, "Editable") || "")) {
+      errors.push(`${standard.id} Standard assumption must be editable`);
+    }
+    if (!/exact.+override|override.+exact/i.test(extractContractField(contract, "Exact Override") || "")) {
+      errors.push(`${standard.id} Standard is missing exact-value override behavior`);
+    }
+    const automation = standard.fields["**Automation:**"] || "";
+    for (const field of AUTOMATION_FIELDS) {
+      if (!automation.includes(field)) errors.push(`${standard.id} Standard missing Automation field ${field}`);
+    }
+  }
+}
+
+function validateDirectInputPolicyDefinitions(contractManifest, standardById, errors) {
+  for (const policy of contractManifest.required_direct_input_policies || []) {
+    const standard = standardById.get(policy.standard_id);
+    if (!standard) {
+      errors.push(`required direct-input policy references unknown Standard ${policy.standard_id}`);
+      continue;
+    }
+    if (!Array.isArray(policy.lookup_keys) || policy.lookup_keys.length === 0) {
+      errors.push(`${policy.standard_id} required direct-input policy has no lookup keys`);
+      continue;
+    }
+    const declaredLookupKeys = new Set(standard.lookupInputs.map((input) => input.key));
+    for (const lookupKey of policy.lookup_keys) {
+      if (!declaredLookupKeys.has(lookupKey)) {
+        errors.push(`${policy.standard_id} required direct-input policy references undeclared lookup key ${lookupKey}`);
+      }
+    }
+    if (!Array.isArray(policy.optional_leaf_exceptions)) {
+      errors.push(`${policy.standard_id} required direct-input policy has malformed optional exceptions`);
+    }
+    if (!String(policy.reason || "").trim()) {
+      errors.push(`${policy.standard_id} required direct-input policy lacks a reason`);
+    }
+  }
+}
+
+function validateProfilePathContract(fixture, actual, errors) {
+  if (fixture.fixture_type !== "normalized_profile_path_contract") {
+    errors.push("normalized Profile path fixture has an invalid fixture type");
+  }
+  if (fixture.normalizer_schema_version !== actual.normalizer_schema_version) {
+    errors.push(
+      `normalized Profile path fixture schema version ${fixture.normalizer_schema_version} does not match ${actual.normalizer_schema_version}`
+    );
+  }
+  const fixtureByPath = new Map((fixture.paths || []).map((descriptor) => [descriptor.path, descriptor]));
+  const actualByPath = new Map(actual.paths.map((descriptor) => [descriptor.path, descriptor]));
+  for (const [path, descriptor] of actualByPath) {
+    const stored = fixtureByPath.get(path);
+    if (!stored) {
+      errors.push(`normalized Profile path fixture is stale: missing actual path ${path}`);
+      continue;
+    }
+    if (stored.kind !== descriptor.kind) {
+      errors.push(
+        `normalized Profile path fixture has wrong structure for ${path}: ${stored.kind}; expected ${descriptor.kind}`
+      );
+    }
+    if ((stored.item_kind || null) !== (descriptor.item_kind || null)) {
+      errors.push(
+        `normalized Profile path fixture has wrong array item structure for ${path}: ${stored.item_kind || "unspecified"}; expected ${descriptor.item_kind || "unspecified"}`
+      );
+    }
+  }
+  for (const path of fixtureByPath.keys()) {
+    if (!actualByPath.has(path)) {
+      errors.push(`normalized Profile path fixture is stale: nonexistent path ${path}`);
+    }
+  }
+  if (fixture.contract_sha256 !== actual.contract_sha256) {
+    errors.push("normalized Profile path fixture checksum is stale");
+  }
+}
+
+function validateAuditEvidenceCount(auditDocument, evidenceManifest, errors) {
+  const verifiedCount = (evidenceManifest.evidence_records || []).filter(
+    (record) => record.evidence_status === "VERIFIED"
+  ).length;
+  const reportedCount = Number(
+    auditDocument.match(
+      /Source-evidence statuses:[^\n]*\bVERIFIED\s+(\d+)\b/
+    )?.[1]
+  );
+  if (reportedCount !== verifiedCount) {
+    errors.push(
+      `Operational-savings audit reports ${reportedCount || "no"} VERIFIED evidence records; manifest contains ${verifiedCount}`
+    );
+  }
+  if (
+    /\b(?:all|the)\s+(?:\d+|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty)\s+`?VERIFIED`?\s+evidence records\b/i.test(
+      auditDocument
+    )
+  ) {
+    errors.push(
+      "Operational-savings audit hardcodes the VERIFIED evidence count in narrative prose"
+    );
+  }
+}
+
+function validateUnitRegistry(registry, errors) {
+  if (registry.registry_type !== "operational_savings_unit_registry" || registry.schema_version !== "1.0.0") {
+    errors.push("operational-savings unit registry has invalid identity metadata");
+  }
+  for (const [unitId, definition] of Object.entries(registry.units || {})) {
+    if (definition.unit_id !== unitId) {
+      errors.push(`unit registry key ${unitId} does not match embedded unit_id ${definition.unit_id}`);
+    }
+    for (const field of ["display_unit", "dimension", "quantity_kind"]) {
+      if (!String(definition[field] || "").trim()) {
+        errors.push(`unit ${unitId} lacks ${field}`);
+      }
+    }
+    if (/[,\n]|\s(?:and|or)\s/i.test(definition.display_unit || "")) {
+      errors.push(`unit ${unitId} has an ambiguous combined display unit ${definition.display_unit}`);
+    }
+    if (
+      definition.dimension_vector !== null &&
+      (typeof definition.dimension_vector !== "object" || Array.isArray(definition.dimension_vector))
+    ) {
+      errors.push(`unit ${unitId} has a malformed dimension vector`);
+    }
+    for (const [base, exponent] of Object.entries(definition.dimension_vector || {})) {
+      if (!base || !Number.isFinite(exponent)) {
+        errors.push(`unit ${unitId} has an invalid dimension exponent`);
+      }
+    }
+  }
+}
+
+function validateSourceFixtures(schema, sourceFixtures, unitRegistry, errors) {
+  if (
+    schema.$id !== "https://greenbusinesssolution.org/schemas/operational-savings/source-fixture-v1.json" ||
+    schema.additionalProperties !== false
+  ) {
+    errors.push("source fixture schema has invalid identity or openness");
+  }
+  const required = new Set(schema.required || []);
+  const allowed = new Set(Object.keys(schema.properties || {}));
+  const rawArtifactAllowed = new Set(
+    Object.keys(schema.properties?.raw_artifacts?.items?.properties || {})
+  );
+  const coverageAllowed = new Set(
+    Object.keys(schema.properties?.coverage?.properties || {})
+  );
+  for (const [path, fixture] of sourceFixtures) {
+    for (const field of required) {
+      if (!(field in fixture)) errors.push(`${path} source fixture is missing ${field}`);
+    }
+    for (const field of Object.keys(fixture)) {
+      if (!allowed.has(field)) errors.push(`${path} source fixture has unsupported field ${field}`);
+    }
+    if (fixture.fixture_type !== "reviewed_source_fixture") {
+      errors.push(`${path} source fixture has invalid fixture type ${fixture.fixture_type}`);
+    }
+    if (fixture.fixture_schema_version !== "1.0.0") {
+      errors.push(`${path} source fixture has unsupported schema version ${fixture.fixture_schema_version}`);
+    }
+    for (const dateField of ["reviewed_on", "retrieved_on"]) {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(fixture[dateField] || "")) {
+        errors.push(`${path} source fixture has invalid ${dateField}`);
+      }
+    }
+    if (!String(fixture.source_title || "").trim()) {
+      errors.push(`${path} source fixture lacks a source title`);
+    }
+    if (!Array.isArray(fixture.source_urls) || fixture.source_urls.length === 0) {
+      errors.push(`${path} source fixture has no source URLs`);
+    } else {
+      for (const url of fixture.source_urls) {
+        if (!/^https:\/\//.test(url)) errors.push(`${path} source fixture URL must use https: ${url}`);
+      }
+    }
+    if (!Array.isArray(fixture.raw_artifacts) || fixture.raw_artifacts.length === 0) {
+      errors.push(`${path} source fixture has no raw artifact metadata`);
+    }
+    for (const [index, artifact] of (fixture.raw_artifacts || []).entries()) {
+      for (const field of Object.keys(artifact)) {
+        if (!rawArtifactAllowed.has(field)) {
+          errors.push(`${path} raw artifact ${index} has unsupported field ${field}`);
+        }
+      }
+      for (const field of [
+        "artifact_identifier",
+        "source_url",
+        "source_version",
+        "exact_artifact",
+        "source_checksum"
+      ]) {
+        if (!String(artifact[field] || "").trim()) {
+          errors.push(`${path} raw artifact ${index} lacks ${field}`);
+        }
+      }
+      if (!fixture.source_urls.includes(artifact.source_url)) {
+        errors.push(`${path} raw artifact ${index} URL is absent from source_urls`);
+      }
+      if (!/^sha256:[0-9a-f]{64}$/.test(artifact.source_checksum || "")) {
+        errors.push(`${path} raw artifact ${index} has invalid source checksum`);
+      }
+    }
+    if (
+      !String(fixture.coverage?.summary || "").trim() ||
+      !Array.isArray(fixture.coverage?.source_roles) ||
+      fixture.coverage.source_roles.length === 0 ||
+      !Array.isArray(fixture.coverage?.scenarios) ||
+      fixture.coverage.scenarios.length === 0
+    ) {
+      errors.push(`${path} source fixture has malformed coverage metadata`);
+    }
+    for (const field of Object.keys(fixture.coverage || {})) {
+      if (!coverageAllowed.has(field)) {
+        errors.push(`${path} source fixture coverage has unsupported field ${field}`);
+      }
+    }
+    let substantiveCount = 0;
+    for (const collection of ["fields", "tables", "values", "methods"]) {
+      if (!Array.isArray(fixture[collection])) {
+        errors.push(`${path} source fixture ${collection} must be an array`);
+        continue;
+      }
+      substantiveCount += fixture[collection].length;
+      for (const [index, item] of fixture[collection].entries()) {
+        for (const field of ["field", "unit_id", "role", "source_location"]) {
+          if (!String(item[field] || "").trim()) {
+            errors.push(`${path} ${collection}[${index}] lacks ${field}`);
+          }
+        }
+        if (!unitRegistry.units?.[item.unit_id]) {
+          errors.push(`${path} ${collection}[${index}] references unknown unit_id ${item.unit_id}`);
+        }
+      }
+    }
+    if (substantiveCount === 0) errors.push(`${path} source fixture has no substantive records`);
+    for (const collection of ["supported_uses", "unsupported_inferences", "provenance_notes"]) {
+      if (
+        !Array.isArray(fixture[collection]) ||
+        fixture[collection].length === 0 ||
+        fixture[collection].some((value) => !String(value || "").trim())
+      ) {
+        errors.push(`${path} source fixture has malformed ${collection}`);
+      }
+    }
+  }
+}
+
+function validateEvidenceManifest(standards, standardById, manifest, evidenceById, sourceFixtures, errors) {
+  const allowedStatuses = new Set(["VERIFIED", "LIMITED", "UNVERIFIED", "UNSUPPORTED"]);
+  const requiredFields = [
+    "standard_id",
+    "output_key",
+    "source_roles",
+    "source_url",
+    "source_title",
+    "source_version",
+    "exact_artifact",
+    "exact_field_table_page_equation_or_function",
+    "units",
+    "covered_product_or_method_scope",
+    "existing_or_proposed_coverage",
+    "supported_scenarios",
+    "required_lookup_inputs",
+    "extraction_or_calculation_method",
+    "selected_value_basis",
+    "uncertainty_basis",
+    "fixture_or_test_reference",
+    "access_limitations",
+    "unsupported_uses",
+    "evidence_status"
+  ];
+  const allowedRoles = new Set(manifest.source_roles || []);
+  const manifestStandardById = new Map((manifest.standards || []).map((standard) => [standard.standard_id, standard]));
+
+  if (manifestStandardById.size !== standards.length) {
+    errors.push(`source-evidence manifest has ${manifestStandardById.size} Standard summaries; expected ${standards.length}`);
+  }
+  for (const standard of standards) {
+    const summary = manifestStandardById.get(standard.id);
+    if (!summary) {
+      errors.push(`${standard.id} is missing a source-evidence Standard summary`);
+      continue;
+    }
+    if (summary.verdict !== standard.status) {
+      errors.push(`${standard.id} evidence verdict ${summary.verdict} does not match registry status ${standard.status}`);
+    }
+    const summaryEvidenceRoles = new Map();
+    for (const role of allowedRoles) {
+      if (!Array.isArray(summary.source_roles?.[role])) {
+        errors.push(`${standard.id} source-role summary is missing ${role}`);
+        continue;
+      }
+      for (const evidenceId of summary.source_roles[role]) {
+        const evidence = evidenceById.get(evidenceId);
+        if (!evidence) {
+          errors.push(`${standard.id} source-role summary references unknown evidence ${evidenceId}`);
+        } else if (evidence.standard_id !== standard.id) {
+          errors.push(`${standard.id} source-role summary references cross-Standard evidence ${evidenceId}`);
+        }
+        if (!summaryEvidenceRoles.has(evidenceId)) summaryEvidenceRoles.set(evidenceId, new Set());
+        summaryEvidenceRoles.get(evidenceId).add(role);
+      }
+    }
+    if (!String(summary.manual_review_verdict || "").trim()) {
+      errors.push(`${standard.id} source-evidence summary lacks a manual review verdict`);
+    }
+    for (const outputKey of summary.output_keys || []) {
+      if (![...evidenceById.values()].some((record) => record.standard_id === standard.id && record.output_key === outputKey)) {
+        errors.push(`${standard.id} output ${outputKey} has no evidence record`);
+      }
+    }
+    const declaredScenarios = parseScenarioList(
+      extractContractField(standard.fields["**Resolution Contract:**"], "Supported Scenarios")
+    );
+    const records = [...evidenceById.values()].filter((record) => record.standard_id === standard.id);
+    for (const record of records) {
+      const listedRoles = summaryEvidenceRoles.get(record.id) || new Set();
+      if (listedRoles.size === 0) {
+        errors.push(`${record.id} is absent from the ${standard.id} source-role summary`);
+      }
+      for (const role of record.source_roles || []) {
+        if (!listedRoles.has(role)) {
+          errors.push(`${record.id} declares source role ${role} but is not listed there`);
+        }
+      }
+      for (const role of listedRoles) {
+        if (!(record.source_roles || []).includes(role)) {
+          errors.push(`${record.id} is listed under undeclared source role ${role}`);
+        }
+      }
+      if (!(summary.output_keys || []).includes(record.output_key)) {
+        errors.push(`${record.id} output ${record.output_key} is absent from the ${standard.id} output summary`);
+      }
+    }
+    for (const scenario of declaredScenarios) {
+      if (!records.some((record) => record.evidence_status !== "UNSUPPORTED" && record.supported_scenarios.includes(scenario))) {
+        errors.push(`${standard.id} scenario ${scenario} has no compatible evidence record`);
+      }
+    }
+    const declaredLookupKeys = new Set(standard.lookupInputs.map((input) => input.key));
+    for (const record of records) {
+      for (const lookupKey of record.required_lookup_inputs || []) {
+        if (!declaredLookupKeys.has(lookupKey)) {
+          errors.push(`${record.id} evidence references undeclared Standard lookup input ${lookupKey}`);
+        }
+      }
+    }
+  }
+
+  for (const record of evidenceById.values()) {
+    for (const field of requiredFields) {
+      if (!(field in record)) errors.push(`${record.id} evidence record is missing ${field}`);
+    }
+    if (!standardById.has(record.standard_id)) errors.push(`${record.id} references unknown Standard ${record.standard_id}`);
+    if (!allowedStatuses.has(record.evidence_status)) errors.push(`${record.id} has invalid evidence status ${record.evidence_status}`);
+    if (!Array.isArray(record.source_roles) || record.source_roles.length === 0) {
+      errors.push(`${record.id} evidence record has no source roles`);
+    } else {
+      for (const role of record.source_roles) {
+        if (!allowedRoles.has(role)) errors.push(`${record.id} has invalid source role ${role}`);
+      }
+    }
+    if (!/^https:\/\//.test(record.source_url || "")) errors.push(`${record.id} evidence source URL must use https`);
+    if (!String(record.exact_artifact || "").trim() || !String(record.exact_field_table_page_equation_or_function || "").trim()) {
+      errors.push(`${record.id} lacks an exact artifact or exact source location`);
+    }
+    if (!Array.isArray(record.supported_scenarios) || !Array.isArray(record.required_lookup_inputs) || !Array.isArray(record.unsupported_uses)) {
+      errors.push(`${record.id} evidence arrays are malformed`);
+    }
+    if (record.evidence_status === "VERIFIED" && !record.fixture_or_test_reference) {
+      errors.push(`${record.id} VERIFIED evidence lacks a fixture or test reference`);
+    }
+    if (
+      record.evidence_status === "VERIFIED" &&
+      record.fixture_or_test_reference &&
+      !sourceFixtures.has(record.fixture_or_test_reference)
+    ) {
+      errors.push(`${record.id} VERIFIED evidence references a missing source fixture ${record.fixture_or_test_reference}`);
+    }
+    if (record.evidence_status === "VERIFIED") {
+      if (!/^sha256:[0-9a-f]{64}$/.test(record.source_checksum || "")) {
+        errors.push(`${record.id} VERIFIED evidence lacks a canonical source checksum`);
+      }
+      validateVerifiedEvidenceBinding(record, sourceFixtures, errors);
+    }
+    if (
+      record.source_roles?.includes("existing_equipment_baseline") &&
+      /proposed-or-current|proposed$/i.test(record.existing_or_proposed_coverage || "") &&
+      record.evidence_status !== "UNSUPPORTED"
+    ) {
+      errors.push(`${record.id} proposed-product evidence is incorrectly used as an existing baseline`);
+    }
+    if (
+      claimsEnabledPercentile(`${record.extraction_or_calculation_method}\n${record.selected_value_basis}`) &&
+      !hasPopulationEvidence(record)
+    ) {
+      errors.push(`${record.id} enables a percentile without eligible-population filters, sample size, and a fixture`);
+    }
+  }
+}
+
+function validateVerifiedEvidenceBinding(record, sourceFixtures, errors) {
+  const binding = record.fixture_binding;
+  if (!binding || typeof binding !== "object") {
+    errors.push(`${record.id} VERIFIED evidence lacks a deep fixture binding`);
+    return;
+  }
+  const fixture = sourceFixtures.get(binding.fixture_path);
+  if (!fixture) {
+    errors.push(`${record.id} fixture binding references missing fixture ${binding.fixture_path}`);
+    return;
+  }
+  if (binding.fixture_path !== record.fixture_or_test_reference) {
+    errors.push(`${record.id} fixture binding path does not match fixture_or_test_reference`);
+  }
+  const equalityBindings = [
+    ["fixture type", binding.fixture_type_pointer, "reviewed_source_fixture"],
+    ["source title", binding.source_title_pointer, record.source_title],
+    ["source URL", binding.source_url_pointer, record.source_url],
+    ["source version", binding.source_version_pointer, record.source_version],
+    ["artifact", binding.artifact_pointer, record.exact_artifact],
+    ["checksum", binding.checksum_pointer, record.source_checksum],
+    ["coverage", binding.coverage_pointer, record.covered_product_or_method_scope]
+  ];
+  for (const [label, pointer, expected] of equalityBindings) {
+    const resolved = resolveJsonPointer(fixture, pointer);
+    if (!resolved.found) {
+      errors.push(`${record.id} fixture binding has missing ${label} pointer ${pointer}`);
+    } else if (resolved.value !== expected) {
+      errors.push(`${record.id} fixture binding ${label} does not match evidence metadata`);
+    }
+  }
+  for (const [label, pointer, pattern] of [
+    ["artifact identifier", binding.artifact_identifier_pointer, /^.+$/],
+    ["checksum", binding.checksum_pointer, /^sha256:[0-9a-f]{64}$/]
+  ]) {
+    const resolved = resolveJsonPointer(fixture, pointer);
+    if (!resolved.found || !pattern.test(String(resolved.value || ""))) {
+      errors.push(`${record.id} fixture binding has invalid ${label} pointer ${pointer}`);
+    }
+  }
+  for (const [index, supporting] of (binding.supporting_artifacts || []).entries()) {
+    if (!String(supporting.role || "").trim()) {
+      errors.push(`${record.id} supporting artifact ${index} lacks a role`);
+    }
+    for (const [label, pointer, pattern] of [
+      ["source URL", supporting.source_url_pointer, /^https:\/\//],
+      ["source version", supporting.source_version_pointer, /^.+$/],
+      ["artifact", supporting.artifact_pointer, /^.+$/],
+      ["artifact identifier", supporting.artifact_identifier_pointer, /^.+$/],
+      ["checksum", supporting.checksum_pointer, /^sha256:[0-9a-f]{64}$/]
+    ]) {
+      const resolved = resolveJsonPointer(fixture, pointer);
+      if (!resolved.found || !pattern.test(String(resolved.value || ""))) {
+        errors.push(`${record.id} supporting artifact ${index} has invalid ${label} pointer ${pointer}`);
+      }
+    }
+  }
+  const sourceRoles = resolveJsonPointer(fixture, binding.source_roles_pointer);
+  if (!sourceRoles.found || !Array.isArray(sourceRoles.value)) {
+    errors.push(`${record.id} fixture binding has invalid source-role coverage pointer`);
+  } else {
+    for (const role of record.source_roles || []) {
+      if (!sourceRoles.value.includes(role)) {
+        errors.push(`${record.id} source role ${role} is absent from its fixture coverage`);
+      }
+    }
+  }
+  const fixtureScenarios = fixture.coverage?.scenarios || [];
+  for (const scenario of record.supported_scenarios || []) {
+    if (!fixtureScenarios.includes(scenario)) {
+      errors.push(`${record.id} scenario ${scenario} is absent from its fixture coverage`);
+    }
+  }
+  if (!Array.isArray(binding.field_pointers) || binding.field_pointers.length === 0) {
+    errors.push(`${record.id} fixture binding has no field pointers`);
+  }
+  const boundFields = [];
+  for (const pointer of binding.field_pointers || []) {
+    const resolved = resolveJsonPointer(fixture, pointer);
+    if (!resolved.found || !String(resolved.value || "").trim()) {
+      errors.push(`${record.id} fixture binding has invalid field pointer ${pointer}`);
+    } else {
+      boundFields.push(String(resolved.value));
+    }
+  }
+  const normalizedLocation = normalizeText(record.exact_field_table_page_equation_or_function);
+  for (const field of boundFields) {
+    if (!normalizedLocation.includes(normalizeText(field))) {
+      errors.push(`${record.id} bound field ${field} is absent from its exact source-location description`);
+    }
+  }
+  if (!Array.isArray(record.unit_ids) || record.unit_ids.length === 0) {
+    errors.push(`${record.id} VERIFIED evidence has no canonical unit_ids`);
+  }
+  const boundUnits = [];
+  for (const pointer of binding.unit_pointers || []) {
+    const resolved = resolveJsonPointer(fixture, pointer);
+    if (!resolved.found || !String(resolved.value || "").trim()) {
+      errors.push(`${record.id} fixture binding has invalid unit pointer ${pointer}`);
+    } else {
+      boundUnits.push(resolved.value);
+    }
+  }
+  for (const unitId of record.unit_ids || []) {
+    if (!boundUnits.includes(unitId)) {
+      errors.push(`${record.id} canonical unit ${unitId} is absent from bound fixture fields`);
+    }
+  }
+  if (!Array.isArray(binding.value_bindings)) {
+    errors.push(`${record.id} fixture binding value_bindings must be an array`);
+  }
+  for (const valueBinding of binding.value_bindings || []) {
+    const resolved = resolveJsonPointer(fixture, valueBinding.pointer);
+    if (!resolved.found) {
+      errors.push(`${record.id} fixture binding has missing value pointer ${valueBinding.pointer}`);
+    } else if (!Object.is(resolved.value, valueBinding.expected)) {
+      errors.push(`${record.id} fixture binding value does not match ${valueBinding.pointer}`);
+    }
+  }
+  if (
+    !Array.isArray(binding.unsupported_inference_pointers) ||
+    binding.unsupported_inference_pointers.length === 0
+  ) {
+    errors.push(`${record.id} fixture binding has no unsupported-inference pointers`);
+  }
+  for (const pointer of binding.unsupported_inference_pointers || []) {
+    const resolved = resolveJsonPointer(fixture, pointer);
+    if (!resolved.found || !(record.unsupported_uses || []).includes(resolved.value)) {
+      errors.push(`${record.id} unsupported-use binding does not match ${pointer}`);
+    }
+  }
+  if (!Array.isArray(binding.substantive_pointers) || binding.substantive_pointers.length === 0) {
+    errors.push(`${record.id} fixture binding has no substantive pointers`);
+  }
+  for (const pointer of binding.substantive_pointers || []) {
+    if (!/^\/(?:fields|tables|values|methods)\/\d+$/.test(pointer)) {
+      errors.push(`${record.id} substantive pointer is outside the canonical collections: ${pointer}`);
+      continue;
+    }
+    const resolved = resolveJsonPointer(fixture, pointer);
+    if (!resolved.found || !resolved.value || typeof resolved.value !== "object") {
+      errors.push(`${record.id} fixture binding has invalid substantive pointer ${pointer}`);
+    }
+  }
+}
+
+function resolveJsonPointer(value, pointer) {
+  if (pointer === "") return { found: true, value };
+  if (typeof pointer !== "string" || !pointer.startsWith("/")) return { found: false };
+  let current = value;
+  for (const rawSegment of pointer.slice(1).split("/")) {
+    const segment = rawSegment.replaceAll("~1", "/").replaceAll("~0", "~");
+    if (
+      current === null ||
+      typeof current !== "object" ||
+      !Object.prototype.hasOwnProperty.call(current, segment)
+    ) {
+      return { found: false };
+    }
+    current = current[segment];
+  }
+  return { found: true, value: current };
+}
+
+function validateCategoryContracts(categories, contractById, sources, evidenceById, allowedProfilePaths, errors) {
+  const allowedComponents = new Set(Object.keys(sources.categoryContracts.rate_component_definitions || {}));
+  const allowedBillFields = new Set(sources.billFieldDictionary.map((field) => field.id));
+  const categoryById = new Map(categories.map((category) => [category.id, category]));
+
+  if (sources.categoryContracts.schema_version !== "2.1.0") {
+    errors.push(
+      `category semantic contract has unsupported schema version ${sources.categoryContracts.schema_version}`
+    );
+  }
+  if (contractById.size !== categories.length) {
+    errors.push(`category semantic contract has ${contractById.size} records; expected ${categories.length}`);
+  }
+  for (const category of categories) {
+    const contract = contractById.get(category.id);
+    if (!contract) {
+      errors.push(`${category.id} is missing a formula-term semantic contract`);
+      continue;
+    }
+    if (contract.verdict !== category.status) {
+      errors.push(`${category.id} semantic verdict ${contract.verdict} does not match category status ${category.status}`);
+    }
+    if (!Array.isArray(contract.formula_terms) || contract.formula_terms.length === 0) {
+      errors.push(`${category.id} has no formula-term evidence`);
+    }
+    if (!String(contract.manual_review_verdict || "").trim()) {
+      errors.push(`${category.id} semantic contract lacks a manual review verdict`);
+    }
+    if (
+      !String(contract.default_path?.selected_value_calculation || "").trim() ||
+      "low_base_high_calculation" in (contract.default_path || {})
+    ) {
+      errors.push(`${category.id} default path lacks a single selected-value calculation`);
+    }
+    const termNames = new Set();
+    for (const group of contract.formula_terms || []) {
+      for (const field of sources.categoryContracts.formula_term_fields || []) {
+        if (!(field in group)) errors.push(`${category.id} formula term is missing ${field}`);
+      }
+      if (!String(group.name || "").trim()) {
+        errors.push(`${category.id} formula term has no name`);
+      } else if (termNames.has(group.name)) {
+        errors.push(`${category.id} has duplicate atomic formula term ${group.name}`);
+      } else {
+        termNames.add(group.name);
+      }
+      if ("names" in group || "unit" in group) {
+        errors.push(`${category.id} formula term ${group.name || "unknown"} uses a legacy grouped-term field`);
+      }
+      const unit = sources.unitRegistry.units?.[group.unit_id];
+      if (!unit) {
+        errors.push(`${category.id} formula term ${group.name} references unknown unit_id ${group.unit_id}`);
+      } else {
+        for (const field of ["dimension", "display_unit", "quantity_kind"]) {
+          if (group[field] !== unit[field]) {
+            errors.push(
+              `${category.id} formula term ${group.name} ${field} ${group[field]} does not match unit ${group.unit_id}`
+            );
+          }
+        }
+      }
+      if (/[,\n]|\s(?:and|or)\s/i.test(group.display_unit || "")) {
+        errors.push(`${category.id} formula term ${group.name} has ambiguous combined units ${group.display_unit}`);
+      }
+      if (!Array.isArray(group.tree_nodes) || group.tree_nodes.length === 0) {
+        errors.push(`${category.id} formula term ${group.name} has no tree resolution`);
+      }
+      if (!Array.isArray(group.exact_paths) || group.exact_paths.length === 0) {
+        errors.push(`${category.id} formula term ${group.name} has no exact input path`);
+      }
+      if (!String(group.formula_use || "").trim() || /\bunused\b/i.test(group.formula_use || "")) {
+        errors.push(`${category.id} formula term ${group.name} is not used by the formula`);
+      }
+      if (
+        group.missing_data_behavior !== "RETURN_ZERO" &&
+        !/(?:SINGLE_VALUE|ONE_(?:SCALAR|RECORD|PROFILE|INPUT_SET|RESULT_SET))_BY_FALLBACK_POLICY|REQUIRE_EXACT_INPUT|DERIVE_FROM_BOUND_INPUTS|REPORT_IMPLEMENTATION_LIMITATION/.test(
+          group.missing_data_behavior || ""
+        )
+      ) {
+        errors.push(
+          `${category.id} formula term ${group.name} lacks single-value missing-data behavior`
+        );
+      }
+      if (category.id !== "ITC-15" && !String(group.fallback_path || "").trim()) {
+        errors.push(`${category.id} formula term ${group.name} lacks a fallback path`);
+      }
+      for (const exactPath of group.exact_paths || []) {
+        for (const match of exactPath.matchAll(/unit_conversion:([a-z0-9-]+)/g)) {
+          if (!sources.categoryContracts.unit_conversion_definitions?.[match[1]]) {
+            errors.push(`${category.id} formula term references unknown unit conversion ${match[1]}`);
+          }
+        }
+        for (const match of exactPath.matchAll(/\bprofile\.([A-Za-z0-9_.]+)/g)) {
+          if (!allowedProfilePaths.has(match[1])) {
+            errors.push(`${category.id} formula term references nonexistent Profile field ${match[1]}`);
+          }
+        }
+        for (const match of exactPath.matchAll(/utilityExtractedValues\[\]\.fieldId=([a-z0-9_]+)/g)) {
+          if (!allowedBillFields.has(match[1])) {
+            errors.push(`${category.id} formula term references nonexistent Bill field ${match[1]}`);
+          }
+        }
+      }
+      for (const evidenceId of group.evidence_ids || []) {
+        const evidence = evidenceById.get(evidenceId);
+        if (!evidence) errors.push(`${category.id} formula term references unknown evidence ${evidenceId}`);
+      }
+      if (
+        group.standard_output_key &&
+        !(group.evidence_ids || []).some((evidenceId) => evidenceById.get(evidenceId)?.output_key === group.standard_output_key)
+      ) {
+        errors.push(`${category.id} formula term ${group.name} has no evidence for Standard output ${group.standard_output_key}`);
+      }
+      validateTermUnitHeuristics(category.id, group, errors);
+    }
+    validateScenarioReadiness(category, contract, evidenceById, sources.goldenFixtures, errors);
+    for (const component of contract.rate_components || []) {
+      if (!allowedComponents.has(component)) errors.push(`${category.id} has unknown rate component ${component}`);
+    }
+    if ((contract.rate_components || []).includes("electric-demand") && !/BR-INTERVAL-LOAD-AND-TARIFF/.test(category.treeBlock)) {
+      errors.push(`${category.id} declares demand value without an interval load and tariff formula path`);
+    }
+    if (
+      ((contract.rate_components || []).includes("electric-export") ||
+        (contract.rate_components || []).includes("electric-export-non-bypassable")) &&
+      !/export|REopt interval dispatch result|Composite microgrid dispatch result/i.test(
+        `${category.primaryFormula}\n${category.supportingFormulas}\n${category.treeBlock}`
+      )
+    ) {
+      errors.push(`${category.id} declares export treatment without an export formula or traced dispatch output`);
+    }
+    if (category.id === "ITC-34" && (contract.rate_components || []).includes("sewer-volumetric")) {
+      errors.push("ITC-34 must not include sewer on the irrigation design path");
+    }
+    if ((contract.rate_components || []).includes("sewer-volumetric") && !contract.sewer_applicability) {
+      errors.push(`${category.id} declares sewer value without an applicability rule`);
+    }
+    for (const profilePath of contract.profile_paths || []) {
+      if (!allowedProfilePaths.has(profilePath)) errors.push(`${category.id} references nonexistent Profile field ${profilePath}`);
+    }
+    for (const fieldId of contract.bill_field_ids || []) {
+      if (!allowedBillFields.has(fieldId)) errors.push(`${category.id} references nonexistent Bill field ${fieldId}`);
+    }
+    const fixture = sources.goldenFixtures.get(category.id);
+    const declaredSourceFixture = contract.default_path?.source_fixture;
+    if (
+      declaredSourceFixture &&
+      !sources.sourceFixtures.has(declaredSourceFixture) &&
+      ![...sources.goldenFixtures.values()].some((candidate) => candidate.path === declaredSourceFixture)
+    ) {
+      errors.push(`${category.id} default path references a missing source fixture ${declaredSourceFixture}`);
+    }
+    if (category.status === "RESEARCHED — READY FOR HUMAN REVIEW") {
+      if (!fixture || contract.default_path?.executable_golden_fixture !== fixture.path) {
+        errors.push(`${category.id} Ready category lacks its declared executable golden fixture`);
+      }
+      for (const group of contract.formula_terms || []) {
+        for (const evidenceId of group.evidence_ids || []) {
+          if (evidenceById.get(evidenceId)?.evidence_status !== "VERIFIED") {
+            errors.push(`${category.id} Ready category uses insufficient evidence ${evidenceId}`);
+          }
+        }
+      }
+      validateGoldenFixture(category, contract, fixture?.content, errors);
+    }
+    if (category.status !== "RESEARCHED — READY FOR HUMAN REVIEW" && contract.default_path?.executable_golden_fixture) {
+      errors.push(`${category.id} non-Ready category must not claim an executable golden fixture`);
+    }
+    validateFormulaIdentifierCoverage(category, contract, errors);
+    validateFormulaGuards(category, contract, errors);
+  }
+  for (const contract of contractById.values()) {
+    if (!categoryById.has(contract.id)) errors.push(`semantic contract references unknown category ${contract.id}`);
+  }
+}
+
+function validateScenarioReadiness(category, contract, evidenceById, goldenFixtures, errors) {
+  if (!Array.isArray(contract.scenarios) || contract.scenarios.length === 0) {
+    errors.push(`${category.id} has no scenario-level readiness records`);
+    return;
+  }
+  const scenarios = new Map();
+  for (const scenario of contract.scenarios) {
+    if (!String(scenario.scenario_id || "").trim()) {
+      errors.push(`${category.id} has a scenario without scenario_id`);
+      continue;
+    }
+    if (scenarios.has(scenario.scenario_id)) {
+      errors.push(`${category.id} has duplicate scenario ${scenario.scenario_id}`);
+    }
+    scenarios.set(scenario.scenario_id, scenario);
+    if (!ALLOWED_SCENARIO_READINESS.has(scenario.readiness)) {
+      errors.push(`${category.id} scenario ${scenario.scenario_id} has invalid readiness ${scenario.readiness}`);
+    }
+    if (!String(scenario.label || "").trim()) {
+      errors.push(`${category.id} scenario ${scenario.scenario_id} lacks a label`);
+    }
+    for (const evidenceId of scenario.evidence || []) {
+      if (!evidenceById.has(evidenceId)) {
+        errors.push(`${category.id} scenario ${scenario.scenario_id} references unknown evidence ${evidenceId}`);
+      }
+      if (
+        scenario.readiness.startsWith("VERIFIED") &&
+        evidenceById.get(evidenceId)?.evidence_status !== "VERIFIED"
+      ) {
+        errors.push(`${category.id} verified scenario ${scenario.scenario_id} uses insufficient evidence ${evidenceId}`);
+      }
+    }
+    if (scenario.readiness === "VERIFIED_EXECUTABLE" && !scenario.executable_fixture) {
+      errors.push(`${category.id} executable scenario ${scenario.scenario_id} lacks an executable fixture`);
+    }
+    if (scenario.readiness !== "VERIFIED_EXECUTABLE" && scenario.executable_fixture) {
+      errors.push(`${category.id} non-executable scenario ${scenario.scenario_id} claims an executable fixture`);
+    }
+  }
+  if (!scenarios.has(contract.default_path?.scenario)) {
+    errors.push(`${category.id} default path scenario has no scenario-level readiness record`);
+  }
+  const readyScenario = contract.ready_scenario_id
+    ? scenarios.get(contract.ready_scenario_id)
+    : null;
+  if (contract.ready_scenario_id && !readyScenario) {
+    errors.push(`${category.id} ready_scenario_id references unknown scenario ${contract.ready_scenario_id}`);
+  }
+  if (readyScenario && readyScenario.readiness !== "VERIFIED_EXECUTABLE") {
+    errors.push(`${category.id} ready_scenario_id is not VERIFIED_EXECUTABLE`);
+  }
+  const executableScenarios = [...scenarios.values()].filter(
+    (scenario) => scenario.readiness === "VERIFIED_EXECUTABLE"
+  );
+  if (category.status === "RESEARCHED — READY FOR HUMAN REVIEW") {
+    if (executableScenarios.length === 0 || !readyScenario) {
+      errors.push(`${category.id} Ready category has no named VERIFIED_EXECUTABLE scenario`);
+    }
+  } else if (executableScenarios.length > 0 || contract.ready_scenario_id) {
+    errors.push(`${category.id} non-Ready category claims a VERIFIED_EXECUTABLE scenario`);
+  }
+  const goldenFixture = goldenFixtures.get(category.id);
+  if (readyScenario && goldenFixture?.path !== readyScenario.executable_fixture) {
+    errors.push(`${category.id} ready scenario fixture does not match the category golden fixture`);
+  }
+}
+
+function validateDimensionalRelationships(manifest, contractById, unitRegistry, errors) {
+  const relationshipIds = new Set();
+  for (const relationship of manifest.dimensional_relationships || []) {
+    if (!String(relationship.relationship_id || "").trim()) {
+      errors.push("dimensional relationship lacks relationship_id");
+      continue;
+    }
+    if (relationshipIds.has(relationship.relationship_id)) {
+      errors.push(`duplicate dimensional relationship ${relationship.relationship_id}`);
+    }
+    relationshipIds.add(relationship.relationship_id);
+    const contract = contractById.get(relationship.category_id);
+    if (!contract) {
+      errors.push(`${relationship.relationship_id} references unknown category ${relationship.category_id}`);
+      continue;
+    }
+    const termByName = new Map(contract.formula_terms.map((term) => [term.name, term]));
+    const result = termByName.get(relationship.result_term);
+    if (!result) {
+      errors.push(`${relationship.relationship_id} references missing result term ${relationship.result_term}`);
+      continue;
+    }
+    const resultVector = unitRegistry.units?.[result.unit_id]?.dimension_vector;
+    if (resultVector === null || resultVector === undefined) {
+      errors.push(`${relationship.relationship_id} result term ${result.name} lacks a deterministic dimension vector`);
+      continue;
+    }
+    const calculated = {};
+    let valid = true;
+    for (const operand of relationship.operands || []) {
+      const term = termByName.get(operand.term);
+      if (!term) {
+        errors.push(`${relationship.relationship_id} references missing operand ${operand.term}`);
+        valid = false;
+        continue;
+      }
+      if (!Number.isInteger(operand.exponent) || operand.exponent === 0) {
+        errors.push(`${relationship.relationship_id} has invalid exponent for ${operand.term}`);
+        valid = false;
+        continue;
+      }
+      const vector = unitRegistry.units?.[term.unit_id]?.dimension_vector;
+      if (vector === null || vector === undefined) {
+        errors.push(`${relationship.relationship_id} operand ${operand.term} lacks a deterministic dimension vector`);
+        valid = false;
+        continue;
+      }
+      for (const [base, exponent] of Object.entries(vector)) {
+        calculated[base] = (calculated[base] || 0) + exponent * operand.exponent;
+      }
+    }
+    if (valid && !equalDimensionVectors(calculated, resultVector)) {
+      errors.push(
+        `${relationship.relationship_id} dimension mismatch: ${JSON.stringify(cleanDimensionVector(calculated))} does not equal ${JSON.stringify(cleanDimensionVector(resultVector))}`
+      );
+    }
+  }
+}
+
+function equalDimensionVectors(left, right) {
+  return JSON.stringify(cleanDimensionVector(left)) === JSON.stringify(cleanDimensionVector(right));
+}
+
+function cleanDimensionVector(vector) {
+  return Object.fromEntries(
+    Object.entries(vector || {})
+      .filter(([, exponent]) => exponent !== 0)
+      .sort(([left], [right]) => left.localeCompare(right))
+  );
+}
+
+function validateRateComponentDefinitions(contractManifest, allowedBillFields, errors) {
+  for (const [componentId, definition] of Object.entries(contractManifest.rate_component_definitions || {})) {
+    if (!String(definition.unit || "").trim()) {
+      errors.push(`rate component ${componentId} lacks units`);
+    }
+    if (!Array.isArray(definition.exact_paths) || definition.exact_paths.length === 0) {
+      errors.push(`rate component ${componentId} lacks exact acquisition paths`);
+      continue;
+    }
+    for (const exactPath of definition.exact_paths) {
+      for (const match of exactPath.matchAll(/utilityExtractedValues\[\]\.fieldId=([a-z0-9_]+)/g)) {
+        if (!allowedBillFields.has(match[1])) {
+          errors.push(`rate component ${componentId} references nonexistent Bill field ${match[1]}`);
+        }
+      }
+    }
+    if (!String(definition.condition || "").trim()) {
+      errors.push(`rate component ${componentId} lacks an applicability condition`);
+    }
+  }
+  for (const [conversionId, definition] of Object.entries(contractManifest.unit_conversion_definitions || {})) {
+    if (!Array.isArray(definition.functions) || definition.functions.length === 0) {
+      errors.push(`unit conversion ${conversionId} lacks declared functions`);
+    }
+    if (!Array.isArray(definition.exact_paths) || definition.exact_paths.length === 0) {
+      errors.push(`unit conversion ${conversionId} lacks an exact acquisition path`);
+    }
+    if (!String(definition.condition || "").trim()) {
+      errors.push(`unit conversion ${conversionId} lacks an applicability condition`);
+    }
+  }
+}
+
+function claimsEnabledPercentile(value) {
+  const text = String(value || "");
+  if (!/(percentile|quartile)/i.test(text)) return false;
+  if (/(?:disabled|prohibited|unsupported|do not|not enabled|not approved|no percentile|not percentiles)/i.test(text)) {
+    return false;
+  }
+  return /\b(?:use|uses|calculate|calculates|derive|derives|return|returns|weighted)\b/i.test(text);
+}
+
+function hasPopulationEvidence(record) {
+  const text = [
+    record.exact_artifact,
+    record.exact_field_table_page_equation_or_function,
+    record.required_lookup_inputs?.join(" "),
+    record.extraction_or_calculation_method,
+    record.selected_value_basis
+  ].join(" ");
+  return /population/i.test(text) &&
+    /filter/i.test(text) &&
+    /sample (?:count|size)/i.test(text) &&
+    Boolean(record.fixture_or_test_reference);
+}
+
+function validateGoldenFixture(category, contract, fixture, errors) {
+  if (!fixture) return;
+  if (fixture.fixture_type !== "ready_category_golden" || fixture.category_id !== category.id) {
+    errors.push(`${category.id} Ready golden fixture has invalid identity metadata`);
+  }
+  if (fixture.scenario !== contract.default_path?.scenario) {
+    errors.push(`${category.id} Ready golden fixture scenario does not match its default path`);
+  }
+  for (const bound of ["low", "base", "high"]) {
+    const result = fixture.resolved_values?.[bound];
+    if (!result || !Number.isFinite(result.value) || !String(result.unit || "").trim()) {
+      errors.push(`${category.id} Ready golden fixture lacks a numeric ${bound} result with units`);
+    }
+  }
+  if (
+    !fixture.final_dollar_result ||
+    !Number.isFinite(fixture.final_dollar_result.value) ||
+    fixture.final_dollar_result.unit !== "USD/year"
+  ) {
+    errors.push(`${category.id} Ready golden fixture lacks a final USD/year result`);
+  }
+  if (!Array.isArray(fixture.intermediate_calculations) || fixture.intermediate_calculations.length === 0) {
+    errors.push(`${category.id} Ready golden fixture lacks intermediate calculations`);
+  }
+  if (!Array.isArray(fixture.expected_missing_data_warnings)) {
+    errors.push(`${category.id} Ready golden fixture lacks expected missing-data warnings`);
+  }
+  if (category.id === "ITC-29") {
+    validateVehicleGoldenFixture(fixture, errors);
+  }
+}
+
+function validateVehicleGoldenFixture(fixture, errors) {
+  const inputs = fixture.minimum_default_path_inputs || {};
+  const existing = (fixture.source_records || []).find((record) => record.field === "comb08");
+  const proposed = (fixture.source_records || []).find((record) => record.field === "combE");
+  if (
+    inputs.existing_vehicle_id !== 43764 ||
+    inputs.proposed_vehicle_id !== 44444 ||
+    existing?.vehicle_id !== inputs.existing_vehicle_id ||
+    proposed?.vehicle_id !== inputs.proposed_vehicle_id
+  ) {
+    errors.push("ITC-29 golden fixture does not use the reviewed exact FuelEconomy.gov vehicle IDs");
+    return;
+  }
+  if (inputs.user_confirmed_service_equivalence !== true) {
+    errors.push("ITC-29 golden fixture lacks explicit user-confirmed service equivalence");
+  }
+  for (const [label, value] of Object.entries({
+    quantity: inputs.quantity,
+    annual_miles_per_vehicle: inputs.annual_miles_per_vehicle,
+    existing_comb08: existing?.value,
+    proposed_combE: proposed?.value,
+    fuel_price: inputs.fuel_price_usd_per_gallon,
+    electric_price: inputs.electric_price_usd_per_kwh
+  })) {
+    if (!Number.isFinite(value) || value <= 0) {
+      errors.push(`ITC-29 golden fixture has invalid positive input ${label}`);
+    }
+  }
+  if (proposed?.unit_id !== "kilowatt_hour_per_100_mile") {
+    errors.push("ITC-29 golden fixture combE unit is not kWh/100 miles at the wall");
+  }
+  const avoidedGallonsPerVehicle = inputs.annual_miles_per_vehicle / existing?.value;
+  const addedKwhPerVehicle = inputs.annual_miles_per_vehicle * proposed?.value / 100;
+  const avoidedFuelValue =
+    inputs.quantity * avoidedGallonsPerVehicle * inputs.fuel_price_usd_per_gallon;
+  const addedElectricCost =
+    inputs.quantity * addedKwhPerVehicle * inputs.electric_price_usd_per_kwh;
+  const expected = avoidedFuelValue - addedElectricCost;
+  if (!approximatelyEqual(expected, 1617) || !approximatelyEqual(fixture.final_dollar_result?.value, expected)) {
+    errors.push(`ITC-29 golden fixture arithmetic mismatch: expected ${expected}`);
+  }
+  for (const bound of ["low", "base", "high"]) {
+    if (!approximatelyEqual(fixture.resolved_values?.[bound]?.value, expected)) {
+      errors.push(`ITC-29 golden fixture ${bound} result does not equal exact-model result`);
+    }
+  }
+  if (
+    !fixture.expected_missing_data_warnings.some((warning) => /class.*percentile.*disabled/i.test(warning)) ||
+    !fixture.expected_missing_data_warnings.some((warning) => /second charging-efficiency/i.test(warning))
+  ) {
+    errors.push("ITC-29 golden fixture lacks class-percentile and charging-efficiency guards");
+  }
+}
+
+function approximatelyEqual(left, right, tolerance = 1e-9) {
+  return Number.isFinite(left) && Number.isFinite(right) && Math.abs(left - right) <= tolerance;
+}
+
+function validateTermUnitHeuristics(categoryId, group, errors) {
+  const name = group.name;
+  if (name === "quantity" && group.dimension !== "count") {
+    errors.push(`${categoryId} formula term quantity has a dimension mismatch: ${group.dimension}`);
+  }
+  if (/^(?:p_|import_rate|export_credit)/.test(name) && !/^currency_per_/.test(group.dimension)) {
+    errors.push(`${categoryId} price term ${name} has a dimension mismatch: ${group.dimension}`);
+  }
+  if (/efficiency|fraction|^η/.test(name) && group.dimension !== "dimensionless") {
+    errors.push(`${categoryId} efficiency term ${name} has a dimension mismatch: ${group.dimension}`);
+  }
+}
+
+function validateFormulaIdentifierCoverage(category, contract, errors) {
+  const codeSpans = [...`${category.primaryFormula}\n${category.supportingFormulas}`.matchAll(/`([^`]+)`/g)]
+    .map((match) => match[1])
+    .join("\n");
+  const ignored = new Set([
+    "S",
+    "r",
+    "t",
+    "i",
+    "period",
+    "bins",
+    "max",
+    "min",
+    "to_energy",
+    "to_billed_unit"
+  ]);
+  const identifiers = [...new Set(
+    [...codeSpans.matchAll(/[A-Za-zηΔ][A-Za-z0-9_ηΔ²³]*(?:,[A-Za-z0-9_]+)?/g)]
+      .map((match) => match[0])
+  )];
+  const contractNames = (contract.formula_terms || []).map((group) => group.name);
+  for (const identifier of identifiers) {
+    if (ignored.has(identifier)) continue;
+    const normalized = identifier.replace(/[²³]/g, "");
+    const covered = contractNames.some((name) => {
+      const normalizedName = name.replace(/[²³]/g, "");
+      return normalizedName === normalized ||
+        (normalized.endsWith("_") && normalizedName.startsWith(normalized));
+    });
+    if (!covered) {
+      errors.push(`${category.id} formula identifier ${identifier} has no formula-term contract`);
+    }
+  }
+}
+
+function validateFormulaGuards(category, contract, errors) {
+  const formulas = `${category.primaryFormula}\n${category.supportingFormulas}`;
+  const usesResourceConversion = /\b(?:to_energy|to_billed_unit)\s*\(/.test(formulas);
+  const declaresResourceConversion = (contract.formula_terms || []).some(
+    (group) => (group.exact_paths || []).includes("unit_conversion:resource-energy")
+  );
+  if (usesResourceConversion && !declaresResourceConversion) {
+    errors.push(`${category.id} uses a resource-energy conversion without a formula-term contract`);
+  }
+  if (!usesResourceConversion && declaresResourceConversion) {
+    errors.push(`${category.id} declares an unused resource-energy conversion`);
+  }
+  if (category.id === "ITC-29" && /charging_efficiency/.test(formulas)) {
+    errors.push("ITC-29 applies vehicle charging efficiency twice even though combE includes wall-to-vehicle losses");
+  }
+  if (category.id === "ITC-42" && /annual_flow_hours[^`\n]*annual_hours[^`\n]*p_electric/.test(category.primaryFormula)) {
+    errors.push("ITC-42 multiplies an annual quantity by annual hours twice");
+  }
+}
+
+function validateFormulaTermTreeCoverage(category, tree, contract, errors) {
+  if (!contract) return;
+  const nodeTexts = [];
+  walkTree(tree, (node) => nodeTexts.push(normalizeText(cleanTreeText(node.text))));
+  for (const group of contract.formula_terms || []) {
+    const missingNodes = (group.tree_nodes || []).filter((treeNode) => {
+      const expected = normalizeText(treeNode);
+      return !nodeTexts.some((nodeText) => nodeText.includes(expected) || expected.includes(nodeText));
+    });
+    if (missingNodes.length > 0) {
+      errors.push(
+        `${category.id} formula term ${group.name} has unmatched tree nodes [${missingNodes.join("; ")}]`
+      );
+    }
+  }
+}
+
+function validateTreeUserInputUsage(tree, category, contract, tracedStandards, errors) {
+  if (!contract) return;
+  const standardLookupKeys = new Set(
+    tracedStandards.flatMap((standard) => standard.lookupInputs.map((input) => input.key))
+  );
+  const formulaTreeNodes = (contract.formula_terms || [])
+    .flatMap((group) => group.tree_nodes || [])
+    .map((treeNode) => normalizeText(treeNode));
+  const conditionalGateNodes = new Set(
+    (contract.conditional_gates || []).map((gate) => normalizeText(gate.tree_node))
+  );
+  const rateComponents = new Set(contract.rate_components || []);
+  walkTree(tree, (node, path) => {
+    if (node.children.length > 0 || path.length === 1 || !node.text.endsWith("(User)")) return;
+    const lookupKeys = [...node.text.matchAll(/\{\{lookup:\s*([^}]+)\}\}/g)]
+      .flatMap((match) => match[1].split(","))
+      .map((key) => key.trim())
+      .filter(Boolean);
+    const usedByStandard = lookupKeys.some((lookupKey) => standardLookupKeys.has(lookupKey));
+    const formulaPath = path.length > 2 ? path.slice(-2) : path.slice(-1);
+    const normalizedPath = formulaPath.map((pathNode) => normalizeText(cleanTreeText(pathNode.text)));
+    const usedByFormula = formulaTreeNodes.some((formulaNode) =>
+      normalizedPath.some((pathNode) => pathNode.includes(formulaNode) || formulaNode.includes(pathNode))
+    );
+    const usedByRate = path.some((pathNode) => {
+      const component = pathNode.text.match(/\{\{component:\s*([^}]+)\}\}/)?.[1]?.trim();
+      return component && rateComponents.has(component);
+    });
+    const usedByConditionalGate =
+      conditionalGateNodes.has(normalizeText(cleanTreeText(node.text)));
+    if (!usedByStandard && !usedByFormula && !usedByRate && !usedByConditionalGate) {
+      errors.push(
+        `${category.id} tree User input is unused by the formula or a traced Standard: ${cleanTreeText(node.text)}`
+      );
+    }
+  });
+}
+
+function buildCategoryEvidence(contract, manifest, evidenceById, tracedStandards) {
+  const evidenceIds = new Set((contract?.formula_terms || []).flatMap((group) => group.evidence_ids || []));
+  const seedRecords = [...evidenceIds].map((id) => evidenceById.get(id)).filter(Boolean);
+  const standardIds = new Set([
+    ...seedRecords.map((record) => record.standard_id),
+    ...tracedStandards.map((standard) => standard.id)
+  ]);
+  const records = [...evidenceById.values()].filter((record) => standardIds.has(record.standard_id));
+  return {
+    records,
+    standardSummaries: (manifest.standards || []).filter((summary) => standardIds.has(summary.standard_id))
+  };
+}
+
+function parseScenarioList(value) {
+  return String(value || "")
+    .replace(/\.$/, "")
+    .split(";")
+    .map((scenario) => scenario.trim())
+    .filter(Boolean);
+}
+
+function traceStandardInputs(category, standard, resolutionIndex, errors) {
+  const tracedInputs = standard.lookupInputs.map((input) => {
+    const resolutions = resolutionIndex.get(input.key) || [];
+    if (
+      resolutions.length === 0 &&
+      !input.conditional &&
+      standard.id !== "STD-CONTEXT-BENCHMARKS"
+    ) {
+      errors.push(`${category.id} has untraceable Standard Lookup Input ${standard.id}:${input.key}`);
+    }
+    return { ...input, resolutions };
+  });
+  return { ...standard, tracedInputs };
+}
+
+function buildResolutionIndex(tree) {
+  const index = new Map();
+  walkTree(tree, (node, path) => {
+    const tags = [...node.text.matchAll(/\{\{(?:lookup|constant|output):\s*([^}]+)\}\}/g)];
+    for (const tag of tags) {
+      for (const key of tag[1].split(",").map((item) => item.trim()).filter(Boolean)) {
+        if (!index.has(key)) index.set(key, []);
+        index.get(key).push({
+          label: cleanTreeText(node.text),
+          path: path.map((item) => cleanTreeText(item.text)).join(" > "),
+          source: ALLOWED_LEAF_LABELS.find((label) => node.text.endsWith(label))?.slice(1, -1) || "Derived"
+        });
+      }
+    }
+  });
+  return index;
+}
+
+function summarizeInputs(tree) {
+  const summary = {
+    RequiredUser: [],
+    ConditionalUser: [],
+    OptionalUser: [],
+    User: [],
+    Profile: [],
+    Bill: [],
+    "Project Document": [],
+    Standard: []
+  };
+  walkTree(tree, (node, path) => {
+    if (node.children.length > 0 || path.length === 1) return;
+    for (const label of ALLOWED_LEAF_LABELS) {
+      if (!node.text.endsWith(label)) continue;
+      const type = label.slice(1, -1);
+      const cleanPath = path.slice(1).map((item) => cleanTreeText(item.text));
+      const value = cleanPath.join(" > ");
+      summary[type].push(value);
+      if (type === "User") {
+        const classification = [...node.text.matchAll(USER_INPUT_TAG)][0]?.[1];
+        if (classification === "required") summary.RequiredUser.push(value);
+        if (classification === "conditional") summary.ConditionalUser.push(value);
+        if (classification === "optional") summary.OptionalUser.push(value);
+      }
+    }
+  });
+  return summary;
+}
+
+function validateInformationCardSchema(schema, errors) {
+  if (
+    schema.$id !==
+      "https://greenbusinesssolution.org/schemas/operational-savings/information-card-v1.json" ||
+    schema.additionalProperties !== false
+  ) {
+    errors.push("Information Card schema has invalid identity or openness");
+  }
+  if (
+    JSON.stringify(schema.required || []) !==
+    JSON.stringify(INFORMATION_CARD_REGISTRY_METADATA.requiredCardFields)
+  ) {
+    errors.push("Information Card schema required fields do not match the presentation registry");
+  }
+  const processRequired = schema.$defs?.process?.required || [];
+  if (
+    JSON.stringify(processRequired) !==
+    JSON.stringify(INFORMATION_CARD_REGISTRY_METADATA.requiredProcessFields)
+  ) {
+    errors.push("Information Card process schema required fields do not match the presentation registry");
+  }
+  if (
+    schema.$defs?.treeNode?.additionalProperties !== false ||
+    schema.$defs?.process?.additionalProperties !== false ||
+    schema.$defs?.process?.properties?.automation?.additionalProperties !== false
+  ) {
+    errors.push("Information Card schema contains an open nested object");
+  }
+}
+
+function validateUserInputRealismContract(contract, schema, categories, errors) {
+  if (
+    schema.$id !==
+      "https://greenbusinesssolution.org/schemas/operational-savings/user-input-realism-v2.json" ||
+    schema.additionalProperties !== false ||
+    schema.$defs?.userInput?.additionalProperties !== false
+  ) {
+    errors.push("User-input realism schema has invalid identity or openness");
+  }
+  const requiredTopLevel = ["schema_version", "generated_from", "user_leaf_count", "inputs"];
+  if (JSON.stringify(schema.required || []) !== JSON.stringify(requiredTopLevel)) {
+    errors.push("User-input realism schema has unexpected required fields");
+  }
+  if (contract.user_leaf_count !== contract.inputs.length) {
+    errors.push("User-input realism contract count does not match its entries");
+  }
+
+  const expectedKeys = new Set();
+  const processesByCategory = new Map();
+  const formulaTermsByCategory = new Map();
+  for (const category of categories) {
+    processesByCategory.set(
+      category.id,
+      new Map(
+        category.informationCard.processes.map((process) => [
+          process.key,
+          process
+        ])
+      )
+    );
+    formulaTermsByCategory.set(
+      category.id,
+      new Set(
+        (category.semanticContract?.formula_terms || []).map(
+          (term) => term.name
+        )
+      )
+    );
+    walkPresentationTree(category.informationCard.tree, (treeNode, path) => {
+      if (
+        treeNode.processKey ||
+        treeNode.children.length > 0 ||
+        !treeNode.text.endsWith("(User)")
+      ) {
+        return;
+      }
+      const treePath = path
+        .filter((item) => !item.processKey)
+        .map((item) =>
+          item.text.replace(
+            /\s+\((?:User|Profile|Bill|Linked Opportunity|Project Document|Derived)\)$/,
+            ""
+          )
+        )
+        .join(" > ");
+      expectedKeys.add(`${category.id}\u0000${treePath}`);
+    });
+  }
+
+  const actualKeys = new Set();
+  const allowedFields = new Set(
+    Object.keys(schema.$defs?.userInput?.properties || {})
+  );
+  const requiredFields = schema.$defs?.userInput?.required || [];
+  for (const entry of contract.inputs) {
+    const key = `${entry.category_id}\u0000${entry.tree_path}`;
+    if (actualKeys.has(key)) {
+      errors.push(`User-input realism contract duplicates ${entry.category_id} ${entry.tree_path}`);
+    }
+    actualKeys.add(key);
+    for (const field of requiredFields) {
+      if (!(field in entry)) {
+        errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} is missing ${field}`);
+      }
+    }
+    for (const field of Object.keys(entry)) {
+      if (!allowedFields.has(field)) {
+        errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} has unsupported field ${field}`);
+      }
+    }
+    if (!["USER_MEMORY", "USER_RECOGNIZABLE_ACTIVITY"].includes(entry.decision)) {
+      errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} has an invalid explicit User decision`);
+    }
+    if (
+      /business representative can ordinarily describe|recognizable selector/i.test(
+        entry.reason || ""
+      ) ||
+      !String(entry.reason || "").includes(entry.tree_path) ||
+      String(entry.reason || "").startsWith(
+        `For ${categories.find((category) => category.id === entry.category_id)
+          ?.informationCard.title || "\u0000"},`
+      )
+    ) {
+      errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} lacks a category-specific reviewed reason`);
+    }
+    const fallbackProcess = entry.fallback_process_key
+      ? processesByCategory.get(entry.category_id)?.get(
+          entry.fallback_process_key
+        )
+      : null;
+    if (entry.fallback_process_key && !fallbackProcess) {
+      errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} references an unknown process`);
+    } else if (fallbackProcess) {
+      if (
+        !fallbackProcess.inputBindings.some(
+          (binding) => binding.treePath === entry.tree_path
+        )
+      ) {
+        errors.push(
+          `User-input realism entry ${entry.category_id} ${entry.tree_path} selects a fallback without an exact input binding`
+        );
+      }
+      const outputBinding = fallbackProcess.outputBindings.find(
+        (binding) => binding.outputName === entry.fallback_output
+      );
+      if (!outputBinding) {
+        errors.push(
+          `User-input realism entry ${entry.category_id} ${entry.tree_path} references an unknown fallback output`
+        );
+      } else if (
+        !formulaTermsByCategory
+          .get(entry.category_id)
+          ?.has(outputBinding.formulaTerm)
+      ) {
+        errors.push(
+          `User-input realism entry ${entry.category_id} ${entry.tree_path} fallback output does not reach a formula term`
+        );
+      }
+    } else if (entry.fallback_output !== null) {
+      errors.push(
+        `User-input realism entry ${entry.category_id} ${entry.tree_path} has a fallback output without a process`
+      );
+    }
+    if (!String(entry.selected_value_method || "").trim()) {
+      errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} lacks a selected-value method`);
+    }
+    if (
+      !String(entry.missing_exact_value_behavior || "").trim() ||
+      /(?:return|produce|show)\s+(?:a\s+)?(?:range|no estimate)/i.test(
+        entry.missing_exact_value_behavior || ""
+      ) ||
+      (
+        /use zero as a missing/i.test(entry.missing_exact_value_behavior || "") &&
+        !/do not use zero as a missing/i.test(entry.missing_exact_value_behavior || "")
+      )
+    ) {
+      errors.push(`User-input realism entry ${entry.category_id} ${entry.tree_path} has invalid missing-exact-value behavior`);
+    }
+  }
+
+  for (const key of expectedKeys) {
+    if (!actualKeys.has(key)) errors.push(`User-input realism contract is missing ${key.replace("\u0000", " ")}`);
+  }
+  for (const key of actualKeys) {
+    if (!expectedKeys.has(key)) errors.push(`User-input realism contract has stale entry ${key.replace("\u0000", " ")}`);
+  }
+}
+
+const PROCESS_SOURCE_NAME_PATTERNS = {
+  "STD-COMSTOCK-ANNUAL-DELTA": /ComStock|National Laboratory of the Rockies/i,
+  "STD-SCOUT-ECM-SCREEN": /Scout|U\.S\. Department of Energy/i,
+  "STD-DOE-CCMS-RATINGS": /Compliance Certification|CCMS|U\.S\. Department of Energy/i,
+  "STD-ENERGY-STAR-PRODUCT-DATA": /ENERGY STAR|U\.S\. Environmental Protection Agency/i,
+  "STD-DOE-MEASUR": /MEASUR|U\.S\. Department of Energy/i,
+  "STD-SAM-SOLAR-THERMAL": /System Advisor Model|National Laboratory of the Rockies/i,
+  "STD-PVWATTS-V8": /PVWatts|National Laboratory of the Rockies/i,
+  "STD-WIND-SAM": /WIND Toolkit|System Advisor Model|National Laboratory of the Rockies/i,
+  "STD-INTERVAL-TARIFF": /OpenEI|Utility Rate Database|published utility tariff/i,
+  "STD-REOPT-LOCAL-DISPATCH": /REopt|National Laboratory of the Rockies/i,
+  "STD-EPA-CHP-PERFORMANCE": /CHP|U\.S\. Environmental Protection Agency/i,
+  "STD-FUELECONOMY-VEHICLES": /FuelEconomy|U\.S\. Department of Energy|U\.S\. Environmental Protection Agency/i,
+  "STD-WATERSENSE-FIXTURES": /WaterSense|U\.S\. Environmental Protection Agency/i,
+  "STD-WATERSENSE-LANDSCAPE": /WaterSense|U\.S\. Environmental Protection Agency/i,
+  "STD-WATERSENSE-CI-OPERATIONS": /WaterSense|U\.S\. Environmental Protection Agency/i,
+  "STD-FEMP-EXTERIOR-LIGHTING": /FEMP|DesignLights Consortium/i,
+  "STD-OPERATING-SCHEDULE": /Commercial Reference|Naval Observatory|U\.S\. Department of Energy/i,
+  "STD-DISHWASHER-WATER-HEATING": /ENERGY STAR Commercial Food Service Equipment Calculator|U\.S\. Environmental Protection Agency/i,
+  "STD-CONTEXT-BENCHMARKS": /U\.S\. DOE|U\.S\. EPA|National Laboratory of the Rockies|Lighting Market Characterization|Commercial Reference|ComStock|EVI-Pro|Fleet DNA|WaterSense|REopt|emergency-generator/i
+};
+
+const SIMULATOR_STANDARD_IDS = new Set([
+  "STD-SAM-SOLAR-THERMAL",
+  "STD-PVWATTS-V8",
+  "STD-WIND-SAM",
+  "STD-REOPT-LOCAL-DISPATCH"
+]);
+const REQUIRED_SINGLE_VALUE_FALLBACK_ORDER = [
+  "EXACT_MEASURED_OR_DOCUMENTED",
+  "EXACT_PRODUCT_OR_PROJECT_SPECIFICATION",
+  "EXACT_AUTHORITATIVE_DATABASE_LOOKUP",
+  "CONTEXT_MATCHED_AUTHORITATIVE_BENCHMARK",
+  "DETERMINISTIC_RETROFI_BENCHMARK"
+];
+const REQUIRED_SELECTED_VALUE_METADATA = [
+  "selected_value",
+  "unit",
+  "source",
+  "source_version",
+  "context_filters",
+  "eligible_population",
+  "population_size",
+  "selection_rule",
+  "fallback_level",
+  "value_provenance"
+];
+const PROJECT_DOCUMENT_TERMS =
+  /(?:nameplate|product label|measurement|measured input|site study|energy audit|water audit|engineering assessment|controls trend|commissioning record|maintenance plan|manufacturer document|contractor quote|contractor specification|construction document|uploaded operating record)/i;
+const TECHNICAL_USAGE_TERMS =
+  /(?:flushes per day|uses per day per fixture|minutes per use|load-bin fraction|probability distribution|exact standby demand|technical annual usage|annual test fuel per unit|annual standby input per unit)/i;
+
+function inputBindingRegistryKey(categoryId, processKey, lookupInput) {
+  return `${categoryId}\u0000${processKey}\u0000${lookupInput}`;
+}
+
+function outputBindingRegistryKey(categoryId, processKey, outputName) {
+  return `${categoryId}\u0000${processKey}\u0000${outputName}`;
+}
+
+function exactRegistryBinding(bindings, keyForBinding, expectedKey) {
+  return (bindings || []).filter(
+    (binding) => keyForBinding(binding) === expectedKey
+  );
+}
+
+export function validateInformationCardBindingRegistry(
+  categoryReviews,
+  registry,
+  errors
+) {
+  if (
+    registry?.schema_version !==
+    "operational-savings/information-card-bindings-v1"
+  ) {
+    errors.push("Information Card binding registry has an unsupported schema version");
+  }
+  const expectedInputKeys = new Set();
+  const expectedOutputKeys = new Set();
+  for (const category of categoryReviews) {
+    for (const process of category.informationCard?.processes || []) {
+      for (const lookupInput of process.lookupInputs || []) {
+        expectedInputKeys.add(
+          inputBindingRegistryKey(category.id, process.key, lookupInput)
+        );
+      }
+      for (const outputName of process.valueNeeded || []) {
+        expectedOutputKeys.add(
+          outputBindingRegistryKey(category.id, process.key, outputName)
+        );
+      }
+    }
+  }
+  const seenInputKeys = new Set();
+  for (const binding of registry?.input_bindings || []) {
+    const key = inputBindingRegistryKey(
+      binding.category_id,
+      binding.process_key,
+      binding.lookup_input
+    );
+    if (seenInputKeys.has(key)) {
+      errors.push(
+        `Information Card binding registry duplicates input ${binding.category_id} ${binding.process_key} ${binding.lookup_input}`
+      );
+    }
+    seenInputKeys.add(key);
+    if (!expectedInputKeys.has(key)) {
+      errors.push(
+        `Information Card binding registry contains stale input ${binding.category_id} ${binding.process_key} ${binding.lookup_input}`
+      );
+    }
+  }
+  const seenOutputKeys = new Set();
+  for (const binding of registry?.output_bindings || []) {
+    const key = outputBindingRegistryKey(
+      binding.category_id,
+      binding.process_key,
+      binding.output_name
+    );
+    if (seenOutputKeys.has(key)) {
+      errors.push(
+        `Information Card binding registry duplicates output ${binding.category_id} ${binding.process_key} ${binding.output_name}`
+      );
+    }
+    seenOutputKeys.add(key);
+    if (!expectedOutputKeys.has(key)) {
+      errors.push(
+        `Information Card binding registry contains stale output ${binding.category_id} ${binding.process_key} ${binding.output_name}`
+      );
+    }
+  }
+  for (const key of expectedInputKeys) {
+    if (!seenInputKeys.has(key)) {
+      errors.push(`Information Card binding registry is missing input ${key.replaceAll("\u0000", " ")}`);
+    }
+  }
+  for (const key of expectedOutputKeys) {
+    if (!seenOutputKeys.has(key)) {
+      errors.push(`Information Card binding registry is missing output ${key.replaceAll("\u0000", " ")}`);
+    }
+  }
+}
+
+export function validateInformationCardProjection(
+  card,
+  category,
+  standardById,
+  schema,
+  evidenceManifest,
+  errors,
+  bindingRegistry = null
+) {
+  if (INFORMATION_CARD_REGISTRY_METADATA.categoryCount !== 54) {
+    errors.push(
+      `Information Card registry has ${INFORMATION_CARD_REGISTRY_METADATA.categoryCount} category records; expected 54`
+    );
+  }
+  for (const field of INFORMATION_CARD_REGISTRY_METADATA.requiredCardFields) {
+    if (!(field in card)) errors.push(`${category.id} Information Card is missing ${field}`);
+  }
+  const allowedCardFields = new Set(Object.keys(schema.properties || {}));
+  for (const field of Object.keys(card)) {
+    if (!allowedCardFields.has(field)) {
+      errors.push(`${category.id} Information Card has unsupported field ${field}`);
+    }
+  }
+  for (const field of ["title", "overview", "broaderFormula", "expandedFormula"]) {
+    if (!String(card[field] || "").trim()) {
+      errors.push(`${category.id} Information Card has an empty ${field}`);
+    }
+  }
+  if (JSON.stringify(card.retrofitNames) !== JSON.stringify(category.retrofits.map((retrofit) => retrofit.name))) {
+    errors.push(`${category.id} Information Card retrofit names do not match the canonical taxonomy mapping`);
+  }
+  if (!card.tree || typeof card.tree !== "object" || Array.isArray(card.tree)) {
+    errors.push(`${category.id} Information Card has no readable information tree`);
+    return;
+  }
+
+  const treeBindingLocations = buildInformationCardBindingLocations(card);
+  const treeBindingLocationByPath = new Map(
+    treeBindingLocations.map((location) => [location.treePath, location])
+  );
+  const formulaTermByName = new Map(
+    (category.semanticContract?.formula_terms || []).map((term) => [term.name, term])
+  );
+  const processByKey = new Map();
+  const processNumbers = new Set();
+  const processNames = new Set();
+  for (const process of card.processes || []) {
+    for (const field of INFORMATION_CARD_REGISTRY_METADATA.requiredProcessFields) {
+      if (!(field in process)) {
+        errors.push(`${category.id} Information Card process ${process.key || "unknown"} is missing ${field}`);
+      }
+    }
+    const allowedProcessFields = new Set(
+      Object.keys(schema.$defs?.process?.properties || {})
+    );
+    for (const field of Object.keys(process)) {
+      if (!allowedProcessFields.has(field)) {
+        errors.push(
+          `${category.id} Information Card process ${process.key || "unknown"} has unsupported field ${field}`
+        );
+      }
+    }
+    if (processByKey.has(process.key)) {
+      errors.push(`${category.id} Information Card has duplicate process key ${process.key}`);
+    }
+    processByKey.set(process.key, process);
+    if (processNumbers.has(process.displayNumber)) {
+      errors.push(`${category.id} Information Card has duplicate Standard number ${process.displayNumber}`);
+    }
+    processNumbers.add(process.displayNumber);
+    if (processNames.has(normalizeText(process.name))) {
+      errors.push(`${category.id} Information Card has duplicate Standard name ${process.name}`);
+    }
+    processNames.add(normalizeText(process.name));
+    if (!Array.isArray(process.canonicalStandardIds) || process.canonicalStandardIds.length === 0) {
+      errors.push(`${category.id} Information Card process ${process.name} has no canonical Standard connection`);
+    }
+    for (const standardId of process.canonicalStandardIds || []) {
+      if (!category.standardIds.includes(standardId)) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} connects unrelated Standard ${standardId}`
+        );
+      }
+    }
+    for (const [field, minimum] of [
+      ["lookupInputs", 1],
+      ["valueNeeded", 1],
+      ["howToUse", 4]
+    ]) {
+      if (!Array.isArray(process[field]) || process[field].length < minimum) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} has incomplete ${field}`
+        );
+      }
+    }
+    for (const field of ["selectedStrategy", "automationMethod", "difficulty"]) {
+      if (!String(process.automation?.[field] || "").trim()) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} has incomplete Automation ${field}`
+        );
+      }
+    }
+    if (
+      !["Easy", "Easy to Medium", "Medium", "Medium to Hard", "Hard"].includes(
+        process.automation?.difficulty
+      )
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} has invalid Difficulty ${process.automation?.difficulty}`
+      );
+    }
+    if (!String(process.validation || "").trim()) {
+      errors.push(`${category.id} Information Card process ${process.name} has no Validation`);
+    }
+    const bindingInputs = (process.inputBindings || []).map(
+      (binding) => binding.lookupInput
+    );
+    if (
+      bindingInputs.length !== process.lookupInputs.length ||
+      new Set(bindingInputs).size !== bindingInputs.length
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} input bindings do not map one-to-one to Lookup Inputs`
+      );
+    }
+    for (const lookupInput of process.lookupInputs || []) {
+      const bindings = (process.inputBindings || []).filter(
+        (binding) => binding.lookupInput === lookupInput
+      );
+      if (bindings.length !== 1) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} omits or duplicates Lookup Input ${lookupInput}`
+        );
+      } else if (
+        !String(bindings[0].use || "").trim() ||
+        !normalizeText(bindings[0].use).includes(normalizeText(lookupInput))
+      ) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} does not document how Lookup Input ${lookupInput} is used`
+        );
+      }
+      const binding = bindings[0];
+      const location = treeBindingLocationByPath.get(binding?.treePath);
+      if (!location) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} binds ${lookupInput} to nonexistent tree path ${binding?.treePath || "missing"}`
+        );
+      } else if (binding.sourceLabel !== location.sourceLabel) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} binds ${lookupInput} with source ${binding.sourceLabel || "missing"} instead of ${location.sourceLabel}`
+        );
+      }
+      if (bindingRegistry) {
+        const registryBindings = exactRegistryBinding(
+          bindingRegistry.input_bindings,
+          (candidate) =>
+            inputBindingRegistryKey(
+              candidate.category_id,
+              candidate.process_key,
+              candidate.lookup_input
+            ),
+          inputBindingRegistryKey(category.id, process.key, lookupInput)
+        );
+        if (registryBindings.length !== 1) {
+          errors.push(
+            `${category.id} Information Card process ${process.name} does not have exactly one explicit registry binding for ${lookupInput}`
+          );
+        } else {
+          const expected = registryBindings[0];
+          if (
+            binding.treePath !== expected.tree_path ||
+            binding.sourceLabel !== expected.source_label ||
+            binding.use !== expected.use
+          ) {
+            errors.push(
+              `${category.id} Information Card process ${process.name} binding for ${lookupInput} differs from the explicit registry`
+            );
+          }
+        }
+      }
+    }
+    for (const bindingInput of bindingInputs) {
+      if (!process.lookupInputs.includes(bindingInput)) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} contains an input binding it does not use: ${bindingInput}`
+        );
+      }
+    }
+    const requiredCategoryLookupInputs =
+      category.id === "ITC-16" && process.key === "reopt_local_dispatch"
+        ? [
+            "Controllable-load definition",
+            "Maximum shed",
+            "Event-availability schedule",
+            "Maximum event duration",
+            "Rebound or recovery constraint",
+            "Timestamped interval utility data",
+            "Resolved interval tariff input set"
+          ]
+        : category.id === "ITC-23" && process.key === "reopt_local_dispatch"
+          ? ["Terminal state-of-charge constraint"]
+          : [];
+    for (const requiredInput of requiredCategoryLookupInputs) {
+      if (
+        !process.lookupInputs.some((lookupInput) =>
+          normalizeText(lookupInput).includes(normalizeText(requiredInput))
+        )
+      ) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} omits required technical tree input ${requiredInput}`
+        );
+      }
+    }
+    const outputNames = (process.outputBindings || []).map(
+      (binding) => binding.outputName
+    );
+    if (
+      outputNames.length !== process.valueNeeded.length ||
+      new Set(outputNames).size !== outputNames.length
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} output bindings do not map one-to-one to Value Needed`
+      );
+    }
+    const processTreePaths = new Set(
+      treeBindingLocations
+        .filter((location) => location.processKey === process.key)
+        .map((location) => location.treePath)
+    );
+    for (const outputName of process.valueNeeded || []) {
+      const bindings = (process.outputBindings || []).filter(
+        (binding) => binding.outputName === outputName
+      );
+      if (bindings.length !== 1) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} omits or duplicates output ${outputName}`
+        );
+        continue;
+      }
+      const binding = bindings[0];
+      if (!processTreePaths.has(binding.treePath)) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} output ${outputName} is not bound to its exact tree location`
+        );
+      }
+      const formulaTerm = formulaTermByName.get(binding.formulaTerm);
+      if (!formulaTerm) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} output ${outputName} does not reach a formula term`
+        );
+      } else if (binding.outputUnit !== formulaTerm.display_unit) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} output ${outputName} unit ${binding.outputUnit} does not match ${binding.formulaTerm} unit ${formulaTerm.display_unit}`
+        );
+      }
+      if (
+        ![
+          "PER_FIXTURE",
+          "PER_EQUIPMENT_UNIT",
+          "PER_PORT",
+          "PER_EVENT",
+          "PER_HOUR",
+          "PER_YEAR",
+          "SITE_TOTAL",
+          "PROJECT_TOTAL",
+          "PROFILE",
+          "RECORD_SET"
+        ].includes(binding.outputScope)
+      ) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} output ${outputName} has invalid scope ${binding.outputScope}`
+        );
+      }
+      if (bindingRegistry) {
+        const registryBindings = exactRegistryBinding(
+          bindingRegistry.output_bindings,
+          (candidate) =>
+            outputBindingRegistryKey(
+              candidate.category_id,
+              candidate.process_key,
+              candidate.output_name
+            ),
+          outputBindingRegistryKey(category.id, process.key, outputName)
+        );
+        if (registryBindings.length !== 1) {
+          errors.push(
+            `${category.id} Information Card process ${process.name} does not have exactly one explicit registry binding for output ${outputName}`
+          );
+        } else {
+          const expected = registryBindings[0];
+          if (
+            binding.treePath !== expected.tree_path ||
+            binding.formulaTerm !== expected.formula_term ||
+            binding.outputUnit !== expected.output_unit ||
+            binding.outputScope !== expected.output_scope
+          ) {
+            errors.push(
+              `${category.id} Information Card process ${process.name} output ${outputName} differs from the explicit registry`
+            );
+          }
+        }
+      }
+      const formulaText = `${category.primaryFormula}\n${category.supportingFormulas}`;
+      const escapedTerm = binding.formulaTerm.replace(
+        /[.*+?^${}()|[\]\\]/g,
+        "\\$&"
+      );
+      if (
+        ["SITE_TOTAL", "PROJECT_TOTAL"].includes(binding.outputScope) &&
+        new RegExp(
+          `(?:\\bquantity\\b\\s*[×*]\\s*\\b${escapedTerm}\\b|\\b${escapedTerm}\\b\\s*[×*]\\s*\\bquantity\\b)`
+        ).test(formulaText)
+      ) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} multiplies total output ${outputName} by equipment count`
+        );
+      }
+      const outputSemantics =
+        `${binding.outputName} ${binding.formulaTerm} ${binding.outputUnit}`;
+      if (
+        ["SITE_TOTAL", "PROJECT_TOTAL"].includes(binding.outputScope) &&
+        /\bper (?:equipment )?unit\b|\/unit\b/i.test(outputSemantics)
+      ) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} passes per-unit output ${outputName} as a total`
+        );
+      }
+      if (
+        [
+          "PER_FIXTURE",
+          "PER_EQUIPMENT_UNIT",
+          "PER_PORT",
+          "PER_EVENT",
+          "PER_HOUR"
+        ].includes(binding.outputScope) &&
+        /\b(?:site|project|group)[_-]?total\b|\btotal annual\b/i.test(
+          outputSemantics
+        )
+      ) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} passes total output ${outputName} as ${binding.outputScope}`
+        );
+      }
+    }
+    const supportedCardinalities = new Set([
+      "ONE_SELECTED_SCALAR",
+      "ONE_SELECTED_RECORD",
+      "ONE_SELECTED_PROFILE",
+      "ONE_SELECTED_INPUT_SET",
+      "ONE_SELECTED_RESULT_SET"
+    ]);
+    const populationCardinality = new Set([
+      "ONE_SELECTED_SCALAR",
+      "ONE_SELECTED_RECORD"
+    ]);
+    const outputCardinality = process.selectionPolicy?.outputCardinality;
+    const allowedMultipleRecordRules = populationCardinality.has(outputCardinality)
+      ? new Set([
+          "OFFICIAL_RECOMMENDED_OR_TYPICAL_THEN_WEIGHTED_MEDIAN_THEN_MEDIAN",
+          "NOT_APPLICABLE_DETERMINISTIC_SELECTION"
+        ])
+      : new Set(["NOT_APPLICABLE_DETERMINISTIC_SELECTION"]);
+    if (
+      !supportedCardinalities.has(outputCardinality) ||
+      JSON.stringify(process.selectionPolicy?.fallbackOrder) !==
+        JSON.stringify(REQUIRED_SINGLE_VALUE_FALLBACK_ORDER) ||
+      !allowedMultipleRecordRules.has(process.selectionPolicy?.multipleRecordRule)
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} lacks the required selected-output fallback policy`
+      );
+    }
+    if (
+      !populationCardinality.has(outputCardinality) &&
+      /median/i.test(
+        `${process.selectionPolicy?.selectedValueMethod || ""} ${process.selectionPolicy?.missingExactValueBehavior || ""}`
+      )
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} applies a median rule to structured output cardinality ${outputCardinality}`
+      );
+    }
+    if (
+      JSON.stringify([...(process.selectionPolicy?.retainedMetadata || [])].sort()) !==
+      JSON.stringify([...REQUIRED_SELECTED_VALUE_METADATA].sort())
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} does not retain the complete selected-value trace`
+      );
+    }
+    if (
+      /^requirement-/.test(process.key) &&
+      !/official recommended or typical[\s\S]*weighted median[\s\S]*ordinary median/i.test(
+        process.selectionPolicy?.selectedValueMethod || ""
+      )
+    ) {
+      errors.push(
+        `${category.id} requirements-based process ${process.name} lacks a deterministic selected-value rule`
+      );
+    }
+    const visibleProcessText = [
+      process.name,
+      process.purpose,
+      ...(process.lookupInputs || []),
+      ...(process.valueNeeded || []),
+      ...(process.howToUse || []),
+      process.automation?.selectedStrategy,
+      process.automation?.automationMethod,
+      process.validation
+    ].join("\n");
+    if (
+      /(?:low\s*\/\s*base\s*\/\s*high|low,\s*base,\s*and\s*high|low,\s*median,\s*and\s*high|return (?:a )?(?:visible )?range|range output)/i.test(
+        visibleProcessText
+      )
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} exposes a range where one selected value is required`
+      );
+    }
+    if (
+      /(?:use (?:a|one) context benchmark|deterministic RetroFi benchmark|closest authoritative value)/i.test(
+        visibleProcessText
+      )
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} contains generic fallback wording without a source-specific formula, table, or population`
+      );
+    }
+    if (/\breturn no estimate\b|\bno estimate until\b/i.test(visibleProcessText)) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} removes the estimate when exact data is unavailable`
+      );
+    }
+    if (
+      ![
+        "EXECUTABLE_PROOF_PRESENT",
+        "METHOD_VERIFIED_IMPLEMENTATION_PENDING",
+        "SOURCE_UNSUPPORTED"
+      ].includes(process.evidenceState)
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} has invalid evidenceState ${process.evidenceState}`
+      );
+    }
+    if (process.evidenceState === "SOURCE_UNSUPPORTED") {
+      errors.push(
+        `${category.id} Information Card displays source-unsupported process ${process.name} as a tree resolver`
+      );
+    }
+    if (
+      process.evidenceState === "METHOD_VERIFIED_IMPLEMENTATION_PENDING" &&
+      !/(?:not yet|pending|have not yet|has not yet|no retained|no category|not currently|remain unverified|still absent)/i.test(
+        process.validation
+      )
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} does not disclose pending implementation proof`
+      );
+    }
+    if (
+      process.evidenceState === "EXECUTABLE_PROOF_PRESENT" &&
+      !/(?:retained fixture|golden)/i.test(process.validation)
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} claims executable proof without fixture or golden evidence`
+      );
+    }
+    if (
+      /(?:should work|will need to be validated|seems appropriate|implementation may be possible)/i.test(
+        process.validation || ""
+      )
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} has generic Validation wording`
+      );
+    }
+    validateProcessEvidenceClaim(process, category.id, evidenceManifest, errors);
+    const sourceLinks = resolveProcessSourceLinks(process, standardById);
+    if (!String(process.sourceName || "").trim() || sourceLinks.length === 0) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} lacks a visible direct source URL`
+      );
+    }
+    for (const standardId of process.canonicalStandardIds || []) {
+      const expectedSourceName = PROCESS_SOURCE_NAME_PATTERNS[standardId];
+      if (expectedSourceName && !expectedSourceName.test(process.sourceName)) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} names a source that does not correspond to ${standardId}`
+        );
+      }
+    }
+    if (/bill-derived .*rate/i.test(process.name)) {
+      errors.push(
+        `${category.id} Information Card incorrectly renders a simple Bill-derived rate as a Standard`
+      );
+    }
+    if (
+      (process.howToUse || []).some((step) =>
+        /^(?:Validate these inputs|Reject missing, ambiguous|Return the value|Store provenance)/i.test(
+          step
+        )
+      )
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} contains generic How to Use boilerplate`
+      );
+    }
+    if (
+      process.canonicalStandardIds.includes("STD-DOE-MEASUR") &&
+      !/(?:Steam System Assessment Tool|Pumping System Assessment Tool|Motor Inventory|Motor Performance|Cooling Tower Water Assessment|Fan System Assessment Tool|Compressed Air Assessment|Process Heating Assessment)/i.test(
+        `${process.purpose} ${process.howToUse.join(" ")} ${process.automation.automationMethod}`
+      )
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} does not identify its exact MEASUR calculator or module`
+      );
+    }
+    const processInstructions = [
+      process.purpose,
+      ...(process.howToUse || []),
+      process.automation?.selectedStrategy,
+      process.automation?.automationMethod
+    ].join(" ");
+    if (
+      category.id === "ITC-08" &&
+      process.canonicalStandardIds.includes("STD-SAM-SOLAR-THERMAL") &&
+      process.lookupInputs.some((input) => /(?:price|rate|cost)/i.test(input))
+    ) {
+      errors.push(
+        `${category.id} Information Card simulator process ${process.name} includes price before resolving the physical result`
+      );
+    }
+    if (
+      process.canonicalStandardIds.some((standardId) =>
+        SIMULATOR_STANDARD_IDS.has(standardId)
+      ) &&
+      /(?:simulator|simulation|model|SAM|PVWatts|REopt).{0,100}(?:supply|infer|derive|choose|fill|default|estimate).{0,40}(?:missing|unknown).{0,40}(?:project|design)|(?:supply|infer|derive|choose|fill|default|estimate).{0,40}(?:missing|unknown).{0,40}(?:project|design).{0,100}(?:simulator|simulation|model|SAM|PVWatts|REopt)/i.test(
+        processInstructions
+      )
+    ) {
+      errors.push(
+        `${category.id} Information Card simulator process ${process.name} treats missing project design inputs as model outputs`
+      );
+    }
+    if (
+      ["ITC-27", "ITC-28"].includes(category.id) &&
+      process.canonicalStandardIds.includes("STD-ENERGY-STAR-PRODUCT-DATA")
+    ) {
+      if (
+        !/AC-output[\s\S]*mode-specific total loss/i.test(processInstructions) ||
+        !/DC-output[\s\S]*loading-adjusted efficiency/i.test(processInstructions) ||
+        !/output power plus[\s\S]*total loss/i.test(processInstructions) ||
+        !/output power divided by[\s\S]*efficiency/i.test(processInstructions)
+      ) {
+        errors.push(
+          `${category.id} Information Card process ${process.name} conflates AC and DC charger fields or omits an explicit normalization formula`
+        );
+      }
+    }
+    if (
+      category.id === "ITC-32" &&
+      process.key === "flow_fixture_activity" &&
+      (
+        !/supported bathroom faucet, showerhead, or pre-rinse spray-valve method/i.test(
+          process.howToUse.join(" ")
+        ) ||
+        /kitchen faucet/i.test(process.howToUse.join(" "))
+      )
+    ) {
+      errors.push(
+        `${category.id} WaterSense usage process claims a fixture type outside the supported source scope`
+      );
+    }
+    const verifiedStandardEvidence = (evidenceManifest.evidence_records || []).some(
+      (record) =>
+        process.canonicalStandardIds.includes(record.standard_id) &&
+        record.evidence_status === "VERIFIED"
+    );
+    const claimsSpecificSourceField =
+      /(?:source|dataset|table|product finder).{0,100}(?:field|column|row|assumption|equation)/i.test(
+        `${process.purpose} ${process.valueNeeded.join(" ")} ${process.validation}`
+      );
+    const disclosesPendingFieldProof =
+      /(?:not yet|pending|no retained|has not yet|have not yet|remain unverified|still absent)/i.test(
+        process.validation || ""
+      );
+    const tiesClaimToInspectedArtifact =
+      /(?:retained|inspected|fixture|documented (?:source )?schema)/i.test(
+        process.validation || ""
+      );
+    if (
+      claimsSpecificSourceField &&
+      !(verifiedStandardEvidence && tiesClaimToInspectedArtifact) &&
+      !disclosesPendingFieldProof
+    ) {
+      errors.push(
+        `${category.id} Information Card process ${process.name} makes a source-field claim without inspected evidence or an implementation-pending limitation`
+      );
+    }
+    if (
+      /^existing-product-rating$/.test(process.key) &&
+      /(?:use|treat|apply).{0,80}(?:current|efficient|certified|qualified).{0,60}(?:product|dataset|population|distribution).{0,80}(?:unknown existing|existing baseline|installed baseline)/i.test(
+        processInstructions
+      )
+    ) {
+      errors.push(
+        `${category.id} Information Card product process ${process.name} uses current products as the unknown existing-equipment baseline`
+      );
+    }
+    if (
+      process.canonicalStandardIds.some((standardId) =>
+        ["STD-DOE-CCMS-RATINGS", "STD-ENERGY-STAR-PRODUCT-DATA"].includes(standardId)
+      ) &&
+      process.lookupInputs.some((input) => /(?:usage|operating schedule|annual activity)/i.test(input))
+    ) {
+      errors.push(
+        `${category.id} Information Card product process ${process.name} incorrectly resolves usage or an operating schedule`
+      );
+    }
+  }
+
+  const exactProcesses = (card.processes || []).filter((process) => /^exact-/.test(process.key));
+  const requirementProcesses = (card.processes || []).filter((process) => /^requirement-/.test(process.key));
+  for (const exact of exactProcesses) {
+    const requirement = requirementProcesses.find((candidate) =>
+      candidate.canonicalStandardIds.some((standardId) =>
+        exact.canonicalStandardIds.includes(standardId)
+      )
+    );
+    if (!requirement) continue;
+    for (const [label, exactValue, requirementValue] of [
+      ["How to Use", exact.howToUse, requirement.howToUse],
+      ["Automation Method", exact.automation.automationMethod, requirement.automation.automationMethod],
+      ["Validation", exact.validation, requirement.validation]
+    ]) {
+      if (JSON.stringify(exactValue) === JSON.stringify(requirementValue)) {
+        errors.push(
+          `${category.id} exact-product and requirement-based processes have identical ${label}`
+        );
+      }
+    }
+  }
+
+  const referencedKeys = [];
+  const visibleTexts = [];
+  const profileLeaves = [];
+  const billLeaves = [];
+  walkPresentationTree(card.tree, (node, path) => {
+    const allowedTreeFields = new Set(
+      Object.keys(schema.$defs?.treeNode?.properties || {})
+    );
+    for (const field of Object.keys(node)) {
+      if (!allowedTreeFields.has(field)) {
+        errors.push(
+          `${category.id} Information Card tree node has unsupported field ${field}`
+        );
+      }
+    }
+    if (node.processKey) {
+      referencedKeys.push(node.processKey);
+      if (!processByKey.has(node.processKey)) {
+        errors.push(
+          `${category.id} Information Card tree references missing process ${node.processKey}`
+        );
+      }
+      return;
+    }
+    visibleTexts.push(node.text);
+    if (node.children.length === 0 && path.length > 1) {
+      if (
+        !["(User)", "(Profile)", "(Bill)", "(Linked Opportunity)", "(Project Document)", "(Derived)"].some(
+          (label) => node.text.endsWith(label)
+        )
+      ) {
+        errors.push(
+          `${category.id} Information Card terminal leaf lacks a permitted source label: ${JSON.stringify(node.text)}`
+        );
+      }
+      if (node.text.endsWith("(Profile)")) profileLeaves.push(node.text);
+      if (node.text.endsWith("(Bill)")) billLeaves.push(node.text);
+      if (
+        node.text.endsWith("(User)") &&
+        /(?:database|record ID|API field|JSON|schema key|comb08|combE|FuelEconomy\.gov ID|utilityExtractedValues|[a-z]+_[a-z0-9_]+)/i.test(
+          node.text
+        )
+      ) {
+        errors.push(
+          `${category.id} Information Card exposes a technical identifier as a User input: ${node.text}`
+        );
+      }
+      if (
+        node.text.endsWith("(User)") &&
+        /(?:distribution|probability|specific power|\bCOP\b|pressure rise|load bin|ratchet rule|tariff calendar|certified resource input per test unit|purchased water-heating input per certified rack)/i.test(
+          node.text
+        )
+      ) {
+        errors.push(
+          `${category.id} Information Card assigns an unrealistic technical value to User: ${node.text}`
+        );
+      }
+      if (
+        node.text.endsWith("(User)") &&
+        /(?:Timestamped Interval Utility Data|Uploaded Utility Artifact|Complete .*Tariff|Billing-Demand)/i.test(
+          node.text
+        )
+      ) {
+        errors.push(
+          `${category.id} Information Card assigns uploaded utility or tariff data to User: ${node.text}`
+        );
+      }
+      if (node.text.endsWith("(User)") && PROJECT_DOCUMENT_TERMS.test(node.text)) {
+        errors.push(
+          `${category.id} Information Card labels Project Document evidence as ordinary User input: ${node.text}`
+        );
+      }
+      if (node.text.endsWith("(User)") && TECHNICAL_USAGE_TERMS.test(node.text)) {
+        errors.push(
+          `${category.id} Information Card assigns technical usage directly to User without a benchmark resolver: ${node.text}`
+        );
+      }
+      if (node.text.endsWith("(Linked Opportunity)")) {
+        if (PROJECT_DOCUMENT_TERMS.test(node.text)) {
+          errors.push(
+            `${category.id} Information Card mislabels a Project Document as Linked Opportunity: ${node.text}`
+          );
+        }
+        const ancestors = path.slice(0, -1);
+        const explicitOpportunityBranch = [...ancestors]
+          .reverse()
+          .find((ancestor) => /^Linked Opportunity\b/i.test(ancestor.text));
+        const candidateAncestors = explicitOpportunityBranch
+          ? [explicitOpportunityBranch]
+          : ancestors;
+        const hasInterpretingProcess = candidateAncestors.some((ancestor) =>
+          ancestor.children.some((sibling) => sibling.processKey)
+        );
+        if (
+          !hasInterpretingProcess &&
+          /(?:watts|efficiency|power|capacity|rating|flow|consumption)/i.test(node.text) &&
+          !/(?:Nameplate|Measurement|Audit|Contractor|Manufacturer|Commissioning|Controls Trend|Site Study|Fleet Study|Operating Record)/i.test(
+            node.text
+          )
+        ) {
+          errors.push(
+            `${category.id} Linked Opportunity jumps directly to an engineering value without a Standard process: ${node.text}`
+          );
+        }
+      }
+    }
+  });
+
+  const uniqueReferencedKeys = [...new Set(referencedKeys)];
+  for (const process of card.processes || []) {
+    if (!uniqueReferencedKeys.includes(process.key)) {
+      errors.push(
+        `${category.id} Information Card includes unreferenced process section ${process.name}`
+      );
+    }
+  }
+  if (
+    JSON.stringify(uniqueReferencedKeys) !==
+    JSON.stringify((card.processes || []).map((process) => process.key))
+  ) {
+    errors.push(
+      `${category.id} Information Card process sections do not follow first tree-reference order`
+    );
+  }
+  const connectedStandardIds = new Set(
+    (card.processes || []).flatMap((process) => process.canonicalStandardIds || [])
+  );
+  for (const standardId of category.standardIds) {
+    if (!connectedStandardIds.has(standardId)) {
+      errors.push(
+        `${category.id} Information Card omits canonical Standard ${standardId}`
+      );
+    }
+  }
+  if (profileLeaves.length > 0 && category.inputs.Profile.length === 0) {
+    errors.push(`${category.id} Information Card shows a Profile value absent from its production contract`);
+  }
+  if (billLeaves.length > 0 && category.inputs.Bill.length === 0) {
+    errors.push(`${category.id} Information Card shows a Bill value absent from its production contract`);
+  }
+  if (card.tree.children.some((child) => normalizeText(child.text) === normalizeText(card.tree.text))) {
+    errors.push(`${category.id} Information Card tree repeats its root output as a final child`);
+  }
+
+  const visibleContent = [
+    card.title,
+    card.overview,
+    card.broaderFormula,
+    card.expandedFormula,
+    ...visibleTexts,
+    ...(card.processes || []).flatMap((process) => [
+      process.name,
+      process.purpose,
+      ...process.lookupInputs,
+      ...process.valueNeeded,
+      ...process.howToUse,
+      process.automation.selectedStrategy,
+      process.automation.automationMethod,
+      process.validation
+    ])
+  ].join("\n");
+  if (
+    /(?:\bSTD-[A-Z0-9-]+\b|\bBR-[A-Z0-9-]+\b|\bE-[A-Z][A-Z0-9-]+\b|\{\{|utilityExtractedValues|site\.[A-Za-z]|business\.[A-Za-z]|\/(?:fields|tables|values|methods)\/\d+|\b[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)+\b)/.test(
+      visibleContent
+    )
+  ) {
+    errors.push(`${category.id} Information Card exposes internal registry or schema identifiers`);
+  }
+  if (/\bRetrofit selected\b/i.test(visibleContent)) {
+    errors.push(`${category.id} Information Card contains a generic Retrofit selected branch`);
+  }
+  if (/\b(?:unknown or different|another pattern)\b/i.test(visibleContent)) {
+    errors.push(`${category.id} Information Card contains a generic unsupported routing branch`);
+  }
+}
+
+function validateProcessEvidenceClaim(process, categoryId, evidenceManifest, errors) {
+  const unsupported = [
+    ...(evidenceManifest.standards || [])
+      .filter((summary) => process.canonicalStandardIds.includes(summary.standard_id))
+      .flatMap((summary) => summary.unsupported_roles || []),
+    ...(evidenceManifest.evidence_records || [])
+      .filter((record) => process.canonicalStandardIds.includes(record.standard_id))
+      .flatMap((record) => record.unsupported_uses || [])
+  ].join(" ");
+  const affirmativeSentences = String(process.validation || "")
+    .split(/(?<=[.!?])\s+/)
+    .filter(
+      (sentence) =>
+        /\b(?:supports?|provides?|supplies?|validates?)\b/i.test(sentence) &&
+        !/\b(?:does not|do not|cannot|not supported|unsupported|remain unverified|no )\b/i.test(
+          sentence
+        )
+    );
+  for (const sentence of affirmativeSentences) {
+    const contradictsExistingBaseline =
+      /(?:installed|existing).*(?:baseline|distribution)|(?:baseline|distribution).*(?:installed|existing)/i.test(
+        sentence
+      ) &&
+      /(?:installed|existing).*(?:baseline|distribution)|(?:baseline|distribution).*(?:installed|existing)/i.test(
+        unsupported
+      );
+    const contradictsTariff =
+      /\b(?:tariff|bill rate)\b/i.test(sentence) &&
+      /\b(?:tariff|bill)\b/i.test(unsupported);
+    const contradictsGenericDefault =
+      /\b(?:generic|default)\b/i.test(sentence) &&
+      /\b(?:generic|default)\b/i.test(unsupported);
+    if (
+      contradictsExistingBaseline ||
+      contradictsTariff ||
+      contradictsGenericDefault
+    ) {
+      errors.push(
+        `${categoryId} Information Card process ${process.name} Validation contradicts the source-evidence manifest`
+      );
+    }
+  }
+}
+
+function walkPresentationTree(root, callback, path = []) {
+  const nextPath = [...path, root];
+  callback(root, nextPath);
+  for (const child of root.children || []) {
+    walkPresentationTree(child, callback, nextPath);
+  }
+}
+
+function buildInformationCardBindingLocations(card) {
+  const processByKey = new Map(
+    (card.processes || []).map((process) => [process.key, process])
+  );
+  const locations = [];
+  const visit = (treeNode, parentSegments) => {
+    const process = treeNode.processKey
+      ? processByKey.get(treeNode.processKey)
+      : null;
+    const sourceLabel = treeNode.processKey
+      ? "Standard Output"
+      : treeNode.text.match(
+          /\s+\((User|Profile|Bill|Linked Opportunity|Project Document|Derived)\)$/
+        )?.[1] || null;
+    const segment = treeNode.processKey
+      ? `Standard ${process?.displayNumber || "unassigned"} - ${process?.name || treeNode.processKey}`
+      : stripInformationCardSourceLabel(treeNode.text);
+    const segments = [...parentSegments, segment].filter(Boolean);
+    locations.push({
+      treePath: segments.join(" > "),
+      segments,
+      processKey: treeNode.processKey || null,
+      sourceLabel
+    });
+    for (const child of treeNode.children || []) visit(child, segments);
+  };
+  visit(card.tree, []);
+  return locations;
+}
+
+function stripInformationCardSourceLabel(value) {
+  return String(value || "")
+    .replace(/\s+\((?:User|Profile|Bill|Linked Opportunity|Project Document|Derived)\)$/, "")
+    .trim();
+}
+
+
+function renderCategoryPage(category) {
+  const card = category.informationCard;
+  const processByKey = new Map(card.processes.map((process) => [process.key, process]));
+  const standardById = new Map(category.tracedStandards.map((standard) => [standard.id, standard]));
+  const processSections = card.processes
+    .map((process) => renderInformationCardProcess(process, standardById))
+    .join("\n\n");
+  return ensureFinalNewline([
+    `# Information Card — ${card.title}`,
+    "",
+    `**Retrofits included:** ${card.retrofitNames.join("; ")}`,
+    "",
+    `**Overview:** ${card.overview}`,
+    "",
+    "**Broader Formula**",
+    "",
+    "```text",
+    card.broaderFormula,
+    "```",
+    "",
+    "**Expanded Formula**",
+    "",
+    "```text",
+    card.expandedFormula,
+    "```",
+    "",
+    "**Information Tree**",
+    "",
+    "```text",
+    renderPresentationTree(card.tree, processByKey),
+    "```",
+    processSections ? `\n${processSections}` : ""
+  ].join("\n"));
+}
+
+function renderInformationCardProcess(process, standardById) {
+  const sourceLinks = resolveProcessSourceLinks(process, standardById);
+  const sourceBlock = [
+    process.sourceName,
+    "",
+    ...sourceLinks.flatMap((link) => [
+      `**${capitalizeLinkLabel(link.label)}:**`,
+      `[${link.url}](${link.url})`,
+      ""
+    ])
+  ];
+  return [
+    `**■ Standard ${process.displayNumber} — ${process.name}**`,
+    "",
+    "**Purpose:**",
+    process.purpose,
+    "",
+    "**Source:**",
+    ...sourceBlock,
+    "**Lookup Inputs:**",
+    "",
+    process.lookupInputs.map((input) => `* ${input}`).join("\n"),
+    "",
+    "**Value Needed:**",
+    "",
+    process.valueNeeded.map((value) => `* ${value}`).join("\n"),
+    "",
+    "**How to Use:**",
+    "",
+    process.howToUse.map((step, index) => `${index + 1}. ${step}`).join("\n"),
+    "",
+    "**Automation:**",
+    "",
+    `* **Selected Strategy:** ${process.automation.selectedStrategy}`,
+    `* **Automation Method:** ${process.automation.automationMethod}`,
+    `* **Difficulty:** ${process.automation.difficulty}`,
+    "",
+    "**Validation:**",
+    process.validation
+  ].join("\n");
+}
+
+function resolveProcessSourceLinks(process, standardById) {
+  const links = [];
+  for (const standardId of process.canonicalStandardIds) {
+    const source = standardById.get(standardId)?.fields["**Source:**"] || "";
+    for (const match of source.matchAll(/\[([^\]]+)\]\((https:\/\/[^)]+)\)/g)) {
+      if (
+        process.sourceLinkLabels?.length &&
+        !process.sourceLinkLabels.some((label) => normalizeText(label) === normalizeText(match[1]))
+      ) {
+        continue;
+      }
+      if (!links.some((link) => link.url === match[2])) {
+        links.push({ label: match[1], url: match[2] });
+      }
+    }
+  }
+  return links;
+}
+
+function capitalizeLinkLabel(label) {
+  return label.charAt(0).toUpperCase() + label.slice(1);
+}
+
+function renderReviewIndex(categories) {
+  const links = categories
+    .map((category) => `- [${category.id} - ${category.informationCard.title}](./categories/${category.id}.md)`)
+    .join("\n");
+  return ensureFinalNewline([
+    "# Operational Savings Information Cards",
+    "",
+    "Each link opens one category Information Card with its mapped retrofits, formulas, readable information tree, and connected Standard processes.",
+    "",
+    links
+  ].join("\n"));
+}
+
+function deriveReviewDecisions(category, contract) {
+  if (category.id === "ITC-02") {
+    return [
+      "Approve the DOE application-matched exterior-lighting wattage benchmark for cases without documented existing fixture watts."
+    ];
+  }
+  if (category.id === "ITC-29") {
+    return [
+      "Approve the exact-model comparison path and decide whether a class-based replacement recommendation should be researched later."
+    ];
+  }
+  if (category.id === "ITC-15") {
+    return [
+      "Approve the zero-direct-resource boundary so RetroFi does not duplicate physical savings that belong to another category."
+    ];
+  }
+  const gate = contract?.default_path?.unresolved_gate;
+  if (gate) {
+    return [
+      `Keep ${category.title} in Draft while the category-specific execution gate is resolved, and continue to return one value through the documented fallback policy: ${gate}`
+    ];
+  }
+  const scenario = contract?.default_path?.scenario || "documented scenario";
+  return [`Approve the ${scenario} boundary for ${category.title} and its documented exclusions.`];
+}
+
+function deriveUncertainty(category, standards) {
+  if (category.defaultEstimate === "NOT APPLICABLE") {
+    return { label: "Low", detail: "No direct operational-resource estimate applies, so model uncertainty is not applicable." };
+  }
+  const detailParts = [];
+  const standardLevels = [];
+  for (const standard of standards) {
+    const field = extractAutomationField(standard.fields["**Automation:**"], "Expected Accuracy or Uncertainty");
+    if (field) {
+      detailParts.push(`${standard.id}: ${field}`);
+      standardLevels.push(field.match(/^\s*(Low|Moderate|High)\b/i)?.[1]?.toLowerCase() || "moderate");
+    }
+  }
+  const noteUncertainty = category.notes.match(/[^.]*\b(?:low|moderate|high) uncertainty[^.]*\./i)?.[0]?.trim();
+  if (noteUncertainty) detailParts.unshift(noteUncertainty);
+  const detail = detailParts.length
+    ? detailParts.join(" ")
+    : category.defaultEstimate === "UNAVAILABLE"
+      ? "No default estimate is available; validated project inputs govern any bounded result."
+      : "No external model uncertainty applies; project-input and bill-data quality still control the result.";
+  const label = /\bhigh uncertainty\b/i.test(noteUncertainty || "") || category.status === "BLOCKED" || standardLevels.includes("high")
+    ? "High"
+    : standardLevels.includes("moderate") || category.status === "DRAFT"
+      ? "Moderate"
+      : "Low";
+  return { label, detail };
+}
+
+function deriveAutomationReadiness(category, standards) {
+  if (category.status === "BLOCKED") return "Blocked";
+  if (category.status === "DRAFT") return "Draft adapter or decision required";
+  if (standards.some((standard) => standard.status === "LIMITED")) return "Limited source access or coverage";
+  if (standards.length === 0) return "Not applicable";
+  return "Ready for implementation";
+}
+
+function validateTaxonomyCoverage(categories, taxonomyById, errors) {
+  const occurrences = new Map();
+  for (const category of categories) {
+    if (category.retrofits.length === 0) errors.push(`${category.id} has no retrofit mappings`);
+    for (const retrofit of category.retrofits) {
+      const taxonomy = taxonomyById.get(retrofit.id);
+      if (!taxonomy) errors.push(`${category.id} maps unknown retrofit ${retrofit.id}`);
+      if (taxonomy && taxonomy.displayName !== retrofit.name) {
+        errors.push(`${category.id} display name mismatch for ${retrofit.id}`);
+      }
+      if (!occurrences.has(retrofit.id)) occurrences.set(retrofit.id, []);
+      occurrences.get(retrofit.id).push(category.id);
+    }
+  }
+  for (const [id] of taxonomyById) {
+    const mapped = occurrences.get(id) || [];
+    if (mapped.length === 0) errors.push(`missing retrofit mapping: ${id}`);
+    if (mapped.length > 1) errors.push(`duplicate retrofit mapping: ${id} in ${mapped.join(", ")}`);
+  }
+}
+
+function validateUsageDeclarations(sections, actualUsage, categoryById, errors) {
+  for (const section of sections) {
+    const declared = parseUsage(section.usedByLine, categoryById, errors);
+    const actual = [...(actualUsage.get(section.id) || [])].sort();
+    if (JSON.stringify([...declared].sort()) !== JSON.stringify(actual)) {
+      errors.push(`${section.id} Used By mismatch: declared [${[...declared].sort().join(", ")}], actual [${actual.join(", ")}]`);
+    }
+  }
+}
+
+function parseUsage(line, categoryById, errors) {
+  const usage = new Set();
+  const ranges = [...line.matchAll(/(ITC-\d{2}) through (ITC-\d{2})/g)];
+  let remainder = line;
+  for (const match of ranges) {
+    const start = Number(match[1].slice(4));
+    const end = Number(match[2].slice(4));
+    for (let value = start; value <= end; value += 1) usage.add(`ITC-${String(value).padStart(2, "0")}`);
+    remainder = remainder.replace(match[0], "");
+  }
+  for (const id of remainder.match(/ITC-\d{2}/g) || []) usage.add(id);
+  for (const id of usage) if (!categoryById.has(id)) errors.push(`usage declaration references unknown category ${id}`);
+  return usage;
+}
+
+function validateCanonicalMarkers(sections, markers, errors) {
+  for (const section of sections) {
+    let previous = -1;
+    for (const marker of markers) {
+      const index = section.body.indexOf(marker);
+      if (index < 0) errors.push(`${section.id} is missing ${marker}`);
+      if (index >= 0 && index <= previous) errors.push(`${section.id} has ${marker} out of order`);
+      if (index >= 0) previous = index;
+    }
+  }
+}
+
+function validateStatuses(categories, branches, standards, sources, errors) {
+  for (const [label, document] of [
+    ["information-tree document", sources.treeDocument],
+    ["Standard registry", sources.standardDocument]
+  ]) {
+    if (/\bFINALIZED\b|\bIN REVIEW\b/.test(document)) errors.push(`${label} contains a prohibited legacy status`);
+  }
+  for (const section of [...categories, ...branches]) {
+    if (!ALLOWED_CATEGORY_STATUSES.has(section.status)) errors.push(`${section.id} uses invalid status ${JSON.stringify(section.status)}`);
+  }
+  for (const standard of standards) {
+    if (!ALLOWED_STANDARD_STATUSES.has(standard.status)) errors.push(`${standard.id} uses invalid status ${JSON.stringify(standard.status)}`);
+  }
+}
+
+function assertContiguousCategoryIds(categories, errors) {
+  const expected = categories.map((_, index) => `ITC-${String(index + 1).padStart(2, "0")}`);
+  const actual = categories.map((category) => category.id);
+  if (JSON.stringify(expected) !== JSON.stringify(actual)) errors.push(`category IDs are not contiguous and ordered: ${actual.join(", ")}`);
+}
+
+function uniqueMap(sections, label, errors) {
+  const map = new Map();
+  for (const section of sections) {
+    if (map.has(section.id)) errors.push(`${label} ${section.id} is defined more than once`);
+    map.set(section.id, section);
+  }
+  return map;
+}
+
+function walkTree(root, callback, path = []) {
+  const nextPath = [...path, root];
+  callback(root, nextPath);
+  for (const child of root.children) walkTree(child, callback, nextPath);
+}
+
+function stripResolutionTags(text) {
+  return text.replace(/\s*\{\{(?:lookup|constant|output|input|resource|component|intermediate):\s*[^}]+\}\}/g, "").trim();
+}
+
+function cleanTreeText(text) {
+  const withoutTags = stripResolutionTags(text);
+  const sourceLabel = ALLOWED_LEAF_LABELS.find((label) => withoutTags.endsWith(label));
+  return sourceLabel ? withoutTags.slice(0, -sourceLabel.length).trim() : withoutTags;
+}
+
+function stripTreePrefix(line) {
+  return line.replace(/^(?:│  |   )*(?:├─ |└─ )?/, "").trim();
+}
+
+function treeDepth(line) {
+  const prefix = line.match(/^(?:(?:│  |   ))*/)?.[0] || "";
+  return prefix.length / 3 + (/^(?:│  |   )*(?:├─ |└─ )/.test(line) ? 1 : 0);
+}
+
+function sliceBetween(text, startMarker, endMarker) {
+  const start = text.indexOf(startMarker);
+  const end = text.indexOf(endMarker, start + startMarker.length);
+  if (start < 0 || end < 0) return "";
+  return text.slice(start + startMarker.length, end);
+}
+
+function matchField(text, label) {
+  return text.match(new RegExp(`^\\*\\*${escapeRegExp(label)}:\\*\\* (.+)$`, "m"))?.[1]?.trim() || null;
+}
+
+function extractAutomationField(automation, label) {
+  return automation.match(new RegExp(`^- \\*\\*${escapeRegExp(label)}:\\*\\* (.+)$`, "m"))?.[1]?.trim() || null;
+}
+
+function extractContractField(contract, label) {
+  return contract.match(new RegExp(`^- \\*\\*${escapeRegExp(label)}:\\*\\* (.+)$`, "m"))?.[1]?.trim() || null;
+}
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function normalizeText(value) {
+  return String(value || "").replace(/[`*_]/g, "").replace(/\s+/g, " ").trim().toLowerCase();
+}
+
+function ensureFinalNewline(value) {
+  return `${value.trimEnd()}\n`;
+}
+
+function buildReport(categories, branches, standards, taxonomy) {
+  const userCounts = categories.map((category) => category.inputs.User.length);
+  const requiredCounts = categories.map((category) => category.inputs.RequiredUser.length);
+  const visibleStandardProcesses = categories.reduce(
+    (sum, category) => sum + category.informationCard.processes.length,
+    0
+  );
+  const sourceLinksRendered = categories.reduce((sum, category) => {
+    const standardById = new Map(
+      category.tracedStandards.map((standard) => [standard.id, standard])
+    );
+    return sum + category.informationCard.processes.reduce(
+      (processSum, process) =>
+        processSum + resolveProcessSourceLinks(process, standardById).length,
+      0
+    );
+  }, 0);
+  const userInputRealismEntries = categories.flatMap(
+    (category) => category.userInputRealism || []
+  );
+  const terminalLeavesBySource = {};
+  for (const category of categories) {
+    walkPresentationTree(category.informationCard.tree, (treeNode) => {
+      if (treeNode.processKey || treeNode.children.length > 0) return;
+      const source = treeNode.text.match(
+        /\((User|Profile|Bill|Linked Opportunity|Project Document|Derived)\)$/
+      )?.[1];
+      if (source) terminalLeavesBySource[source] = (terminalLeavesBySource[source] || 0) + 1;
+    });
+  }
+  return {
+    categoryPages: categories.length,
+    categories: categories.length,
+    taxonomyRetrofits: taxonomy.length,
+    mappedRetrofits: categories.reduce((sum, category) => sum + category.retrofits.length, 0),
+    sharedBranchesExpanded: branches.length,
+    standardsEmbedded: standards.length,
+    visibleStandardProcesses,
+    sourceLinksRendered,
+    visibleUserLeaves: userInputRealismEntries.length,
+    visibleProjectDocumentLeaves: terminalLeavesBySource["Project Document"] || 0,
+    visibleLinkedOpportunityLeaves: terminalLeavesBySource["Linked Opportunity"] || 0,
+    userLeavesByDecision: countBy(
+      userInputRealismEntries,
+      (entry) => entry.decision
+    ),
+    userLeavesWithStandardFallback: userInputRealismEntries.filter(
+      (entry) => entry.fallback_process_key
+    ).length,
+    maxAtomicUserInputs: Math.max(...userCounts),
+    requiredUserInputs: requiredCounts.reduce((sum, value) => sum + value, 0),
+    conditionalCalculationGates: categories.reduce(
+      (sum, category) => sum + category.inputs.ConditionalUser.length,
+      0
+    ),
+    optionalKnownDetails: categories.reduce((sum, category) => sum + category.inputs.OptionalUser.length, 0),
+    maxRequiredUserInputs: Math.max(...requiredCounts),
+    categoriesOverFourUserInputs: categories.filter((category) => category.inputs.RequiredUser.length > 4).map((category) => category.id),
+    categoriesWithFiveUserInputs: categories.filter((category) => category.inputs.RequiredUser.length === 5).map((category) => category.id),
+    atomicUserInputsByCategory: Object.fromEntries(categories.map((category) => [category.id, category.inputs.User.length])),
+    requiredUserInputsByCategory: Object.fromEntries(categories.map((category) => [category.id, category.inputs.RequiredUser.length])),
+    conditionalCalculationGatesByCategory: Object.fromEntries(
+      categories.map((category) => [category.id, category.inputs.ConditionalUser.length])
+    ),
+    optionalKnownDetailsByCategory: Object.fromEntries(categories.map((category) => [category.id, category.inputs.OptionalUser.length])),
+    categoryStatuses: countBy(categories, (category) => category.status),
+    standardStatuses: countBy(standards, (standard) => standard.status)
+  };
+}
+
+function countBy(items, selector) {
+  const counts = {};
+  for (const item of items) {
+    const key = selector(item);
+    counts[key] = (counts[key] || 0) + 1;
+  }
+  return counts;
+}
+
+async function main() {
+  const args = process.argv.slice(2);
+  const rootFlagIndex = args.indexOf("--root");
+  const root = rootFlagIndex >= 0 ? resolve(args[rootFlagIndex + 1]) : SCRIPT_ROOT;
+  const check = args.includes("--check");
+  const result = buildOperationalSavingsReview(await loadOperationalSavingsSources(root));
+  if (result.errors.length > 0) {
+    console.error("Operational-savings review generation failed:");
+    for (const error of result.errors) console.error(`- ${error}`);
+    process.exitCode = 1;
+    return;
+  }
+  if (check) {
+    const freshnessErrors = await checkReviewArtifacts(root, result.artifacts);
+    if (freshnessErrors.length > 0) {
+      console.error("Generated review freshness check failed:");
+      for (const error of freshnessErrors) console.error(`- ${error}`);
+      process.exitCode = 1;
+      return;
+    }
+    console.log(`Generated review pages are current: ${result.report.categoryPages} categories.`);
+    return;
+  }
+  await writeReviewArtifacts(root, result.artifacts);
+  console.log(JSON.stringify(result.report, null, 2));
+  console.log("Operational-savings review pages generated.");
+}
+
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  await main();
+}

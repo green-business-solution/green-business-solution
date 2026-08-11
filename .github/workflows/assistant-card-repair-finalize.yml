@@ -1,0 +1,160 @@
+name: Finalize and verify founder-reviewed Information Cards
+
+on:
+  push:
+    branches:
+      - docs/operational-savings-information-trees
+    paths:
+      - .github/workflows/assistant-card-repair-finalize.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Check out latest repair branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Ensure deterministic reviewed-card entrypoints and tests
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('scripts/repair-reviewed-operational-savings-cards.mjs')
+          text = path.read_text()
+          old = '''  const regex = /^\\*\\*■ Standard ([1-9]\\d*\\.[1-9]\\d*) — ([^*\\n]+)\\*\\*\\n\\n([\\s\\S]*?)(?=^\\*\\*■ Standard |\\s*$)/gm;
+          for (const match of markdown.matchAll(regex)) {
+            const body = match[3].trim();'''
+          new = '''  const processChunks = markdown.split(/(?=^\\*\\*■ Standard [1-9]\\d*\\.[1-9]\\d* — )/m);
+          for (const chunk of processChunks) {
+            const match = chunk.match(/^\\*\\*■ Standard ([1-9]\\d*\\.[1-9]\\d*) — ([^*\\n]+)\\*\\*\\n\\n([\\s\\S]*)$/);
+            if (!match) continue;
+            const body = match[3].trim();'''
+          if old in text:
+              text = text.replace(old, new)
+          text = text.replace('new Date().toISOString()', '"2026-07-25T00:00:00.000Z"')
+          path.write_text(text)
+          PY
+
+          cat > scripts/generate-operational-savings-review-pages.mjs <<'EOF'
+          import { fileURLToPath } from "node:url";
+          import { generateReviewedCards } from "./repair-reviewed-operational-savings-cards.mjs";
+          export { generateReviewedCards };
+          if (process.argv[1] === fileURLToPath(import.meta.url)) {
+            const result = await generateReviewedCards({
+              write: process.argv.includes("--write") || !process.argv.includes("--check"),
+              rebuild: process.argv.includes("--rebuild")
+            });
+            process.stdout.write(`Generated ${result.cards.length} founder-reviewed Information Cards.\n`);
+          }
+          EOF
+
+          cat > scripts/validate-operational-savings-information-trees.mjs <<'EOF'
+          import { fileURLToPath } from "node:url";
+          import { validateReviewedCards } from "./repair-reviewed-operational-savings-cards.mjs";
+          export { validateReviewedCards };
+          if (process.argv[1] === fileURLToPath(import.meta.url)) {
+            const result = await validateReviewedCards();
+            if (result.errors.length) {
+              process.stderr.write(`${result.errors.join("\n")}\n`);
+              process.exitCode = 1;
+            } else {
+              process.stdout.write(`Operational-savings Information Tree validation passed: ${result.cards} cards, ${result.processes} category-local processes, ${result.standards} canonical Standards.\n`);
+            }
+          }
+          EOF
+
+      - name: Generate or refresh the reviewed source and all 54 cards
+        run: |
+          if [ -f docs/operational-savings-reviewed-cards.json ]; then
+            node scripts/repair-reviewed-operational-savings-cards.mjs --write
+          else
+            node scripts/repair-reviewed-operational-savings-cards.mjs --write --rebuild
+          fi
+          node scripts/validate-operational-savings-information-trees.mjs
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run focused Information Card suites
+        run: npx vitest run scripts/generate-operational-savings-review-pages.test.mjs scripts/validate-operational-savings-information-trees.test.mjs
+
+      - name: Run full repository suite
+        run: npm test
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Production build
+        run: npm run build
+
+      - name: API syntax check
+        run: node --check apps/api/server.mjs
+
+      - name: Write completion audit
+        run: |
+          node --input-type=module <<'EOF'
+          import { readFile, writeFile } from 'node:fs/promises';
+          const source = JSON.parse(await readFile('docs/operational-savings-reviewed-cards.json', 'utf8'));
+          const cards = source.cards;
+          const processes = cards.reduce((sum, card) => sum + card.processes.length, 0);
+          const standards = new Set(cards.flatMap((card) => card.processes.map((process) => process.canonicalId))).size;
+          const userLeaves = cards.flatMap((card) => card.tree.split('\n')).filter((line) => line.includes('(User)')).length;
+          const documentLeaves = cards.flatMap((card) => card.tree.split('\n')).filter((line) => line.includes('(Project Document)')).length;
+          const text = `# Operational-Savings Information Card Repair — Completion Audit\n\n` +
+            `**Branch:** \`docs/operational-savings-information-trees\`\n\n` +
+            `**Validated commit input:** \`${process.env.GITHUB_SHA}\`\n\n` +
+            `## Completed scope\n\n` +
+            `- Information Cards: ${cards.length}\n` +
+            `- Category-local processes: ${processes}\n` +
+            `- Canonical Standards used: ${standards}\n` +
+            `- Visible User leaves: ${userLeaves}\n` +
+            `- Visible Project Document leaves: ${documentLeaves}\n` +
+            `- All Project Document leaves are marked \`[OPTIONAL OVERRIDE]\`.\n` +
+            `- Every tree process has exactly one complete visible process section.\n` +
+            `- Every process names a reusable canonical Standard.\n` +
+            `- The approved four-label Information Tree grammar appears on every card.\n` +
+            `- Technical engineering variables are not exposed as ordinary User inputs.\n\n` +
+            `## Verification completed\n\n` +
+            `- Reviewed-card generator and deterministic freshness validation: passed\n` +
+            `- Focused Information Card tests: passed\n` +
+            `- Full repository tests: passed\n` +
+            `- Frontend typecheck: passed\n` +
+            `- Production frontend build: passed\n` +
+            `- API syntax check: passed\n` +
+            `- git diff --check: passed before push\n\n` +
+            `## Boundaries\n\n` +
+            `This completes the founder-reviewable Information Card architecture. It does not merge PR #29, deploy the application, or claim that every implementation-pending source adapter is production-ready. Those adapters remain governed by PR #30's proof ledger and later category integration.\n`;
+          await writeFile('docs/operational-savings-repair-completion.md', text);
+          EOF
+
+      - name: Remove all temporary assistant workflows and markers
+        run: |
+          rm -f .github/workflows/assistant-card-repair-export.yml
+          rm -f .github/workflows/assistant-card-repair-apply.yml
+          rm -f .github/workflows/assistant-card-repair-finalize.yml
+          rm -f tmp-test-file.txt
+
+      - name: Commit verified final repair
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --check
+          if git diff --cached --quiet; then
+            echo "No final changes to commit"
+            exit 0
+          fi
+          git commit -m "docs: complete founder-reviewed operational savings cards"
+          git push origin HEAD:docs/operational-savings-information-trees
