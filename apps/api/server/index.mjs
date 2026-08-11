@@ -19,6 +19,10 @@ import { isVisibleAvailability, isVisibleOpportunity } from "./matching/opportun
 import { applyOpportunityAvailabilityOverlay } from "./matching/opportunityAvailabilityOverlay.mjs";
 import { applyOpportunityAwardAuditOverlay } from "./matching/opportunityAwardAuditOverlay.mjs";
 import { buildPortalRetrofitPreviewShell, buildPortalRetrofitRecommendations } from "./retrofitRecommendations.mjs";
+import {
+  resolvePublicScanRecommendationContext,
+  sanitizePublicScanRecommendationPayload
+} from "./publicScanRecommendations.mjs";
 import { resolveOpportunityApplicationSource } from "./applicationSources/ApplicationSourceResolver.mjs";
 import { resolveOfficialProgramWebsite } from "./applicationSources/OfficialProgramWebsiteResolver.mjs";
 import { discoverOpportunityApplicationLinks } from "./applicationSources/ApplicationPathFinder.mjs";
@@ -3547,6 +3551,42 @@ app.post("/api/intake", async (req, res) => {
       intake: result.intake,
       uploadSession: result.uploadSession
     });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/scan/retrofit-preview", async (req, res) => {
+  try {
+    const { intake, user } = await resolvePublicScanRecommendationContext(req.body || {}, {
+      getUserRecord,
+      verifyEnergyUploadSession
+    });
+    const formQuestionCatalog = await loadRuntimeFormQuestionCatalog();
+    const payload = buildPortalRetrofitPreviewShell({
+      formQuestionCatalog,
+      user: publicUser(user),
+      intake,
+      now: new Date()
+    });
+    res.json(sanitizePublicScanRecommendationPayload(payload));
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
+app.post("/api/scan/retrofit-recommendations", async (req, res) => {
+  try {
+    const { intake, user } = await resolvePublicScanRecommendationContext(req.body || {}, {
+      getUserRecord,
+      verifyEnergyUploadSession
+    });
+    const payload = await buildCachedPortalRetrofitRecommendations({
+      user,
+      intake,
+      now: new Date()
+    });
+    res.json(sanitizePublicScanRecommendationPayload(payload));
   } catch (error) {
     handleError(res, error);
   }

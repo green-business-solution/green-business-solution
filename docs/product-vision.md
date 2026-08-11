@@ -64,7 +64,7 @@ Current public URL structure:
 - `/about/trust` = trust and data
 - `/about/contact` = contact
 - `/scan` = free scan intake form
-- `/scan/results` = scan results placeholder
+- `/scan/results` = initial retrofit recommendation workspace
 - `/sign-in` = report/dashboard sign-in
 
 Current public page direction:
@@ -87,7 +87,7 @@ Personal contact information is still needed, but it should not be the first thi
 3. User completes a business-first intake form.
 4. The app saves the intake data to DynamoDB through the local/API backend.
 5. After intake save, the app routes to `/scan/results`.
-6. `/scan/results` currently shows a clean placeholder that the free scan is being prepared.
+6. `/scan/results` immediately shows an initial recommendation shell, then fills in the live eligibility matches.
 7. `Sign In` leads to Google-backed report/dashboard access.
 8. Admin users can inspect intake records and data tables.
 
@@ -171,21 +171,15 @@ The lock icon should not be inside the submit button. It should sit separately i
 
 After intake submission, the current next page is `/scan/results`.
 
-Current placeholder content:
+Current recommendation experience:
 
-- Title: `Your free scan is being prepared`
-- Supporting copy: `RetroFi is reviewing your business and site information to identify likely incentive and retrofit opportunities.`
-- Placeholder cards:
-  - Estimated opportunity range: `Coming soon`
-  - Likely categories: `Pending analysis`
-  - Recommended next step: `Upload utility bills for detailed savings and ROI`
-
-Later planned page concept:
-
-- Header: `Your Initial Opportunities`
-- Supporting copy: Based on the business and site information, these are the areas RetroFi will evaluate first.
-- Opportunity cards for likely categories such as LED upgrades, HVAC, refrigeration, solar, EV charging, water efficiency, and building controls.
-- Each card can show relevance, why it may apply, and what data is needed next.
+- Header: `Your Retrofit Recommendations`
+- Supporting copy explains that the matches use the submitted business, property, utility, and eligibility information.
+- The page first loads a lightweight recommendation shell so the customer sees a useful workspace without waiting for the full matching pass.
+- The full eligibility results then replace the shell with current retrofit categories, matched opportunities, savings previews, and the inputs needed to improve each estimate.
+- The experience uses the same customer-facing recommendation workspace as the admin post-form preview.
+- Access is scoped to the temporary free-scan session issued for that intake submission.
+- A missing or expired session shows a safe recovery page with actions to start a new scan or sign in.
 
 Utility bill upload should be the next step after the preview:
 

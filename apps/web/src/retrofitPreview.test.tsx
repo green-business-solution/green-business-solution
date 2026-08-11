@@ -20,6 +20,7 @@ import {
   areBillsCompleteForRetrofit,
   areRetrofitQuestionsComplete,
   buildDashboardPerformanceData,
+  buildScanRecommendationSessionBody,
   buildPersistedRetrofitDetailAnswers,
   buildSeededRetrofitDetailAnswers,
   comparePreviewRetrofits,
@@ -101,6 +102,40 @@ describe("estimated report pricing", () => {
       high: 125
     });
     expect(estimate.midpoint).toBeCloseTo(92.983, 3);
+  });
+});
+
+describe("public scan recommendation handoff", () => {
+  it("sends only the scoped user and upload credentials to recommendation endpoints", () => {
+    expect(
+      buildScanRecommendationSessionBody({
+        userId: " user-1 ",
+        token: "session-token",
+        expiresAt: "2026-09-01T00:00:00.000Z",
+        submissionId: "intake-1",
+      }),
+    ).toEqual({
+      userId: " user-1 ",
+      uploadToken: "session-token",
+    });
+  });
+
+  it("loads the shared recommendation workspace instead of the old placeholder", async () => {
+    const fsModuleName = "node:fs";
+    const { readFileSync } = await import(fsModuleName);
+    const source = readFileSync(new URL("./App.tsx", import.meta.url), "utf8");
+    const resultsPage = source.slice(
+      source.indexOf("function ScanResultsPage"),
+      source.indexOf("function EnergyDataUploadPage"),
+    );
+
+    expect(resultsPage).toContain('"/api/scan/retrofit-preview"');
+    expect(resultsPage).toContain('"/api/scan/retrofit-recommendations"');
+    expect(resultsPage).toContain("<RetrofitRecommendationsPreview");
+    expect(resultsPage).toContain("buildScanRecommendationSessionBody");
+    expect(resultsPage).not.toContain("Coming soon");
+    expect(resultsPage).not.toContain("Pending analysis");
+    expect(resultsPage).not.toContain("Your free scan is being prepared");
   });
 });
 
