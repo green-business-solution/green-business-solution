@@ -37,12 +37,6 @@ import {
 } from "./routes";
 import { HomePage } from "./pages/home/HomePage";
 import {
-  contactMailtoUrl,
-  validateContactForm,
-  type ContactFormErrors,
-  type ContactFormState,
-} from "./pages/about/contactForm";
-import {
   HOME_HOW_IT_WORKS_SECTION_ID,
   scrollToHomeHowItWorksFallback,
 } from "./pages/home/homeSections";
@@ -2991,7 +2985,7 @@ function SectionHeading({
   );
 }
 
-function AboutSectionNav({
+function AboutSubnav({
   activeRoute,
   navigate,
 }: {
@@ -2999,23 +2993,34 @@ function AboutSectionNav({
   navigate: (route: Route) => void;
 }) {
   return (
-    <nav aria-label="About RetroFi" className="about-section-nav">
-      <div className="about-section-nav-inner">
-        <span className="about-section-nav-label">About</span>
-        <div className="about-section-nav-links">
-          {aboutLinks.map((item) => (
-            <button
-              aria-current={activeRoute === item.route ? "page" : undefined}
-              className="about-section-nav-link"
-              key={item.route}
-              onClick={() => navigate(item.route)}
-              type="button"
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
-      </div>
+    <nav aria-label="About RetroFi" className="about-subnav">
+      <button
+        aria-current={activeRoute === "about" ? "page" : undefined}
+        className={
+          activeRoute === "about"
+            ? "about-subnav-link is-active"
+            : "about-subnav-link"
+        }
+        onClick={() => navigate("about")}
+        type="button"
+      >
+        Overview
+      </button>
+      {aboutLinks.map((item) => (
+        <button
+          aria-current={activeRoute === item.route ? "page" : undefined}
+          className={
+            activeRoute === item.route
+              ? "about-subnav-link is-active"
+              : "about-subnav-link"
+          }
+          key={item.route}
+          onClick={() => navigate(item.route)}
+          type="button"
+        >
+          {item.label}
+        </button>
+      ))}
     </nav>
   );
 }
@@ -3055,6 +3060,433 @@ function AboutHubCard({
     </article>
   );
 }
+
+const scannerDashboardImage = "/home/final-4-cards-page.png";
+const scannerDashboardStartMotion = { scale: 2.34, x: 0, y: -18 };
+const scannerDashboardEndMotion = { scale: 1, x: 0, y: 0 };
+
+
+function LegacyPlanetScanHero({ navigate }: { navigate: (route: Route) => void }) {
+  const sectionRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let animationFrame = 0;
+    let targetProgress = 0;
+    let displayProgress = 0;
+    let hasMeasuredProgress = false;
+    let isDisposed = false;
+    let autoTransitionActive = false;
+    let autoTransitionSettledSide: "before" | "after" | null = null;
+    let autoTransitionDirection: "forward" | "reverse" | null = null;
+    let autoTransitionStartProgress = 0;
+    let autoTransitionEndProgress = 1;
+    let autoTransitionStartTime = 0;
+    let pendingAutoTransitionDirection: "forward" | "reverse" | null = null;
+    let dashboardScrollLockActive = false;
+    let dashboardScrollLockConsumed = 0;
+    let touchStartY: number | null = null;
+    let dashboardImageLoaded = false;
+    let dashboardImage: HTMLImageElement | null = null;
+    const scannerEnd = 0.68;
+    const resultClearStart = 0.7;
+    const resultClearEnd = 0.76;
+    const transitionStart = 0.78;
+    const transitionEnd = 1;
+    const forwardAutoTrigger = transitionStart + 0.006;
+    const reverseAutoTrigger = 0.995;
+    const autoTransitionDuration = 680;
+    const dashboardScrollLockDistance = 520;
+    const clamp = (value: number, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+    const lerp = (start: number, end: number, progress: number) => start + (end - start) * progress;
+    const smootherstep = (value: number) => {
+      const clamped = clamp(value);
+      return clamped * clamped * clamped * (clamped * (clamped * 6 - 15) + 10);
+    };
+    const easeOutCubic = (value: number) => {
+      const clamped = clamp(value);
+      return 1 - Math.pow(1 - clamped, 3);
+    };
+    const smoothstep = (start: number, end: number, value: number) => {
+      if (start === end) return value >= end ? 1 : 0;
+      const clamped = clamp((value - start) / (end - start));
+      return clamped * clamped * (3 - 2 * clamped);
+    };
+    const setDashboardMotion = (motion: { scale: number; x: number; y: number }) => {
+      section?.style.setProperty("--scanner-dashboard-scale", motion.scale.toFixed(4));
+      section?.style.setProperty("--scanner-dashboard-x", `${motion.x.toFixed(2)}vw`);
+      section?.style.setProperty("--scanner-dashboard-y", `${motion.y.toFixed(2)}vh`);
+    };
+
+    const measureScrollProgress = () => {
+      if (!section) {
+        return 0;
+      }
+
+      const scrollDistance = Math.max(1, section.offsetHeight - window.innerHeight);
+      return clamp(-section.getBoundingClientRect().top / scrollDistance);
+    };
+
+    const getScrollYForProgress = (progress: number) => {
+      if (!section) {
+        return window.scrollY;
+      }
+
+      const scrollDistance = Math.max(1, section.offsetHeight - window.innerHeight);
+      const sectionTop = window.scrollY + section.getBoundingClientRect().top;
+      return sectionTop + scrollDistance * clamp(progress);
+    };
+
+    const startAutoTransition = (direction: "forward" | "reverse", timestamp: number) => {
+      autoTransitionActive = true;
+      autoTransitionDirection = direction;
+      pendingAutoTransitionDirection = null;
+      dashboardScrollLockActive = false;
+      dashboardScrollLockConsumed = 0;
+      autoTransitionStartTime = timestamp;
+      autoTransitionStartProgress =
+        direction === "forward"
+          ? clamp(Math.max(targetProgress, transitionStart), transitionStart, 1)
+          : clamp(targetProgress, transitionStart, 1);
+      autoTransitionEndProgress = direction === "forward" ? 1 : transitionStart;
+      targetProgress = autoTransitionStartProgress;
+      displayProgress = autoTransitionStartProgress;
+      window.scrollTo(0, getScrollYForProgress(displayProgress));
+    };
+
+    const updateScan = (timestamp = window.performance.now()) => {
+      animationFrame = 0;
+
+      if (!section) {
+        return;
+      }
+
+      if (reducedMotionQuery.matches) {
+        section.style.setProperty("--planet-scan-position", "100%");
+        section.style.setProperty("--planet-scan-ray-opacity", "0");
+        section.style.setProperty("--planet-scan-hint-opacity", "0");
+        section.style.setProperty("--planet-scan-erase", "1");
+        section.style.setProperty("--planet-scan-reveal", "1");
+        section.style.setProperty("--planet-scan-result-copy-opacity", "0");
+        section.style.setProperty("--planet-scan-magic-opacity", "0");
+        section.style.setProperty("--planet-scan-layer-opacity", "0");
+        section.style.setProperty("--scanner-dashboard-opacity", "1");
+        setDashboardMotion(scannerDashboardEndMotion);
+        return;
+      }
+
+      if (!hasMeasuredProgress) {
+        targetProgress = measureScrollProgress();
+        displayProgress = targetProgress;
+        hasMeasuredProgress = true;
+      }
+
+      if (pendingAutoTransitionDirection && dashboardImageLoaded && !autoTransitionActive) {
+        startAutoTransition(pendingAutoTransitionDirection, timestamp);
+      }
+
+      if (autoTransitionActive) {
+        const autoProgress = clamp((timestamp - autoTransitionStartTime) / autoTransitionDuration);
+        const easedAutoProgress = easeOutCubic(autoProgress);
+        targetProgress = lerp(autoTransitionStartProgress, autoTransitionEndProgress, easedAutoProgress);
+        displayProgress = targetProgress;
+        window.scrollTo(0, getScrollYForProgress(displayProgress));
+
+        if (autoProgress >= 1) {
+          const settledProgress = autoTransitionEndProgress;
+          autoTransitionActive = false;
+          autoTransitionSettledSide = autoTransitionDirection === "forward" ? "after" : "before";
+          dashboardScrollLockActive = autoTransitionDirection === "forward";
+          dashboardScrollLockConsumed = 0;
+          autoTransitionDirection = null;
+          targetProgress = settledProgress;
+          displayProgress = settledProgress;
+          window.scrollTo(0, getScrollYForProgress(settledProgress));
+        }
+      } else {
+        const animationTargetProgress = dashboardImageLoaded ? targetProgress : Math.min(targetProgress, transitionStart);
+        const progressDelta = animationTargetProgress - displayProgress;
+        displayProgress = Math.abs(progressDelta) < 0.0006 ? animationTargetProgress : displayProgress + progressDelta * 0.12;
+      }
+
+      const rawProgress = displayProgress;
+      const scannerProgress = clamp(rawProgress / scannerEnd);
+      const easedProgress = smootherstep(scannerProgress);
+      const transitionProgress = clamp((rawProgress - transitionStart) / (transitionEnd - transitionStart));
+      const dashboardOpacity = smoothstep(0.03, 0.2, transitionProgress);
+      const scannerLayerOpacity = 1 - smoothstep(0.12, 0.42, transitionProgress);
+      const edgeFade = Math.min(1, scannerProgress * 10, (1 - scannerProgress) * 10);
+      const eraseProgress = Math.min(1, Math.max(0, (easedProgress - 0.08) / 0.34));
+      const revealProgress = Math.min(1, Math.max(0, (easedProgress - 0.54) / 0.3));
+      const resultCopyOpacity = 1 - smoothstep(resultClearStart, resultClearEnd, rawProgress);
+      const magicOpacity = Math.min(1, edgeFade, Math.max(0, (easedProgress - 0.06) / 0.12), Math.max(0, (0.96 - easedProgress) / 0.18));
+      const dashboardMotionProgress = smootherstep(transitionProgress);
+      const dashboardMotion = {
+        scale: lerp(scannerDashboardStartMotion.scale, scannerDashboardEndMotion.scale, dashboardMotionProgress),
+        x: lerp(scannerDashboardStartMotion.x, scannerDashboardEndMotion.x, dashboardMotionProgress),
+        y: lerp(scannerDashboardStartMotion.y, scannerDashboardEndMotion.y, dashboardMotionProgress)
+      };
+      const safeDashboardOpacity = dashboardImageLoaded ? dashboardOpacity : 0;
+      const safeScannerLayerOpacity = dashboardImageLoaded ? scannerLayerOpacity : 1;
+
+      section.style.setProperty("--planet-scan-position", `${easedProgress * 100}%`);
+      section.style.setProperty("--planet-scan-ray-opacity", `${Math.max(0, edgeFade)}`);
+      section.style.setProperty("--planet-scan-hint-opacity", `${Math.max(0, 1 - rawProgress * 6)}`);
+      section.style.setProperty("--planet-scan-erase", String(eraseProgress));
+      section.style.setProperty("--planet-scan-reveal", String(revealProgress));
+      section.style.setProperty("--planet-scan-result-copy-opacity", String(resultCopyOpacity));
+      section.style.setProperty("--planet-scan-magic-opacity", String(magicOpacity));
+      section.style.setProperty("--planet-scan-layer-opacity", String(safeScannerLayerOpacity));
+      section.style.setProperty("--scanner-dashboard-opacity", String(safeDashboardOpacity));
+      setDashboardMotion(dashboardMotion);
+
+      const shouldContinueSmoothing =
+        autoTransitionActive ||
+        Math.abs((dashboardImageLoaded ? targetProgress : Math.min(targetProgress, transitionStart)) - displayProgress) > 0.0006;
+
+      if (shouldContinueSmoothing) {
+        scheduleScanUpdate();
+      }
+    };
+
+    const scheduleScanUpdate = () => {
+      if (!animationFrame) {
+        animationFrame = window.requestAnimationFrame(updateScan);
+      }
+    };
+
+    const handleScrollProgressChange = () => {
+      const measuredProgress = measureScrollProgress();
+
+      if (autoTransitionActive) {
+        return;
+      }
+
+      if (!hasMeasuredProgress) {
+        targetProgress = measuredProgress;
+        displayProgress = measuredProgress;
+        autoTransitionSettledSide = measuredProgress >= reverseAutoTrigger ? "after" : "before";
+        hasMeasuredProgress = true;
+      }
+
+      if (autoTransitionSettledSide === "after" && measuredProgress < reverseAutoTrigger) {
+        pendingAutoTransitionDirection = "reverse";
+        targetProgress = measuredProgress;
+      } else if (autoTransitionSettledSide !== "after" && measuredProgress >= forwardAutoTrigger) {
+        pendingAutoTransitionDirection = "forward";
+        targetProgress = Math.max(measuredProgress, transitionStart);
+      } else {
+        pendingAutoTransitionDirection = null;
+        targetProgress = measuredProgress;
+        if (measuredProgress < transitionStart - 0.04) {
+          autoTransitionSettledSide = "before";
+        } else if (measuredProgress >= reverseAutoTrigger) {
+          autoTransitionSettledSide = "after";
+        }
+      }
+
+      scheduleScanUpdate();
+    };
+
+    const holdDashboardScrollLock = (scrollAmount: number) => {
+      if (!section || scrollAmount <= 0 || autoTransitionSettledSide !== "after") {
+        return false;
+      }
+
+      const measuredProgress = measureScrollProgress();
+      if (measuredProgress < reverseAutoTrigger) {
+        return false;
+      }
+
+      if (!dashboardScrollLockActive) {
+        return false;
+      }
+
+      dashboardScrollLockConsumed += scrollAmount;
+      window.scrollTo(0, getScrollYForProgress(1));
+
+      if (dashboardScrollLockConsumed >= dashboardScrollLockDistance) {
+        dashboardScrollLockActive = false;
+        dashboardScrollLockConsumed = 0;
+      }
+
+      return true;
+    };
+
+    const handleWheel = (event: WheelEvent) => {
+      if (autoTransitionActive) {
+        event.preventDefault();
+        return;
+      }
+
+      if (holdDashboardScrollLock(event.deltaY)) {
+        event.preventDefault();
+      }
+    };
+
+    const handleTouchStart = (event: TouchEvent) => {
+      touchStartY = event.touches[0]?.clientY ?? null;
+    };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      if (autoTransitionActive) {
+        event.preventDefault();
+        return;
+      }
+
+      const currentY = event.touches[0]?.clientY;
+      if (touchStartY == null || currentY == null) {
+        return;
+      }
+
+      const scrollAmount = touchStartY - currentY;
+      if (holdDashboardScrollLock(scrollAmount)) {
+        event.preventDefault();
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (autoTransitionActive) {
+        event.preventDefault();
+        return;
+      }
+
+      const scrollKeys: Record<string, number> = {
+        " ": window.innerHeight * 0.8,
+        ArrowDown: 80,
+        PageDown: window.innerHeight * 0.8,
+        End: dashboardScrollLockDistance
+      };
+      const scrollAmount = scrollKeys[event.key] ?? 0;
+
+      if (holdDashboardScrollLock(scrollAmount)) {
+        event.preventDefault();
+      }
+    };
+
+    dashboardImage = new Image();
+    dashboardImage.decoding = "async";
+    dashboardImage.onload = () => {
+      const markDashboardLoaded = () => {
+        if (isDisposed) {
+          return;
+        }
+
+        dashboardImageLoaded = true;
+        scheduleScanUpdate();
+      };
+
+      if (dashboardImage?.decode) {
+        void dashboardImage.decode().then(markDashboardLoaded).catch(markDashboardLoaded);
+        return;
+      }
+
+      markDashboardLoaded();
+    };
+    dashboardImage.src = scannerDashboardImage;
+
+    handleScrollProgressChange();
+    window.addEventListener("scroll", handleScrollProgressChange, { passive: true });
+    window.addEventListener("resize", handleScrollProgressChange);
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("keydown", handleKeyDown);
+    reducedMotionQuery.addEventListener("change", scheduleScanUpdate);
+
+    return () => {
+      isDisposed = true;
+      window.cancelAnimationFrame(animationFrame);
+      if (dashboardImage) {
+        dashboardImage.onload = null;
+      }
+      window.removeEventListener("scroll", handleScrollProgressChange);
+      window.removeEventListener("resize", handleScrollProgressChange);
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("keydown", handleKeyDown);
+      reducedMotionQuery.removeEventListener("change", scheduleScanUpdate);
+    };
+  }, []);
+
+  return (
+    <section aria-labelledby="planet-scan-heading" className="planet-scan-section" ref={sectionRef}>
+      <div className="planet-scan-sticky">
+        <div aria-hidden="true" className="planet-scan-visual">
+          <img
+            alt=""
+            className="planet-scan-image planet-scan-image-before"
+            decoding="async"
+            fetchPriority="high"
+            loading="eager"
+            src="/home/planet-before.jpg"
+          />
+          <div className="planet-scan-after-reveal">
+            <img
+              alt=""
+              className="planet-scan-image planet-scan-image-after"
+              decoding="async"
+              fetchPriority="high"
+              loading="eager"
+              src="/home/planet-after.jpg"
+            />
+          </div>
+          <span className="planet-scan-ray" />
+          <div aria-hidden="true" className="planet-scan-magic-trail">
+            {Array.from({ length: 7 }, (_, index) => (
+              <span key={index} />
+            ))}
+          </div>
+        </div>
+
+        <div aria-hidden="true" className="planet-scan-shade" />
+
+        <div aria-hidden="true" className="scanner-dashboard-layer">
+          <img
+            alt=""
+            className="scanner-dashboard-panel"
+            decoding="async"
+            loading="eager"
+            src={scannerDashboardImage}
+          />
+        </div>
+
+        <div className="planet-scan-content">
+          <div className="planet-scan-copy">
+            <div className="planet-scan-message planet-scan-message-before">
+              <h1 className="planet-scan-title planet-scan-title--before" id="planet-scan-heading">
+                <span>Find the money</span>
+                <span>behind your next</span>
+                <span className="planet-scan-title-accent">retrofit.</span>
+              </h1>
+              <p className="planet-scan-subhead">Billions in retrofit incentives exist while building owners lose billions to operating expenses.</p>
+            </div>
+          </div>
+
+          <div className="planet-scan-result-copy">
+            <h2 className="planet-scan-title planet-scan-title--after">
+              <span>Find, compare, and claim</span>
+              <span>retrofit incentives.</span>
+            </h2>
+            <p className="planet-scan-emphasis">Sustainable. Profitable. Practical.</p>
+            <button className="planet-scan-cta planet-scan-primary planet-scan-cta--after" onClick={() => navigate("scan")} type="button">
+              Get Started
+            </button>
+          </div>
+        </div>
+
+        <div aria-hidden="true" className="planet-scan-scroll-cue">
+          <span />
+          Scroll to scan
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
 
 function PricingPage({
   navigate,
@@ -3264,14 +3696,14 @@ function AboutPage({
   publicAuth: PublicAuthState;
 }) {
   return (
-    <PublicShell navigate={navigate} pageClassName="home-page" publicAuth={publicAuth}>
+    <PublicShell navigate={navigate} publicAuth={publicAuth}>
       <PageHero
         compact
         eyebrow="About RetroFi"
         title="RetroFi helps homeowners make smarter retrofit decisions faster"
         copy="We turn messy home and utility data into clear guidance so people can understand upgrades, incentives, and next steps without the usual research burden."
       />
-      <AboutSectionNav activeRoute="about" navigate={navigate} />
+      <AboutSubnav activeRoute="about" navigate={navigate} />
       <section className="split-section about-story-section">
         <div>
           <p className="eyebrow">Mission</p>
@@ -3346,14 +3778,14 @@ function MissionPage({
   publicAuth: PublicAuthState;
 }) {
   return (
-    <PublicShell navigate={navigate} pageClassName="home-page" publicAuth={publicAuth}>
+    <PublicShell navigate={navigate} publicAuth={publicAuth}>
       <PageHero
         compact
         eyebrow="Mission"
         title="Making sustainability upgrades financially practical."
         copy="RetroFi is building a cleaner path from incentive discovery to confident retrofit decisions."
       />
-      <AboutSectionNav activeRoute="about-mission" navigate={navigate} />
+      <AboutSubnav activeRoute="about-mission" navigate={navigate} />
       <section className="two-column-section">
         <article className="feature-card">
           <h2>The problem</h2>
@@ -3441,7 +3873,7 @@ function TeamPage({
           </p>
         </div>
       </section>
-      <AboutSectionNav activeRoute="about-team" navigate={navigate} />
+      <AboutSubnav activeRoute="about-team" navigate={navigate} />
       <section
         aria-labelledby="about-founders-heading"
         className="content-section about-founders-section"
@@ -3511,93 +3943,67 @@ function TrustPage({
   navigate: (route: Route) => void;
   publicAuth: PublicAuthState;
 }) {
-  const trustPrinciples = [
-    {
-      title: "Start with less",
-      copy: "You can begin a free scan without uploading utility bills. More detailed data is only useful when you want deeper savings, ROI, payback, and prioritization analysis.",
-    },
-    {
-      title: "Use it with purpose",
-      copy: "Business, building, and utility information is used to identify likely incentives, estimate savings, prioritize retrofit opportunities, and prepare recommendations.",
-    },
-    {
-      title: "Keep clear boundaries",
-      copy: "RetroFi does not sell business information, use utility bills for unrelated purposes, or share sensitive information without permission.",
-    },
-  ] as const;
-
   return (
-    <PublicShell
-      navigate={navigate}
-      pageClassName="about-editorial-page home-page"
-      publicAuth={publicAuth}
-      showFooter
-    >
-      <section aria-labelledby="about-trust-title" className="about-editorial-hero">
-        <div className="about-editorial-hero-copy">
-          <p className="about-editorial-eyebrow">About / Trust &amp; Data</p>
-          <h1 id="about-trust-title">Your data should work for your decision.</h1>
-          <p className="about-editorial-intro">
-            RetroFi uses business, building, and utility information to make retrofit opportunities easier to understand—not for unrelated purposes.
-          </p>
-        </div>
-        <aside className="about-hero-note" aria-label="Data sharing summary">
-          <span className="about-hero-note-icon"><LockIcon /></span>
-          <strong>Share in stages, beginning with a lightweight scan.</strong>
-          <span>Utility bills come later, only when deeper financial analysis is useful to you.</span>
-        </aside>
-      </section>
-      <AboutSectionNav activeRoute="about-trust" navigate={navigate} />
-      <section aria-label="RetroFi data principles" className="about-trust-principles">
-        {trustPrinciples.map((principle, index) => (
-          <article className="about-trust-principle" key={principle.title}>
-            <span className="about-trust-icon">
-              {index === 2 ? <LockIcon /> : <CheckIcon />}
-            </span>
-            <p className="about-card-kicker">0{index + 1}</p>
-            <h2>{principle.title}</h2>
-            <p>{principle.copy}</p>
-          </article>
-        ))}
-      </section>
-      <section aria-label="Data use boundaries" className="about-data-boundaries">
-        <article className="about-boundary-card">
-          <p className="about-card-kicker">Information used in a scan</p>
-          <h2>What helps shape your recommendations</h2>
-          <ul className="about-boundary-list">
+    <PublicShell navigate={navigate} publicAuth={publicAuth}>
+      <PageHero
+        compact
+        eyebrow="Trust & Data"
+        title="Trust & Data"
+        copy="RetroFi uses business and utility information only to prepare recommendations, estimate savings, and identify relevant opportunities."
+      />
+      <AboutSubnav activeRoute="about-trust" navigate={navigate} />
+      <section className="card-grid two trust-grid">
+        <article className="feature-card list-card">
+          <h2>What we collect</h2>
+          <ul>
             {[
-              "Business name, contact information, and site address",
-              "Utility provider, organization type, and building type",
+              "Business name and contact information",
+              "Site address",
+              "Utility provider",
+              "Organization and building type",
               "Approximate square footage",
-              "Utility bills, if you choose to upload them later",
+              "Utility bills if uploaded later"
             ].map((item) => (
-              <li key={item}><CheckIcon /><span>{item}</span></li>
+              <li key={item}>{item}</li>
             ))}
           </ul>
         </article>
-        <article className="about-boundary-card is-dark">
-          <p className="about-card-kicker">Clear limits</p>
-          <h2>What your information is not for</h2>
-          <ul className="about-boundary-list">
+        <article className="feature-card list-card">
+          <h2>Why we collect it</h2>
+          <ul>
             {[
-              "Selling your business information",
-              "Using utility bills for unrelated purposes",
-              "Sharing sensitive information without permission",
+              "To identify likely incentives",
+              "To estimate savings and ROI",
+              "To prioritize retrofit opportunities",
+              "To prepare reports and recommendations"
             ].map((item) => (
-              <li key={item}><CheckIcon /><span>{item}</span></li>
+              <li key={item}>{item}</li>
             ))}
           </ul>
+        </article>
+        <article className="feature-card list-card">
+          <h2>What we do not do</h2>
+          <ul>
+            {[
+              "Do not sell business information",
+              "Do not use utility bills for unrelated purposes",
+              "Do not share sensitive information without permission"
+            ].map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </article>
+        <article className="feature-card utility-note-card">
+          <h2>Utility bill note</h2>
+          <p>
+            Utility bills are only needed for detailed savings, ROI, payback, and prioritization.
+            The free scan can be started without uploading bills.
+          </p>
         </article>
       </section>
-      <section className="about-editorial-cta">
-        <div className="about-editorial-cta-copy">
-          <h2>Start light. Add detail when it earns its place.</h2>
-          <p>The free scan does not require utility bills. Share more only when a closer analysis can help your decision.</p>
-        </div>
-        <button className="about-editorial-cta-button" onClick={() => navigate("scan")} type="button">
-          Start free scan
-          <ArrowUpRightIcon />
-        </button>
+      <section className="final-cta">
+        <h2>Start with a free scan and share more only when deeper analysis is useful.</h2>
+        <ScanStartButton navigate={navigate} publicAuth={publicAuth}>Get Started</ScanStartButton>
       </section>
     </PublicShell>
   );
@@ -3610,188 +4016,107 @@ function ContactPage({
   navigate: (route: Route) => void;
   publicAuth: PublicAuthState;
 }) {
-  const [contactForm, setContactForm] = useState<ContactFormState>({
+  const [contactForm, setContactForm] = useState({
     name: "",
     email: "",
     company: "",
     message: ""
   });
-  const [contactErrors, setContactErrors] = useState<ContactFormErrors>({});
-  const [contactStatus, setContactStatus] = useState<
-    "idle" | "preparing" | "ready" | "error"
-  >("idle");
-
-  function updateContactField(field: keyof ContactFormState, value: string) {
-    setContactForm((current) => ({ ...current, [field]: value }));
-    setContactErrors((current) => {
-      if (!(field in current)) return current;
-      const nextErrors = { ...current };
-      delete nextErrors[field as keyof ContactFormErrors];
-      return nextErrors;
-    });
-    if (contactStatus !== "idle") setContactStatus("idle");
-  }
 
   function submitContactForm(event: FormEvent) {
     event.preventDefault();
-    const form = event.currentTarget as HTMLFormElement;
-    const errors = validateContactForm(contactForm);
 
-    if (Object.keys(errors).length) {
-      setContactErrors(errors);
-      setContactStatus("error");
-      window.requestAnimationFrame(() => {
-        form.querySelector<HTMLElement>("[aria-invalid='true']")?.focus();
-      });
-      return;
-    }
+    const subject = contactForm.company
+      ? `RetroFi inquiry from ${contactForm.company}`
+      : `RetroFi inquiry from ${contactForm.name || "website visitor"}`;
+    const body = [
+      `Name: ${contactForm.name}`,
+      `Email: ${contactForm.email}`,
+      `Company: ${contactForm.company}`,
+      "",
+      contactForm.message
+    ].join("\n");
 
-    setContactErrors({});
-    setContactStatus("preparing");
-    const mailtoUrl = contactMailtoUrl(contactForm);
-
-    window.setTimeout(() => {
-      try {
-        window.location.href = mailtoUrl;
-        setContactStatus("ready");
-      } catch {
-        setContactStatus("error");
-      }
-    }, 120);
+    window.location.href = `mailto:hello@retrofi.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }
 
   return (
-    <PublicShell
-      navigate={navigate}
-      pageClassName="about-editorial-page home-page"
-      publicAuth={publicAuth}
-      showFooter
-    >
-      <section aria-labelledby="about-contact-title" className="about-editorial-hero">
-        <div className="about-editorial-hero-copy">
-          <p className="about-editorial-eyebrow">About / Contact</p>
-          <h1 id="about-contact-title">Bring us the question behind the project.</h1>
-          <p className="about-editorial-intro">
-            Whether you are deciding where to begin or what information to share, we can help you find the clearest next step.
+    <PublicShell navigate={navigate} publicAuth={publicAuth}>
+      <PageHero
+        compact
+        eyebrow="Contact"
+        title="Contact RetroFi"
+        copy="Have questions before starting a scan or uploading business information? Reach out to us."
+      />
+      <AboutSubnav activeRoute="about-contact" navigate={navigate} />
+      <section className="two-column-section contact-layout">
+        <article className="feature-card contact-card">
+          <h2>Contact email</h2>
+          <p>
+            <a href="mailto:hello@retrofi.org">hello@retrofi.org</a>
           </p>
-        </div>
-        <aside className="about-hero-note" aria-label="Contact summary">
-          <span className="about-hero-note-icon"><FeatureIcon icon="contact" /></span>
-          <strong>Questions are welcome before you start a scan.</strong>
-          <span>Your message opens in your email app, so you stay in control of what is sent.</span>
-        </aside>
-      </section>
-      <AboutSectionNav activeRoute="about-contact" navigate={navigate} />
-      <section className="about-contact-layout" aria-label="Contact RetroFi">
-        <aside className="about-contact-aside">
-          <article className="about-contact-card">
-            <span className="about-contact-icon"><FeatureIcon icon="contact" /></span>
-            <p className="about-card-kicker">Email us directly</p>
-            <h2>Prefer your own inbox?</h2>
-            <a className="about-contact-email" href="mailto:hello@retrofi.org">hello@retrofi.org</a>
-            <p>Reach out before creating a scan or sending business information.</p>
-          </article>
-          <article className="about-contact-card">
-            <span className="about-contact-icon"><LockIcon /></span>
-            <p className="about-card-kicker">Before you share</p>
-            <h2>Understand the data boundaries.</h2>
-            <ul className="about-contact-expectations">
-              <li><CheckIcon /><span>Start without utility bills.</span></li>
-              <li><CheckIcon /><span>Add detail only when deeper analysis is useful.</span></li>
-            </ul>
-            <button className="about-contact-trust-link" onClick={() => navigate("about-trust")} type="button">
-              Read Trust &amp; Data
-              <ArrowUpRightIcon />
-            </button>
-          </article>
-        </aside>
-        <form className="about-contact-form" noValidate onSubmit={submitContactForm}>
-          <header className="about-contact-form-header">
-            <p className="about-card-kicker">Send a note</p>
-            <h2>What can we help you clarify?</h2>
-            <p>Complete the form and we will prepare a message in your email app for you to review and send.</p>
-          </header>
-          <div className="about-contact-field-grid">
-            <label className="about-contact-field">
-              <span>Name <span aria-hidden="true" className="about-contact-required">*</span><span className="sr-only"> (required)</span></span>
+          <p>Reach out before creating a scan or sending any business information.</p>
+        </article>
+        <form className="feature-card contact-form-card" onSubmit={submitContactForm}>
+          <h2>Contact form</h2>
+          <div className="field-grid">
+            <label className="field">
+              <span>
+                Name<b aria-label="required"> *</b>
+              </span>
               <input
-                aria-describedby={contactErrors.name ? "contact-name-error" : undefined}
-                aria-invalid={Boolean(contactErrors.name)}
-                autoComplete="name"
                 name="name"
-                onChange={(event) => updateContactField("name", event.target.value)}
-                placeholder="Your name"
+                onChange={(event) =>
+                  setContactForm((current) => ({ ...current, name: event.target.value }))
+                }
                 required
                 value={contactForm.name}
               />
-              {contactErrors.name ? <span className="about-contact-field-error" id="contact-name-error">{contactErrors.name}</span> : null}
             </label>
-            <label className="about-contact-field">
-              <span>Email <span aria-hidden="true" className="about-contact-required">*</span><span className="sr-only"> (required)</span></span>
+            <label className="field">
+              <span>
+                Email<b aria-label="required"> *</b>
+              </span>
               <input
-                aria-describedby={contactErrors.email ? "contact-email-error" : undefined}
-                aria-invalid={Boolean(contactErrors.email)}
-                autoComplete="email"
-                inputMode="email"
                 name="email"
-                onChange={(event) => updateContactField("email", event.target.value)}
-                placeholder="you@example.com"
+                onChange={(event) =>
+                  setContactForm((current) => ({ ...current, email: event.target.value }))
+                }
                 required
                 type="email"
                 value={contactForm.email}
               />
-              {contactErrors.email ? <span className="about-contact-field-error" id="contact-email-error">{contactErrors.email}</span> : null}
             </label>
-            <label className="about-contact-field is-wide">
-              <span>Company <span className="sr-only">(optional)</span></span>
+            <label className="field">
+              <span>Company</span>
               <input
-                autoComplete="organization"
                 name="company"
-                onChange={(event) => updateContactField("company", event.target.value)}
-                placeholder="Company or organization (optional)"
+                onChange={(event) =>
+                  setContactForm((current) => ({ ...current, company: event.target.value }))
+                }
                 value={contactForm.company}
               />
             </label>
-            <label className="about-contact-field is-wide">
-              <span>Message <span aria-hidden="true" className="about-contact-required">*</span><span className="sr-only"> (required)</span></span>
+            <label className="field field-wide">
+              <span>
+                Message<b aria-label="required"> *</b>
+              </span>
               <textarea
-                aria-describedby={contactErrors.message ? "contact-message-error" : "contact-message-note"}
-                aria-invalid={Boolean(contactErrors.message)}
                 name="message"
-                onChange={(event) => updateContactField("message", event.target.value)}
-                placeholder="Tell us about your building, question, or next decision."
+                onChange={(event) =>
+                  setContactForm((current) => ({ ...current, message: event.target.value }))
+                }
                 required
                 value={contactForm.message}
               />
-              {contactErrors.message ? (
-                <span className="about-contact-field-error" id="contact-message-error">{contactErrors.message}</span>
-              ) : (
-                <span className="about-contact-form-note" id="contact-message-note">Please do not include confidential documents or raw utility data in this message.</span>
-              )}
             </label>
           </div>
-          <div className="about-contact-form-actions">
-            <button className="about-contact-submit" disabled={contactStatus === "preparing"} type="submit">
-              {contactStatus === "preparing" ? "Preparing email…" : "Prepare email"}
-              <ArrowUpRightIcon />
-            </button>
-            <span className="about-contact-form-note">Required fields are marked with an asterisk.</span>
+          <div className="hero-actions">
+            <button type="submit">Email RetroFi</button>
+            <ScanStartButton navigate={navigate} publicAuth={publicAuth} variant="secondary">
+              Get Started
+            </ScanStartButton>
           </div>
-          {contactStatus !== "idle" ? (
-            <p
-              aria-live="polite"
-              className={`about-contact-status is-${contactStatus}`}
-              role={contactStatus === "error" ? "alert" : "status"}
-            >
-              {contactStatus === "preparing"
-                ? "Preparing your message…"
-                : contactStatus === "ready"
-                  ? "Your email app should be open with a draft ready to review."
-                  : Object.keys(contactErrors).length
-                    ? "Review the highlighted fields and try again."
-                    : "We could not open your email app. Email hello@retrofi.org directly instead."}
-            </p>
-          ) : null}
         </form>
       </section>
     </PublicShell>
