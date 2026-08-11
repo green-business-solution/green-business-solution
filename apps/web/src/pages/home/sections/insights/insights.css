@@ -953,14 +953,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .about-section-nav-link,
+  .about-founders-page .about-subnav-link,
   .about-founders-page .about-founder-card,
   .about-founders-page .home-infographics-cta button,
   .about-founders-page .home-infographics-cta .arrow-icon {
     animation: none;
     transition: none;
   }
-  .about-section-nav-link:hover,
+  .about-founders-page .about-subnav-link:hover,
   .about-founders-page .home-infographics-cta button:hover,
   .about-founders-page .home-infographics-cta button:active {
     transform: none;
@@ -1001,6 +1001,7 @@
     min-height: 44px;
   }
 
+  .home-cloud-transition-bank,
   .home-greenery {
     display: none;
   }
