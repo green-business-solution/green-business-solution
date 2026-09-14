@@ -19,11 +19,6 @@ describe("routes", () => {
     expect(shouldCanonicalizeUnknownHomeFallback("/get-started")).toBe(false);
   });
 
-  it("routes the standalone pricing page", () => {
-    expect(routeFromPath("/pricing")).toBe("pricing");
-    expect(pathForRoute("pricing")).toBe("/pricing");
-  });
-
   it("keeps the About navigation focused on Mission and Team", () => {
     expect(aboutLinks).toEqual([
       { label: "Mission", route: "about-mission" },

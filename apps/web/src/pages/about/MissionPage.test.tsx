@@ -13,9 +13,9 @@ describe("MissionPage", () => {
     const html = renderToStaticMarkup(
       <MissionPage navigate={() => undefined} publicAuth={publicAuth} />,
     );
-    const introIndex = html.indexOf("Sustainable retrofits, made practical.");
-    const firstPillarIndex = html.indexOf("Clarity from complexity");
-    const conclusionIndex = html.indexOf("Making sustainable retrofits the standard");
+    const introIndex = html.indexOf("Fund better buildings. Waste less.");
+    const firstPillarIndex = html.indexOf("Start with clear facts");
+    const conclusionIndex = html.indexOf("A future where every building is cleaner");
 
     expect(html.match(/<article class="mission-chapter/g)).toHaveLength(3);
     expect(introIndex).toBeGreaterThan(-1);

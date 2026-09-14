@@ -15,12 +15,12 @@ function PracticalGraphic() {
   return (
     <div aria-hidden="true" className="mission-clarity-map">
       <div className="mission-clarity-sources">
-        <span>Options</span>
-        <span>Requirements</span>
-        <span>Tradeoffs</span>
+        <span>Building needs</span>
+        <span>Costs</span>
+        <span>Incentives</span>
       </div>
       <span className="mission-clarity-line"><i /></span>
-      <strong>Clear next step</strong>
+      <strong>Action plan</strong>
     </div>
   );
 }
@@ -28,21 +28,19 @@ function PracticalGraphic() {
 function ValueGraphic() {
   return (
     <div aria-hidden="true" className="mission-value-map">
-      <span className="mission-value-orbit is-time">Time</span>
-      <strong>Better-informed<br />investment</strong>
-      <span className="mission-value-orbit is-money">Money</span>
+      <span className="mission-value-orbit is-time">Incentives</span>
+      <strong>A workable<br />project</strong>
+      <span className="mission-value-orbit is-money">Savings</span>
     </div>
   );
 }
 
 const ecosystemMembers = [
-  "Businesses",
   "Property owners",
-  "Governments",
-  "Homeowners",
   "Contractors",
+  "Incentive programs",
   "Utilities",
-  "Financial institutions",
+  "Lenders",
 ];
 
 function EcosystemGraphic() {
@@ -58,19 +56,19 @@ function EcosystemGraphic() {
 
 const missionChapters = [
   {
-    copy: "RetroFi turns fragmented options, requirements, tradeoffs, expected outcomes, and next steps into a clear path people can understand and act on—without requiring specialist knowledge.",
+    copy: "Owners should know what an upgrade will do, what it will cost, what support is available, and what comes next. RetroFi puts those answers in one place so a good decision does not depend on knowing the system.",
     graphic: <PracticalGraphic />,
-    title: "Clarity from complexity",
+    title: "Start with clear facts",
   },
   {
-    copy: "Sustainable upgrades should respect both the budget and the calendar. RetroFi helps customers focus time and capital where they may matter most, supporting better-informed financial choices without presenting outcomes as guarantees.",
+    copy: "High upfront costs and missed incentives stop worthwhile projects. RetroFi helps customers find available funding, compare the real costs and savings, and focus their time and money on upgrades that fit their property.",
     graphic: <ValueGraphic />,
-    title: "Value in time and money",
+    title: "Make good projects affordable",
   },
   {
-    copy: "RetroFi aims to connect businesses, property owners, governments, homeowners, contractors, utilities, and financial institutions—making sustainable retrofit projects easier to coordinate, repeat, and scale worldwide.",
+    copy: "A recommendation only matters if it leads to action. RetroFi is building a shared path for property owners, contractors, incentive programs, utilities, and lenders so fewer projects stall between planning and completion.",
     graphic: <EcosystemGraphic />,
-    title: "One connected ecosystem",
+    title: "Help projects reach the finish line",
   },
 ];
 
@@ -250,10 +248,10 @@ export function MissionPage({
           <div className="mission-narrative">
             <header className="mission-statement" ref={statementRef}>
               <p className="about-editorial-eyebrow">Mission statement</p>
-              <h1 id="about-mission-title">Sustainable retrofits, made practical.</h1>
+              <h1 id="about-mission-title">Fund better buildings. Waste less.</h1>
               <p className="about-editorial-intro">
-                RetroFi exists to make sustainable retrofit adoption practical, understandable, and
-                financially worthwhile—saving customers time and money.
+                RetroFi helps property owners move from “we should upgrade” to a project they can act on.
+                We bring the right options, incentives, costs, and next steps into one clear plan.
               </p>
             </header>
             {missionChapters.map((chapter, index) => (
@@ -275,8 +273,8 @@ export function MissionPage({
 
           <div className="mission-finale" ref={finaleRef}>
             <p>Our vision</p>
-            <h2>Making sustainable retrofits the standard—not the exception.</h2>
-            <span>By connecting the people, programs, expertise, and capital each project depends on, RetroFi is working toward a world where sustainable retrofit investment is a normal, practical choice.</span>
+            <h2>A future where every building is cleaner, more efficient, and less expensive to run.</h2>
+            <span>We believe sustainable upgrades will become standard when the better environmental choice is also the clear, practical business choice. RetroFi exists to make that choice easier to see and act on.</span>
           </div>
         </div>
       </section>
